@@ -41,7 +41,6 @@ $(document).ready(function () {
     WalletInitalizeComponent();
     var FlagUpdate = false;
     function WalletInitalizeComponent() {
-        debugger;
         $("#App_Ref").on('click', function () {
             var glopalBtn = localStorage.getItem('glopalBtn');
             $("#" + glopalBtn + "").click();
@@ -129,7 +128,6 @@ $(document).ready(function () {
     }
     function Tabs_click() {
         $('body').on('click', '.scrollable-tabs li', function () {
-            debugger;
             $('li').removeClass('actTab');
             $('.scrollable-tabs li a.active').removeClass('active');
             if ($(this).html() != '<a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="true"><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="false"><i class="fa fa-plus-circle Add"></i></a>') {
@@ -233,7 +231,6 @@ $(document).ready(function () {
         }
     }
     function GridDoubleClick() {
-        debugger;
         FlagUpdate = true;
         if (JGrid.SelectedItem.Title == "Exchange") {
             $('#a_Expans').click();
@@ -308,7 +305,6 @@ $(document).ready(function () {
                 else {
                     Display = new Array();
                     for (var d = 0; d < Wallet_Def.length; d++) {
-                        debugger;
                         if (Wallet_Def[d].Amount > 0) {
                             var DisOpen_ball = new Wallet_Data();
                             DisOpen_ball.ID = -1;
@@ -330,14 +326,11 @@ $(document).ready(function () {
         });
     }
     function Display_Grid(_Display) {
-        debugger;
         totalAmount = 0;
         AllDisplay = _Display;
         AllDisplay = AllDisplay.sort(dynamicSortNew("ID"));
         Display = _Display;
-        debugger;
         for (var d = 0; d < Wallet_Def.length; d++) {
-            debugger;
             if (Wallet_Def[d].Amount > 0) {
                 var DisOpen_ball = new Wallet_Data();
                 DisOpen_ball.ID = -1;
@@ -351,7 +344,6 @@ $(document).ready(function () {
                 Display.push(DisOpen_ball);
             }
         }
-        debugger;
         if ($('#TypeSoursF').val() != "All") {
             Display = Display.filter(function (x) { return x.Type == $('#TypeSoursF').val(); });
         }
@@ -386,7 +378,6 @@ $(document).ready(function () {
         $('#txtTotal').val((AmountRec - AmountEx).toFixed(2));
     }
     function AppTans(Type) {
-        debugger;
         if (flagSave == 1) {
             setTimeout(function () { flagSave = 0; }, 800);
             return false;
@@ -419,7 +410,6 @@ $(document).ready(function () {
         Data.Name_Txt_Master = Comp_Wallet;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'u';
-        debugger;
         $.ajax({
             url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
@@ -445,7 +435,6 @@ $(document).ready(function () {
         Data.Name_Txt_Master = Comp_Wallet;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'd';
-        debugger;
         $.ajax({
             url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
@@ -532,7 +521,6 @@ $(document).ready(function () {
     }
     //*************************************************Display_AllBalance**************************************** 
     function AllBalance() {
-        debugger;
         //******************************************* Exchange********************************
         var DebtAmountEx = 0; //مديونيه
         var CashAmountEx = 0;
@@ -540,13 +528,11 @@ $(document).ready(function () {
         var Al_ahly_BankAmountEx = 0;
         var Bal_HomeAmountEx = 0;
         var AAIBAmountEx = 0;
-        debugger;
         var CashEx = AllDisplay.filter(function (x) { return x.Type == 'Cash' && (x.Title == 'Exchange' || x.Title == 'Transfers'); });
         var Cairo_BankEx = AllDisplay.filter(function (x) { return x.Type == 'Cairo Bank' && (x.Title == 'Exchange' || x.Title == 'Transfers'); });
         var Al_ahly_BankEx = AllDisplay.filter(function (x) { return x.Type == 'Al ahly Bank' && (x.Title == 'Exchange' || x.Title == 'Transfers'); });
         var DebtEx = AllDisplay.filter(function (x) { return x.Type == 'Debt' && x.Title == 'Exchange'; });
         var Bal_HomeEx = AllDisplay.filter(function (x) { return x.Type == 'Bal Home' && (x.Title == 'Exchange' || x.Title == 'Transfers'); });
-        debugger;
         var AAIBEx = AllDisplay.filter(function (x) { return x.Type == 'AAIB' && (x.Title == 'Exchange' || x.Title == 'Transfers'); });
         for (var i = 0; i < DebtEx.length; i++) {
             DebtAmountEx = DebtAmountEx + DebtEx[i].Amount;
@@ -573,13 +559,11 @@ $(document).ready(function () {
         var Al_ahly_BankAmountRec = 0; //بنك الاهلي
         var Bal_HomeAmountRec = 0; // رصيد البيت
         var AAIBAmountRec = 0; //بنك العربي الافريقي
-        debugger;
         var CashRec = AllDisplay.filter(function (x) { return x.Type == 'Cash' && x.Title == 'Receipt' || (x.TypeTo == 'Cash' && x.Title == 'Transfers'); });
         var Cairo_BankRec = AllDisplay.filter(function (x) { return x.Type == 'Cairo Bank' && x.Title == 'Receipt' || (x.TypeTo == 'Cairo Bank' && x.Title == 'Transfers'); });
         var Al_ahly_BankRec = AllDisplay.filter(function (x) { return x.Type == 'Al ahly Bank' && x.Title == 'Receipt' || (x.TypeTo == 'Al ahly Bank' && x.Title == 'Transfers'); });
         var DebtRec = AllDisplay.filter(function (x) { return x.Type == 'Debt' && x.Title == 'Receipt'; });
         var Bal_HomeRec = AllDisplay.filter(function (x) { return x.Type == 'Bal Home' && x.Title == 'Receipt' || (x.TypeTo == 'Bal Home' && x.Title == 'Transfers'); });
-        debugger;
         var AAIBRec = AllDisplay.filter(function (x) { return x.Type == 'AAIB' && x.Title == 'Receipt' || (x.TypeTo == 'AAIB' && x.Title == 'Transfers'); });
         for (var i = 0; i < DebtRec.length; i++) {
             DebtAmountRec = DebtAmountRec + DebtRec[i].Amount;
@@ -600,7 +584,6 @@ $(document).ready(function () {
             AAIBAmountRec = AAIBAmountRec + AAIBRec[i].Amount;
         }
         //****************************************Total***********************************************
-        debugger;
         $('#InDebtLab').html('InDebt ( ' + (Number(DebtAmountRec)) + ' ) $');
         $('#OutDebtLab').html('OutDebt ( ' + (Number(DebtAmountEx)) + ' ) $');
         $('#CashLab').html('Cash ( ' + (Number(CashAmountRec) - Number(CashAmountEx)) + ' ) $');
@@ -615,11 +598,9 @@ $(document).ready(function () {
     }
     function Sum_AllBalance() {
         $('#Div_Show_Balance').html('');
-        debugger;
         var AllTotal = 0;
         var Wallet_Def_IsActive = Wallet_Def.filter(function (x) { return x.CUSTOM4 == "true"; });
         for (var xx = 0; xx < Wallet_Def_IsActive.length; xx++) {
-            debugger;
             //**********************************************Build**********************************
             var idBal = Wallet_Def_IsActive[xx].NameBal;
             idBal = idBal.replace(/ /g, "_");
@@ -632,6 +613,11 @@ $(document).ready(function () {
                 for (var i0 = 0; i0 < SHchange.length; i0++) {
                     SHAmount = SHAmount + SHchange[i0].Amount;
                 }
+                debugger;
+                //alert(BalansCalculatorShahadat(SHchange))
+                //alert(SHAmount)
+                SHAmount = SHAmount - BalansCalculatorShahadat(SHchange);
+                debugger;
             }
             //******************************************* Sum Exchange********************************
             var EXAmount = 0;
@@ -641,9 +627,10 @@ $(document).ready(function () {
                     EXAmount = EXAmount + Exchange[i1].Amount;
                 }
             }
-            EXAmount = EXAmount + SHAmount;
-            //****************************************************Sum Receipt**************************************
             debugger;
+            EXAmount = EXAmount + SHAmount;
+            debugger;
+            //****************************************************Sum Receipt**************************************
             var RecAmount = 0;
             var Receipt = AllDisplay.filter(function (x) { return x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Receipt' || (x.TypeTo == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Transfers'); });
             if (Wallet_Def_IsActive[xx].CUSTOM1 == "true") {
@@ -653,6 +640,7 @@ $(document).ready(function () {
             }
             //RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
             //***************************************************************SetValHtml*********************************************  
+            debugger;
             $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].Remars + ' ( ' + (Number(RecAmount) - Number(EXAmount)).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
             //****************************************Total***********************************************
             if (Wallet_Def_IsActive[xx].CUSTOM3 == "true") {
@@ -665,15 +653,66 @@ $(document).ready(function () {
         $('#BalanceLab').html('All Bal ( ' + (Number(AllTotal.toFixed(2))).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
     }
     //*************************************************Shahadat****************************************
+    function BalansCalculatorShahadat(Shahadat) {
+        var AomuntDue = 0;
+        for (var b = 0; b < Shahadat.length; b++) {
+            debugger;
+            var AllMonth = getMonthsDifference(Shahadat[b].TrDate, Shahadat[b].DueDate);
+            var NumPriod = 1;
+            if (Shahadat[b].TypePeriod != '0') {
+                NumPriod = AllMonth / Number(Shahadat[b].TypePeriod);
+            }
+            var NumMonth = getMonthsDifference(Shahadat[b].TrDate, GetDate());
+            debugger;
+            for (var Pr = 0; Pr < NumPriod; Pr++) {
+                var AllDue = parseFloat(Shahadat[b].CUSTOM3.replace(/,/g, ''));
+                if (AomuntDue == AllDue) {
+                    debugger;
+                    AomuntDue = AomuntDue + Shahadat[b].Amount;
+                    break;
+                }
+                if (Number(Shahadat[b].TypePeriod) <= NumMonth) {
+                    var numberString = Shahadat[b].CUSTOM2;
+                    var Due = parseFloat(numberString.replace(/,/g, ''));
+                    AomuntDue = (AomuntDue + Due);
+                    AomuntDue = parseFloat(AomuntDue.toFixed(1));
+                    NumMonth = NumMonth - Number(Shahadat[b].TypePeriod);
+                }
+                else {
+                    debugger;
+                    if (AomuntDue == AllDue) {
+                        debugger;
+                        AomuntDue = AomuntDue + Shahadat[b].Amount;
+                        break;
+                    }
+                    break;
+                }
+                if (AomuntDue == AllDue) {
+                    debugger;
+                    AomuntDue = AomuntDue + Shahadat[b].Amount;
+                    break;
+                }
+            }
+        }
+        debugger;
+        return AomuntDue;
+    }
     function SumPrc() {
         debugger;
         var Amount = Number($('#txtAmountSH').val());
         var Prc = (Number($('#txtPrcSH').val()) / 100);
-        var NumYear = getYearDifference($('#txtdateSH').val(), $('#txtdateDueSH').val());
+        //let NumYear = getYearDifference($('#txtdateSH').val(), $('#txtdateDueSH').val())
+        var AllMonth = getMonthsDifference($('#txtdateSH').val(), $('#txtdateDueSH').val());
+        var NumPriod = 1;
+        if ($('#TypePeriod').val() != '0') {
+            NumPriod = AllMonth / Number($('#TypePeriod').val());
+        }
         var calacul = Amount * Prc; //حساب الفائده علي السنه
         var period = Number($('#TypePeriod').val());
+        debugger;
         var AmountDue = 0;
         var allAmount = 0;
+        debugger;
         if (period != 0) {
             AmountDue = (calacul / 12) * period;
         }
@@ -681,16 +720,16 @@ $(document).ready(function () {
             var NumMonths = getMonthsDifference($('#txtdateSH').val(), $('#txtdateDueSH').val());
             AmountDue = (calacul / 12) * NumMonths;
         }
-        allAmount = calacul * NumYear;
+        debugger;
+        allAmount = Number(AmountDue.toFixed(1)) * NumPriod;
         $('#txtAmountDuePay').val(Number(Number(AmountDue).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
-        $('#txtAllAmountDue').val(Number((allAmount + Amount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
         $('#txtAllDue').val(Number(Number(allAmount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+        $('#txtAllAmountDue').val(Number((allAmount + Amount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
         // Remove commas from the number string to convert it to a valid number format
         //var numberString = "1,583.3";
         //var number = parseFloat(numberString.replace(/,/g, ''));
     }
     function AppTansShahada(Type) {
-        debugger;
         if (flagSave == 1) {
             setTimeout(function () { flagSave = 0; }, 800);
             return false;
@@ -732,6 +771,13 @@ $(document).ready(function () {
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'u';
         debugger;
+        var chackDateMakeShahada = AllDisplay.filter(function (x) { return x.Type == '' + $('#TypeSoursSH').val() + '' && (x.Title == 'Shahadat') && x.CUSTOM1 == 'true' && x.DueDate >= DateFormatRep($('#txtdateSH').val()) && x.ID != Number($('#txtTrNoSH').val()); });
+        if (chackDateMakeShahada.length > 0) {
+            debugger;
+            alert('في شهاده معموله في هذه الفتره');
+            Errorinput($('#txtdateSH'));
+            return;
+        }
         $.ajax({
             url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
@@ -750,15 +796,12 @@ $(document).ready(function () {
     }
     //*************************************************Definitions****************************************
     function GetDefinitions() {
-        debugger;
         Ajax.CallAsync({
             url: Url.Action("Get_Two_Data", "Profile"),
             data: { Name_txt1: Comp_HedDef, Name_txt2: Comp_Definitions },
             success: function (Pro) {
-                debugger;
                 if (Pro != "Error") {
                     var result = JSON.parse(Pro);
-                    debugger;
                     var _Def = result;
                     if (_Def.Wallet_HedDef != "Error") {
                         var Data_hed = JSON.parse(_Def.Wallet_HedDef);
@@ -781,7 +824,6 @@ $(document).ready(function () {
         });
     }
     function Set_Roll_HedDef() {
-        debugger;
         $('.Hed').addClass('display_none');
         if (Wal_HedDef.CUSTOM1 == "true") {
             $('#a_Resive').removeClass('display_none');
@@ -801,7 +843,6 @@ $(document).ready(function () {
         DisplayOneTap();
     }
     function DisplayOneTap() {
-        debugger;
         if ($('#a_Expans').is(':visible')) {
             $('#a_Expans').click();
             return;
@@ -858,7 +899,6 @@ $(document).ready(function () {
         CountGrid = 0;
         $("#div_Data_Def").html('');
         for (var i = 0; i < Wallet_Def.length; i++) {
-            debugger;
             BuildControls(i);
             DisplayDetailsControls(i, Wallet_Def[i]);
             CountGrid++;
@@ -922,7 +962,6 @@ $(document).ready(function () {
         Enabled();
     }
     function Assign() {
-        debugger;
         ModelDetails = new Array();
         Model_Wal_HedDef = new Wallet_HedDef();
         Model_Wal_HedDef.CUSTOM1 = "" + ($("#CH_Hed_Receipt").prop('checked')) + "";
@@ -956,7 +995,6 @@ $(document).ready(function () {
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "Wallet_Definitions";
         Data.StatusFlag = StatusFlag;
-        debugger;
         $.ajax({
             url: Url.Action("Update_Data_Wallet_Def", "Profile"),
             type: "POST",

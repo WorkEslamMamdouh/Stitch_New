@@ -53,7 +53,7 @@ $(document).ready(() => {
 
     function WalletInitalizeComponent() {
 
-        debugger
+        
 
 
 
@@ -187,7 +187,7 @@ $(document).ready(() => {
 
 
         $('body').on('click', '.scrollable-tabs li', function () {
-            debugger
+            
             $('li').removeClass('actTab');
             $('.scrollable-tabs li a.active').removeClass('active');
 
@@ -321,7 +321,7 @@ $(document).ready(() => {
     }
     function GridDoubleClick() {
 
-        debugger
+        
         FlagUpdate = true;
 
 
@@ -426,7 +426,7 @@ $(document).ready(() => {
                     Display = new Array<Wallet_Data>();
 
                     for (var d = 0; d < Wallet_Def.length; d++) {
-                        debugger
+                        
                         if (Wallet_Def[d].Amount > 0) {
 
                             let DisOpen_ball: Wallet_Data = new Wallet_Data();
@@ -457,16 +457,16 @@ $(document).ready(() => {
     }
 
     function Display_Grid(_Display: Array<Wallet_Data>) {
-        debugger
+        
         totalAmount = 0;
         AllDisplay = _Display;
         AllDisplay = AllDisplay.sort(dynamicSortNew("ID"));
 
         Display = _Display;
 
-        debugger
+        
         for (var d = 0; d < Wallet_Def.length; d++) {
-            debugger
+            
             if (Wallet_Def[d].Amount > 0) {
 
                 let DisOpen_ball: Wallet_Data = new Wallet_Data();
@@ -484,7 +484,7 @@ $(document).ready(() => {
             }
 
         }
-        debugger
+        
 
         if ($('#TypeSoursF').val() != "All") {
             Display = Display.filter(x => x.Type == $('#TypeSoursF').val());
@@ -531,7 +531,7 @@ $(document).ready(() => {
     }
     function AppTans(Type: string) {
 
-        debugger
+        
 
         if (flagSave == 1) {
             setTimeout(function () { flagSave = 0; }, 800);
@@ -579,7 +579,7 @@ $(document).ready(() => {
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'u';
 
-        debugger
+        
         $.ajax({
             url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
@@ -619,7 +619,7 @@ $(document).ready(() => {
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'd';
 
-        debugger
+        
         $.ajax({
             url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
@@ -725,7 +725,7 @@ $(document).ready(() => {
     //*************************************************Display_AllBalance**************************************** 
     function AllBalance() {
 
-        debugger
+        
 
         //******************************************* Exchange********************************
         let DebtAmountEx = 0; //مديونيه
@@ -734,13 +734,13 @@ $(document).ready(() => {
         let Al_ahly_BankAmountEx = 0;
         let Bal_HomeAmountEx = 0;
         let AAIBAmountEx = 0;
-        debugger
+        
         let CashEx = AllDisplay.filter(x => x.Type == 'Cash' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
         let Cairo_BankEx = AllDisplay.filter(x => x.Type == 'Cairo Bank' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
         let Al_ahly_BankEx = AllDisplay.filter(x => x.Type == 'Al ahly Bank' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
         let DebtEx = AllDisplay.filter(x => x.Type == 'Debt' && x.Title == 'Exchange');
         let Bal_HomeEx = AllDisplay.filter(x => x.Type == 'Bal Home' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
-        debugger
+        
         let AAIBEx = AllDisplay.filter(x => x.Type == 'AAIB' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
 
 
@@ -778,13 +778,13 @@ $(document).ready(() => {
         let Bal_HomeAmountRec = 0; // رصيد البيت
         let AAIBAmountRec = 0; //بنك العربي الافريقي
 
-        debugger
+        
         let CashRec = AllDisplay.filter(x => x.Type == 'Cash' && x.Title == 'Receipt' || (x.TypeTo == 'Cash' && x.Title == 'Transfers'));
         let Cairo_BankRec = AllDisplay.filter(x => x.Type == 'Cairo Bank' && x.Title == 'Receipt' || (x.TypeTo == 'Cairo Bank' && x.Title == 'Transfers'));
         let Al_ahly_BankRec = AllDisplay.filter(x => x.Type == 'Al ahly Bank' && x.Title == 'Receipt' || (x.TypeTo == 'Al ahly Bank' && x.Title == 'Transfers'));
         let DebtRec = AllDisplay.filter(x => x.Type == 'Debt' && x.Title == 'Receipt');
         let Bal_HomeRec = AllDisplay.filter(x => x.Type == 'Bal Home' && x.Title == 'Receipt' || (x.TypeTo == 'Bal Home' && x.Title == 'Transfers'));
-        debugger
+        
         let AAIBRec = AllDisplay.filter(x => x.Type == 'AAIB' && x.Title == 'Receipt' || (x.TypeTo == 'AAIB' && x.Title == 'Transfers'));
 
         for (var i = 0; i < DebtRec.length; i++) {
@@ -812,7 +812,7 @@ $(document).ready(() => {
         }
 
         //****************************************Total***********************************************
-        debugger
+        
         $('#InDebtLab').html('InDebt ( ' + (Number(DebtAmountRec)) + ' ) $');
 
         $('#OutDebtLab').html('OutDebt ( ' + (Number(DebtAmountEx)) + ' ) $');
@@ -838,11 +838,11 @@ $(document).ready(() => {
     function Sum_AllBalance() {
 
         $('#Div_Show_Balance').html('')
-        debugger
+        
         let AllTotal = 0;
         let Wallet_Def_IsActive = Wallet_Def.filter(x => x.CUSTOM4 == "true");
         for (var xx = 0; xx < Wallet_Def_IsActive.length; xx++) {
-            debugger
+            
 
             //**********************************************Build**********************************
             let idBal = Wallet_Def_IsActive[xx].NameBal
@@ -857,11 +857,16 @@ $(document).ready(() => {
             //******************************************* Sum Shahadat********************************
             let SHAmount = 0;
             let SHchange = AllDisplay.filter(x => x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && (x.Title == 'Shahadat') && x.CUSTOM1 == 'true');
-
             if (Wallet_Def_IsActive[xx].CUSTOM5 == "true") {
                 for (var i0 = 0; i0 < SHchange.length; i0++) {
                     SHAmount = SHAmount + SHchange[i0].Amount
                 }
+                debugger
+
+                //alert(BalansCalculatorShahadat(SHchange))
+                //alert(SHAmount)
+                SHAmount = SHAmount - BalansCalculatorShahadat(SHchange);
+                debugger
             }
 
             //******************************************* Sum Exchange********************************
@@ -873,9 +878,11 @@ $(document).ready(() => {
                     EXAmount = EXAmount + Exchange[i1].Amount
                 }
             }
-            EXAmount = EXAmount + SHAmount;
-            //****************************************************Sum Receipt**************************************
             debugger
+            EXAmount = EXAmount + SHAmount;
+            debugger
+            //****************************************************Sum Receipt**************************************
+            
             let RecAmount = 0;
             let Receipt = AllDisplay.filter(x => x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Receipt' || (x.TypeTo == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Transfers'));
 
@@ -886,6 +893,7 @@ $(document).ready(() => {
             }
             //RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
             //***************************************************************SetValHtml*********************************************  
+            debugger
             $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].Remars + ' ( ' + (Number(RecAmount) - Number(EXAmount)).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
 
             //****************************************Total***********************************************
@@ -906,20 +914,98 @@ $(document).ready(() => {
 
     //*************************************************Shahadat****************************************
 
+    function BalansCalculatorShahadat(Shahadat: Array<Wallet_Data>) {
+
+        let AomuntDue = 0;
+        
+        for (let b = 0; b < Shahadat.length; b++) {
+            debugger
+            let AllMonth = getMonthsDifference(Shahadat[b].TrDate, Shahadat[b].DueDate)
+
+
+            let NumPriod = 1;
+            if (Shahadat[b].TypePeriod != '0') {
+                NumPriod = AllMonth / Number(Shahadat[b].TypePeriod)
+            }
+             
+
+
+            let NumMonth = getMonthsDifference(Shahadat[b].TrDate, GetDate())
+            
+            debugger
+
+            for (let Pr = 0; Pr < NumPriod; Pr++) {
+                
+
+                var AllDue = parseFloat(Shahadat[b].CUSTOM3.replace(/,/g, ''));
+                if (AomuntDue == AllDue) {
+                    debugger
+                    AomuntDue = AomuntDue + Shahadat[b].Amount
+                    break;
+                }
+
+                if (Number(Shahadat[b].TypePeriod) <= NumMonth) {
+                    
+                    var numberString = Shahadat[b].CUSTOM2;
+                    
+
+                    var Due = parseFloat(numberString.replace(/,/g, ''));
+                    AomuntDue = (AomuntDue + Due)
+                    AomuntDue = parseFloat(AomuntDue.toFixed(1))
+
+                    NumMonth = NumMonth - Number(Shahadat[b].TypePeriod)
+                }
+                else {
+                    debugger
+                    if (AomuntDue == AllDue) {
+                        debugger
+                        AomuntDue = AomuntDue + Shahadat[b].Amount
+                        break;
+                    }
+
+                    break;
+                }
+
+
+                if (AomuntDue == AllDue) {
+                    debugger
+                    AomuntDue = AomuntDue + Shahadat[b].Amount
+                    break;
+                }
+
+            }
+             
+        }
+
+        debugger
+
+        return AomuntDue
+    }
+
     function SumPrc() {
+
         debugger
         let Amount = Number($('#txtAmountSH').val())
         let Prc = (Number($('#txtPrcSH').val()) / 100)
-        let NumYear = getYearDifference($('#txtdateSH').val(), $('#txtdateDueSH').val())
+        //let NumYear = getYearDifference($('#txtdateSH').val(), $('#txtdateDueSH').val())
+
+        let AllMonth = getMonthsDifference($('#txtdateSH').val(), $('#txtdateDueSH').val())
+
+        let NumPriod = 1;
+        if ($('#TypePeriod').val() != '0') {
+            NumPriod = AllMonth / Number($('#TypePeriod').val())
+        }
 
         let calacul = Amount * Prc  //حساب الفائده علي السنه
 
 
         let period = Number($('#TypePeriod').val());
+        debugger
 
         let AmountDue = 0;
         let allAmount = 0;
 
+        debugger
         if (period != 0) {
             AmountDue = (calacul / 12) * period;
         }
@@ -928,25 +1014,25 @@ $(document).ready(() => {
             AmountDue = (calacul / 12) * NumMonths;
         }
 
-        allAmount = calacul * NumYear;
+        debugger
+        allAmount = Number(AmountDue.toFixed(1)) * NumPriod;
 
 
         $('#txtAmountDuePay').val(Number(Number(AmountDue).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }))
 
-        $('#txtAllAmountDue').val(Number((allAmount + Amount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }))
-
         $('#txtAllDue').val(Number(Number(allAmount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }))
+
+        $('#txtAllAmountDue').val(Number((allAmount + Amount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }))
 
 
         // Remove commas from the number string to convert it to a valid number format
         //var numberString = "1,583.3";
 
         //var number = parseFloat(numberString.replace(/,/g, ''));
-    }
-
+    } 
     function AppTansShahada(Type: string) {
 
-        debugger
+        
 
         if (flagSave == 1) {
             setTimeout(function () { flagSave = 0; }, 800);
@@ -1006,6 +1092,13 @@ $(document).ready(() => {
         Data.StatusFlag = 'u';
 
         debugger
+        let chackDateMakeShahada = AllDisplay.filter(x => x.Type == '' + $('#TypeSoursSH').val() + '' && (x.Title == 'Shahadat') && x.CUSTOM1 == 'true' && x.DueDate >= DateFormatRep($('#txtdateSH').val()) && x.ID != Number($('#txtTrNoSH').val()));
+        if (chackDateMakeShahada.length > 0) {
+            debugger
+            alert('في شهاده معموله في هذه الفتره')
+            Errorinput($('#txtdateSH'))
+            return
+        }
         $.ajax({
             url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
@@ -1032,15 +1125,15 @@ $(document).ready(() => {
 
 
     function GetDefinitions() {
-        debugger
+        
         Ajax.CallAsync({
             url: Url.Action("Get_Two_Data", "Profile"),
             data: { Name_txt1: Comp_HedDef, Name_txt2: Comp_Definitions },
             success: (Pro) => {
-                debugger
+                
                 if (Pro != "Error") {
                     let result = JSON.parse(Pro)
-                    debugger
+                    
                     let _Def = result as All_Definitions;
 
                     if (_Def.Wallet_HedDef != "Error") {
@@ -1077,7 +1170,7 @@ $(document).ready(() => {
     }
     function Set_Roll_HedDef() {
 
-        debugger
+        
 
         $('.Hed').addClass('display_none')
         if (Wal_HedDef.CUSTOM1 == "true") {
@@ -1100,7 +1193,7 @@ $(document).ready(() => {
     }
     function DisplayOneTap() {
 
-        debugger
+        
         if ($('#a_Expans').is(':visible')) {
             $('#a_Expans').click();
             return
@@ -1231,7 +1324,7 @@ $(document).ready(() => {
         CountGrid = 0;
         $("#div_Data_Def").html('');
         for (var i = 0; i < Wallet_Def.length; i++) {
-            debugger
+            
             BuildControls(i);
             DisplayDetailsControls(i, Wallet_Def[i])
             CountGrid++;
@@ -1312,7 +1405,7 @@ $(document).ready(() => {
 
     }
     function Assign() {
-        debugger
+        
 
         ModelDetails = new Array<Wallet_Definitions>();
         Model_Wal_HedDef = new Wallet_HedDef();
@@ -1359,7 +1452,7 @@ $(document).ready(() => {
         Data.TypeDataSouce = "Wallet_Definitions";
         Data.StatusFlag = StatusFlag;
 
-        debugger
+        
         $.ajax({
             url: Url.Action("Update_Data_Wallet_Def", "Profile"),
             type: "POST",

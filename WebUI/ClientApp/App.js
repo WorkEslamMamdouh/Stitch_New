@@ -963,11 +963,9 @@ function GetDateyyyy_1() {
     return ReturnedDate;
 }
 function SelectFristRow(NameID) {
-    debugger;
     var dropdown = document.getElementById('' + NameID + '');
     // Loop through the options and find the first visible option
     for (var i = 0; i < dropdown.options.length; i++) {
-        debugger;
         var option = dropdown.options[i];
         var ch_none = false;
         for (var u = 0; u < option.classList.length; u++) {
@@ -976,7 +974,6 @@ function SelectFristRow(NameID) {
             }
         }
         if (ch_none == false) {
-            debugger;
             // Set the "selected" property to true for the first visible option
             option.selected = true;
             break; // Break the loop once the first visible option is found
@@ -1138,8 +1135,7 @@ function DateStartYear() {
     return ReturnedDate;
 }
 function getMonthsDifference(date1, date2) {
-    // Create Date objects from the input
-    debugger;
+    // Create Date objects from the input 
     var d1 = new Date(date1);
     var d2 = new Date(date2);
     // Calculate the difference in years and months
