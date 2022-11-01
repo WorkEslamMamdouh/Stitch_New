@@ -1,0 +1,175 @@
+﻿ 
+<!doctype html>
+@*<html id="body_img" class="no-js">*@
+<html @*class="no-js" id="body_img" dir="rtl" lang="ar"*@>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="John Doe">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="~/NewStyle/img/logo.png">
+    <title>EslamMamdouh</title>
+
+
+
+    <!-- favicon
+      ============================================ -->
+    @*<link rel="shortcut icon" type="image/x-icon" href="~/NewStyle/img/favicon.ico">*@
+    <!-- Google Fonts
+        ============================================ -->
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/bootstrap.min.css">
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/font-awesome.min.css">
+    <!-- adminpro icon CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/adminpro-custon-icon.css">
+    <!-- meanmenu icon CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/meanmenu.min.css">
+    <!-- mCustomScrollbar CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/jquery.mCustomScrollbar.min.css">
+    <!-- animate CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/animate.css">
+    <!-- summernote CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/summernote.css">
+    <!-- normalize CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/data-table/bootstrap-table.css">
+    <link rel="stylesheet" href="~/NewStyle/css/data-table/bootstrap-editable.css">
+    <!-- normalize CSS
+        ============================================ -->
+    <!-- charts CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/c3.min.css">
+    <!-- style CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/style.css">
+    <!-- responsive CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/NewStyle/css/responsive.css">
+    <!-- modernizr JS
+        ============================================ -->
+    <script src="~/NewStyle/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <style>
+        .display_none {
+            display: none;
+        }
+
+        .text_Mandatory {
+            background-color: #ff00009e
+        }
+
+        #SearchBox {
+            z-index: 1041;
+            position: fixed;
+            padding-top: 19px;
+            background-color: white;
+            border-radius: 15px;
+            -moz-box-shadow: black 5px 4px 18px 0px;
+            -webkit-box-shadow: black 5px 4px 18px 0px;
+            box-shadow: black 5px 4px 18px 0px;
+        }
+
+        .jsgrid-grid-body {
+            overflow-y: hidden !important;
+        }
+    </style>
+
+
+    @*@Styles.Render("~/Bundles/AppStyle2")*@
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/NewStyle/js/vendor/jquery-1.11.3.min.js"></script>
+    <script src="~/NewStyle/js/data-table/bootstrap-table.js"></script>
+    <script src="~/NewStyle/js/data-table/tableExport.js"></script>
+    <script src="~/NewStyle/js/data-table/data-table-active.js"></script>
+    <script src="~/NewStyle/js/data-table/bootstrap-table-resizable.js"></script>
+    <script src="~/NewStyle/js/data-table/colResizable-1.5.source.js"></script>
+    <script src="~/NewStyle/js/data-table/bootstrap-table-export.js"></script>
+
+    @Scripts.Render("~/Bundles/AppScript2")
+    @*<script src="~/NewStyle/js/jquery.cookie.min.js"></script>*@
+    @Scripts.Render("~/Bundles/AppScript3")
+
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    @Scripts.Render("~/Bundles/AppScript4")
+
+
+ 
+    <script src="~/ClientApp/App.js"></script>
+    <script src="~/ClientApp/EslamGrid.js"></script>
+
+</head>
+
+<body id="main-menu" class=" materialdesign mini-navbar">
+    <div class="card-body">
+    </div>
+    <input type="hidden" id="GetActionUrl" name="name" value="@Url.Action("GetActionUrl","ClientTools")" />
+    <input type="hidden" id="GetAPIUrl" name="name" value="@System.Configuration.ConfigurationManager.AppSettings["ServiceUrl"]" />
+
+    <div id="cont" class="divcont">
+        @RenderBody()
+    </div>
+
+
+
+    <div class="modal fade messagealert" id="MessageBoxDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="MessageBoxTitle">delete</h4>
+                </div>
+                <div class="modal-body" style="max-height:200px; overflow:auto;">
+                    <div class="col-xs-7"> <h3 id="MessageBoxMessage">Are you sure you want to delete?</h3></div>
+                    <div class="col-xs-5 text-center">
+                        <i class="glyphicon btn-danger"></i>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="MessageBoxOk" class="btn btn-danger">comfirm</button>
+                    <button type="button" id="MessageBoxCancel" class="btn btn-warning" data-dismiss="modal">إلغاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="help-pop modal fade in" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">helpe</h4>
+                </div>
+                <div class="modal-body content content-8" id="modalHelpRep">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <link href="~/NewStyle/LodBut/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/NewStyle/LodBut/Loder.js"></script>
+</body>
+</html>
