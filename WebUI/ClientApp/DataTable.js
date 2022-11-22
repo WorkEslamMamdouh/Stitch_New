@@ -38,10 +38,12 @@ var DataTable = /** @class */ (function () {
         for (var index = 0; index < this.Columns.length; index++) {
             var ss = this.Columns[index].key;
             if (ss.indexOf('Date') > -1 || ss.indexOf('date') > -1) {
-                for (var _i = 0, _a = this.dataScr; _i < _a.length; _i++) {
-                    var itm = _a[_i];
-                    itm[ss] = DateFormat(itm[ss]);
-                }
+                debugger;
+                //for (var itm of this.dataScr) {
+                //    alert(ss)
+                //    debugger 
+                //    itm[ss] = DateFormat(itm[ss]);
+                //}
             }
             var newColumn = {
                 "data": this.Columns[index].key,

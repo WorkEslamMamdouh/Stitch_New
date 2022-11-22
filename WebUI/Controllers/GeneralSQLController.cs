@@ -121,7 +121,7 @@ namespace Inv.WebUI.Controllers
                     }
 
 
-                
+
 
                     //SqlDataReader reader1 = command.ExecuteReader();
                     //while (reader1.Read())
@@ -130,7 +130,7 @@ namespace Inv.WebUI.Controllers
 
                     //    Liset_NameData.Add(NameData);
                     //}
-                    connection.Close(); 
+                    connection.Close();
                     command.Dispose();
                     connection.Dispose();
 
@@ -151,7 +151,7 @@ namespace Inv.WebUI.Controllers
             };
 
             return Json(resultObject, JsonRequestBehavior.AllowGet);
-              
+
 
         }
 
@@ -199,7 +199,7 @@ namespace Inv.WebUI.Controllers
                     {
                         New_Query = "Select * from " + TablesName + "";
                         connection.Open();
-                        command.CommandText = New_Query; 
+                        command.CommandText = New_Query;
                         Dtable.Load(command.ExecuteReader());
                         connection.Close();
                     }
@@ -208,10 +208,10 @@ namespace Inv.WebUI.Controllers
 
                     connection.Open();
 
-                    
+
                     command.CommandText = @"SELECT  name 
                                                   , system_type_name 
-                                            FROM    sys.dm_exec_describe_first_result_set (N'"+ New_Query + "', null, 1) ";
+                                            FROM    sys.dm_exec_describe_first_result_set (N'" + New_Query + "', null, 1) ";
 
 
 
@@ -256,7 +256,7 @@ namespace Inv.WebUI.Controllers
             });
 
             //var columns = db.SqlColumns.Where(f => f.object_id == rp.sqlTables.object_id).ToList();
-          
+
 
             foreach (SqlColumns colum in columns)
             {
@@ -623,7 +623,7 @@ namespace Inv.WebUI.Controllers
 
 
 
-                            string qury = returnQueryInsert(obj, table, Liset_ID, Liset_NameColumn, Cheak_IDENTITY , columns);
+                            string qury = returnQueryInsert(obj, table, Liset_ID, Liset_NameColumn, Cheak_IDENTITY, columns);
 
 
 
@@ -666,7 +666,7 @@ namespace Inv.WebUI.Controllers
                         connection.Close();
 
 
-                       
+
 
                         connection.Dispose();
                         command.Dispose();
@@ -1192,7 +1192,7 @@ namespace Inv.WebUI.Controllers
         }
 
 
-        private string returnQueryInsert(object obj, SqlTables table, List<string> ID, List<string> Liset_NameColumn, int Cheak_IDENTITY ,List<SqlColumns> columns)
+        private string returnQueryInsert(object obj, SqlTables table, List<string> ID, List<string> Liset_NameColumn, int Cheak_IDENTITY, List<SqlColumns> columns)
         {
             int flagfrist = 0;
             int flagfrist_ID = 0;
@@ -1258,7 +1258,7 @@ namespace Inv.WebUI.Controllers
 
                     if (value.Trim() == "")
                     {
-                        string typeName = column.ColumnTypeNew(this.db);
+                        string typeName = column.ColumnTypeInsert(this.db);
 
                         switch (typeName)
                         {
@@ -1282,12 +1282,28 @@ namespace Inv.WebUI.Controllers
 
                     if (flagfrist == 0)
                     {
+                        if (value == "Null" || value == "0"|| value == "")
+                        {
+                            models.Append("Null");
+                        }
+                        else { 
                         models.Append("'" + value.ToString() + "'");
+                        }
 
                     }
                     else
                     {
-                        models.Append(",'" + value.ToString() + "'");
+                        if (value == "Null" || value == "0" || value == "")
+
+                        {
+                            models.Append(",Null");
+
+                        }
+                        else
+                        {
+                            models.Append(",'" + value.ToString() + "'");
+
+                        }
                     }
 
                     flagfrist = 1;
@@ -1331,7 +1347,7 @@ namespace Inv.WebUI.Controllers
 
                     if (value.Trim() == "")
                     {
-                        string typeName = column.ColumnType(this.db);
+                        string typeName = column.ColumnTypeInsert(this.db);
 
                         switch (typeName)
                         {
@@ -1370,12 +1386,28 @@ namespace Inv.WebUI.Controllers
 
                         if (flagfrist == 0)
                         {
-                            models.Append("" + column.name + " = '" + value.ToString() + "'");
+                            if (value == "Null" || value == "0" || value == "") 
+                            {
+                                models.Append("" + column.name + " = Null");
+                            }
+                            else
+                            {
+                                models.Append("" + column.name + " = '" + value.ToString() + "'");
+
+                            }
 
                         }
                         else
                         {
-                            models.Append("," + column.name + " = '" + value.ToString() + "'");
+                            if (value == "Null" || value == "0" || value == "") 
+                            {
+                                models.Append("," + column.name + " = Null");
+                            }
+                            else
+                            {
+                                models.Append("," + column.name + " = '" + value.ToString() + "'");
+
+                            }
                         }
                         flagfrist = 1;
                     }

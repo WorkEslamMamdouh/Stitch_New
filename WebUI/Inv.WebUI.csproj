@@ -292,6 +292,13 @@
     <Content Include="NewStyle\fonts\adminpro-icon.svg" />
     <Content Include="NewStyle\fonts\fontawesome-webfont.svg" />
     <Content Include="NewStyle\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="NewStyle\Gam\game.js" />
+    <Content Include="NewStyle\Gam\img\O.png" />
+    <Content Include="NewStyle\Gam\img\tie.png" />
+    <Content Include="NewStyle\Gam\img\X.png" />
+    <Content Include="NewStyle\Gam\index.html" />
+    <Content Include="NewStyle\Gam\options.js" />
+    <Content Include="NewStyle\Gam\style.css" />
     <Content Include="NewStyle\google-map.html" />
     <Content Include="NewStyle\images-cropper.html" />
     <Content Include="NewStyle\img\clear.png" />
@@ -611,6 +618,7 @@
     <Content Include="NewStyle\fonts\summernote.ttf" />
     <Content Include="NewStyle\fonts\summernote.woff" />
     <Content Include="NewStyle\pdf\Sharmin.pdf" />
+    <Content Include="NewStyle\Gam\font\jVyR7mzzB3zc-jp6QCAu60poNqIy5grIfA.woff2" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="login\css\bootstrap-theme.css.map" />
     <Content Include="login\css\bootstrap-theme.min.css.map" />

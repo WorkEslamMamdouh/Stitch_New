@@ -60,8 +60,9 @@ namespace System.Data
 
 
 
+
         public static string ColumnTypeNew(this SqlColumns column, SqlEntities db)
-        { 
+        {
 
             string system_type = column.system_type;
             int idx = system_type.LastIndexOf('(');
@@ -73,7 +74,7 @@ namespace System.Data
             else
             {
                 type = system_type;
-                    }
+            }
 
             string result = "string";
             switch (type)
@@ -112,12 +113,23 @@ namespace System.Data
         }
 
 
-
-        public static string ColumnType(this SqlColumns column, SqlEntities db)
+        public static string ColumnTypeInsert(this SqlColumns column, SqlEntities db)
         {
-            var type = db.SqlTypes.Where(f => f.system_type_id == column.system_type_id && f.name != "").FirstOrDefault();
+
+            string system_type = column.system_type;
+            int idx = system_type.LastIndexOf('(');
+            string type = "";
+            if (idx != -1)
+            {
+                type = system_type.Substring(0, idx);
+            }
+            else
+            {
+                type = system_type;
+            }
+
             string result = "string";
-            switch (type.name)
+            switch (type)
             {
                 case "nvarchar":
                 case "varchar":
@@ -138,16 +150,86 @@ namespace System.Data
                     result = "boolean";
                     break;
 
-                case "datetime":
-                case "smalldatetime":
-                case "date":
-                case "time":
-                    result = "string";
-                    break;
+                //case "datetime":
+                //case "smalldatetime":
+                //case "date":
+                //case "time":
+                //    result = "string";
+                //    break;
                 default:
                     result = "any";
                     break;
             }
+
+            return result;
+        }
+
+
+
+        public static string ColumnType(this SqlColumns column, SqlEntities db)
+        {
+            var type = db.SqlTypes.Where(f => f.system_type_id == column.system_type_id && f.name != "").FirstOrDefault();
+            string result = "string";
+            string name = "";
+            if (type == null)
+            {
+                name = column.system_type;
+            }
+            else
+            {
+                name = type.name;
+            }
+            try
+            {
+                switch (name)
+                {
+                    case "nvarchar":
+                    case "varchar":
+                    case "nvarchar(30)":
+                    case "nvarchar(15)":
+                    case "nvarchar(10)":
+                    case "nvarchar(50)":
+                    case "nvarchar(100)":
+                    case "nvarchar(200)":
+                        result = "string";
+                        break;
+
+                    case "int":
+                    case "bitint":
+                    case "smallint":
+                    case "tinyint":
+                    case "numeric":
+                    case "decimal":
+                    case "float":
+                        result = "number";
+                        break;
+
+                    case "bit":
+                        result = "boolean";
+                        break;
+
+                    case null:
+                        result = "any";
+                        break;
+
+                    case "datetime":
+                    case "smalldatetime":
+                    case "date":
+                    case "time":
+                        result = "string";
+                        break;
+                    default:
+                        result = "any";
+                        break;
+                }
+            }
+            catch (Exception Ex)
+            {
+
+                return "any";
+
+            }
+
 
             return result;
         }

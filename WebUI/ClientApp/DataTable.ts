@@ -64,9 +64,12 @@ class DataTable {
         for (var index = 0; index < this.Columns.length; index++) {
             let ss = this.Columns[index].key;
             if (ss.indexOf('Date') > -1 || ss.indexOf('date') > -1) {
-                for (var itm of this.dataScr) {
-                    itm[ss] = DateFormat(itm[ss]);
-                }
+                debugger
+                //for (var itm of this.dataScr) {
+                //    alert(ss)
+                //    debugger 
+                //    itm[ss] = DateFormat(itm[ss]);
+                //}
             }
             var newColumn: datatableColumn = {
                 "data": this.Columns[index].key,

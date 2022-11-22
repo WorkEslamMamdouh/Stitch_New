@@ -5,6 +5,7 @@ var TestGrad;
 (function (TestGrad) {
     var Grid = new ESGrid();
     //var ShowData: HTMLButtonElement;
+    var Open_Page;
     var GenerateModels;
     var ConactServer;
     var Conact;
@@ -13,6 +14,7 @@ var TestGrad;
     var top;
     function InitalizeComponent() {
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement
+        Open_Page = document.getElementById('Open_Page');
         GenerateModels = document.getElementById('GenerateModels');
         Conact = document.getElementById('Conact');
         ConactServer = document.getElementById('ConactServer');
@@ -33,12 +35,16 @@ var TestGrad;
         Conact.onclick = Conact_onclick;
         ConactServer.onclick = ConactServer_onclick;
         GenerateModels.onclick = GenerateModels_onclick;
+        Open_Page.onclick = Open_Pages;
         DataSours.onchange = DataSours_onchange;
         top.onchange = DataSours_onchange;
         //ShowData.onclick = ShowData_onclick;
         InitializeGridControl();
     }
     TestGrad.InitalizeComponent = InitalizeComponent;
+    function Open_Pages() {
+        window.open(Url.Action("CompaniesIndex", "Home"), "_self");
+    }
     function Conact_onclick() {
         var rp = new SqlEnt();
         //rp.Database = $('#Database').val();
@@ -194,6 +200,7 @@ var TestGrad;
         debugger;
     }
     function Display_Data(res, NameTable, OnSearchSelected) {
+        debugger;
         var response = res;
         var columns = response.Columns;
         var result = JSON.parse(response.DataResult);
