@@ -47,6 +47,7 @@ var ESG = /** @class */ (function () {
         this.LastCounter = 0;
         this.LastCounterAdd = 0;
         this.RowCnt = 0;
+        this.CountModel = 0;
         this.Right = true;
         this.object = new Object();
         this.TotalModel = new Object();
@@ -385,10 +386,12 @@ function DisplayData(List, Grid) {
     _Copy.attr('style', 'display:none !important;');
     var btn_Copy = $('#td_btn_Copy_' + NameTable + cnt);
     btn_Copy.attr('style', 'display:none !important;');
+    debugger;
     for (var u = 0; u < Grid.Column.length; u++) {
         try {
+            debugger;
             var values = Object["values"](List);
-            if (Grid.Column[u].ColumnType.NameType == 'Input') {
+            if (Grid.Column[u].ColumnType.NameType == 'Input' || Grid.Column[u].ColumnType.NameType == 'date' || Grid.Column[u].ColumnType.NameType == 'number') {
                 $('#' + NameTable + '_' + Grid.Column[u].Name + cnt + '').val(values[u]);
             }
             if (Grid.Column[u].ColumnType.NameType == 'Dropdown') {
@@ -491,6 +494,19 @@ function BuildGridControl(flagDisplay, Grid) {
         }
         if (Grid.Column[u].ColumnType.NameType == 'checkbox') {
             td = '<td id="td_' + NameTable + '_' + Grid.Column[u].Name + cnt + '" ><input  disabled="disabled" id="' + NameTable + '_' + Grid.Column[u].Name + cnt + '" value="' + Grid.Column[u].value + '" type="checkbox" class="form-control ' + classEdit + '" placeholder="' + Grid.Column[u].value + '" /></td>';
+            $('#No_Row_' + NameTable + cnt + '').append(td);
+        }
+        if (Grid.Column[u].ColumnType.NameType == 'date') {
+            td = '<td id="td_' + NameTable + '_' + Grid.Column[u].Name + cnt + '" >' +
+                '<input  disabled="disabled" id = "' + NameTable + '_' + Grid.Column[u].Name + cnt + '" value = "' + Grid.Column[u].value + '" type = "date" class="form-control ' + classEdit + '" placeholder = "' + Grid.Column[u].value + '" /> ' +
+                '</td>';
+            $('#No_Row_' + NameTable + cnt + '').append(td);
+            $('#' + NameTable + '_' + Grid.Column[u].Name + cnt + '').val(GetDate());
+        }
+        if (Grid.Column[u].ColumnType.NameType == 'number') {
+            td = '<td id="td_' + NameTable + '_' + Grid.Column[u].Name + cnt + '" >' +
+                '<input  disabled="disabled" id = "' + NameTable + '_' + Grid.Column[u].Name + cnt + '" value = "' + Grid.Column[u].value + '" type = "number" class="form-control ' + classEdit + '" placeholder = "' + Grid.Column[u].value + '" /> ' +
+                '</td>';
             $('#No_Row_' + NameTable + cnt + '').append(td);
         }
         $('#' + NameTable + '_' + Grid.Column[u].Name + cnt + '').focus(function () {
@@ -601,10 +617,14 @@ function AssignGridControl(Grid, Newobject) {
     debugger;
     var Model = JSON.parse(JSON.stringify(obj));
     var index = 0;
+    Grid.ESG.CountModel = 0;
     for (var i = 0; i < LastCountGrid; i++) {
         debugger;
         var cnt = i;
         var StatusFlag = $("#StatusFlag_" + NameTable + '_' + cnt).val();
+        if (StatusFlag != "") {
+            Grid.ESG.CountModel = Grid.ESG.CountModel + 1;
+        }
         Model = JSON.parse(JSON.stringify(obj));
         if (StatusFlag == "i") {
             GActions.AssignToModel(Model, NameTable, cnt, StatusFlag);
@@ -911,11 +931,15 @@ var GActions = {
             var property = properties_2[_i];
             var element = document.getElementById('' + NameTable + '_' + property + cnt);
             if (element != null) {
-                if (element.type == "checkbox")
+                if (element.type == "checkbox") {
                     Model[property] = element.checked;
-                //addToArray('Model', property, element.checked)
-                else
+                }
+                else if (element.type == "date") {
+                    Model[property] = DateFormat(element.value);
+                }
+                else {
                     Model[property] = element.value;
+                }
                 //addToArray('Model', property, element.value)
             }
         }

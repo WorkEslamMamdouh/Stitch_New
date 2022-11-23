@@ -262,7 +262,11 @@ namespace Inv.WebUI.Controllers
             {
 
                 ColumnObjectStruct colObj = new ColumnObjectStruct();
-                colObj.dataType = "string";
+
+                string typeName = colum.ColumnTypeGet(this.db);
+
+
+                colObj.dataType = typeName;
 
 
                 colObj.headerText = colum.name;
@@ -691,7 +695,11 @@ namespace Inv.WebUI.Controllers
                         {
 
                             ColumnObjectStruct colObj = new ColumnObjectStruct();
-                            colObj.dataType = "string";
+                            string typeName = column.ColumnTypeGet(this.db);
+
+
+                            colObj.dataType = typeName;
+
 
 
                             colObj.headerText = column.name;
@@ -1282,7 +1290,7 @@ namespace Inv.WebUI.Controllers
 
                     if (flagfrist == 0)
                     {
-                        if (value == "Null" || value == "0"|| value == "")
+                        if (value == "Null" || value == "0"|| value == ""|| value == "NaN-NaN-NaN")
                         {
                             models.Append("Null");
                         }
@@ -1293,7 +1301,7 @@ namespace Inv.WebUI.Controllers
                     }
                     else
                     {
-                        if (value == "Null" || value == "0" || value == "")
+                        if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN")
 
                         {
                             models.Append(",Null");
@@ -1386,7 +1394,7 @@ namespace Inv.WebUI.Controllers
 
                         if (flagfrist == 0)
                         {
-                            if (value == "Null" || value == "0" || value == "") 
+                            if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN") 
                             {
                                 models.Append("" + column.name + " = Null");
                             }
@@ -1399,7 +1407,7 @@ namespace Inv.WebUI.Controllers
                         }
                         else
                         {
-                            if (value == "Null" || value == "0" || value == "") 
+                            if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN") 
                             {
                                 models.Append("," + column.name + " = Null");
                             }

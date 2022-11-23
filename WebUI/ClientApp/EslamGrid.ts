@@ -57,6 +57,7 @@ class ESG {
         this.LastCounter = 0;
         this.LastCounterAdd = 0;
         this.RowCnt = 0;
+        this.CountModel = 0;
         this.Right = true;
         this.object = new Object();
         this.TotalModel = new Object();
@@ -82,6 +83,7 @@ class ESG {
     public LastCounter: number;
     public LastCounterAdd: number;
     public RowCnt: number;
+    public CountModel: number;
     public Right: boolean;
     public object: any
     public TotalModel: any
@@ -366,7 +368,7 @@ function BindGridControl(Grid: ESGrid) {
         '</div>'
     $("#" + NameTable).append(table);
 
-  
+
 
     $('#DivMassage_' + NameTable).addClass('display_hidden');
 
@@ -450,7 +452,7 @@ function BindGridControl(Grid: ESGrid) {
         thead = '<th data-field="number" class=" ' + style_Text + '  ' + NameTable + '_' + i + '"   ' + visible + ' id="th_' + i + NameTable + '"  data-editable="false">______' + Grid.Column[i].title + '______</th>'
         $("#tr_" + NameTable).append(thead);
 
-       
+
     }
 
     //------------------------------------------------------------تنظيم الجريد
@@ -588,15 +590,16 @@ function DisplayData(List: any, Grid: ESGrid) {
     let btn_Copy = $('#td_btn_Copy_' + NameTable + cnt);
     btn_Copy.attr('style', 'display:none !important;');
 
+    debugger
     for (let u = 0; u < Grid.Column.length; u++) {
 
 
         try {
 
-
+            debugger
             var values: Array<any> = Object["values"](List);
 
-            if (Grid.Column[u].ColumnType.NameType == 'Input') {
+            if (Grid.Column[u].ColumnType.NameType == 'Input' || Grid.Column[u].ColumnType.NameType == 'date' || Grid.Column[u].ColumnType.NameType == 'number') {
 
                 $('#' + NameTable + '_' + Grid.Column[u].Name + cnt + '').val(values[u]);
             }
@@ -636,7 +639,7 @@ function BuildGridControl(flagDisplay: boolean, Grid: ESGrid) {
 
     let cnt = Grid.ESG.LastCounter;
 
-   
+
 
     if (Grid.ESG.LastCounter == 0) {
         $('#tbody_' + NameTable + '').html('');
@@ -741,6 +744,22 @@ function BuildGridControl(flagDisplay: boolean, Grid: ESGrid) {
 
         if (Grid.Column[u].ColumnType.NameType == 'checkbox') {
             td = '<td id="td_' + NameTable + '_' + Grid.Column[u].Name + cnt + '" ><input  disabled="disabled" id="' + NameTable + '_' + Grid.Column[u].Name + cnt + '" value="' + Grid.Column[u].value + '" type="checkbox" class="form-control ' + classEdit + '" placeholder="' + Grid.Column[u].value + '" /></td>';
+            $('#No_Row_' + NameTable + cnt + '').append(td);
+        }
+
+
+        if (Grid.Column[u].ColumnType.NameType == 'date') {
+            td = '<td id="td_' + NameTable + '_' + Grid.Column[u].Name + cnt + '" >' +
+                '<input  disabled="disabled" id = "' + NameTable + '_' + Grid.Column[u].Name + cnt + '" value = "' + Grid.Column[u].value + '" type = "date" class="form-control ' + classEdit + '" placeholder = "' + Grid.Column[u].value + '" /> ' +
+                '</td>';
+            $('#No_Row_' + NameTable + cnt + '').append(td);
+
+            $('#' + NameTable + '_' + Grid.Column[u].Name + cnt + '').val(GetDate());
+        }
+        if (Grid.Column[u].ColumnType.NameType == 'number') {
+            td = '<td id="td_' + NameTable + '_' + Grid.Column[u].Name + cnt + '" >' +
+                '<input  disabled="disabled" id = "' + NameTable + '_' + Grid.Column[u].Name + cnt + '" value = "' + Grid.Column[u].value + '" type = "number" class="form-control ' + classEdit + '" placeholder = "' + Grid.Column[u].value + '" /> ' +
+                '</td>';
             $('#No_Row_' + NameTable + cnt + '').append(td);
         }
 
@@ -921,11 +940,14 @@ function AssignGridControl(Grid: ESGrid, Newobject: object) {
     let Model = JSON.parse(JSON.stringify(obj));
 
     let index = 0;
-
+    Grid.ESG.CountModel = 0;
     for (var i = 0; i < LastCountGrid; i++) {
         debugger
         let cnt = i;
         let StatusFlag = $("#StatusFlag_" + NameTable + '_' + cnt).val();
+        if (StatusFlag != "") {
+            Grid.ESG.CountModel = Grid.ESG.CountModel + 1;
+        }
 
         Model = JSON.parse(JSON.stringify(obj));
 
@@ -1197,7 +1219,7 @@ function EditGridControl(Grid: ESGrid) {
 
     $('#btnEdit_' + NameTable).attr('style', 'display:none !important;');
 
-    $('.Edit_But').attr('style', ''); 
+    $('.Edit_But').attr('style', '');
     $('.btn_Copy ').attr('style', 'background-color: cornflowerblue; font-weight: bold; font-size: 22PX; width: 34px; padding: unset; ');
     $('.btn_minus').attr('style', 'font-weight: bold;font-size: 22PX;width: 34px;padding: unset; ');
 
@@ -1212,7 +1234,7 @@ function SetDataSours(data: string) {
 
 function CleanGridControl(List: Array<any>, Grid: ESGrid) {
 
-    let NameTable = Grid.ESG.NameTable; 
+    let NameTable = Grid.ESG.NameTable;
 
     $('#btnEdit_' + NameTable).attr('style', '');
     $('#btnsave_' + NameTable).attr('style', 'display:none !important;');
@@ -1222,11 +1244,11 @@ function CleanGridControl(List: Array<any>, Grid: ESGrid) {
 
 
     Grid.ESG.LastCounter = 0;
-    Grid.ESG.LastCounterAdd = 0; 
+    Grid.ESG.LastCounterAdd = 0;
 
     //DisplayDataGridControl(List, Grid)
 
-    
+
     showGridData(Grid, Grid.ESG.NewDataSours)
 }
 
@@ -1344,7 +1366,7 @@ function BuildCopy(Grid: ESGrid, List: any, cnt: number) {
 
 
 
-function showGridData(Grid: ESGrid,Modelstring: string) {
+function showGridData(Grid: ESGrid, Modelstring: string) {
 
 
     Grid.ESG.LastCounter = 0;
@@ -1393,13 +1415,13 @@ function showGridData(Grid: ESGrid,Modelstring: string) {
         debugger
         $("#StatusFlag_" + Grid.ESG.NameTable + '_' + cnt + 1).val('i');
     });
- 
+
 
     $('.Input_Text').change(function (e) {
         debugger
         let idStatusFlag: string = $(this).attr('Data_idStatus');
-         
-        if ($("#" + idStatusFlag+"").val() != "i")
+
+        if ($("#" + idStatusFlag + "").val() != "i")
             $("#" + idStatusFlag + "").val("u");
 
     });
@@ -1421,11 +1443,18 @@ var GActions = {
             let element = document.getElementById('' + NameTable + '_' + property + cnt) as HTMLInputElement;
 
             if (element != null) {
-                if (element.type == "checkbox")
+                if (element.type == "checkbox") {
                     Model[property] = element.checked;
-                //addToArray('Model', property, element.checked)
-                else
+
+                }
+                else if (element.type == "date") {
+                    Model[property] = DateFormat(element.value); 
+
+                }
+                else {
                     Model[property] = element.value;
+                }
+
                 //addToArray('Model', property, element.value)
             }
         }
@@ -1478,7 +1507,7 @@ function Resizable(NameTable: string) {  //تنظيم الجريد
 
     $('.' + NameTable + '_Delete').attr('style', 'width: 1% !important;');
     $('.' + NameTable + '_Copy').attr('style', 'width: 1% !important;');
-     
+
     $('[data-toggle="table"]').bootstrapTable();
 
 }

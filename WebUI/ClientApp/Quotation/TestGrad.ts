@@ -80,7 +80,7 @@ namespace TestGrad {
                     Database.innerHTML = '';
                     for (var i = 0; i < result.TableName.length; i++) {
                         if (result.TableName[i] != 'tempdb' && result.TableName[i] != 'master' && result.TableName[i] != 'msdb' && result.TableName[i] != 'model') {
-                            $('#Database').append('<option value="' + result.TableName[i]+'">' + result.TableName[i]+'</option>')
+                            $('#Database').append('<option value="' + result.TableName[i] + '">' + result.TableName[i] + '</option>')
                             //Database.append("<option value=" + result.TableName[i] + '">Select ' + result.TableName[i] + '</option>")
                         }
                     }
@@ -246,6 +246,21 @@ namespace TestGrad {
             let Colum: Column = new Column();
             Colum.Name = "" + property + "";
             Colum.title = "" + property + "";
+
+            let NameTyp = res.Columns.filter(x => x.headerText == property);
+            if (NameTyp[0].dataType == "boolean") {
+                Colum.ColumnType.NameType = "checkbox";
+
+            }
+            if (NameTyp[0].dataType == "date") {
+                Colum.ColumnType.NameType = "date";
+
+            }
+            if (NameTyp[0].dataType == "number") {
+                Colum.ColumnType.NameType = "number";
+
+            }
+
             Grid.Column.push(Colum);
 
         }
@@ -279,7 +294,34 @@ namespace TestGrad {
             let NameTable = Grid.ESG.NameTable;
             debugger
             for (let u = 0; u < Grid.Column.length; u++) {
-                $('#' + NameTable + '_' + Grid.Column[u].Name + 0 + '').val(values[u]);
+
+                //$('#' + NameTable + '_' + Grid.Column[u].Name + 0 + '').val(values[u]);
+                debugger
+                if (Grid.Column[u].ColumnType.NameType == 'checkbox') {
+                    if (values[u] == "1" || values[u] == "true") {
+
+                        $('#' + NameTable + '_' + Grid.Column[u].Name + 0 + '').prop('checked', true)
+                    }
+                    else {
+
+                        $('#' + NameTable + '_' + Grid.Column[u].Name + 0 + '').prop('checked', false)
+                    }
+                }
+                else if (Grid.Column[u].ColumnType.NameType == 'date') {
+                    debugger
+                    if (values[u] == null || values[u] == '') {
+                        $('#' + NameTable + '_' + Grid.Column[u].Name + 0 + '').val(GetDate());
+
+                    }
+                    else {
+                        $('#' + NameTable + '_' + Grid.Column[u].Name + 0 + '').val(DateFormat(values[u]));
+                    }
+                }
+                else {
+                    $('#' + NameTable + '_' + Grid.Column[u].Name + 0 + '').val(values[u]);
+
+                }
+
             }
             $('#StatusFlag_' + NameTable + '_0').val("");
 
@@ -388,6 +430,21 @@ namespace TestGrad {
                     let Colum: Column = new Column();
                     Colum.Name = "" + property + "";
                     Colum.title = "" + property + "";
+
+                    let NameTyp = res.Columns.filter(x => x.headerText == property);
+                    if (NameTyp[0].dataType == "boolean") {
+                        Colum.ColumnType.NameType = "checkbox";
+
+                    }
+                    if (NameTyp[0].dataType == "date") {
+                        Colum.ColumnType.NameType = "date";
+
+                    }
+                    if (NameTyp[0].dataType == "number") {
+                        Colum.ColumnType.NameType = "number";
+
+                    }
+
                     Grid.Column.push(Colum);
 
                 }
@@ -428,9 +485,6 @@ namespace TestGrad {
         })
 
     }
-
-
-
 
 
 
@@ -480,6 +534,14 @@ namespace TestGrad {
         modelSql.Model = Grid.ESG.Model;
 
         let _Data: string = JSON.stringify(modelSql);
+          
+        debugger
+        
+
+        if (Grid.ESG.CountModel  == 0) {
+            alert('لا يوجد اي تعديل للحفظ')
+            return;
+        }
 
         Ajax.CallAsync({
             url: Url.Action("InsetDataNew", "GeneralSQL"),

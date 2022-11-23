@@ -165,6 +165,59 @@ namespace System.Data
         }
 
 
+        public static string ColumnTypeGet(this SqlColumns column, SqlEntities db)
+        {
+
+            string system_type = column.system_type;
+            int idx = system_type.LastIndexOf('(');
+            string type = "";
+            if (idx != -1)
+            {
+                type = system_type.Substring(0, idx);
+            }
+            else
+            {
+                type = system_type;
+            }
+
+            string result = "string";
+            switch (type)
+            {
+                case "nvarchar":
+                case "varchar":
+                    result = "string";
+                    break;
+
+                case "int":
+                case "bitint":
+                case "smallint":
+                case "tinyint":
+                case "numeric":
+                case "decimal":
+                case "float":
+                    result = "number";
+                    break;
+
+                case "bit":
+                    result = "boolean";
+                    break;
+
+                case "datetime":
+                case "smalldatetime":
+                case "date":
+                case "time":
+                    result = "date";
+                    break;
+                default:
+                    result = "string";
+                    break;
+            }
+
+            return result;
+        }
+
+
+
 
         public static string ColumnType(this SqlColumns column, SqlEntities db)
         {
