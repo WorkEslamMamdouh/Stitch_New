@@ -177,8 +177,7 @@ class UserPrivilege {
 }
 
 class SystemEnvironment {
-
-    public issuer: issuer;
+     
     public I_Control: I_Control;
     public SystemCode: string;
     public SYSTEM_DESCE: string;
@@ -302,16 +301,19 @@ function GetPrivileges(): UserPrivilege {
 
 
 function GetSystemEnvironment(): SystemEnvironment {
-    if (document.cookie.length > 0) {
-        let sys: SystemEnvironment = JSON.parse(getCookie("Inv1_systemProperties")) as SystemEnvironment;
-        sys.CompanyNameAr = "";
-        sys.CompanyName = "";
-        //alert(getCookie("Kids_systemProperties"));
-        //alert(getCookie("Kids_systemProperties").length);
-        // 
-        //SysSession.CurrentEnvironment = sys
+    let sys: SystemEnvironment
+
+    //if (document.cookie.length > 0) {
+    //    let sys: SystemEnvironment = JSON.parse(getCookie("Inv1_systemProperties")) as SystemEnvironment;
+    //    sys.CompanyNameAr = "";
+    //    sys.CompanyName = "";
+    //    //alert(getCookie("Kids_systemProperties"));
+    //    //alert(getCookie("Kids_systemProperties").length);
+    //    // 
+    //    //SysSession.CurrentEnvironment = sys
+    //    return sys;
+    //}
         return sys;
-    }
 
 }
 
@@ -341,62 +343,7 @@ function GetSystemEnvironment(): SystemEnvironment {
 //    }
 //}
 
-
-function GetSystemSession(Mod: string): SystemSession {
-    if (document.cookie.length > 0) {
-         
-        var SysSession = new SystemSession;
-        SysSession.CurrentEnvironment = JSON.parse(readCookie("Inv1_systemProperties")) as SystemEnvironment;
-        if (Mod == "Home")
-            return SysSession;
-
-        var sys: SystemTools = new SystemTools();
-       
-        let compCode = SysSession.CurrentEnvironment.CompCode;
-        if (!(compCode == "Undefied") ) {
-
-
-            let branchCode = SysSession.CurrentEnvironment.BranchCode;
-            let UserCode = SysSession.CurrentEnvironment.UserCode;
-            let SystemCode = SysSession.CurrentEnvironment.SystemCode;
-            let SubSystemCode = SysSession.CurrentEnvironment.SubSystemCode;
-            let CurrentYear = SysSession.CurrentEnvironment.CurrentYear;
-            //var apiUrl = $("#GetAPIUrl").val() + "SystemTools" + "/" + "GetUserPrivilage";
-
-            Ajax.Callsync({
-                type: "GET",
-                url: sys.apiUrl("SystemTools", "GetUserPrivilage"),
-                data: { year: Number(CurrentYear), compCode: Number(compCode), branchCode: Number(branchCode), UserCode: UserCode, SystemCode: SystemCode, Modulecode: Mod },
-                success: (d) => {
-          
-                    let result = JSON.parse(d) as UserPrivilege;
-                   
-                    if (result == null || result.Access != true) {
-                        MessageBox.Show("Access denied", Mod);
-                        return;
-                    }
-                    if (result.Access == true) {
-                        $("#btnHelpRep").click(() => { ScreenHelp(Mod); })    
-                        SysSession.CurrentPrivileges = result;
-
-                    }
-                    else {
-                        MessageBox.Show("No Inv1_Privilage", Mod);
-                    }
-                }
-            });
-        }
-        return SysSession;
-    }
-}
-//function GetMemberComm(): Kids_Comm {
-//    if (document.cookie.length > 0) {
-//        // 
- //       let kids = JSON.parse(getCookie("Inv1_Comm")) as Kids_Comm;
-//        //Kids_Comm = Kids
-//        return Kids;
-//    }
-//}
+ 
 
 class PropertiesPage {
     public static PageIndex: number;

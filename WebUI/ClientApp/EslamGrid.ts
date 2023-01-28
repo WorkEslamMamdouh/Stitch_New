@@ -1448,7 +1448,7 @@ var GActions = {
 
                 }
                 else if (element.type == "date") {
-                    Model[property] = DateFormat(element.value); 
+                    Model[property] = DateFormatNew(element.value);
 
                 }
                 else {

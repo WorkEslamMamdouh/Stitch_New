@@ -662,7 +662,39 @@ var DocumentActions = {
         return element;
     }
 };
- 
+
+function DateFormatNew(dateForm: string): string {
+
+    try {
+        var date: Date = new Date();
+        let myDate: string = "";
+        if (dateForm.indexOf("Date(") > -1) {
+            myDate = dateForm.split('(')[1].split(')')[0];
+            date = new Date(Number(myDate));
+        }
+        else {
+            date = new Date(dateForm);
+        }
+
+
+        let yy = date.getFullYear();
+        let mm = (date.getMonth() + 1);
+        let dd = date.getDate();
+
+        let year = yy;
+        let month = (mm < 10) ? ("0" + mm.toString()) : mm.toString();
+        let day = (dd < 10) ? ("0" + dd.toString()) : dd.toString();
+
+        //The specified value "'2018-01-15'" does not conform to the required format, "yyyy-MM-dd".
+        var startDate = year + "-" + day + "-" + month ;
+        let form_date = startDate;
+        return form_date;
+    } catch (e) {
+        return DateFormatNew((new Date()).toString());
+    }
+}
+
+
 function DateFormat(dateForm: string): string {
 
     try {

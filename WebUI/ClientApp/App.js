@@ -516,6 +516,32 @@ var DocumentActions = {
         return element;
     }
 };
+function DateFormatNew(dateForm) {
+    try {
+        var date = new Date();
+        var myDate = "";
+        if (dateForm.indexOf("Date(") > -1) {
+            myDate = dateForm.split('(')[1].split(')')[0];
+            date = new Date(Number(myDate));
+        }
+        else {
+            date = new Date(dateForm);
+        }
+        var yy = date.getFullYear();
+        var mm = (date.getMonth() + 1);
+        var dd = date.getDate();
+        var year = yy;
+        var month = (mm < 10) ? ("0" + mm.toString()) : mm.toString();
+        var day = (dd < 10) ? ("0" + dd.toString()) : dd.toString();
+        //The specified value "'2018-01-15'" does not conform to the required format, "yyyy-MM-dd".
+        var startDate = year + "-" + day + "-" + month;
+        var form_date = startDate;
+        return form_date;
+    }
+    catch (e) {
+        return DateFormatNew((new Date()).toString());
+    }
+}
 function DateFormat(dateForm) {
     try {
         var date = new Date();

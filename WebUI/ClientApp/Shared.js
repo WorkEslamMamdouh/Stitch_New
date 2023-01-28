@@ -204,16 +204,18 @@ function GetPrivileges() {
     }
 }
 function GetSystemEnvironment() {
-    if (document.cookie.length > 0) {
-        var sys = JSON.parse(getCookie("Inv1_systemProperties"));
-        sys.CompanyNameAr = "";
-        sys.CompanyName = "";
-        //alert(getCookie("Kids_systemProperties"));
-        //alert(getCookie("Kids_systemProperties").length);
-        // 
-        //SysSession.CurrentEnvironment = sys
-        return sys;
-    }
+    var sys;
+    //if (document.cookie.length > 0) {
+    //    let sys: SystemEnvironment = JSON.parse(getCookie("Inv1_systemProperties")) as SystemEnvironment;
+    //    sys.CompanyNameAr = "";
+    //    sys.CompanyName = "";
+    //    //alert(getCookie("Kids_systemProperties"));
+    //    //alert(getCookie("Kids_systemProperties").length);
+    //    // 
+    //    //SysSession.CurrentEnvironment = sys
+    //    return sys;
+    //}
+    return sys;
 }
 //function GetI_Control(): I_Control {
 //    if (document.cookie.length > 0) {
@@ -233,52 +235,6 @@ function GetSystemEnvironment() {
 //        SysSession.CurrentPrivileges = JSON.parse(readCookie("Inv1_Privilage")) as UserPrivilege;
 //        //RS.CurrentMemberComm = JSON.parse(getCookie("Inv1_Comm")) as Kids_Comm;
 //        return SysSession;
-//    }
-//}
-function GetSystemSession(Mod) {
-    if (document.cookie.length > 0) {
-        var SysSession = new SystemSession;
-        SysSession.CurrentEnvironment = JSON.parse(readCookie("Inv1_systemProperties"));
-        if (Mod == "Home")
-            return SysSession;
-        var sys = new SystemTools();
-        var compCode = SysSession.CurrentEnvironment.CompCode;
-        if (!(compCode == "Undefied")) {
-            var branchCode = SysSession.CurrentEnvironment.BranchCode;
-            var UserCode = SysSession.CurrentEnvironment.UserCode;
-            var SystemCode = SysSession.CurrentEnvironment.SystemCode;
-            var SubSystemCode = SysSession.CurrentEnvironment.SubSystemCode;
-            var CurrentYear = SysSession.CurrentEnvironment.CurrentYear;
-            //var apiUrl = $("#GetAPIUrl").val() + "SystemTools" + "/" + "GetUserPrivilage";
-            Ajax.Callsync({
-                type: "GET",
-                url: sys.apiUrl("SystemTools", "GetUserPrivilage"),
-                data: { year: Number(CurrentYear), compCode: Number(compCode), branchCode: Number(branchCode), UserCode: UserCode, SystemCode: SystemCode, Modulecode: Mod },
-                success: function (d) {
-                    var result = JSON.parse(d);
-                    if (result == null || result.Access != true) {
-                        MessageBox.Show("Access denied", Mod);
-                        return;
-                    }
-                    if (result.Access == true) {
-                        $("#btnHelpRep").click(function () { ScreenHelp(Mod); });
-                        SysSession.CurrentPrivileges = result;
-                    }
-                    else {
-                        MessageBox.Show("No Inv1_Privilage", Mod);
-                    }
-                }
-            });
-        }
-        return SysSession;
-    }
-}
-//function GetMemberComm(): Kids_Comm {
-//    if (document.cookie.length > 0) {
-//        // 
-//       let kids = JSON.parse(getCookie("Inv1_Comm")) as Kids_Comm;
-//        //Kids_Comm = Kids
-//        return Kids;
 //    }
 //}
 var PropertiesPage = /** @class */ (function () {

@@ -935,7 +935,7 @@ var GActions = {
                     Model[property] = element.checked;
                 }
                 else if (element.type == "date") {
-                    Model[property] = DateFormat(element.value);
+                    Model[property] = DateFormatNew(element.value);
                 }
                 else {
                     Model[property] = element.value;
