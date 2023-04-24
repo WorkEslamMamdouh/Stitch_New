@@ -749,7 +749,7 @@ function DateFormatRep(dateForm: string): string {
         let day = (dd < 10) ? ("0" + dd.toString()) : dd.toString();
 
         //The specified value "'2018-01-15'" does not conform to the required format, "dd/MM/yyyy".
-        var startDate = day + "/" + month + "/" + year;
+        var startDate = year+ "-" + month + "-" + day;
 
 
 
@@ -760,7 +760,22 @@ function DateFormatRep(dateForm: string): string {
 }
 
 
+function DateStartMonth() {
 
+    var today: Date = new Date();
+    var dd: string = today.getDate().toString();
+    var ReturnedDate: string;
+    var mm: string = (today.getMonth() + 1).toString();
+    var yyyy = today.getFullYear();
+    if (Number(dd) < 10) {
+        dd = ('0' + dd);
+    }
+    if (Number(mm) < 10) {
+        mm = ('0' + mm);
+    }
+    ReturnedDate = yyyy + '-' + mm + '-' + '01';
+    return ReturnedDate;
+} 
 
 function GetTime() {
     var date: Date = new Date();
@@ -1305,6 +1320,39 @@ function SetCustomerType(Transcode: number, Iscredit: number, SlsType: string) {
 
 }
 
+
+
+function dynamicSortNew(property) {
+    var sortOrder = 1;
+    if (property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (b, a) {
+        /* next line works with strings and numbers, 
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
+
+
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if (property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a, b) {
+        /* next line works with strings and numbers, 
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
 
 
 function CompareTime(t1: string, t2: string): number {

@@ -1935,4 +1935,40 @@ class ModelSql  {
     public Model: Array<any>;
 }
 
+
+
+class DataAll {
+    constructor() { 
+        this.ID = 0;
+        this.TrDate = "";
+        this.Type = '';
+        this.Title = '';
+        this.Remars = '';
+
+    }
+    public ID: number;
+    public TrDate: string;
+    public Type: string;
+    public Title: string;
+    public Remars: string;
+
+}
+ 
+
+class Send_Data {
+    constructor() { 
+        this.ID = 0;
+        this.Model = "";
+        this.Name_Txt = ''; 
+        this.TypeDataSouce = '';
+        this.StatusFlag = '';
+
+    }
+    public ID: number;
+    public Model: string;
+    public Name_Txt: string; 
+    public TypeDataSouce: string;
+    public StatusFlag: string;
+
+}
  

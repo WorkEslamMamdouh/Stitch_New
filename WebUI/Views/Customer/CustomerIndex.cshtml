@@ -1,38 +1,225 @@
-﻿ 
+﻿
 @{
 
     Layout = "~/Views/Shared/Layout.cshtml";
-} 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tic Tac Toe - JavaScript</title>
- 
-    <link href="~/NewStyle/Gam/style.css" rel="stylesheet" />
-</head>
-<body>
-    <div class="container">
-        <canvas id="cvs" width="450" height="450"></canvas>
-        <div class="options">
-            <h1>Tic Tac Toe</h1>
+}
 
-            <h2>Play Versus</h2>
-            <div class="computer">COMPUTER</div>
-            <div class="friend">FRIEND</div>
+<style>
 
-            <h2>Symbol</h2>
-            <div class="x">X</div>
-            <div class="o">O</div>
+    .des {
+        width: 22% !important;
+    }
 
-            <div class="play">PLAY</div>
+    .uom {
+        width: 11% !important;
+    }
+
+    .Zero {
+        width: 0% !important;
+    }
+
+    .Price {
+        width: 9% !important;
+    }
+
+    .odd {
+        background-color: lightcoral;
+        font-weight: bold;
+        font-size: 16px;
+        color: black;
+    }
+
+    .even {
+        background-color: #fff2ce;
+        font-weight: bold;
+        font-size: 16px;
+        color: black;
+    }
+
+    tr {
+        background-color: #b9b9b9;
+        color: black;
+    }
+
+    .px-5 {
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+    }
+    .disabledDiv {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+</style>
+<body class="materialdesign">
+    <div class="content-inner-all" >
+        <div id="id_div_Filter" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+
+                <h1 class="col-xs-12 col-lg-12 col-sm-12">My Profile</h1>
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>Type</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 ">
+                <select id="dbTypeF" class="form-control ">
+                    <option value="All">All</option>
+                    <option value="Notes">Notes</option>
+                    <option value="Email">Email</option>
+                    <option value="Work Out">Work Out</option>
+                    <option value="Credit">Credit</option>
+                </select>
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>From Data</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <input id="txtDateFrom" type="date" class="form-control ">
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>To Data</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 animated animate backInDown">
+                <input id="txtDateTo" type="date" class="form-control ">
+            </div>
+
+            <div class="col-xs-12">
+                <br />
+            </div>
+
+
+            <div class="col-xs-12">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-6 col-sm-12">
+                <button id="btnShow" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Show </button>
+            </div>
+            <div class="col-xs-12 col-lg-6 col-sm-12">
+                <button id="btnAdd" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Add </button>
+            </div>
+
+
+
+            <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
+
+                <div class="inside-table my-4">
+                    <h2 id="searchTitle"></h2>
+                    <div id="JGrid">
+
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
-        <div class="gameover hide"></div>
+
+
+
+
+
+
+      
+
+
+
+        <div id="Div_control" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+            <div class="col-xs-12 col-lg-4 col-sm-12">
+                <button id="btnUpdate" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">     Update </button>
+            </div>  
+            <div class="col-xs-12 col-lg-4 col-sm-12">
+                <button id="btnBack" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning">     Back </button>
+            </div>
+            <div class="col-xs-12 col-lg-4 col-sm-12">
+                <button id="btnSave" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Save </button>
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>TrNo</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 ">
+                <input id="txtTrNo" type="number" name="ID" class="_dis form-control ">
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>TrData</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <input id="txtTrDate" type="date" name="TrData" class="_dis form-control ">
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>Type</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 ">
+                <select id="dbTypeH" class="form-control _dis" name="Type">
+                    <option value="Notes">Notes</option>
+                    <option value="Email">Email</option>
+                    <option value="Work Out">Work Out</option>
+                    <option value="Credit">Credit</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>Title</label>
+            </div>
+            <div class="col-xs-12 col-lg-6 col-sm-12">
+                <input id="txtTitle" type="text" name="Title" class="_dis form-control ">
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>Remars</label>
+            </div>
+            <div class="col-xs-12 col-lg-11 col-sm-12">
+                <textarea id="txtRemars" type="text" name="Remars" class="_dis form-control "></textarea>
+            </div>
+
+        </div>
+
+
+
+
     </div>
-     
-   
-    <script src="~/NewStyle/Gam/options.js"></script>
-    <script src="~/NewStyle/Gam/game.js"></script>
+
+
+
+
 </body>
-</html>
+<link href="~/Scripts/IgGrid/infragistics.css" rel="stylesheet" />
+<link href="~/Scripts/IgGrid/theme.css" rel="stylesheet" />
+<link href="~/Scripts/jsgrid/jsgrid-theme.css" rel="stylesheet" />
+<link href="~/Scripts/jsgrid/jsgrid-theme.min.css" rel="stylesheet" />
+<link href="~/Scripts/jsgrid/jsgrid.css" rel="stylesheet" />
+<link href="~/Scripts/jsgrid/jsgrid.min.css" rel="stylesheet" />    
+<link href="~/Scripts/jsgrid/jsgrid-theme.css" rel="stylesheet" />
+<link href="~/Scripts/jsgrid/jsgrid-theme.min.css" rel="stylesheet" />
+<link href="~/Scripts/jsgrid/jsgrid.css" rel="stylesheet" />
+<link href="~/Scripts/jsgrid/jsgrid.min.css" rel="stylesheet" />
+<script src="~/Scripts/jsgrid/jsgrid.js"></script>
+<script src="~/Scripts/jsgrid/jsgrid.min.js"></script>
+<script src="~/ClientApp/App.js"></script>
+<script src="~/ClientApp/SystemTools.js"></script>
+<script src="~/ClientApp/Shared.js"></script>
+<script src="~/ClientApp/DataTable.js"></script>
+<script src="~/ClientApp/Shared.js"></script>
+<script src="~/ClientApp/IgGrid.js"></script>
+<script src="~/ClientApp/JsGrid.js"></script>
+<script src="~/ClientApp/Quotation/Profile.js"></script>

@@ -1172,4 +1172,24 @@ var ModelSql = /** @class */ (function () {
     }
     return ModelSql;
 }());
+var DataAll = /** @class */ (function () {
+    function DataAll() {
+        this.ID = 0;
+        this.TrDate = "";
+        this.Type = '';
+        this.Title = '';
+        this.Remars = '';
+    }
+    return DataAll;
+}());
+var Send_Data = /** @class */ (function () {
+    function Send_Data() {
+        this.ID = 0;
+        this.Model = "";
+        this.Name_Txt = '';
+        this.TypeDataSouce = '';
+        this.StatusFlag = '';
+    }
+    return Send_Data;
+}());
 //# sourceMappingURL=Entities.js.map
