@@ -3,6 +3,7 @@ $(document).ready(function () {
 });
 var Profile;
 (function (Profile) {
+    var Display = new Array();
     var Model = new DataAll();
     var JGrid = new JsGrid();
     var btnShow;
@@ -99,6 +100,12 @@ var Profile;
         ];
         //JGrid.Bind();
     }
+    function Display_Grid(_Display) {
+        Display = _Display;
+        Display = Display.sort(dynamicSortNew("ID"));
+        JGrid.DataSource = Display;
+        JGrid.Bind();
+    }
     function btnShow_onclick() {
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
@@ -106,9 +113,7 @@ var Profile;
             success: function (d) {
                 var result = JSON.parse(d);
                 var res = result;
-                res = res.sort(dynamicSortNew("ID"));
-                JGrid.DataSource = res;
-                JGrid.Bind();
+                Display_Grid(res);
             }
         });
     }
@@ -193,9 +198,7 @@ var Profile;
             success: function (d) {
                 var result = JSON.parse(d);
                 var res = result;
-                res = res.sort(dynamicSortNew("ID"));
-                JGrid.DataSource = res;
-                JGrid.Bind();
+                Display_Grid(res);
                 JGrid.SelectedItem = Model;
                 GridDoubleClick();
             }
@@ -215,9 +218,7 @@ var Profile;
             success: function (d) {
                 var result = JSON.parse(d);
                 var res = result;
-                res = res.sort(dynamicSortNew("ID"));
-                JGrid.DataSource = res;
-                JGrid.Bind();
+                Display_Grid(res);
             }
         });
     }
@@ -239,9 +240,7 @@ var Profile;
             success: function (d) {
                 var result = JSON.parse(d);
                 var res = result;
-                res = res.sort(dynamicSortNew("ID"));
-                JGrid.DataSource = res;
-                JGrid.Bind();
+                Display_Grid(res);
             }
         });
     }

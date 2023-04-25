@@ -5,6 +5,7 @@ $(document).ready(() => {
 
 namespace Profile {
 
+    var Display: Array<DataAll> = new Array<DataAll>();
     var Model: DataAll = new DataAll();
     var JGrid: JsGrid = new JsGrid();
 
@@ -117,6 +118,15 @@ namespace Profile {
         //JGrid.Bind();
     }
 
+    function Display_Grid(_Display: Array<DataAll>) {
+
+        Display = _Display;
+        Display = Display.sort(dynamicSortNew("ID"));
+        JGrid.DataSource = Display;
+        JGrid.Bind();
+
+    }
+
     function btnShow_onclick() {
 
         Ajax.CallAsync({
@@ -124,10 +134,9 @@ namespace Profile {
             data: { Name_txt: "All_Data" },
             success: (d) => {
                 let result = JSON.parse(d)
+
                 let res = result as Array<DataAll>;
-                res = res.sort(dynamicSortNew("ID"));
-                JGrid.DataSource = res;
-                JGrid.Bind();
+                Display_Grid(res)
 
 
             }
@@ -235,10 +244,9 @@ namespace Profile {
             data: { Data: JSON.stringify(Data) },
             success: (d) => {
                 let result = JSON.parse(d)
+
                 let res = result as Array<DataAll>;
-                res = res.sort(dynamicSortNew("ID"));
-                JGrid.DataSource = res;
-                JGrid.Bind();
+                Display_Grid(res)
 
                 JGrid.SelectedItem = Model;
                 GridDoubleClick();
@@ -262,10 +270,9 @@ namespace Profile {
             data: { Data: JSON.stringify(Data) },
             success: (d) => {
                 let result = JSON.parse(d)
+
                 let res = result as Array<DataAll>;
-                res = res.sort(dynamicSortNew("ID"));
-                JGrid.DataSource = res;
-                JGrid.Bind();
+                Display_Grid(res)
 
 
             }
@@ -295,10 +302,9 @@ namespace Profile {
             data: { Data: JSON.stringify(Data) },
             success: (d) => {
                 let result = JSON.parse(d)
+
                 let res = result as Array<DataAll>;
-                res = res.sort(dynamicSortNew("ID"));
-                JGrid.DataSource = res;
-                JGrid.Bind();
+                Display_Grid(res)
 
 
             }
