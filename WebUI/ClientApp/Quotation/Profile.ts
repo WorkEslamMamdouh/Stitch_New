@@ -16,6 +16,7 @@ namespace Profile {
     var btnUpdate: HTMLButtonElement;
     var btnBack: HTMLButtonElement;
 
+    var txtSearch: HTMLInputElement;
     var txtDateFrom: HTMLInputElement;
     var txtDateTo: HTMLInputElement;
     var txtTrDate: HTMLInputElement;
@@ -47,6 +48,7 @@ namespace Profile {
         dbTypeF = document.getElementById("dbTypeF") as HTMLSelectElement;
         dbTypeH = document.getElementById("dbTypeH") as HTMLSelectElement;
         ////////
+        txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
         txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
         txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
         txtTrDate = document.getElementById("txtTrDate") as HTMLInputElement;
@@ -61,6 +63,7 @@ namespace Profile {
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         //********************************onchange****************************
+        txtSearch.onkeyup = txtSearch_change;
 
     }
     function InitializeGrid() {
@@ -80,7 +83,7 @@ namespace Profile {
             { title: "TrNo", name: "ID", type: "text", width: "5%" },
             { title: "TrDate", name: "TrDate", type: "text", width: "6%" },
             { title: "Type", name: "Type", type: "text", width: "7%" },
-            { title: "Remars", name: "Remars", type: "text", width: "11%" },
+            { title: "Title", name: "Title", type: "text", width: "11%" },
             {
                 title: "Delete",
                 width: "5%",
@@ -136,7 +139,26 @@ namespace Profile {
         JGrid.Bind();
 
     }
+    function txtSearch_change() {
 
+
+        $("#JGrid").jsGrid("option", "pageIndex", 1);
+
+
+        if (txtSearch.value != "") {
+
+            let search: string = txtSearch.value.toLowerCase();
+            let SearchDetails = Display.filter(x => x.ID.toString().search(search) >= 0 || x.Title.toLowerCase().search(search) >= 0
+                || x.Type.toLowerCase().search(search) >= 0 || x.Remars.toLowerCase().search(search) >= 0);
+
+            JGrid.DataSource = SearchDetails;
+            JGrid.Bind();
+        } else {
+            JGrid.DataSource = Display;
+            JGrid.Bind();
+        }
+
+    }
     function btnShow_onclick() {
 
         Ajax.CallAsync({

@@ -12,6 +12,7 @@ var Profile;
     var btnSave;
     var btnUpdate;
     var btnBack;
+    var txtSearch;
     var txtDateFrom;
     var txtDateTo;
     var txtTrDate;
@@ -37,6 +38,7 @@ var Profile;
         dbTypeF = document.getElementById("dbTypeF");
         dbTypeH = document.getElementById("dbTypeH");
         ////////
+        txtSearch = document.getElementById("txtSearch");
         txtDateFrom = document.getElementById("txtDateFrom");
         txtDateTo = document.getElementById("txtDateTo");
         txtTrDate = document.getElementById("txtTrDate");
@@ -49,6 +51,7 @@ var Profile;
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         //********************************onchange****************************
+        txtSearch.onkeyup = txtSearch_change;
     }
     function InitializeGrid() {
         JGrid.ElementName = "JGrid";
@@ -67,7 +70,7 @@ var Profile;
             { title: "TrNo", name: "ID", type: "text", width: "5%" },
             { title: "TrDate", name: "TrDate", type: "text", width: "6%" },
             { title: "Type", name: "Type", type: "text", width: "7%" },
-            { title: "Remars", name: "Remars", type: "text", width: "11%" },
+            { title: "Title", name: "Title", type: "text", width: "11%" },
             {
                 title: "Delete",
                 width: "5%",
@@ -112,6 +115,20 @@ var Profile;
         Display = Display.sort(dynamicSortNew("ID"));
         JGrid.DataSource = Display;
         JGrid.Bind();
+    }
+    function txtSearch_change() {
+        $("#JGrid").jsGrid("option", "pageIndex", 1);
+        if (txtSearch.value != "") {
+            var search_1 = txtSearch.value.toLowerCase();
+            var SearchDetails = Display.filter(function (x) { return x.ID.toString().search(search_1) >= 0 || x.Title.toLowerCase().search(search_1) >= 0
+                || x.Type.toLowerCase().search(search_1) >= 0 || x.Remars.toLowerCase().search(search_1) >= 0; });
+            JGrid.DataSource = SearchDetails;
+            JGrid.Bind();
+        }
+        else {
+            JGrid.DataSource = Display;
+            JGrid.Bind();
+        }
     }
     function btnShow_onclick() {
         Ajax.CallAsync({
