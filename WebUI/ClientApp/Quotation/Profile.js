@@ -17,7 +17,9 @@ var Profile;
     var btnSave;
     var btnUpdate;
     var btnBack;
+    var btnLogin;
     var btnAddDetails;
+    var txtPassword;
     var txtSearch;
     var txtDateFrom;
     var txtDateTo;
@@ -28,12 +30,10 @@ var Profile;
     var CountGrid = 0;
     var DetMaxLast = 0;
     function InitalizeComponent() {
-        InitalizeControls();
-        InitalizeEvents();
-        txtDateFrom.value = DateStartMonth();
-        txtDateTo.value = GetDate();
-        InitializeGrid();
-        btnShow_onclick();
+        btnLogin = document.getElementById("btnLogin");
+        txtPassword = document.getElementById("txtPassword");
+        btnLogin.onclick = btnLogin_onclick;
+        Event_key('Enter', 'txtPassword', 'btnLogin');
     }
     Profile.InitalizeComponent = InitalizeComponent;
     function InitalizeControls() {
@@ -138,6 +138,21 @@ var Profile;
         else {
             JGrid.DataSource = Display;
             JGrid.Bind();
+        }
+    }
+    function btnLogin_onclick() {
+        if (txtPassword.value.trim() == "619619Aa619606") {
+            $('#Pass').addClass('display_none');
+            $('#Page_Profile').removeClass('display_none');
+            InitalizeControls();
+            InitalizeEvents();
+            txtDateFrom.value = DateStartMonth();
+            txtDateTo.value = GetDate();
+            InitializeGrid();
+            btnShow_onclick();
+        }
+        else {
+            Errorinput(txtPassword);
         }
     }
     function btnShow_onclick() {

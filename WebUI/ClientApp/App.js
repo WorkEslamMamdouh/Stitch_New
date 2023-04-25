@@ -1079,4 +1079,13 @@ function CompareTime(t1, t2) {
     var h3 = (h1 - h2) * 60 + (m1 - m2);
     return h3;
 }
+function Event_key(key, Nameinput, NameBtnEvent) {
+    var input = document.getElementById(Nameinput);
+    input.addEventListener("keypress", function (event) {
+        if (event.key === key) {
+            event.preventDefault();
+            document.getElementById(NameBtnEvent).click();
+        }
+    });
+}
 //# sourceMappingURL=App.js.map

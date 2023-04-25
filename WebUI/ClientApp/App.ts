@@ -1371,3 +1371,13 @@ function CompareTime(t1: string, t2: string): number {
 }
 
 
+function Event_key(key: string, Nameinput: string, NameBtnEvent: string) {
+
+    var input = document.getElementById(Nameinput);
+    input.addEventListener("keypress", function (event) {
+        if (event.key === key) {
+            event.preventDefault();
+            document.getElementById(NameBtnEvent).click();
+        }
+    });
+}

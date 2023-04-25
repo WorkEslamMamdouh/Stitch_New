@@ -23,8 +23,10 @@ namespace Profile {
     var btnSave: HTMLButtonElement;
     var btnUpdate: HTMLButtonElement;
     var btnBack: HTMLButtonElement;
+    var btnLogin: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
 
+    var txtPassword: HTMLInputElement;
     var txtSearch: HTMLInputElement;
     var txtDateFrom: HTMLInputElement;
     var txtDateTo: HTMLInputElement;
@@ -39,13 +41,12 @@ namespace Profile {
 
     export function InitalizeComponent() {
 
+        btnLogin = document.getElementById("btnLogin") as HTMLButtonElement;
+        txtPassword = document.getElementById("txtPassword") as HTMLInputElement;
 
-        InitalizeControls();
-        InitalizeEvents();
-        txtDateFrom.value = DateStartMonth();
-        txtDateTo.value = GetDate();
-        InitializeGrid();
-        btnShow_onclick();
+        btnLogin.onclick = btnLogin_onclick;
+
+        Event_key('Enter', 'txtPassword', 'btnLogin');
 
 
     }
@@ -76,6 +77,7 @@ namespace Profile {
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
+        
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
 
@@ -172,6 +174,25 @@ namespace Profile {
             JGrid.Bind();
         }
 
+    }
+    function btnLogin_onclick() {
+        if (txtPassword.value.trim() == "619619Aa619606") {
+
+            $('#Pass').addClass('display_none');
+            $('#Page_Profile').removeClass('display_none');
+
+            InitalizeControls();
+            InitalizeEvents();
+            txtDateFrom.value = DateStartMonth();
+            txtDateTo.value = GetDate();
+            InitializeGrid();
+            btnShow_onclick();
+        }
+        else {
+            Errorinput(txtPassword);
+        }
+
+           
     }
     function btnShow_onclick() {
 
