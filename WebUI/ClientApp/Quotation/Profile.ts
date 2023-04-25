@@ -152,6 +152,8 @@ namespace Profile {
         CleanDetails();
         Enabled();
         Flag_IsNew = true;
+        
+
     }
     function btnBack_onclick() {
 
@@ -164,6 +166,8 @@ namespace Profile {
         }
     } 
     function btnUpdate_onclick() {
+
+        Enabled();
 
     }
     function GridDoubleClick() {
@@ -179,17 +183,32 @@ namespace Profile {
 
     function Enabled() {
         $('._dis').removeAttr('disabled') 
-        $('#id_div_Filter').addClass('disabledDiv') 
+        $('#id_div_Filter').addClass('disabledDiv')
+        $('#btnBack').removeClass('display_none')
+        $('#btnSave').removeClass('display_none')
+        $('#btnUpdate').addClass('display_none')
+
     }
     function disabled() {
         $('._dis').attr('disabled', 'disabled') 
         $('#id_div_Filter').removeClass('disabledDiv')
+        $('#btnBack').addClass('display_none')
+        $('#btnSave').addClass('display_none')
+        $('#btnUpdate').removeClass('display_none')
+
+
     }
     function CleanDetails() {
         $('#Div_control').removeClass('display_none');
         $("#Div_control :input").val(""); 
         txtTrDate.value = GetDate();
         dbTypeH.selectedIndex = 0; 
+        let MaxID = JGrid.DataSource[0].ID;
+        $('#txtTrNo').val(MaxID + 1);
+        $('#txtTitle').focus();
+
+        document.body.scrollTop = 800;
+        document.documentElement.scrollTop = 800;
     }
 
     function Assign() {
@@ -221,6 +240,8 @@ namespace Profile {
                 JGrid.DataSource = res;
                 JGrid.Bind();
 
+                JGrid.SelectedItem = Model;
+                GridDoubleClick();
 
             }
         })
