@@ -233,6 +233,9 @@ var Profile;
         $("#btn_minus" + cnt).on('click', function () {
             DeleteRow(cnt);
         });
+        $("#btn_Open" + cnt).on('click', function () {
+            window.open($("#txtUrl" + cnt).val().trim(), "_blank");
+        });
     }
     function AddNewRow() {
         BuildControls(CountGrid);
