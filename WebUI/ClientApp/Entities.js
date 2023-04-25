@@ -1182,11 +1182,26 @@ var DataAll = /** @class */ (function () {
     }
     return DataAll;
 }());
+var DataDetails = /** @class */ (function () {
+    function DataDetails() {
+        this.ID = 0;
+        this.MasterID = 0;
+        this.Ser = 0;
+        this.Desc = '';
+        this.Remark = '';
+        this.Url = '';
+        this.Ex_Field = '';
+        this.StatusFlag = '';
+    }
+    return DataDetails;
+}());
 var Send_Data = /** @class */ (function () {
     function Send_Data() {
         this.ID = 0;
         this.Model = "";
-        this.Name_Txt = '';
+        this.ModelDetails = "";
+        this.Name_Txt_Master = '';
+        this.Name_Txt_Detail = '';
         this.TypeDataSouce = '';
         this.StatusFlag = '';
     }

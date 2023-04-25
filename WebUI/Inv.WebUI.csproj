@@ -840,9 +840,9 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\AjaxCaller.ts" />
     <TypeScriptCompile Include="ClientApp\DataTable.ts" />
-    <TypeScriptCompile Include="ClientApp\EslamGrid.ts" />
     <TypeScriptCompile Include="ClientApp\App.ts" />
     <TypeScriptCompile Include="ClientApp\ClientGeneralTools.ts" />
+    <TypeScriptCompile Include="ClientApp\EslamGrid.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Profile.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\TestGrad.ts" />
     <TypeScriptCompile Include="ClientApp\Entities.ts" />

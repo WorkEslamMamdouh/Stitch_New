@@ -37,7 +37,7 @@
     }
 
     tr {
-        background-color: #b9b9b9;
+        background-color: #9ecbd6bf;
         color: black;
     }
 
@@ -49,7 +49,34 @@
         pointer-events: none;
         opacity: 0.4;
     }
+
+
 </style>
+
+<style>
+    .display_hidden {
+        display: none !important;
+    }
+
+    .Text_right {
+        text-align: right;
+    }
+
+    .Text_left {
+        text-align: left;
+    }
+
+    .Search_grid {
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+</style>
+
 <body class="materialdesign">
     <div class="content-inner-all" >
         <div id="id_div_Filter" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
@@ -141,7 +168,7 @@
             </div>
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <button id="btnUpdate" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">     Update </button>
-            </div>  
+            </div>
             <div class="col-xs-12 col-lg-6 col-sm-12">
                 <button id="btnBack" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning">     Back </button>
             </div>
@@ -200,6 +227,33 @@
                 <textarea id="txtRemars" type="text" name="Remars" class="_dis form-control "></textarea>
             </div>
 
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+
+
+            <div class="inside-table my-4" id="divInputs">
+                <div class="">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th style="width: 0.1%"></th> 
+                                <th style="width: 0.7%;"> Ser</th>
+                                <th style="width: 5%"> Description</th>
+                                <th style="width: 10%"> Remark</th>
+                                <th style="width: 5%"> Url</th>
+                                <th style="width: 2%">Open</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="div_Data"></tbody>
+
+                    </table>
+                    <div class="d-flex justify-content-start mr-1"> 
+                        <button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div> 
         </div>
 
 

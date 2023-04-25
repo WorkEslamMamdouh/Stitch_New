@@ -7,11 +7,17 @@ var Profile;
     var Display = new Array();
     var Model = new DataAll();
     var JGrid = new JsGrid();
+    var AllDisplayDetails = new Array();
+    var DisplayDetails = new Array();
+    var ModelDetails = new Array();
+    var SingModelDetails = new DataDetails();
+    //var GridNew: NewEslamGrid.ESGrid = new NewEslamGrid.ESGrid();
     var btnShow;
     var btnAdd;
     var btnSave;
     var btnUpdate;
     var btnBack;
+    var btnAddDetails;
     var txtSearch;
     var txtDateFrom;
     var txtDateTo;
@@ -19,6 +25,8 @@ var Profile;
     var dbTypeF;
     var dbTypeH;
     var Flag_IsNew = false;
+    var CountGrid = 0;
+    var DetMaxLast = 0;
     function InitalizeComponent() {
         InitalizeControls();
         InitalizeEvents();
@@ -34,6 +42,7 @@ var Profile;
         btnSave = document.getElementById("btnSave");
         btnUpdate = document.getElementById("btnUpdate");
         btnBack = document.getElementById("btnBack");
+        btnAddDetails = document.getElementById("btnAddDetails");
         ////////  
         dbTypeF = document.getElementById("dbTypeF");
         dbTypeH = document.getElementById("dbTypeH");
@@ -50,6 +59,7 @@ var Profile;
         btnSave.onclick = btnSave_onClick;
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
+        btnAddDetails.onclick = AddNewRow;
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
     }
@@ -137,6 +147,8 @@ var Profile;
             success: function (d) {
                 var result = JSON.parse(d);
                 var res = result;
+                $('#Div_control').addClass('display_none');
+                disabled();
                 Display_Grid(res);
             }
         });
@@ -169,16 +181,101 @@ var Profile;
     }
     function GridDoubleClick() {
         CleanDetails();
-        DisplayDetails(JGrid.SelectedItem);
+        DisplayMaster(JGrid.SelectedItem);
         disabled();
     }
-    function DisplayDetails(Selecteditem) {
+    function DisplayMaster(Selecteditem) {
         DocumentActions.RenderFromModel(Selecteditem);
         txtTrDate.value = Selecteditem.TrDate;
+        GetDetails(Selecteditem.ID);
         Flag_IsNew = false;
+    }
+    //***********************************************Grid Controls*******************************************//
+    function GetDetails(MasterID) {
+        debugger;
+        Ajax.CallAsync({
+            url: Url.Action("Get_Data", "Profile"),
+            data: { Name_txt: "Data_Details" },
+            success: function (d) {
+                var result = JSON.parse(d);
+                var res = result;
+                debugger;
+                AllDisplayDetails = res;
+                AllDisplayDetails = AllDisplayDetails.sort(dynamicSortNew("ID"));
+                DetMaxLast = AllDisplayDetails[0].ID + 1;
+                DisplayDetails = res;
+                DisplayDetails = DisplayDetails.filter(function (x) { return x.MasterID == MasterID; });
+                DisplayDetails = DisplayDetails.sort(dynamicSort("Ser"));
+                debugger;
+                CountGrid = 0;
+                $("#div_Data").html('');
+                for (var i = 0; i < DisplayDetails.length; i++) {
+                    debugger;
+                    BuildControls(i);
+                    DisplayDetailsControls(i, DisplayDetails[i]);
+                    CountGrid++;
+                }
+            }
+        });
+    }
+    function DisplayDetailsControls(cnt, DataDet) {
+        $("#ID" + cnt).val(DataDet.ID);
+        $("#MasterID" + cnt).val(DataDet.MasterID);
+        $("#txtSerial" + cnt).val(DataDet.Ser);
+        $("#txtDesc" + cnt).val(DataDet.Desc);
+        $("#txtRemars" + cnt).val(DataDet.Remark);
+        $("#txtUrl" + cnt).val(DataDet.Url);
+    }
+    function BuildControls(cnt) {
+        var html = "";
+        html = "<tr id= \"No_Row" + cnt + "\" class=\"animated animate slideInDown\">\n                    <input id=\"txtCollectDetailID" + cnt + "\" type=\"hidden\" class=\"form-control display_none\"  />\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtDesc" + cnt + "\" type=\"text\" disabled class=\" _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"_dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtUrl" + cnt + "\" type=\"text\" disabled class=\"_dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_Open" + cnt + "\" type=\"button\"   class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-folder-open\" ></i></button>\n\t\t                </div>\n\t                </td>\n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
+        $("#div_Data").append(html);
+        $("#btn_minus" + cnt).on('click', function () {
+            DeleteRow(cnt);
+        });
+    }
+    function AddNewRow() {
+        BuildControls(CountGrid);
+        $("#txt_StatusFlag" + CountGrid).val("i"); //In Insert mode 
+        CountGrid++;
+        Insert_Serial();
+        $(".btn-minus").removeClass("display_none");
+        $('._dis').removeAttr('disabled');
+        $('._Cont').removeClass('display_none');
+        $("#ID" + CountGrid).val(DetMaxLast);
+        DetMaxLast++;
+    }
+    function DeleteRow(RecNo) {
+        var statusFlag = $("#txt_StatusFlag" + RecNo).val();
+        if (statusFlag == "i")
+            $("#txt_StatusFlag" + RecNo).val("m");
+        else
+            $("#txt_StatusFlag" + RecNo).val("d");
+        $("#No_Row" + RecNo).attr("hidden", "true");
+    }
+    function Insert_Serial() {
+        var Chack_Flag = false;
+        var flagval = "";
+        var Ser = 1;
+        for (var i = 0; i < CountGrid; i++) {
+            flagval = $("#txt_StatusFlag" + i).val();
+            if (flagval != "d" && flagval != "m") {
+                $("#txtSerial" + i).val(Ser);
+                Ser++;
+            }
+            if (flagval == 'd' || flagval == 'm' || flagval == 'i') {
+                Chack_Flag = true;
+            }
+            if (Chack_Flag) {
+                if ($("#txt_StatusFlag" + i).val() != 'i' && $("#txt_StatusFlag" + i).val() != 'm' && $("#txt_StatusFlag" + i).val() != 'd') {
+                    $("#txt_StatusFlag" + i).val('u');
+                }
+            }
+        }
     }
     function Enabled() {
         $('._dis').removeAttr('disabled');
+        $('._Cont').removeClass('display_none');
         $('#id_div_Filter').addClass('disabledDiv');
         $('#btnBack').removeClass('display_none');
         $('#btnSave').removeClass('display_none');
@@ -186,6 +283,7 @@ var Profile;
     }
     function disabled() {
         $('._dis').attr('disabled', 'disabled');
+        $('._Cont').addClass('display_none');
         $('#id_div_Filter').removeClass('disabledDiv');
         $('#btnBack').addClass('display_none');
         $('#btnSave').addClass('display_none');
@@ -207,12 +305,28 @@ var Profile;
         Model = new DataAll();
         DocumentActions.AssignToModel(Model); //Insert Update 
         Model.TrDate = DateFormatRep(txtTrDate.value);
+        ModelDetails = new Array();
+        for (var i = 0; i < CountGrid; i++) {
+            SingModelDetails = new DataDetails();
+            if ($("#txt_StatusFlag" + i).val() == '' || $("#txt_StatusFlag" + i).val() == 'i' || $("#txt_StatusFlag" + i).val() == 'u') {
+                SingModelDetails.ID = Number($("#ID" + i).val());
+                SingModelDetails.MasterID = Number($("#txtTrNo").val());
+                SingModelDetails.Ser = Number($("#txtSerial" + i).val());
+                SingModelDetails.Desc = $("#txtDesc" + i).val();
+                SingModelDetails.Remark = $("#txtRemars" + i).val();
+                SingModelDetails.Url = $("#txtUrl" + i).val();
+                SingModelDetails.Ex_Field = "";
+                ModelDetails.push(SingModelDetails);
+            }
+        }
     }
     function Update(StatusFlag) {
         var Data = new Send_Data();
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt = "All_Data";
+        Data.Name_Txt_Master = "All_Data";
+        Data.Name_Txt_Detail = "Data_Details";
         Data.Model = JSON.stringify(Model);
+        Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "DataAll";
         Data.StatusFlag = StatusFlag;
         debugger;
@@ -229,10 +343,18 @@ var Profile;
         });
     }
     function Delete(ID) {
+        JGrid.SelectedItem = Display.filter(function (x) { return x.ID == ID; })[0];
+        CleanDetails();
+        DisplayMaster(JGrid.SelectedItem);
+        disabled();
+        Assign();
         var Data = new Send_Data();
-        Data.ID = ID;
-        Data.Name_Txt = "All_Data";
+        debugger;
+        Data.ID = Number($('#txtTrNo').val());
+        Data.Name_Txt_Master = "All_Data";
+        Data.Name_Txt_Detail = "Data_Details";
         Data.Model = JSON.stringify(Model);
+        Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "DataAll";
         Data.StatusFlag = "d";
         debugger;
@@ -243,30 +365,49 @@ var Profile;
                 var result = JSON.parse(d);
                 var res = result;
                 Display_Grid(res);
+                $('#Div_control').addClass('display_none');
+                disabled();
             }
         });
     }
     function Copy(ID) {
-        var Data = new Send_Data();
         debugger;
-        var MaxID = AllDisplay[0].ID;
-        var NewData = JGrid.DataSource.filter(function (x) { return x.ID == ID; });
-        NewData[0].ID = MaxID + 1;
-        Data.Model = JSON.stringify(NewData[0]);
-        Data.ID = MaxID + 1;
-        Data.Name_Txt = "All_Data";
-        Data.TypeDataSouce = "DataAll";
-        Data.StatusFlag = "u";
-        debugger;
-        Ajax.CallAsync({
-            url: Url.Action("Update_Data", "Profile"),
-            data: { Data: JSON.stringify(Data) },
-            success: function (d) {
-                var result = JSON.parse(d);
-                var res = result;
-                Display_Grid(res);
+        JGrid.SelectedItem = Display.filter(function (x) { return x.ID == ID; })[0];
+        CleanDetails();
+        DisplayMaster(JGrid.SelectedItem);
+        disabled();
+        setTimeout(function () {
+            var MaxID = AllDisplay[0].ID;
+            JGrid.SelectedItem.ID = MaxID + 1;
+            $('#txtTrNo').val(MaxID + 1);
+            Assign();
+            var Data = new Send_Data();
+            debugger;
+            var DetMaxID = AllDisplayDetails[0].ID + 1;
+            for (var i = 0; i < ModelDetails.length; i++) {
+                ModelDetails[i].ID = DetMaxID;
+                DetMaxID++;
             }
-        });
+            debugger;
+            debugger;
+            Data.ID = Number($('#txtTrNo').val());
+            Data.Name_Txt_Master = "All_Data";
+            Data.Name_Txt_Detail = "Data_Details";
+            Data.Model = JSON.stringify(Model);
+            Data.ModelDetails = JSON.stringify(ModelDetails);
+            Data.TypeDataSouce = "DataAll";
+            Data.StatusFlag = "u";
+            debugger;
+            Ajax.CallAsync({
+                url: Url.Action("Update_Data", "Profile"),
+                data: { Data: JSON.stringify(Data) },
+                success: function (d) {
+                    var result = JSON.parse(d);
+                    var res = result;
+                    Display_Grid(res);
+                }
+            });
+        }, 500);
     }
 })(Profile || (Profile = {}));
 //# sourceMappingURL=Profile.js.map

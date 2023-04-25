@@ -1954,19 +1954,47 @@ class DataAll {
 
 }
  
+class DataDetails {
+    constructor() { 
+        this.ID = 0;
+        this.MasterID = 0;
+        this.Ser = 0;
+        this.Desc = '';
+        this.Remark = '';
+        this.Url = '';
+        this.Ex_Field = '';
+        this.StatusFlag = '';
+
+    }
+    public ID: number;
+    public MasterID: number;
+    public Ser: number;
+    public Desc: string;
+    public Remark: string;
+    public Url: string;
+    public Ex_Field: string;
+    public StatusFlag: string;
+
+}
+
+
 
 class Send_Data {
     constructor() { 
         this.ID = 0;
         this.Model = "";
-        this.Name_Txt = ''; 
+        this.ModelDetails = "";
+        this.Name_Txt_Master = '';
+        this.Name_Txt_Detail = '';
         this.TypeDataSouce = '';
         this.StatusFlag = '';
 
     }
     public ID: number;
     public Model: string;
-    public Name_Txt: string; 
+    public ModelDetails: string;
+    public Name_Txt_Master: string;
+    public Name_Txt_Detail: string;
     public TypeDataSouce: string;
     public StatusFlag: string;
 

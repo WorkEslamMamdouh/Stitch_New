@@ -1069,7 +1069,9 @@ ul.breadcome-menu li {
 
 .sparkline-content, .sparkline7-graph, .sparkline8-graph, .sparkline9-graph, .sparkline10-graph, .sparkline11-graph, .sparkline12-graph, .sparkline13-graph, .sparkline14-graph, .sparkline15-graph, .sparkline16-graph {
     padding: 20px;
-    background: #fff;
+    /* background: #d07171; */
+    background-color: hsl(0deg 0% 100% / 30%);
+    color: black;
 }
 
 .sparkline7-graph, .sparkline8-graph, .sparkline9-graph, .sparkline11-graph, .sparkline12-graph, .sparkline13-graph, .sparkline14-graph, .sparkline15-graph, .sparkline16-graph {
@@ -3930,15 +3932,17 @@ ul.profile-contact-menu {
 }
 
 .form-control {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     background-image: none;
-    border: 1px solid #e5e6e7;
-    border-radius: 1px;
+    border: 1px solid #000000;
+    border-radius: 13px;
     color: inherit;
     display: block;
     padding: 6px 12px;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     width: 100%;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .custom-go-button .btn-primary, .custom-dropdowns-button .dropdown-toggle, .dropdown-segmented .dropdown-toggle, .dropdown-segmented .btn-white {

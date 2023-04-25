@@ -33,18 +33,33 @@ namespace Inv.WebUI.Controllers
             public string Type { get; set; }
             public string Title { get; set; }
             public string Remars { get; set; }
+        } 
+        
+        public class DataDetails
+        {
+            public int ID { get; set; }
+            public int MasterID { get; set; }
+            public int Ser { get; set; }
+            public string Desc { get; set; }
+            public string Remark { get; set; }
+            public string Url { get; set; }
+            public string Ex_Field { get; set; }
+            public string StatusFlag { get; set; }
         }
+           
 
         public class Send_Data
         {
             public int ID { get; set; }
             public string Model { get; set; }
-            public string Name_Txt { get; set; }
+            public string ModelDetails { get; set; }
+            public string Name_Txt_Master { get; set; }
+            public string Name_Txt_Detail { get; set; }
             public string TypeDataSouce { get; set; }
             public string StatusFlag { get; set; }
         }
 
-
+ 
         public List<T> GetListClass(string jsonData, string NameClass)
         {
             Type type = AppDomain.CurrentDomain.GetAssemblies()
@@ -100,8 +115,9 @@ namespace Inv.WebUI.Controllers
 
             var rp = JsonConvert.DeserializeObject<Send_Data>(Data);
 
-             
-            var jsonData = GetData(rp.Name_Txt);
+            //******************************************Master*************************
+
+            var jsonData = GetData(rp.Name_Txt_Master);
              
             List<DataAll> Data_List = JsonConvert.DeserializeObject<List<DataAll>>(jsonData);
 
@@ -116,9 +132,34 @@ namespace Inv.WebUI.Controllers
            
             var New_Data = JsonConvert.SerializeObject(NewList);
 
-            SetData(rp.Name_Txt, New_Data);
+            SetData(rp.Name_Txt_Master, New_Data);
 
-            var json  = GetData(rp.Name_Txt);
+            //******************************************Detail*************************
+             
+            var jsonDataDetail = GetData(rp.Name_Txt_Detail);
+
+            List<DataDetails>  Detail_Data_List = JsonConvert.DeserializeObject<List<DataDetails>>(jsonDataDetail);
+
+            var NewDetail_List = Detail_Data_List.Where(x => x.MasterID != rp.ID).ToList();
+
+            if (rp.ModelDetails != "[]" && rp.StatusFlag != "d")
+            {
+                List<DataDetails> DetailsData_Obj = JsonConvert.DeserializeObject<List<DataDetails>>(rp.ModelDetails);
+
+                foreach (var item in DetailsData_Obj)
+                {
+                    NewDetail_List.Add(item); 
+                }
+            }
+             
+            var NewDetail_Data = JsonConvert.SerializeObject(NewDetail_List);
+
+            SetData(rp.Name_Txt_Detail, NewDetail_Data);
+
+
+            //******************************************Get_Master*************************
+
+            var json  = GetData(rp.Name_Txt_Master);
 
             return Json(json, JsonRequestBehavior.AllowGet);
         }
