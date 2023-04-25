@@ -5,13 +5,14 @@ $(document).ready(() => {
 
 namespace Profile {
 
+    var AllDisplay: Array<DataAll> = new Array<DataAll>();
     var Display: Array<DataAll> = new Array<DataAll>();
     var Model: DataAll = new DataAll();
     var JGrid: JsGrid = new JsGrid();
 
     var btnShow: HTMLButtonElement;
     var btnAdd: HTMLButtonElement;
-    var btnSave: HTMLButtonElement; 
+    var btnSave: HTMLButtonElement;
     var btnUpdate: HTMLButtonElement;
     var btnBack: HTMLButtonElement;
 
@@ -39,9 +40,9 @@ namespace Profile {
     function InitalizeControls() {
         btnShow = document.getElementById("btnShow") as HTMLButtonElement;
         btnAdd = document.getElementById("btnAdd") as HTMLButtonElement;
-        btnSave = document.getElementById("btnSave") as HTMLButtonElement; 
+        btnSave = document.getElementById("btnSave") as HTMLButtonElement;
         btnUpdate = document.getElementById("btnUpdate") as HTMLButtonElement;
-        btnBack = document.getElementById("btnBack") as HTMLButtonElement; 
+        btnBack = document.getElementById("btnBack") as HTMLButtonElement;
         ////////  
         dbTypeF = document.getElementById("dbTypeF") as HTMLSelectElement;
         dbTypeH = document.getElementById("dbTypeH") as HTMLSelectElement;
@@ -56,9 +57,9 @@ namespace Profile {
         //********************************Btn****************************
         btnShow.onclick = btnShow_onclick;
         btnAdd.onclick = btnAdd_onclick;
-        btnSave.onclick = btnSave_onClick; 
+        btnSave.onclick = btnSave_onClick;
         btnBack.onclick = btnBack_onclick;
-        btnUpdate.onclick = btnUpdate_onclick; 
+        btnUpdate.onclick = btnUpdate_onclick;
         //********************************onchange****************************
 
     }
@@ -120,7 +121,16 @@ namespace Profile {
 
     function Display_Grid(_Display: Array<DataAll>) {
 
+        AllDisplay = _Display;
+        AllDisplay = AllDisplay.sort(dynamicSortNew("ID"));
+
         Display = _Display;
+
+        if (dbTypeF.value != "All") { 
+            Display = Display.filter(x => x.Type == dbTypeF.value);
+        }
+        Display = Display.filter(x => x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value);
+
         Display = Display.sort(dynamicSortNew("ID"));
         JGrid.DataSource = Display;
         JGrid.Bind();
@@ -161,7 +171,7 @@ namespace Profile {
         CleanDetails();
         Enabled();
         Flag_IsNew = true;
-        
+
 
     }
     function btnBack_onclick() {
@@ -173,7 +183,7 @@ namespace Profile {
         else {
             GridDoubleClick();
         }
-    } 
+    }
     function btnUpdate_onclick() {
 
         Enabled();
@@ -191,7 +201,7 @@ namespace Profile {
     }
 
     function Enabled() {
-        $('._dis').removeAttr('disabled') 
+        $('._dis').removeAttr('disabled')
         $('#id_div_Filter').addClass('disabledDiv')
         $('#btnBack').removeClass('display_none')
         $('#btnSave').removeClass('display_none')
@@ -199,7 +209,7 @@ namespace Profile {
 
     }
     function disabled() {
-        $('._dis').attr('disabled', 'disabled') 
+        $('._dis').attr('disabled', 'disabled')
         $('#id_div_Filter').removeClass('disabledDiv')
         $('#btnBack').addClass('display_none')
         $('#btnSave').addClass('display_none')
@@ -209,11 +219,13 @@ namespace Profile {
     }
     function CleanDetails() {
         $('#Div_control').removeClass('display_none');
-        $("#Div_control :input").val(""); 
+        $("#Div_control :input").val("");
         txtTrDate.value = GetDate();
-        dbTypeH.selectedIndex = 0; 
-        let MaxID = JGrid.DataSource[0].ID;
+        dbTypeH.selectedIndex = 0;
+
+        let MaxID = AllDisplay[0].ID;
         $('#txtTrNo').val(MaxID + 1);
+
         $('#txtTitle').focus();
 
         document.body.scrollTop = 800;
@@ -284,9 +296,9 @@ namespace Profile {
         let Data = new Send_Data();
 
         debugger
-         
 
-        let MaxID = JGrid.DataSource[0].ID;
+
+        let MaxID = AllDisplay[0].ID;
 
         let NewData = JGrid.DataSource.filter(x => x.ID == ID);
         NewData[0].ID = MaxID + 1;

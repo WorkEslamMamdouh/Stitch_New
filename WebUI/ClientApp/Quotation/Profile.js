@@ -3,6 +3,7 @@ $(document).ready(function () {
 });
 var Profile;
 (function (Profile) {
+    var AllDisplay = new Array();
     var Display = new Array();
     var Model = new DataAll();
     var JGrid = new JsGrid();
@@ -101,7 +102,13 @@ var Profile;
         //JGrid.Bind();
     }
     function Display_Grid(_Display) {
+        AllDisplay = _Display;
+        AllDisplay = AllDisplay.sort(dynamicSortNew("ID"));
         Display = _Display;
+        if (dbTypeF.value != "All") {
+            Display = Display.filter(function (x) { return x.Type == dbTypeF.value; });
+        }
+        Display = Display.filter(function (x) { return x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value; });
         Display = Display.sort(dynamicSortNew("ID"));
         JGrid.DataSource = Display;
         JGrid.Bind();
@@ -172,7 +179,7 @@ var Profile;
         $("#Div_control :input").val("");
         txtTrDate.value = GetDate();
         dbTypeH.selectedIndex = 0;
-        var MaxID = JGrid.DataSource[0].ID;
+        var MaxID = AllDisplay[0].ID;
         $('#txtTrNo').val(MaxID + 1);
         $('#txtTitle').focus();
         document.body.scrollTop = 800;
@@ -225,7 +232,7 @@ var Profile;
     function Copy(ID) {
         var Data = new Send_Data();
         debugger;
-        var MaxID = JGrid.DataSource[0].ID;
+        var MaxID = AllDisplay[0].ID;
         var NewData = JGrid.DataSource.filter(function (x) { return x.ID == ID; });
         NewData[0].ID = MaxID + 1;
         Data.Model = JSON.stringify(NewData[0]);
