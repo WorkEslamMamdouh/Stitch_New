@@ -96,13 +96,12 @@ namespace Profile {
         JGrid.OnItemEditing = () => { };
         JGrid.Columns = [
             { title: "ID", name: "ID", type: "text", width: " ", visible: false },
-            { title: "TrNo", name: "ID", type: "text", width: "5%" },
-            { title: "TrDate", name: "TrDate", type: "text", width: "6%" },
-            { title: "Type", name: "Type", type: "text", width: "7%" },
-            { title: "Title", name: "Title", type: "text", width: "11%" },
+            { title: "TrNo", name: "ID", type: "text"  },
+            { title: "TrDate", name: "TrDate", type: "text" },
+            { title: "Type", name: "Type", type: "text"  },
+            { title: "Title", name: "Title", type: "text" },
             {
-                title: "Delete",
-                width: "5%",
+                title: "Delete", 
                 itemTemplate: (s: string, item: DataAll): HTMLInputElement => {
                     let txt: HTMLInputElement = document.createElement("input");
                     txt.type = "button";
@@ -117,8 +116,7 @@ namespace Profile {
                 }
             },
             {
-                title: "Copy",
-                width: "5%",
+                title: "Copy", 
                 itemTemplate: (s: string, item: DataAll): HTMLInputElement => {
                     let txt: HTMLInputElement = document.createElement("input");
                     txt.type = "button";

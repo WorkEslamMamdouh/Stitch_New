@@ -74,6 +74,28 @@
         border: 1px solid #ddd;
         margin-bottom: 12px;
     }
+
+    .Delet {
+        width: 0.1% !important;
+    }
+       .Ser {
+        width: 0.7% !important;
+    }    
+       .Decs {
+        width: 5% !important;
+    }    
+       .Rem {
+        width: 10% !important;
+    }   
+       .Url {
+        width: 5% !important;
+    }
+       .Ope {
+        width: 2% !important;
+    }
+
+        
+
 </style>
 
 <body class="materialdesign">
@@ -257,7 +279,10 @@
             </div>
 
 
-            <div class="inside-table my-4" id="divInputs">
+
+
+
+            @*<div class="inside-table my-4" id="divInputs">
                 <div class="">
                     <table class="table table-borderless">
                         <thead>
@@ -278,7 +303,48 @@
                         <button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo"><i class="fa fa-plus"></i></button>
                     </div>
                 </div>
+            </div>*@
+
+
+            <div class="bootstrap-table">
+                <div class="fixed-table-toolbar">
+                    <div class="bs-bars pull-left">
+                    </div>
+                </div>
+                <div class="fixed-table-container" style="padding-bottom: 0px;">
+                    <div class="fixed-table-header" style="display: none;">
+                        <table></table>
+                    </div>
+                    <div class="fixed-table-body" style="height: 460px; overflow: scroll;">
+                        <div class="fixed-table-loading" style="top: 41px;">Loading, please wait...</div>
+                        <table id="table_Grad1" data-toggle="table" data-page-number="2" data-page-size="5" data-pagination="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="false" data-click-to-select="true" data-toolbar="#toolbar" class="table table-hover">
+                            <thead id="thead_Grad1">
+                                <tr>
+                                    <th class=" Text_right Delet" style="width: 0.1% !important;" data-field="number" tabindex="0"><div class="th-inner ">  </div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Ser</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Decs" style="width: 5% !important;" data-field="number" tabindex="0"><div class="th-inner ">Description</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Rem" style="width: 10%  !important;" data-field="number" tabindex="0"><div class="th-inner ">Remark</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Url" style="width: 5% !important;" data-field="number" tabindex="0"><div class="th-inner ">Url</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ope" style="width: 2% !important;" data-field="number" tabindex="0"><div class="th-inner ">Open</div><div class="fht-cell"></div></th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="div_Data">
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-start mr-1">
+                            <button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="fixed-table-footer" style="display: none;">
+                        <table><tbody><tr></tr></tbody></table>
+                    </div><div class="fixed-table-pagination" style="display: none;"><div class="pull-left pagination-detail"><span class="pagination-info">Showing 6 to 0 of 0 rows</span><span class="page-list" style="display: none;"><span class="btn-group dropup"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="page-size">5</span> <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li role="menuitem"><a href="#">10</a></li></ul></span> rows per page</span></div><div class="pull-right pagination" style="display: none;"><ul class="pagination"><li class="page-pre"><a href="#">‹</a></li><li class="page-next"><a href="#">›</a></li></ul></div></div>
+                 
+                </div>
             </div>
+
+
+
         </div>
 
 
