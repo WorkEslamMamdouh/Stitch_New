@@ -98,9 +98,13 @@ namespace Inv.WebUI.Controllers
             return View("~/Views/Quotation/QuotationViewIndex.cshtml");
         }
 
-        public ActionResult CompaniesIndex()
+        public ActionResult ProfileIndex()
         {
-            return View("~/Views/Customer/CustomerIndex.cshtml");
+            return View("~/Views/Customer/ProfileIndex.cshtml");
+        }       
+        public ActionResult NotesIndex()
+        {
+            return View("~/Views/Customer/NotesIndex.cshtml");
         }
 
         public ActionResult TestIndex()

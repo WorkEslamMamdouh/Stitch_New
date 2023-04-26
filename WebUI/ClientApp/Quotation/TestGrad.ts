@@ -9,6 +9,7 @@ namespace TestGrad {
 
     //var ShowData: HTMLButtonElement;
     var Open_Page: HTMLButtonElement;
+    var Open_Notes: HTMLButtonElement;
     var GenerateModels: HTMLButtonElement;
     var ConactServer: HTMLButtonElement;
     var Conact: HTMLButtonElement;
@@ -19,6 +20,7 @@ namespace TestGrad {
     export function InitalizeComponent() {
 
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement
+        Open_Notes = document.getElementById('Open_Notes') as HTMLButtonElement
         Open_Page = document.getElementById('Open_Page') as HTMLButtonElement
         GenerateModels = document.getElementById('GenerateModels') as HTMLButtonElement
         Conact = document.getElementById('Conact') as HTMLButtonElement
@@ -46,6 +48,7 @@ namespace TestGrad {
         ConactServer.onclick = ConactServer_onclick;
         GenerateModels.onclick = GenerateModels_onclick;
         Open_Page.onclick = Open_Pages;
+        Open_Notes.onclick = Open_NotesS;
         DataSours.onchange = DataSours_onchange;
         top.onchange = DataSours_onchange;
         //ShowData.onclick = ShowData_onclick;
@@ -53,9 +56,13 @@ namespace TestGrad {
         InitializeGridControl();
     }
 
+    function Open_NotesS() {
+
+        window.open(Url.Action("NotesIndex", "Home"), "_self");
+    }
     function Open_Pages() {
 
-        window.open(Url.Action("CompaniesIndex", "Home"), "_self");
+        window.open(Url.Action("ProfileIndex", "Home"), "_self");
 
     }
 

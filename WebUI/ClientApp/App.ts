@@ -7,7 +7,7 @@ const TransparentButton: string = "TransparentButton";
 var Modules = {
     Home: "Home",
     QuotationView: "QuotationView",
-    Companies: "Companies",
+    Profile: "Profile",
     Users: "Users",
     Test: "Test",
     Quotation: "Quotation"
