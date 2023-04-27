@@ -1195,6 +1195,15 @@ var DataDetails = /** @class */ (function () {
     }
     return DataDetails;
 }());
+var DataNotes = /** @class */ (function () {
+    function DataNotes() {
+        this.ID = 0;
+        this.MasterID = 0;
+        this.Remark = '';
+        this.Ex_Field = '';
+    }
+    return DataNotes;
+}());
 var Send_Data = /** @class */ (function () {
     function Send_Data() {
         this.ID = 0;

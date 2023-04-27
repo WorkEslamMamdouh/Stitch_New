@@ -230,6 +230,7 @@
     <Content Include="NewStyle\css\animate.css" />
     <Content Include="NewStyle\css\bootstrap-editable.css" />
     <Content Include="NewStyle\css\bootstrap.min.css" />
+    <Content Include="NewStyle\css\Taps.css" />
     <Content Include="NewStyle\css\buttons.css" />
     <Content Include="NewStyle\css\c3.min.css" />
     <Content Include="NewStyle\css\charts.css" />

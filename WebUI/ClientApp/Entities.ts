@@ -1976,6 +1976,19 @@ class DataDetails {
     public StatusFlag: string;
 
 }
+ 
+class DataNotes {
+    constructor() { 
+        this.ID = 0;
+        this.MasterID = 0; 
+        this.Remark = ''; 
+        this.Ex_Field = ''; 
+    }
+    public ID: number;
+    public MasterID: number; 
+    public Remark: string; 
+    public Ex_Field: string;  
+}
 
 
 
