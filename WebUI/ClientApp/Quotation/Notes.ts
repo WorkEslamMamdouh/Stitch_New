@@ -71,7 +71,7 @@ namespace Notes {
     }
     function DisplayDetailsControls(cnt: number, DataDet: DataNotes) {
 
-        $("#ID" + cnt).val(DataDet.ID);
+        $("#ID" + cnt).val("0");
         $("#tab_" + cnt + "_Remark").html(DataDet.Remark);
     }
     function BuildControls(cnt: number) {
@@ -89,7 +89,7 @@ namespace Notes {
         Area_Html = `
             <div class="tab-pane   active" id="Tab_${cnt}">
                 <div class="card">
-                    <input id="ID${cnt}" type="hidden" />
+                    <input id="ID${cnt}" type="hidden" value="0" />
                     <textarea class="tearea display_none" id="tab_${cnt}_Remark" cols="2" rows="32">  </textarea>
                 </div>
             </div>`;
@@ -103,8 +103,24 @@ namespace Notes {
 
         $("#tab_" + cnt + "_Remark").on('change', function () {
 
-            Set_Notes(cnt);
+            //Set_Notes(cnt);
                 
+        });
+
+        $("#tab_" + cnt + "_Remark").on('keyup', function () {
+
+            //alert('keyup')
+            debugger
+            if ($("#ID" + cnt ).val() == "0") {
+                setTimeout(function () {
+                    Set_Notes(cnt);
+                    $("#ID" + cnt).val("0")
+                }, 2000);
+                $("#ID" + cnt).val("1")
+            }
+
+          
+
         });
 
 
@@ -164,7 +180,7 @@ namespace Notes {
             data: { Data: JSON.stringify(Data) },
             success: (d) => {
                 
-                alert(100)
+                //alert(100)
             }
         })
     }

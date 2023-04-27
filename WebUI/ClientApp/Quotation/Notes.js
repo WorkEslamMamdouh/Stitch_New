@@ -47,7 +47,7 @@ var Notes;
         });
     }
     function DisplayDetailsControls(cnt, DataDet) {
-        $("#ID" + cnt).val(DataDet.ID);
+        $("#ID" + cnt).val("0");
         $("#tab_" + cnt + "_Remark").html(DataDet.Remark);
     }
     function BuildControls(cnt) {
@@ -55,13 +55,24 @@ var Notes;
         label_Html = "\n            <li class=\"nav-item\" Data_Remark=\"tab_" + cnt + "_Remark\">\n                <a id=\"a_Tab_" + cnt + "\" class=\"nav-link active\" data-toggle=\"tab\" href=\"#Tab_" + cnt + "\">Tab ( " + (cnt + 1) + " )</a>\n            </li>";
         $("#label_Tab").append(label_Html);
         var Area_Html = "";
-        Area_Html = "\n            <div class=\"tab-pane   active\" id=\"Tab_" + cnt + "\">\n                <div class=\"card\">\n                    <input id=\"ID" + cnt + "\" type=\"hidden\" />\n                    <textarea class=\"tearea display_none\" id=\"tab_" + cnt + "_Remark\" cols=\"2\" rows=\"32\">  </textarea>\n                </div>\n            </div>";
+        Area_Html = "\n            <div class=\"tab-pane   active\" id=\"Tab_" + cnt + "\">\n                <div class=\"card\">\n                    <input id=\"ID" + cnt + "\" type=\"hidden\" value=\"0\" />\n                    <textarea class=\"tearea display_none\" id=\"tab_" + cnt + "_Remark\" cols=\"2\" rows=\"32\">  </textarea>\n                </div>\n            </div>";
         $("#Area_Tab").append(Area_Html);
         //$("#btn_minus" + cnt).on('click', function () {
         //    DeleteRow(cnt);
         //});
         $("#tab_" + cnt + "_Remark").on('change', function () {
-            Set_Notes(cnt);
+            //Set_Notes(cnt);
+        });
+        $("#tab_" + cnt + "_Remark").on('keyup', function () {
+            //alert('keyup')
+            debugger;
+            if ($("#ID" + cnt).val() == "0") {
+                setTimeout(function () {
+                    Set_Notes(cnt);
+                    $("#ID" + cnt).val("0");
+                }, 2000);
+                $("#ID" + cnt).val("1");
+            }
         });
     }
     function AddNewRow() {
@@ -100,7 +111,7 @@ var Notes;
             async: false,
             data: { Data: JSON.stringify(Data) },
             success: function (d) {
-                alert(100);
+                //alert(100)
             }
         });
     }
