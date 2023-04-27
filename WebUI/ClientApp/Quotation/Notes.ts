@@ -11,83 +11,58 @@ namespace Notes {
     var CountGrid = 0;
      
 
-     
 
-    export function InitalizeComponent() {
 
-        InitalizeControls();
-        InitalizeEvents();
+    export function InitalizeComponent() { 
+        Tabs_click();
+         
 
-        CountGrid = 0;
-        $("#label_Tab").html('');
-        $("#Area_Tab").html('');
-        for (var i = 0; i < 5; i++) {
+        Get_All_Notes();
+        AddButtonApp_Tap();
+    } 
+    function Tabs_click() {
+
+        $('body').on('click', '.scrollable-tabs li', function () {
             debugger
-            BuildControls(i);
-            //DisplayDetailsControls(i, AllDisplay[i])
-            CountGrid++;
-        }
-        let a_Tab = document.getElementById("a_Tab_" + (CountGrid - 1));
-        a_Tab.click();
-        a_Tab.focus();
-    }
-
-    function InitalizeControls() {
-        //btnShow = document.getElementById("btnShow") as HTMLButtonElement;
-        //btnAdd = document.getElementById("btnAdd") as HTMLButtonElement;
-        //btnSave = document.getElementById("btnSave") as HTMLButtonElement;
-        //btnUpdate = document.getElementById("btnUpdate") as HTMLButtonElement;
-        //btnBack = document.getElementById("btnBack") as HTMLButtonElement;
-        //btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
-        //////////  
-        //dbTypeF = document.getElementById("dbTypeF") as HTMLSelectElement;
-        //dbTypeH = document.getElementById("dbTypeH") as HTMLSelectElement;
-        //////////
-        //txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
-        //txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
-        //txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
-        //txtTrDate = document.getElementById("txtTrDate") as HTMLInputElement;
+            $('li').removeClass('actTab');
+            $('.scrollable-tabs li a.active').removeClass('active');
 
 
-    }
-    function InitalizeEvents() {
-        //********************************Btn****************************
-        //btnShow.onclick = btnShow_onclick;
-        //btnAdd.onclick = btnAdd_onclick;
-        //btnSave.onclick = btnSave_onClick;
-        //btnBack.onclick = btnBack_onclick;
-        //btnUpdate.onclick = btnUpdate_onclick;
-        //btnAddDetails.onclick = AddNewRow;
-        
-        ////********************************onchange****************************
-        //txtSearch.onkeyup = txtSearch_change;
+            if ($(this).html() != '<a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="true"><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="false"><i class="fa fa-plus-circle Add"></i></a>') {
 
-    }
+                $(this).addClass('actTab');
+                let id_Remark = $(this).attr('Data_Remark');
+
+                setTimeout(function () { $('#' + id_Remark + '').focus(); }, 150);
+            }
 
 
-    function GetDetails(MasterID: number) {
+        });
+
+    } 
+
+    function Get_All_Notes() {
 
         debugger
         Ajax.CallAsync({
-            url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "Data_Notes" },
+            url: Url.Action("Get_All_Notes", "Profile"),
+            data: { Name_txt: "Note_" },
             success: (d) => {
+                debugger
                 let result = JSON.parse(d)
 
-                AllDisplay = result as Array<DataNotes>; 
-                AllDisplay = AllDisplay.sort(dynamicSortNew("ID")); 
-                DetMaxLast = DetMaxLast[0].ID + 1;
+                AllDisplay = result as Array<DataNotes>;  
                 AllDisplay = AllDisplay.sort(dynamicSort("ID"));
                  
                 debugger
                 CountGrid = 0;
-                $("#Area_Tab").html('');
                 for (var i = 0; i < AllDisplay.length; i++) {
                     debugger
                     BuildControls(i);
                     DisplayDetailsControls(i, AllDisplay[i])
                     CountGrid++;
                 }
+                AddButtonApp_Tap();
 
 
             }
@@ -96,8 +71,8 @@ namespace Notes {
     }
     function DisplayDetailsControls(cnt: number, DataDet: DataNotes) {
 
-        $("#ID" + cnt).val(DataDet.ID); 
-        $("#txtRemars" + cnt).val(DataDet.Remark);  
+        $("#ID" + cnt).val(DataDet.ID);
+        $("#tab_" + cnt + "_Remark").html(DataDet.Remark);
     }
     function BuildControls(cnt: number) {
 
@@ -115,37 +90,85 @@ namespace Notes {
             <div class="tab-pane   active" id="Tab_${cnt}">
                 <div class="card">
                     <input id="ID${cnt}" type="hidden" />
-                    <textarea id="tab_${cnt}_Remark" cols="2" rows="25">  </textarea>
+                    <textarea class="tearea display_none" id="tab_${cnt}_Remark" cols="2" rows="32">  </textarea>
                 </div>
             </div>`;
 
         $("#Area_Tab").append(Area_Html);
 
 
-        $("#btn_minus" + cnt).on('click', function () {
-            DeleteRow(cnt);
-        });
+        //$("#btn_minus" + cnt).on('click', function () {
+        //    DeleteRow(cnt);
+        //});
 
-        $("#btn_Open" + cnt).on('click', function () {
-            window.open($("#txtUrl" + cnt).val().trim(), "_blank");
+        $("#tab_" + cnt + "_Remark").on('change', function () {
+
+            Set_Notes(cnt);
+                
         });
 
 
     }
     function AddNewRow() {
 
-        //BuildControls(CountGrid);
-        //$("#txt_StatusFlag" + CountGrid).val("i"); //In Insert mode 
-        //CountGrid++;
-        //Insert_Serial();
-        //$(".btn-minus").removeClass("display_none");
-        //$('._dis').removeAttr('disabled')
-        //$('._Cont').removeClass('display_none')
+        BuildControls(CountGrid); 
+        CountGrid++;
+
+    
 
 
-        //$("#ID" + CountGrid).val(DetMaxLast)
-        //DetMaxLast++;
+       
+        AddButtonApp_Tap();
+    } 
+    function AddButtonApp_Tap() {
+
+        setTimeout(function () {
+            let a_Tab = document.getElementById("a_Tab_" + (CountGrid - 1));
+            a_Tab.click();
+            a_Tab.focus();
+
+            $(".tearea").removeClass('display_none');
+
+             
+        }, 20);
+
+        //**********************************************************App_Tap*************************
+        const element = document.getElementById("App_Tap");
+        element.remove();
+
+        $("#label_Tab").append('<li id="App_Tap" class=""><a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a></li>');
+
+        $("#App_Tap").on('click', function () {
+            AddNewRow();
+        });
+
+        const label_Tab = document.getElementById("label_Tab"); 
+        label_Tab.scrollLeft = 1000;
     }
+
+    function Set_Notes(cnt: number) {
+
+        let Data = new Send_Data();
+
+        Data.ID = Number($('#ID' + cnt).val());
+        Data.Name_Txt_Master = "Note_" + cnt;
+        Data.Model = $("#tab_" + cnt + "_Remark").val();
+        Data.TypeDataSouce = "Note_" + cnt; 
+
+        debugger
+        $.ajax({
+            url: Url.Action("Set_Data_Notes", "Profile"),
+            type: "POST",
+            dataType: 'json',
+            async: false,
+            data: { Data: JSON.stringify(Data) },
+            success: (d) => {
+                
+                alert(100)
+            }
+        })
+    }
+
     function DeleteRow(RecNo: number) {
         var statusFlag = $("#txt_StatusFlag" + RecNo).val();
         if (statusFlag == "i")

@@ -46,8 +46,16 @@ namespace Inv.WebUI.Controllers
             public string Ex_Field { get; set; }
             public string StatusFlag { get; set; }
         }
-           
+        
+        public class DataNotes
+        {
+            public int ID { get; set; }
+            public int MasterID { get; set; } 
+            public string Remark { get; set; } 
+            public string Ex_Field { get; set; } 
+        }
 
+         
         public class Send_Data
         {
             public int ID { get; set; }
@@ -110,6 +118,38 @@ namespace Inv.WebUI.Controllers
 
         }
 
+
+        public JsonResult Get_All_Notes(string Name_txt)
+        {
+
+            var List_Notes = new List<DataNotes>();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                var Model_Notes = new DataNotes();
+
+                try
+                {
+                    var jsonData = GetData(Name_txt + i);
+
+                    Model_Notes.ID = i; 
+                    Model_Notes.Remark = jsonData;
+                    List_Notes.Add(Model_Notes);    
+                }
+                catch  
+                {
+
+                    break;
+                }
+
+            }
+
+            var All_Notes = JsonConvert.SerializeObject(List_Notes);
+
+            return Json(All_Notes, JsonRequestBehavior.AllowGet);
+
+        }
+
         public JsonResult Update_Data(string Data)
         { 
 
@@ -163,7 +203,23 @@ namespace Inv.WebUI.Controllers
 
             return Json(json, JsonRequestBehavior.AllowGet);
         }
+
+
          
+        public ActionResult Set_Data_Notes(string Data)
+        {
+
+            var rp = JsonConvert.DeserializeObject<Send_Data>(Data);
+
+            //******************************************Master*************************
+              
+            SetData(rp.Name_Txt_Master, rp.Model);
+             
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+
 
 
     }

@@ -20,6 +20,11 @@
         background-color: white !important;
         font-weight: bold;
         border-radius: 19px 19px 0 0;
+        cursor:pointer;
+    }
+
+    .nav-item { 
+        cursor: pointer !important;
     }
 
     /* width */
@@ -41,6 +46,15 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+
+    .Add {
+        font-size: 23px !important;
+        color: wheat;
+    }
+    .display_none {
+        display: none !important;
+    }
 </style>
 <link href="~/NewStyle/css/Taps.css" rel="stylesheet" />
 <body class="materialdesign">
@@ -53,11 +67,9 @@
 
     <div class="responsive__tabs">
         <!-- Nav tabs -->
-        <ul id="label_Tab" class="scrollable-tabs">
+        <ul id="label_Tab" class="scrollable-tabs ">
 
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#Tab_1">Tab_1</a>
-            </li>
+            <li id="App_Tap" class=""><a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a></li>
 
            
 
@@ -69,12 +81,7 @@
         <!-- Tab panes -->
         <div id="Area_Tab" class="tab-content">
 
-            <div class="tab-pane   active" id="Tab_1">
-                <div class="card">
-                    <input id="ID${cnt}" type="hidden" />
-                    <textarea id="tab_${cnt}_Remark" cols="2" rows="25">  </textarea>
-                </div>
-            </div>
+            
 
            
         </div>
@@ -83,17 +90,22 @@
 
 </body>
 <script>
-    $('body').on('click', '.scrollable-tabs li', function () {
-        $('li').removeClass('actTab');
-        $('.scrollable-tabs li a.active').removeClass('active');
-        $(this).addClass('actTab');
+    //$('body').on('click', '.scrollable-tabs li', function () {
+    //    $('li').removeClass('actTab');
+    //    $('.scrollable-tabs li a.active').removeClass('active');
 
-        debugger
-        let id_Remark = $(this).attr('Data_Remark');
+    //    alert($(this).html())
+    //    console.log($(this).html())
+    //    if ($(this).html() != '<a class=" " data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>') {
 
-        setTimeout(function () { $('#' + id_Remark + '').focus(); }, 150);
+    //        $(this).addClass('actTab'); 
+    //        let id_Remark = $(this).attr('Data_Remark');
+
+    //        setTimeout(function () { $('#' + id_Remark + '').focus(); }, 150);
+    //    }
+        
          
-    });
+    //});
 </script>
 <script src="~/ClientApp/App.js"></script>
 <script src="~/ClientApp/SystemTools.js"></script>
