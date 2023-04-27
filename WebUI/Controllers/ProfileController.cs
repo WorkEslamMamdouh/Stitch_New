@@ -150,7 +150,7 @@ namespace Inv.WebUI.Controllers
 
         }
 
-        public JsonResult Update_Data(string Data)
+        public ActionResult Update_Data(string Data)
         { 
 
             var rp = JsonConvert.DeserializeObject<Send_Data>(Data);

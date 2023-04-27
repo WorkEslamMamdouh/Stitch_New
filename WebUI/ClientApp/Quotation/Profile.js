@@ -33,6 +33,7 @@ var Profile;
         btnLogin = document.getElementById("btnLogin");
         txtPassword = document.getElementById("txtPassword");
         btnLogin.onclick = btnLogin_onclick;
+        txtPassword.focus();
         Event_key('Enter', 'txtPassword', 'btnLogin');
     }
     Profile.InitalizeComponent = InitalizeComponent;
@@ -346,8 +347,11 @@ var Profile;
         Data.TypeDataSouce = "DataAll";
         Data.StatusFlag = StatusFlag;
         debugger;
-        Ajax.CallAsync({
+        $.ajax({
             url: Url.Action("Update_Data", "Profile"),
+            type: "POST",
+            dataType: 'json',
+            async: false,
             data: { Data: JSON.stringify(Data) },
             success: function (d) {
                 var result = JSON.parse(d);
@@ -374,8 +378,11 @@ var Profile;
         Data.TypeDataSouce = "DataAll";
         Data.StatusFlag = "d";
         debugger;
-        Ajax.CallAsync({
+        $.ajax({
             url: Url.Action("Update_Data", "Profile"),
+            type: "POST",
+            dataType: 'json',
+            async: false,
             data: { Data: JSON.stringify(Data) },
             success: function (d) {
                 var result = JSON.parse(d);
@@ -414,8 +421,11 @@ var Profile;
             Data.TypeDataSouce = "DataAll";
             Data.StatusFlag = "u";
             debugger;
-            Ajax.CallAsync({
+            $.ajax({
                 url: Url.Action("Update_Data", "Profile"),
+                type: "POST",
+                dataType: 'json',
+                async: false,
                 data: { Data: JSON.stringify(Data) },
                 success: function (d) {
                     var result = JSON.parse(d);

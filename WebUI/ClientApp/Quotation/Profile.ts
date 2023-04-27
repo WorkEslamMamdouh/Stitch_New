@@ -46,6 +46,8 @@ namespace Profile {
 
         btnLogin.onclick = btnLogin_onclick;
 
+        txtPassword.focus();
+
         Event_key('Enter', 'txtPassword', 'btnLogin');
 
 
@@ -484,8 +486,11 @@ namespace Profile {
         Data.StatusFlag = StatusFlag;
 
         debugger
-        Ajax.CallAsync({
+        $.ajax({
             url: Url.Action("Update_Data", "Profile"),
+            type: "POST",
+            dataType: 'json',
+            async: false,
             data: { Data: JSON.stringify(Data) },
             success: (d) => {
                 let result = JSON.parse(d)
@@ -523,8 +528,11 @@ namespace Profile {
         Data.StatusFlag = "d";
 
         debugger
-        Ajax.CallAsync({
+        $.ajax({
             url: Url.Action("Update_Data", "Profile"),
+            type: "POST",
+            dataType: 'json',
+            async: false,
             data: { Data: JSON.stringify(Data) },
             success: (d) => {
                 let result = JSON.parse(d)
@@ -590,10 +598,13 @@ namespace Profile {
                 Data.StatusFlag = "u";
 
                 debugger
-                Ajax.CallAsync({
-                    url: Url.Action("Update_Data", "Profile"),
-                    data: { Data: JSON.stringify(Data) },
-                    success: (d) => {
+            $.ajax({
+                url: Url.Action("Update_Data", "Profile"),
+                type: "POST",
+                dataType: 'json',
+                async: false,
+                data: { Data: JSON.stringify(Data) },
+                success: (d) => {
                         let result = JSON.parse(d)
 
                         let res = result as Array<DataAll>;
