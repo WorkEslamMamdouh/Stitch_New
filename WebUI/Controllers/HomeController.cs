@@ -107,9 +107,19 @@ namespace Inv.WebUI.Controllers
             return View("~/Views/Customer/NotesIndex.cshtml");
         }
 
+        public ActionResult Page_Get_Views()
+        {
+            return View("~/Views/Customer/Get_ViewsIndex.cshtml");
+        }
+
         public ActionResult TestIndex()
         {
             return View("~/Views/Customer/TestIndex.cshtml");
+        }    
+        
+        public ActionResult Home_New_Index()
+        {
+            return View("~/Views/Customer/HomeIndex.cshtml");
         }
 
         public ActionResult UsersIndex()

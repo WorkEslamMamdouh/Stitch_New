@@ -606,6 +606,7 @@
     <Content Include="login\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <Content Include="Views\Customer\index.Html" />
     <Content Include="Views\Login\HomePage1.cshtml" />
     <Content Include="NewStyle\fonts\adminpro-icon.ttf" />
     <Content Include="NewStyle\fonts\adminpro-icon.woff" />
@@ -827,6 +828,8 @@
     <Content Include="Views\Customer\ProfileIndex.cshtml" />
     <Content Include="Views\Customer\TestIndex.cshtml" />
     <Content Include="Views\Customer\NotesIndex.cshtml" />
+    <Content Include="Views\Customer\Get_ViewsIndex.cshtml" />
+    <Content Include="Views\Customer\HomeIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

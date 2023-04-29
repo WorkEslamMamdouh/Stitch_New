@@ -1,0 +1,116 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<style>
+
+    .des {
+        width: 22% !important;
+    }
+
+    .uom {
+        width: 11% !important;
+    }
+
+    .Zero {
+        width: 0% !important;
+    }
+
+    .Price {
+        width: 9% !important;
+    }
+
+    .odd {
+        background-color: lightcoral;
+        font-weight: bold;
+        font-size: 16px;
+        color: black;
+    }
+    .even {
+        background-color: #fff2ce;
+        font-weight: bold;
+        font-size: 16px;
+        color: black;
+    }
+    tr {
+        background-color: #b9b9b9;
+        color: black;
+    }
+
+    .px-5 {
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+    }
+
+</style>
+<body class="materialdesign">
+    <div class="content-inner-all">
+        <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
+
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <h1 class="col-xs-12 col-lg-12 col-sm-12">Eslam Mamdouh</h1>
+            </div>
+
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="Open_Profile" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success  ">      Profile </button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="Open_Notes" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning  ">      Notes </button>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+                <br /> 
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="Open_Data_Server" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info  ">      Data Server </button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="Open_Get_Views" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger  ">      Get Views </button>
+            </div>
+
+            <div id="Pages" class="col-xs-12 col-lg-12 col-sm-12">
+                
+            </div>
+
+
+
+        </div>
+
+
+         
+
+
+    </div>
+
+
+
+    <script>
+
+        $("#Open_Profile").on('click', function () {
+            window.open(Url.Action("ProfileIndex", "Home"), "_self");
+        });
+
+        $("#Open_Notes").on('click', function () {
+            window.open(Url.Action("NotesIndex", "Home"), "_self");
+        });
+
+        $("#Open_Data_Server").on('click', function () {
+            window.open(Url.Action("TestIndex", "Home"), "_self");
+        });
+
+
+        $("#Open_Get_Views").on('click', function () {
+
+            
+            window.open(Url.Action("Page_Get_Views", "Home"), "_self");
+        });
+
+        
+
+        
+
+    </script>
+</body> 

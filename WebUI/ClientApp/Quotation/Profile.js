@@ -1,3 +1,4 @@
+/// <reference path="../iggrid.ts" /> 
 $(document).ready(function () {
     Profile.InitalizeComponent();
 });
@@ -19,6 +20,7 @@ var Profile;
     var btnBack;
     var btnLogin;
     var btnAddDetails;
+    var btnPage_Get_Views;
     var txtPassword;
     var txtSearch;
     var txtDateFrom;
@@ -44,6 +46,7 @@ var Profile;
         btnUpdate = document.getElementById("btnUpdate");
         btnBack = document.getElementById("btnBack");
         btnAddDetails = document.getElementById("btnAddDetails");
+        btnPage_Get_Views = document.getElementById("btnPage_Get_Views");
         ////////  
         dbTypeF = document.getElementById("dbTypeF");
         dbTypeH = document.getElementById("dbTypeH");
@@ -61,6 +64,7 @@ var Profile;
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
+        btnPage_Get_Views.onclick = btnPage_Get_Views_onclick;
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
     }
@@ -113,6 +117,19 @@ var Profile;
         ];
         //JGrid.Bind();
     }
+    function btnPage_Get_Views_onclick() {
+        debugger;
+        //window.open('http://www.example.com?ReportID=1', '_blank');
+        //window.open(Url.Action("Page_Get_Views", "Home"), "_blank");
+        var guestName = $('#List_Url').val();
+        var listData = guestName.split('\n');
+        window.sessionStorage.setItem("Url_Data", JSON.stringify(listData));
+        document.cookie = JSON.stringify(listData);
+        var Url_Data = localStorage.getItem("Url_Data");
+        //for (var i = 0; i < listData.length; i++) {
+        //    alert(listData[i])
+        //}
+    }
     function Display_Grid(_Display) {
         AllDisplay = _Display;
         AllDisplay = AllDisplay.sort(dynamicSortNew("ID"));
@@ -140,6 +157,14 @@ var Profile;
         }
     }
     function btnLogin_onclick() {
+        //$('#Pass').addClass('display_none');
+        //$('#Page_Profile').removeClass('display_none');
+        //InitalizeControls();
+        //InitalizeEvents();
+        //txtDateFrom.value = DateStartMonth();
+        //txtDateTo.value = GetDate();
+        //InitializeGrid();
+        //btnShow_onclick();
         if (txtPassword.value.trim() == "619619Aa619606") {
             $('#Pass').addClass('display_none');
             $('#Page_Profile').removeClass('display_none');

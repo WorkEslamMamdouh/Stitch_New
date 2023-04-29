@@ -7,9 +7,7 @@ namespace TestGrad {
 
     var Grid: ESGrid = new ESGrid();
 
-    //var ShowData: HTMLButtonElement;
-    var Open_Page: HTMLButtonElement;
-    var Open_Notes: HTMLButtonElement;
+    //var ShowData: HTMLButtonElement; 
     var GenerateModels: HTMLButtonElement;
     var ConactServer: HTMLButtonElement;
     var Conact: HTMLButtonElement;
@@ -19,9 +17,7 @@ namespace TestGrad {
 
     export function InitalizeComponent() {
 
-        //ShowData = document.getElementById('ShowData') as HTMLButtonElement
-        Open_Notes = document.getElementById('Open_Notes') as HTMLButtonElement
-        Open_Page = document.getElementById('Open_Page') as HTMLButtonElement
+        //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
         GenerateModels = document.getElementById('GenerateModels') as HTMLButtonElement
         Conact = document.getElementById('Conact') as HTMLButtonElement
         ConactServer = document.getElementById('ConactServer') as HTMLButtonElement
@@ -46,25 +42,14 @@ namespace TestGrad {
 
         Conact.onclick = Conact_onclick;
         ConactServer.onclick = ConactServer_onclick;
-        GenerateModels.onclick = GenerateModels_onclick;
-        Open_Page.onclick = Open_Pages;
-        Open_Notes.onclick = Open_NotesS;
+        GenerateModels.onclick = GenerateModels_onclick; 
         DataSours.onchange = DataSours_onchange;
         top.onchange = DataSours_onchange;
         //ShowData.onclick = ShowData_onclick;
 
         InitializeGridControl();
     }
-
-    function Open_NotesS() {
-
-        window.open(Url.Action("NotesIndex", "Home"), "_self");
-    }
-    function Open_Pages() {
-
-        window.open(Url.Action("ProfileIndex", "Home"), "_self");
-
-    }
+     
 
     function Conact_onclick() {
 

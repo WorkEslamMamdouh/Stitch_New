@@ -4,9 +4,7 @@ $(document).ready(function () {
 var TestGrad;
 (function (TestGrad) {
     var Grid = new ESGrid();
-    //var ShowData: HTMLButtonElement;
-    var Open_Page;
-    var Open_Notes;
+    //var ShowData: HTMLButtonElement; 
     var GenerateModels;
     var ConactServer;
     var Conact;
@@ -14,9 +12,7 @@ var TestGrad;
     var Database;
     var top;
     function InitalizeComponent() {
-        //ShowData = document.getElementById('ShowData') as HTMLButtonElement
-        Open_Notes = document.getElementById('Open_Notes');
-        Open_Page = document.getElementById('Open_Page');
+        //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
         GenerateModels = document.getElementById('GenerateModels');
         Conact = document.getElementById('Conact');
         ConactServer = document.getElementById('ConactServer');
@@ -37,20 +33,12 @@ var TestGrad;
         Conact.onclick = Conact_onclick;
         ConactServer.onclick = ConactServer_onclick;
         GenerateModels.onclick = GenerateModels_onclick;
-        Open_Page.onclick = Open_Pages;
-        Open_Notes.onclick = Open_NotesS;
         DataSours.onchange = DataSours_onchange;
         top.onchange = DataSours_onchange;
         //ShowData.onclick = ShowData_onclick;
         InitializeGridControl();
     }
     TestGrad.InitalizeComponent = InitalizeComponent;
-    function Open_NotesS() {
-        window.open(Url.Action("NotesIndex", "Home"), "_self");
-    }
-    function Open_Pages() {
-        window.open(Url.Action("ProfileIndex", "Home"), "_self");
-    }
     function Conact_onclick() {
         var rp = new SqlEnt();
         //rp.Database = $('#Database').val();

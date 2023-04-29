@@ -26,7 +26,7 @@ namespace Inv.WebUI
         {
             Exception ex = Server.GetLastError();
             Server.ClearError();
-            string url = "/Login/LoginIndex";  // HttpContext.Current.Session["ErrorUrl"].ToString();
+            string url = "/Home/Home_New_Index";  // HttpContext.Current.Session["ErrorUrl"].ToString();
             // url = url + "?err=" + ex.Message + "      " + ex.InnerException;
             Response.Redirect(url);
         }
