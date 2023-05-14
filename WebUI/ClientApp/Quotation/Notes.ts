@@ -14,9 +14,7 @@ namespace Notes {
 
 
     export function InitalizeComponent() { 
-        Tabs_click();
-         
-
+        Tabs_click(); 
         Get_All_Notes();
         AddButtonApp_Tap();
     } 

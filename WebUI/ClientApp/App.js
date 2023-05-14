@@ -823,6 +823,14 @@ function Errorinput(input) {
         setTimeout(function () { input.classList.remove('text_Mandatory'); }, 5000);
     }
 }
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($('#' + element).val()).select();
+    document.execCommand("copy");
+    $temp.remove();
+    $('#' + element).focus();
+}
 function findIndexInData(data, property, value) {
     var result = -1;
     data.some(function (item, i) {

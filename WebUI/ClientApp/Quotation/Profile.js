@@ -20,7 +20,7 @@ var Profile;
     var btnBack;
     var btnLogin;
     var btnAddDetails;
-    var btnPage_Get_Views;
+    //var btnPage_Get_Views: HTMLButtonElement;
     var txtPassword;
     var txtSearch;
     var txtDateFrom;
@@ -46,7 +46,7 @@ var Profile;
         btnUpdate = document.getElementById("btnUpdate");
         btnBack = document.getElementById("btnBack");
         btnAddDetails = document.getElementById("btnAddDetails");
-        btnPage_Get_Views = document.getElementById("btnPage_Get_Views");
+        //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
         ////////  
         dbTypeF = document.getElementById("dbTypeF");
         dbTypeH = document.getElementById("dbTypeH");
@@ -64,9 +64,12 @@ var Profile;
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
-        btnPage_Get_Views.onclick = btnPage_Get_Views_onclick;
+        //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
+        $("._copy").on('click', function () {
+            copyToClipboard(this.id);
+        });
     }
     function InitializeGrid() {
         JGrid.ElementName = "JGrid";
@@ -121,11 +124,11 @@ var Profile;
         debugger;
         //window.open('http://www.example.com?ReportID=1', '_blank');
         //window.open(Url.Action("Page_Get_Views", "Home"), "_blank");
-        var guestName = $('#List_Url').val();
-        var listData = guestName.split('\n');
-        window.sessionStorage.setItem("Url_Data", JSON.stringify(listData));
-        document.cookie = JSON.stringify(listData);
-        var Url_Data = localStorage.getItem("Url_Data");
+        //var guestName = $('#List_Url').val();
+        //var listData = guestName.split('\n');
+        //window.sessionStorage.setItem("Url_Data", JSON.stringify(listData));
+        //document.cookie = JSON.stringify(listData);
+        //var Url_Data = localStorage.getItem("Url_Data");
         //for (var i = 0; i < listData.length; i++) {
         //    alert(listData[i])
         //}
@@ -274,6 +277,9 @@ var Profile;
         });
         $("#btn_Open" + cnt).on('click', function () {
             window.open($("#txtUrl" + cnt).val().trim(), "_blank");
+        });
+        $("#No_Row" + cnt + " :input").on('click', function () {
+            copyToClipboard(this.id);
         });
     }
     function AddNewRow() {

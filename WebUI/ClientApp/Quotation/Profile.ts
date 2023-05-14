@@ -27,7 +27,7 @@ namespace Profile {
     var btnBack: HTMLButtonElement;
     var btnLogin: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
-    var btnPage_Get_Views: HTMLButtonElement;
+    //var btnPage_Get_Views: HTMLButtonElement;
 
     var txtPassword: HTMLInputElement;
     var txtSearch: HTMLInputElement;
@@ -63,7 +63,7 @@ namespace Profile {
         btnUpdate = document.getElementById("btnUpdate") as HTMLButtonElement;
         btnBack = document.getElementById("btnBack") as HTMLButtonElement;
         btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
-        btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
+        //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
 
         ////////  
         dbTypeF = document.getElementById("dbTypeF") as HTMLSelectElement;
@@ -84,9 +84,13 @@ namespace Profile {
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
-        btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
+        //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
+
+        $("._copy").on('click', function () {
+            copyToClipboard(this.id); 
+        });
 
     }
     function InitializeGrid() {
@@ -154,15 +158,15 @@ namespace Profile {
 
 
 
-        var guestName = $('#List_Url').val();
-        var listData = guestName.split('\n');
+        //var guestName = $('#List_Url').val();
+        //var listData = guestName.split('\n');
 
-        window.sessionStorage.setItem("Url_Data", JSON.stringify(listData));
+        //window.sessionStorage.setItem("Url_Data", JSON.stringify(listData));
 
-        document.cookie = JSON.stringify(listData);
+        //document.cookie = JSON.stringify(listData);
 
 
-        var Url_Data = localStorage.getItem("Url_Data");
+        //var Url_Data = localStorage.getItem("Url_Data");
 
         //for (var i = 0; i < listData.length; i++) {
         //    alert(listData[i])
@@ -404,8 +408,11 @@ namespace Profile {
            
         });
 
-
+        $(`#No_Row${cnt} :input`).on('click', function () { 
+            copyToClipboard(this.id); 
+        }); 
     }
+
     function AddNewRow() {
 
         BuildControls(CountGrid);
