@@ -17,6 +17,7 @@ var Profile;
     var btnAdd;
     var btnSave;
     var btnUpdate;
+    var btnUpload;
     var btnBack;
     var btnLogin;
     var btnAddDetails;
@@ -44,6 +45,7 @@ var Profile;
         btnAdd = document.getElementById("btnAdd");
         btnSave = document.getElementById("btnSave");
         btnUpdate = document.getElementById("btnUpdate");
+        btnUpload = document.getElementById("btnUpload");
         btnBack = document.getElementById("btnBack");
         btnAddDetails = document.getElementById("btnAddDetails");
         //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
@@ -64,10 +66,11 @@ var Profile;
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
+        btnUpload.onclick = function () { window.open("https://app.mediafire.com/myfiles", "_blank"); };
         //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
-        $("._copy").on('click', function () {
+        $("._copy").on('dblclick', function () {
             copyToClipboard(this.id);
         });
     }
@@ -270,7 +273,7 @@ var Profile;
     }
     function BuildControls(cnt) {
         var html = "";
-        html = "<tr id= \"No_Row" + cnt + "\" class=\"animated animate slideInDown\">\n                    <input id=\"txtCollectDetailID" + cnt + "\" type=\"hidden\" class=\"form-control display_none\"  />\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtDesc" + cnt + "\" type=\"text\" disabled class=\" _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"_dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtUrl" + cnt + "\" type=\"text\" disabled class=\"_dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_Open" + cnt + "\" type=\"button\"   class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-folder-open\" ></i></button>\n\t\t                </div>\n\t                </td>\n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
+        html = "<tr id= \"No_Row" + cnt + "\" class=\"animated animate slideInDown\">\n                    <input id=\"txtCollectDetailID" + cnt + "\" type=\"hidden\" class=\"form-control display_none\"  />\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtDesc" + cnt + "\" type=\"text\" disabled class=\"_copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"_copy _dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtUrl" + cnt + "\" type=\"text\" disabled class=\"_dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_Open" + cnt + "\" type=\"button\"   class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-folder-open\" ></i></button>\n\t\t                </div>\n\t                </td>\n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
         $("#div_Data").append(html);
         $("#btn_minus" + cnt).on('click', function () {
             DeleteRow(cnt);
@@ -278,7 +281,7 @@ var Profile;
         $("#btn_Open" + cnt).on('click', function () {
             window.open($("#txtUrl" + cnt).val().trim(), "_blank");
         });
-        $("#No_Row" + cnt + " :input").on('click', function () {
+        $("._copy").on('dblclick', function () {
             copyToClipboard(this.id);
         });
     }

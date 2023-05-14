@@ -24,6 +24,7 @@ namespace Profile {
     var btnAdd: HTMLButtonElement;
     var btnSave: HTMLButtonElement;
     var btnUpdate: HTMLButtonElement;
+    var btnUpload: HTMLButtonElement;
     var btnBack: HTMLButtonElement;
     var btnLogin: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
@@ -61,6 +62,7 @@ namespace Profile {
         btnAdd = document.getElementById("btnAdd") as HTMLButtonElement;
         btnSave = document.getElementById("btnSave") as HTMLButtonElement;
         btnUpdate = document.getElementById("btnUpdate") as HTMLButtonElement;
+        btnUpload = document.getElementById("btnUpload") as HTMLButtonElement;
         btnBack = document.getElementById("btnBack") as HTMLButtonElement;
         btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
         //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
@@ -84,14 +86,16 @@ namespace Profile {
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
+        btnUpload.onclick = () => { window.open("https://app.mediafire.com/myfiles", "_blank"); };
         //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
 
-        $("._copy").on('click', function () {
-            copyToClipboard(this.id); 
+        $("._copy").on('dblclick', function () {
+            copyToClipboard(this.id);
         });
-
+ 
+         
     }
     function InitializeGrid() {
         JGrid.ElementName = "JGrid";
@@ -372,12 +376,12 @@ namespace Profile {
 	                </td>
                     <td>
 		                <div class="form-group">
-                            <input id="txtDesc${cnt}" type="text" disabled class=" _dis form-control condisa" name=""   />
+                            <input id="txtDesc${cnt}" type="text" disabled class="_copy _dis form-control condisa" name=""   />
 		                </div>
 	                </td>
                     <td>
 		                <div class="form-group"> 
-                            <textarea id="txtRemars${cnt}" type="text"  disabled class="_dis form-control " style="height: 43px;" ></textarea>
+                            <textarea id="txtRemars${cnt}" type="text"  disabled class="_copy _dis form-control " style="height: 43px;" ></textarea>
 		                </div>
 	                </td>
                     <td>
@@ -403,14 +407,12 @@ namespace Profile {
         });
 
         $("#btn_Open" + cnt).on('click', function () {
-            window.open($("#txtUrl" + cnt).val().trim(), "_blank");
-             
-           
+            window.open($("#txtUrl" + cnt).val().trim(), "_blank");  
         });
-
-        $(`#No_Row${cnt} :input`).on('click', function () { 
-            copyToClipboard(this.id); 
-        }); 
+         
+        $("._copy").on('dblclick', function () {
+            copyToClipboard(this.id);
+        });
     }
 
     function AddNewRow() {
