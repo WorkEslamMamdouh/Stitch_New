@@ -58,7 +58,10 @@
     }
 
     .Text_right {
-        text-align: right;
+        text-align: left;
+        font-weight: bold;
+        color: #ffffff;
+        font-size: 20px;
     }
 
     .Text_left {
@@ -78,26 +81,31 @@
     .Delet {
         width: 0.1% !important;
     }
-       .Ser {
+
+    .Ser {
         width: 0.7% !important;
-    }    
-       .Decs {
-        width: 5% !important;
-    }    
-       .Rem {
-        width: 10% !important;
-    }   
-       .Url {
+    }
+
+    .Decs {
         width: 5% !important;
     }
-       .Ope {
+
+    .Rem {
+        width: 10% !important;
+    }
+
+    .Url {
+        width: 5% !important;
+    }
+
+    .Ope {
         width: 2% !important;
     }
 
-        
-
-</style>
-
+    .wid {
+        width: 417px !important;
+    }
+</style> 
 <body class="materialdesign">
     <div id="Pass" class="content-inner-all">
         <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
@@ -111,6 +119,7 @@
             </div>
             <div class="col-xs-12 col-lg-2 col-sm-12">
                 <input id="txtPassword" type="password" class="  form-control  " placeholder="Password" style="text-align: center;">
+   
             </div>
             <div class="col-xs-12 col-lg-12 col-sm-12">
             </div>
@@ -169,18 +178,18 @@
                 <br />
             </div>
             @*<div class="col-xs-12 col-lg-3 col-sm-12">
-                <button id="btnPage_Get_Views" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    جلب زيارات الواقع </button>
-            </div>
-            <div class="col-xs-12 col-lg-9 col-sm-12">
-                <textarea id="List_Url" style="height: 100%;width: 100%;"> </textarea>
-            </div>*@
+                    <button id="btnPage_Get_Views" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    جلب زيارات الواقع </button>
+                </div>
+                <div class="col-xs-12 col-lg-9 col-sm-12">
+                    <textarea id="List_Url" style="height: 100%;width: 100%;"> </textarea>
+                </div>*@
             <div class="col-xs-12">
                 <br />
             </div>
-            <div class="col-xs-12 col-lg-6 col-sm-12">
+            <div class="col-xs-6 col-lg-6 col-sm-6">
                 <button id="btnShow" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Show </button>
             </div>
-            <div class="col-xs-12 col-lg-6 col-sm-12">
+            <div class="col-xs-6 col-lg-6 col-sm-6">
                 <button id="btnAdd" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Add </button>
             </div>
 
@@ -225,10 +234,10 @@
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <button id="btnUpdate" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">     Update </button>
             </div>
-            <div class="col-xs-12 col-lg-6 col-sm-12">
+            <div class="col-xs-6 col-lg-6 col-sm-6">
                 <button id="btnBack" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning">     Back </button>
             </div>
-            <div class="col-xs-12 col-lg-6 col-sm-12">
+            <div class="col-xs-6 col-lg-6 col-sm-6">
                 <button id="btnSave" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Save </button>
             </div>
 
@@ -270,12 +279,6 @@
             </div>
             <div class="col-xs-12 col-lg-7 col-sm-12">
                 <input id="txtTitle" type="text" name="Title" class="_copy _dis form-control ">
-            </div> 
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Upload</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <button id="btnUpload" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">     Upload Files </button>
             </div>
 
             <div class="col-xs-12 col-lg-12 col-sm-12">
@@ -292,33 +295,37 @@
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br />
             </div>
-
-
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <button id="btnUpload" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info" style="background-color: #140087 !important;">     Upload Files </button>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
 
 
 
             @*<div class="inside-table my-4" id="divInputs">
-                <div class="">
-                    <table class="table table-borderless">
-                        <thead>
-                            <tr>
-                                <th style="width: 0.1%"></th>
-                                <th style="width: 0.7%;"> Ser</th>
-                                <th style="width: 5%"> Description</th>
-                                <th style="width: 10%"> Remark</th>
-                                <th style="width: 5%"> Url</th>
-                                <th style="width: 2%">Open</th>
+                    <div class="">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th style="width: 0.1%"></th>
+                                    <th style="width: 0.7%;"> Ser</th>
+                                    <th style="width: 5%"> Description</th>
+                                    <th style="width: 10%"> Remark</th>
+                                    <th style="width: 5%"> Url</th>
+                                    <th style="width: 2%">Open</th>
 
-                            </tr>
-                        </thead>
-                        <tbody id="div_Data"></tbody>
+                                </tr>
+                            </thead>
+                            <tbody id="div_Data"></tbody>
 
-                    </table>
-                    <div class="d-flex justify-content-start mr-1">
-                        <button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo"><i class="fa fa-plus"></i></button>
+                        </table>
+                        <div class="d-flex justify-content-start mr-1">
+                            <button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo"><i class="fa fa-plus"></i></button>
+                        </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
 
 
             <div class="bootstrap-table">
@@ -354,7 +361,7 @@
                     <div class="fixed-table-footer" style="display: none;">
                         <table><tbody><tr></tr></tbody></table>
                     </div><div class="fixed-table-pagination" style="display: none;"><div class="pull-left pagination-detail"><span class="pagination-info">Showing 6 to 0 of 0 rows</span><span class="page-list" style="display: none;"><span class="btn-group dropup"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="page-size">5</span> <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li role="menuitem"><a href="#">10</a></li></ul></span> rows per page</span></div><div class="pull-right pagination" style="display: none;"><ul class="pagination"><li class="page-pre"><a href="#">‹</a></li><li class="page-next"><a href="#">›</a></li></ul></div></div>
-                 
+
                 </div>
             </div>
 
@@ -367,6 +374,29 @@
 
     </div>
 
+    <div id="Upload" class="content-inner-all display_none">
+        <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <h1>Upload</h1>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <button id="btnBack_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning"> Back </button>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+            <div id="Page" class="col-xs-12 col-lg-12 col-sm-12">
+               
+            </div>
+  
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+        </div>
+    </div>
 
 
 

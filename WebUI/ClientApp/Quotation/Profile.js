@@ -18,6 +18,7 @@ var Profile;
     var btnSave;
     var btnUpdate;
     var btnUpload;
+    var btnBack_Up;
     var btnBack;
     var btnLogin;
     var btnAddDetails;
@@ -46,6 +47,7 @@ var Profile;
         btnSave = document.getElementById("btnSave");
         btnUpdate = document.getElementById("btnUpdate");
         btnUpload = document.getElementById("btnUpload");
+        btnBack_Up = document.getElementById("btnBack_Up");
         btnBack = document.getElementById("btnBack");
         btnAddDetails = document.getElementById("btnAddDetails");
         //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
@@ -66,7 +68,9 @@ var Profile;
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
-        btnUpload.onclick = function () { window.open("https://app.mediafire.com/myfiles", "_blank"); };
+        //btnUpload.onclick = Upload;
+        btnUpload.onclick = function () { window.open('https://app.mediafire.com/myfiles', "_blank"); };
+        btnBack_Up.onclick = function () { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
         //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
@@ -123,6 +127,13 @@ var Profile;
         ];
         //JGrid.Bind();
     }
+    function Upload() {
+        var Page = document.getElementById('Page');
+        Page.innerHTML = ' <iframe src="https://app.mediafire.com/" frameBorder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
+        $('#Pass').addClass('display_none');
+        $('#Page_Profile').addClass('display_none');
+        $('#Upload').removeClass('display_none');
+    }
     function btnPage_Get_Views_onclick() {
         debugger;
         //window.open('http://www.example.com?ReportID=1', '_blank');
@@ -163,15 +174,7 @@ var Profile;
         }
     }
     function btnLogin_onclick() {
-        //$('#Pass').addClass('display_none');
-        //$('#Page_Profile').removeClass('display_none');
-        //InitalizeControls();
-        //InitalizeEvents();
-        //txtDateFrom.value = DateStartMonth();
-        //txtDateTo.value = GetDate();
-        //InitializeGrid();
-        //btnShow_onclick();
-        if (txtPassword.value.trim() == "619619Aa619606") {
+        if (txtPassword.value.trim() == "619606") {
             $('#Pass').addClass('display_none');
             $('#Page_Profile').removeClass('display_none');
             InitalizeControls();
@@ -211,6 +214,8 @@ var Profile;
         CleanDetails();
         Enabled();
         Flag_IsNew = true;
+        CountGrid = 0;
+        $("#div_Data").html('');
     }
     function btnBack_onclick() {
         if (Flag_IsNew == true) {
@@ -273,7 +278,7 @@ var Profile;
     }
     function BuildControls(cnt) {
         var html = "";
-        html = "<tr id= \"No_Row" + cnt + "\" class=\"animated animate slideInDown\">\n                    <input id=\"txtCollectDetailID" + cnt + "\" type=\"hidden\" class=\"form-control display_none\"  />\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtDesc" + cnt + "\" type=\"text\" disabled class=\"_copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"_copy _dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtUrl" + cnt + "\" type=\"text\" disabled class=\"_dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_Open" + cnt + "\" type=\"button\"   class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-folder-open\" ></i></button>\n\t\t                </div>\n\t                </td>\n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
+        html = "<tr id= \"No_Row" + cnt + "\" class=\"animated animate slideInDown\">\n                    <input id=\"txtCollectDetailID" + cnt + "\" type=\"hidden\" class=\"form-control display_none\"  />\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtDesc" + cnt + "\" type=\"text\" disabled class=\"wid _copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"wid _copy _dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtUrl" + cnt + "\" type=\"text\" disabled class=\"wid _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_Open" + cnt + "\" type=\"button\"   class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-folder-open\" ></i></button>\n\t\t                </div>\n\t                </td>\n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
         $("#div_Data").append(html);
         $("#btn_minus" + cnt).on('click', function () {
             DeleteRow(cnt);

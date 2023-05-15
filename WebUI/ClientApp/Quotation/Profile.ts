@@ -25,6 +25,7 @@ namespace Profile {
     var btnSave: HTMLButtonElement;
     var btnUpdate: HTMLButtonElement;
     var btnUpload: HTMLButtonElement;
+    var btnBack_Up: HTMLButtonElement;
     var btnBack: HTMLButtonElement;
     var btnLogin: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
@@ -63,6 +64,7 @@ namespace Profile {
         btnSave = document.getElementById("btnSave") as HTMLButtonElement;
         btnUpdate = document.getElementById("btnUpdate") as HTMLButtonElement;
         btnUpload = document.getElementById("btnUpload") as HTMLButtonElement;
+        btnBack_Up = document.getElementById("btnBack_Up") as HTMLButtonElement;
         btnBack = document.getElementById("btnBack") as HTMLButtonElement;
         btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
         //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
@@ -86,7 +88,9 @@ namespace Profile {
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
-        btnUpload.onclick = () => { window.open("https://app.mediafire.com/myfiles", "_blank"); };
+        //btnUpload.onclick = Upload;
+        btnUpload.onclick = () => { window.open('https://app.mediafire.com/myfiles', "_blank");  };
+        btnBack_Up.onclick = () => { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
         //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
@@ -149,6 +153,20 @@ namespace Profile {
 
         ];
         //JGrid.Bind();
+    }
+
+    function Upload() {
+
+
+
+        var Page = document.getElementById('Page');
+        Page.innerHTML = ' <iframe src="https://app.mediafire.com/" frameBorder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
+
+
+        $('#Pass').addClass('display_none');
+        $('#Page_Profile').addClass('display_none');
+        $('#Upload').removeClass('display_none');
+
     }
 
     function btnPage_Get_Views_onclick() {
@@ -215,18 +233,9 @@ namespace Profile {
         }
 
     }
-    function btnLogin_onclick() {
-        //$('#Pass').addClass('display_none');
-        //$('#Page_Profile').removeClass('display_none');
+    function btnLogin_onclick() { 
 
-        //InitalizeControls();
-        //InitalizeEvents();
-        //txtDateFrom.value = DateStartMonth();
-        //txtDateTo.value = GetDate();
-        //InitializeGrid();
-        //btnShow_onclick();
-
-        if (txtPassword.value.trim() == "619619Aa619606") {
+        if (txtPassword.value.trim() == "619606") {
 
             $('#Pass').addClass('display_none');
             $('#Page_Profile').removeClass('display_none');
@@ -281,7 +290,8 @@ namespace Profile {
         CleanDetails();
         Enabled();
         Flag_IsNew = true;
-
+        CountGrid = 0;
+        $("#div_Data").html('');
 
     }
     function btnBack_onclick() {
@@ -376,17 +386,17 @@ namespace Profile {
 	                </td>
                     <td>
 		                <div class="form-group">
-                            <input id="txtDesc${cnt}" type="text" disabled class="_copy _dis form-control condisa" name=""   />
+                            <input id="txtDesc${cnt}" type="text" disabled class="wid _copy _dis form-control condisa" name=""   />
 		                </div>
 	                </td>
                     <td>
 		                <div class="form-group"> 
-                            <textarea id="txtRemars${cnt}" type="text"  disabled class="_copy _dis form-control " style="height: 43px;" ></textarea>
+                            <textarea id="txtRemars${cnt}" type="text"  disabled class="wid _copy _dis form-control " style="height: 43px;" ></textarea>
 		                </div>
 	                </td>
                     <td>
 		                <div class="form-group">
-                            <input id="txtUrl${cnt}" type="text" disabled class="_dis form-control" name=""  />
+                            <input id="txtUrl${cnt}" type="text" disabled class="wid _dis form-control" name=""  />
 		                </div>
 	                </td>
                     <td>
