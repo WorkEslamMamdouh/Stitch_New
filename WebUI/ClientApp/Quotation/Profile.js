@@ -239,6 +239,7 @@ var Profile;
         txtTrDate.value = Selecteditem.TrDate;
         GetDetails(Selecteditem.ID);
         Flag_IsNew = false;
+        btnUpdate.focus();
     }
     //***********************************************Grid Controls*******************************************//
     function GetDetails(MasterID) {
@@ -344,6 +345,7 @@ var Profile;
         $('#btnBack').addClass('display_none');
         $('#btnSave').addClass('display_none');
         $('#btnUpdate').removeClass('display_none');
+        btnUpdate.focus();
     }
     function CleanDetails() {
         $('#Div_control').removeClass('display_none');

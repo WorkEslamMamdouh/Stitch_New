@@ -21,7 +21,7 @@ namespace Notes {
     function Tabs_click() {
 
         $('body').on('click', '.scrollable-tabs li', function () {
-            debugger
+            debugger 
             $('li').removeClass('actTab');
             $('.scrollable-tabs li a.active').removeClass('active');
 

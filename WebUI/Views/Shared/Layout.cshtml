@@ -111,7 +111,18 @@
  
     <script src="~/ClientApp/App.js"></script>
     <script src="~/ClientApp/EslamGrid.js"></script>
-
+    <style>
+        .back {
+            font-size: 35px !important;
+            color: #d70000;
+        }
+        .backposition {
+            position: absolute;
+            left: 1%;
+            top: 2%;
+            z-index: 99999 !important;
+        }
+    </style>
 </head>
 
 <body id="main-menu" class=" materialdesign mini-navbar">
@@ -119,6 +130,9 @@
     </div>
     <input type="hidden" id="GetActionUrl" name="name" value="@Url.Action("GetActionUrl","ClientTools")" />
     <input type="hidden" id="GetAPIUrl" name="name" value="@System.Configuration.ConfigurationManager.AppSettings["ServiceUrl"]" />
+
+ 
+    <a id="layout_Back" onclick="history.back()" class="backposition" data-toggle="tab" title="Back Page" href=""><i class="fa fa-backward back"></i></a>
 
     <div id="cont" class="divcont">
         @RenderBody()

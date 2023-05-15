@@ -20,10 +20,10 @@
         background-color: white !important;
         font-weight: bold;
         border-radius: 19px 19px 0 0;
-        cursor:pointer;
+        cursor: pointer;
     }
 
-    .nav-item { 
+    .nav-item {
         cursor: pointer !important;
     }
 
@@ -52,11 +52,21 @@
         font-size: 23px !important;
         color: wheat;
     }
+
     .display_none {
         display: none !important;
     }
+
+    .backposition {
+        position: absolute;
+        left: 0% !important;
+        top: 0% !important;
+        z-index: 99999 !important;
+    }
 </style>
 <link href="~/NewStyle/css/Taps.css" rel="stylesheet" />
+
+
 <body class="materialdesign">
 
     @*<table class="wrapper">
@@ -68,10 +78,12 @@
     <div class="responsive__tabs">
         <!-- Nav tabs -->
         <ul id="label_Tab" class="scrollable-tabs ">
-
+            <li id="Back" onclick="history.back()" class="nav-item">
+                <a id="Back" class="nav-link" onclick="history.back()" data-toggle="tab" href=""><i id="Back" onclick="history.back()" class="fa fa-backward back"></i></a>
+            </li>
             <li id="App_Tap" class=""><a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a></li>
 
-           
+
 
 
 
@@ -81,9 +93,9 @@
         <!-- Tab panes -->
         <div id="Area_Tab" class="tab-content">
 
-            
 
-           
+
+
         </div>
     </div>
 
@@ -98,16 +110,19 @@
     //    console.log($(this).html())
     //    if ($(this).html() != '<a class=" " data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>') {
 
-    //        $(this).addClass('actTab'); 
+    //        $(this).addClass('actTab');
     //        let id_Remark = $(this).attr('Data_Remark');
 
     //        setTimeout(function () { $('#' + id_Remark + '').focus(); }, 150);
     //    }
-        
-         
+
+
     //});
 </script>
 <script src="~/ClientApp/App.js"></script>
 <script src="~/ClientApp/SystemTools.js"></script>
 <script src="~/ClientApp/Shared.js"></script>
 <script src="~/ClientApp/Quotation/Notes.js"></script>
+<script>
+    $('#layout_Back').addClass('display_none')
+</script>
