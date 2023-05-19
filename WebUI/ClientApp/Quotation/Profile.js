@@ -39,6 +39,11 @@ var Profile;
         btnLogin.onclick = btnLogin_onclick;
         txtPassword.focus();
         Event_key('Enter', 'txtPassword', 'btnLogin');
+        var pass = sessionStorage.getItem("EslamPassword");
+        if (pass.trim() != '') {
+            txtPassword.value = pass;
+            btnLogin_onclick();
+        }
     }
     Profile.InitalizeComponent = InitalizeComponent;
     function InitalizeControls() {
@@ -68,7 +73,7 @@ var Profile;
         btnBack.onclick = btnBack_onclick;
         btnUpdate.onclick = btnUpdate_onclick;
         btnAddDetails.onclick = AddNewRow;
-        btnUpload.onclick = Upload;
+        //btnUpload.onclick = Upload;
         //btnUpload.onclick = () => { window.open('https://app.mediafire.com/myfiles', "_blank");  };
         btnBack_Up.onclick = function () { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
         //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
@@ -130,8 +135,8 @@ var Profile;
     function Upload() {
         //var Page = document.getElementById('Page');
         //Page.innerHTML = ' <iframe src="https://app.mediafire.com/" frameBorder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
-        var newWindow = open('https://app.mediafire.com/myfiles', 'example', 'width=800,height=800');
-        newWindow.focus();
+        //let newWindow = open('https://app.mediafire.com/myfiles', 'example', 'width=800,height=800')
+        //newWindow.focus();
         //$('#Pass').addClass('display_none');
         //$('#Page_Profile').addClass('display_none');
         //$('#Upload').removeClass('display_none');
@@ -185,6 +190,7 @@ var Profile;
             txtDateTo.value = GetDate();
             InitializeGrid();
             btnShow_onclick();
+            sessionStorage.setItem("EslamPassword", "619606");
         }
         else {
             Errorinput(txtPassword);

@@ -108,14 +108,16 @@
     @Scripts.Render("~/Bundles/AppScript4")
 
 
- 
+
     <script src="~/ClientApp/App.js"></script>
     <script src="~/ClientApp/EslamGrid.js"></script>
+    <link href="~/NewStyle/animate.min.css" rel="stylesheet" />
     <style>
         .back {
             font-size: 35px !important;
             color: #d70000;
         }
+
         .backposition {
             position: absolute;
             left: 1%;
@@ -126,10 +128,31 @@
         .back:hover {
             color: #008f8f;
         }
+
         .back:active {
             color: #008f8f;
         }
 
+
+        .Refresh {
+            font-size: 35px !important;
+            color: #89dc00;
+        }
+
+        .Refreshposition {
+            position: absolute;
+            right: 3%;
+            top: 2%;
+            z-index: 99999 !important;
+        }
+
+        .Refresh:hover {
+            color: #008f8f;
+        }
+
+        .Refresh:active {
+            color: #008f8f;
+        }
     </style>
 </head>
 
@@ -138,9 +161,12 @@
     </div>
     <input type="hidden" id="GetActionUrl" name="name" value="@Url.Action("GetActionUrl","ClientTools")" />
     <input type="hidden" id="GetAPIUrl" name="name" value="@System.Configuration.ConfigurationManager.AppSettings["ServiceUrl"]" />
+    <input type="hidden" id="GetPass" name="name" value="" />
 
  
-    <a id="layout_Back" onclick="history.back()" class="backposition" data-toggle="tab" title="Back Page" href=""><i class="fa fa-backward back"></i></a>
+    <a id="layout_Back" onclick="history.back()" class="backposition animate__animated animate__backInDown" data-toggle="tab" title="Back Page" href=""><i class="fa fa-backward back"></i></a>
+
+    <a id="layout_Refresh" onclick="location.reload()" class="Refreshposition animate__animated animate__backInDown" data-toggle="tab" title="Refresh" href=""><i class="fa fa-refresh Refresh"></i></a>
 
     <div id="cont" class="divcont">
         @RenderBody()
@@ -193,5 +219,29 @@
 
     <link href="~/NewStyle/LodBut/font-awesome.min.css" rel="stylesheet" />
     <script src="~/NewStyle/LodBut/Loder.js"></script>
+    <script>
+
+        //window.onbeforeunload = confirmExit;
+        //function confirmExit() {
+        //    alert("confirm exit is being called");
+        //    return false;
+        //}
+        //if (myWindow.closed) {
+        //    callback();
+        //    return;
+        //}
+        //window.onunload = function () { alert("Bye now!"); }
+        //$(window).unload(function () { alert("Bye now!"); });
+
+
+
+        $(window).on("load", function (e) {
+            //alert($('#GetPass').val())
+        });
+
+         
+       
+
+    </script>
 </body>
 </html>
