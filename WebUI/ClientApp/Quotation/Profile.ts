@@ -60,6 +60,9 @@ namespace Profile {
             txtPassword.value = pass;
             btnLogin_onclick();
         }
+        else {
+            $('#Pass').removeClass('display_none'); 
+        }
 
     }
 
@@ -383,7 +386,7 @@ namespace Profile {
     function BuildControls(cnt: number) {
 
         var html = "";
-        html = `<tr id= "No_Row${cnt}" class="animated animate slideInDown">
+        html = `<tr id= "No_Row${cnt}" class="">
                     <input id="txtCollectDetailID${cnt}" type="hidden" class="form-control display_none"  />
                     <td>
 		                <div class="form-group">
