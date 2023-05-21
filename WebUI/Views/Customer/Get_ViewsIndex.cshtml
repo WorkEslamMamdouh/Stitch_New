@@ -1,467 +1,160 @@
-﻿<!DOCTYPE HTML>
-<html>
-<head>
-    <title>html2pdf Test - Pagebreaks</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+﻿
+@{
 
-    <style type="text/css">
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
 
-  
+<style>
 
-        body {
-            color: #777777;
-            font-size: 16px;
-            line-height: 30px;
-            font-family: 'Archivo', sans-serif;
-        }
+    .des {
+        width: 22% !important;
+    }
 
-        .copyright-text p {
-            color: #ffffff;
-            font-size: 14px;
-            margin: 0;
-        }
+    .uom {
+        width: 11% !important;
+    }
 
-        * {
-            margin: 0px;
-            padding: 0px;
-            outline: none;
-            font-size: 100%;
-        }
+    .Zero {
+        width: 0% !important;
+    }
 
-        .row {
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            margin-right: -15px;
-            margin-left: -15px;
-        }
+    .Price {
+        width: 9% !important;
+    }
 
-        .ptb-60 {
-            padding-top: 20px;
-            padding-bottom: 50px;
-        }
+    .odd {
+        background-color: lightcoral;
+        font-weight: bold;
+        font-size: 16px;
+        color: black;
+    }
 
-        *,
-        ::after,
-        ::before {
-            box-sizing: border-box;
-        }
+    .even {
+        background-color: #fff2ce;
+        font-weight: bold;
+        font-size: 16px;
+        color: black;
+    }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            color: #222222;
-            font-family: 'Lora', serif;
-            margin: 0;
-            font-size: 18px;
-            line-height: 30px;
-        }
+    tr {
+        background-color: #b9b9b9;
+        color: black;
+    }
 
+    .px-5 {
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+    }
 
-        .h1,
-        h1 {
-            font-size: 2.5rem;
-        }
+    .px-Top_5 {
+        padding-top: 2px !important;
+    }
+</style>
+<body class="materialdesign">
+    <div class="content-inner-all animate__animated animate__backInLeft">
+        <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
-        .col-6 {
-            -ms-flex: 0 0 50%;
-            flex: 0 0 50%;
-            max-width: 50%;
-        }
-
-        .col,
-        .col-1,
-        .col-10,
-        .col-11,
-        .col-12,
-        .col-2,
-        .col-3,
-        .col-4,
-        .col-5,
-        .col-6,
-        .col-7,
-        .col-8,
-        .col-9,
-        .col-auto,
-        .col-lg,
-        .col-lg-1,
-        .col-lg-10,
-        .col-lg-11,
-        .col-lg-12,
-        .col-lg-2,
-        .col-lg-3,
-        .col-lg-4,
-        .col-lg-5,
-        .col-lg-6,
-        .col-lg-7,
-        .col-lg-8,
-        .col-lg-9,
-        .col-lg-auto,
-        .col-md,
-        .col-md-1,
-        .col-md-10,
-        .col-md-11,
-        .col-md-12,
-        .col-md-2,
-        .col-md-3,
-        .col-md-4,
-        .col-md-5,
-        .col-md-6,
-        .col-md-7,
-        .col-md-8,
-        .col-md-9,
-        .col-md-auto,
-        .col-sm,
-        .col-sm-1,
-        .col-sm-10,
-        .col-sm-11,
-        .col-sm-12,
-        .col-sm-2,
-        .col-sm-3,
-        .col-sm-4,
-        .col-sm-5,
-        .col-sm-6,
-        .col-sm-7,
-        .col-sm-8,
-        .col-sm-9,
-        .col-sm-auto,
-        .col-xl,
-        .col-xl-1,
-        .col-xl-10,
-        .col-xl-11,
-        .col-xl-12,
-        .col-xl-2,
-        .col-xl-3,
-        .col-xl-4,
-        .col-xl-5,
-        .col-xl-6,
-        .col-xl-7,
-        .col-xl-8,
-        .col-xl-9,
-        .col-xl-auto {
-            position: relative;
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-        }
-
-        .col-12 {
-            -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
-            max-width: 100%;
-        }
-
-        .table-responsive {
-            width: 100%;
-        }
-
-        .col-2 {
-            -ms-flex: 0 0 16.666667%;
-            flex: 0 0 16.666667%;
-            max-width: 16.666667%;
-        }
-
-        .col-10 {
-            -ms-flex: 0 0 83.333333%;
-            flex: 0 0 83.333333%;
-            max-width: 83.333333%;
-        }
-
-        p {
-            margin-top: 0;
-        }
-         
-
-        .container {
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .title {
-            background-color: #cfcfcf;
-            margin-top: 5px;
-        }
-
-        .ptb-60 {
-            padding-top: 60px;
-            padding-bottom: 60px;
-        }
-
-        .title h3 {
-            color: #000;
-            font-size: 17px;
-            padding-left: 5px;
-            margin-bottom: 0px;
-        }
-
-        #customers td,
-        #customers th {
-            border: 1px solid #ddd;
-            color: #000 !important;
-            text-align: center;
-        }
-
-        body {
-            size: 7in 9.25in;
-            margin: 10mm 16mm 27mm 16mm;
-        }
- 
-
-        .judgespdf {
-            border: 3px solid #000;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
-        }
-
-            .judgespdf h3 {
-                color: #000;
-                font-size: 20px;
-                font-style: italic;
-            }
-
-            .judgespdf p {
-                margin-top: 0;
-                margin-bottom: 0;
-                color: rgb(99, 99, 99);
-            }
-
-        p {
-            color: rgb(99, 99, 99);
-        }
-
-        .number {
-            align-items: center;
-            text-align: center;
-            top: 20px;
-        }
-
-        strong {
-            color: #000;
-        }
-
-        .mt-10 {
-            margin-top: 10px;
-        }
-
-        .line {
-            line-height: 10px;
-        }
-
-        #customers th {
-            padding-top: 0px;
-            padding-bottom: 0px;
-            text-align: center;
-            background-color: #eee;
-        }
-
-        #customers {
-            line-height: 21px !important;
-            font-family: Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        .table-responsive {
-            display: flex;
-            border-bottom: 3px solid #000;
-            background: url('assets/images/102-removebg-preview.png') #eee no-repeat center 15px;
-            background-size: contain;
-        }
-
-        .descpdf {
-            text-align: center;
-            padding: 5px;
-        }
-
-            .descpdf p {
-                color: #000;
-            }
-
-        .copyright-text p {
-            color: #000;
-        }
-
-            .copyright-text p a {
-                color: #000;
-            }
-        /* Avoid unexpected sizing on all elements. */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* CSS styling for before/after/avoid. */
-        .before {
-            page-break-before: always;
-        }
-
-        .after {
-            page-break-after: always;
-        }
-
-        .avoid {
-            page-break-inside: avoid;
-        }
-
-        /* Big and bigger elements. */
-        .big {
-            height: 10.9in;
-            background-color: yellow;
-            border: 1px solid black;
-        }
-
-        .fullpage {
-            height: 11in;
-            background-color: fuchsia;
-            border: 1px solid black;
-        }
-
-        .bigger {
-            height: 11.1in;
-            background-color: aqua;
-            border: 1px solid black;
-        }
-
-        /* Table styling */
-        table {
-            border-collapse: collapse;
-        }
-
-        td {
-            border: 1px solid black;
-        }
-    </style>
-</head>
-
-<body style="background-color: black;">
-    <!-- Different options. -->
-    <!--<select id="mode">
-        <option value="avoid-all">Avoid-all</option>
-        <option value="css">CSS</option>
-        <option value="legacy">Legacy</option>
-        <option value="specify">Specified elements (using before/after/avoid)</option>
-    </select>-->
-    <!-- Button to generate PDF. -->
-
-    <div id=" " style="text-align:center">
-        <h1 style="color: antiquewhite;">جلب زيارات للمواقع </h1>
-        <br />
-        <button id="labl_WebNum" onclick="" style="font-size: 30px;font-weight: bold;background-color: #ffffff00;border-radius: 2.5rem;
-     padding: 1.25rem 2rem;color: red;border-color: red;     cursor: pointer;">
-            👉👉👉👉   الموقع ( 1 )   👈👈👈👈
-        </button>
-    </div>
-
-    <!-- Div to capture. -->
-
-
-    <div id=" " style="text-align:center">
-        <br />
-        <button id="Butt" onclick="test()" style="font-size: 30px;font-weight: bold;background-color: #ffffff00;border-radius: 2.5rem;
-     padding: 1.25rem 2rem;color: red;border-color: red;    cursor: pointer;">
-            👉👉👉👉   الــكـود   👈👈👈👈
-        </button>
-        <br />
-        <br />
-        <h1 id="Code"></h1>
-        <div id="root">
-            <div id="example">
-                <div class="page-container hidden-on-narrow">
-                    <div class="pdf-page size-a4">
-                        <page id="Page" size="A4" class="">
-                            <!--<iframe src="https://www.fiverr.com/muhammadmoezz/make-professional-ecommerce-web-using-carrd-and-wordpress?context_referrer=subcategory_listing&source=pagination&ref_ctx_id=c0d07b28b4295a8b79478315487ac4fd&pckg_id=1&pos=28&context_type=rating&funnel=c0d07b28b4295a8b79478315487ac4fd&ref=website_type%3Ae_commerce&imp_id=bc75526d-0ce0-4f68-aee9-9b0e67d806e0" frameBorder="0" scrolling="auto" width="1300" height="900" style="margin-left: 7%;"></iframe>-->
-                        </page>
-                    </div>
+            <form id="form" class="mx-auto my-5 shadow p-2" method="POST">
+                <div class="col-xs-12 col-lg-12 col-sm-12">
+                    <h1 class="col-xs-12 col-lg-12 col-sm-12">Work</h1>
                 </div>
-            </div>
+
+                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
+                    <label>Url 1 </label>
+                </div>
+                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
+                    <input id="Url_1" type="text" class="form-control " value=""  name="Url1" placeholder="Url" />
+                </div>
+
+                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
+                    <label>Url 2 </label>
+                </div>
+                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
+                    <input id="Url_2" type="text" class="form-control " value="" name="Url2" placeholder="Url" />
+                </div>
+
+                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
+                    <label>Url 3 </label>
+                </div>
+                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
+                    <input id="Url_3" type="text" class="form-control " value="" name="Url3" placeholder="Url" />
+                </div>
+                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
+                    <label>Url 4 </label>
+                </div>
+                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
+                    <input id="Url_4" type="text" class="form-control " value="" name="Url4" placeholder="Url" />
+                </div>
+                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
+                    <label>Url 5 </label>
+                </div>
+                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
+                    <input id="Url_5" type="text" class="form-control " value="" name="Url5" placeholder="Url" />
+                </div>      
+                <div class="col-xs-12 col-lg-12 col-sm-12 px-Top_5">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
 
         </div>
+
+
+
+
+
+
+
+
     </div>
 
 
-    <!-- Include html2pdf bundle. -->
-    <script src="html2pdf.bundle.js"></script>
+
 
     <script>
-        //test();
+        const url = "https://script.google.com/macros/s/AKfycbwuAsxh_U6Vcq7806hgmtm5SnhwFwOtDXsyyUFDQ3pH3v4pmtNZJYPozgrF8UuAv9qQ/exec" // enter your public ('access' - 'anyone') deployment URL (NOT test deployment!)
+        document.getElementById('form').action = url;
 
-        document.title = " الحصول علي الكود ";
-        var Num = 10;
-        var Num_Page = 0;
-        function test() {
+        // fetching the data from each column in the sheet
+        // then populating the respective datalist
+        fetch(`${url}?header=Url1`)
+            .then((response) => response.json())
+            .then(({ data }) => {
+                debugger
+                $('#Url_1').val(data[data.length - 1]) 
+            })
+            .catch((error) => console.error('!!!!!!!!', error));
+
+        fetch(`${url}?header=Url2`)
+            .then((response) => response.json())
+            .then(({ data }) => {
+                $('#Url_2').val(data[data.length - 1]) 
+            })
+            .catch((error) => console.error('!!!!!!!!', error));
+
+        fetch(`${url}?header=Url3`)
+            .then((response) => response.json())
+            .then(({ data }) => {
+                $('#Url_3').val(data[data.length - 1]) 
+            })
+            .catch((error) => console.error('!!!!!!!!', error));
+
+       
+        fetch(`${url}?header=Url4`)
+            .then((response) => response.json())
+            .then(({ data }) => {
+                $('#Url_4').val(data[data.length - 1]) 
+            })
+            .catch((error) => console.error('!!!!!!!!', error));
 
 
-            var Url_Data = localStorage.getItem("Url_Data");
+        fetch(`${url}?header=Url5`)
+            .then((response) => response.json())
+            .then(({ data }) => {
+                $('#Url_5').val(data[data.length - 1])
+            })
+            .catch((error) => console.error('!!!!!!!!', error));
 
-            alert(Url_Data)
-
-            var Page = document.getElementById('Page');
-
-            Page.innerHTML = ' <iframe src="~/index.Html" frameBorder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
-
-            //var labl_WebNum = document.getElementById('labl_WebNum');
-            //var Butt = document.getElementById('Butt');
-            //var Page = document.getElementById('Page');
-            //Butt.innerHTML = "" + (Num == 11 ? 10 : Num) + " ....";
-            //labl_WebNum.innerHTML = "👉👉👉👉   الموقع ( " + (Num_Page) + " ---> 5 )   👈👈👈👈";
-            //document.title = "( " + (Num == 11 ? 10 : Num) + " )";
-
-            //setTimeout(function () {
-            //    Num--;
-
-            //    if (Num > 0) {
-            //        test();
-            //    }
-            //    else {
-            //        Butt.innerHTML = " 👇👇👇👇👇👇👇👇👇";
-            //        document.title = " الحصول علي الكود ";
-            //        Num = 11
-
-            //        var Buttqq = document.getElementById('Butt');
-            //        Buttqq.click();
-            //    }
-
-            //}, 1700);
-
-            //if (Num == 10) {
-            //    Num_Page++;
-            //    let PageUrl = "";
-            //    if (Num_Page == 1) {
-            //        PageUrl = "https://bit.ly/3KDPUBk";
-            //    }
-            //    if (Num_Page == 2) {
-            //        PageUrl = "https://bit.ly/3nb1dJy";
-            //    }
-            //    if (Num_Page == 3) {
-            //        PageUrl = "https://bit.ly/44aqT9J";
-            //    }
-            //    if (Num_Page == 4) {
-            //        PageUrl = "https://bit.ly/44czbOk";
-            //    }
-            //    if (Num_Page == 5) {
-            //        PageUrl = "https://bit.ly/41X3zdW";
-            //    }
-            //    if (Num_Page == 6) {
-            //        location.reload();
-            //    }
-            //    Page.innerHTML = ' <iframe src="' + PageUrl + '" frameBorder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
-            //}
-
-        }
-
-        var Butt = document.getElementById('Butt');
-        Butt.click();
-
-         
     </script>
-</body>
-</html>
+
+</body> 

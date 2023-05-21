@@ -11,11 +11,11 @@ class SharedWork {
     public static SharedNavText: HTMLInputElement;
     public static UserFavorits: Array<FavModules> = new Array<FavModules>();
 
-   
+    
 
    
     public static set PageIndex(value: number) {
-
+        
         //this.SetClientSession("PageIndex", value);
         localStorage.setItem("PageIndex", value.toString());
     }
