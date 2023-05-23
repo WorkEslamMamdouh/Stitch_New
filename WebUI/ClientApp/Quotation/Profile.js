@@ -39,13 +39,15 @@ var Profile;
         btnLogin.onclick = btnLogin_onclick;
         txtPassword.focus();
         Event_key('Enter', 'txtPassword', 'btnLogin');
+        debugger;
         var pass = sessionStorage.getItem("EslamPassword");
-        if (pass.trim() != '') {
+        if (pass != null) {
             txtPassword.value = pass;
             btnLogin_onclick();
         }
         else {
             $('#Pass').removeClass('display_none');
+            txtPassword.focus();
         }
     }
     Profile.InitalizeComponent = InitalizeComponent;

@@ -55,13 +55,15 @@ namespace Profile {
 
         Event_key('Enter', 'txtPassword', 'btnLogin');
 
+        debugger
         let pass = sessionStorage.getItem("EslamPassword");
-        if (pass.trim() != '') {
+        if (pass != null) {
             txtPassword.value = pass;
             btnLogin_onclick();
         }
         else {
-            $('#Pass').removeClass('display_none'); 
+            $('#Pass').removeClass('display_none');
+            txtPassword.focus();
         }
 
     }
