@@ -118,6 +118,16 @@ var Money_Wallet;
     }
     function AppTans(Type) {
         debugger;
+        if ($('#txtRemark').val().trim() == '') {
+            Errorinput($('#txtRemark'));
+            //alert('برجاء ادخال الملاخظات')
+            return false;
+        }
+        if ($('#txtAmount').val().trim() == '') {
+            Errorinput($('#txtAmount'));
+            //alert('برجاء ادخال المبلغ')
+            return false;
+        }
         Model = new DataAll();
         DocumentActions.AssignToModel(Model); //Insert Update 
         Model.TrDate = DateFormatRep($('#txtdate').val());
@@ -150,13 +160,13 @@ var Money_Wallet;
         Model = new DataAll();
         Model.ID = ID;
         var Data = new Send_Data();
-        Data.ID = Number($('#txtTrNo').val());
+        Data.ID = ID;
         Data.Name_Txt_Master = "Catch_Receipt";
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'd';
         debugger;
         $.ajax({
-            url: Url.Action("Update_Data", "Profile"),
+            url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
             dataType: 'json',
             async: false,
@@ -173,7 +183,7 @@ var Money_Wallet;
         debugger;
         var MaxID = AllDisplay[0].ID;
         $('#txtTrNo').val(MaxID + 1);
-        $('#TrNoLab').html('TrNo ( ' + MaxID + 1 + ' )');
+        $('#TrNoLab').html('TrNo ( ' + (Number(MaxID) + 1) + ' )');
         $('#TypeSours').val('Cash');
         $('#txtRemark').val('');
         $('#txtdate').val(GetDate());
