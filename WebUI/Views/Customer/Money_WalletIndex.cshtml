@@ -73,7 +73,7 @@
 
     .Respon_width {
         width: 30%;
-        font-size: 2vw;
+        font-size: 4.6vw;
     }
 
 
@@ -86,6 +86,11 @@
         color: #02a9a9 !important;
     }
 </style>
+<script>
+    $('#layout_Back').addClass('display_none')
+    $('#layout_Refresh').addClass('display_none')
+</script>
+
 <link href="~/NewStyle/css/Taps.css" rel="stylesheet" />
 
 
@@ -119,15 +124,15 @@
             </li>
 
             <li id="a_Expans" class="nav-item actTab active Respon_width" data_remark="tab_0_Remark">
-                <a id="a_Expans" class="nav-link" data-toggle="tab" href="#Tab_0" aria-expanded="true">مصروفات يومية</a>
+                <a id="a_Expans" class="nav-link" data-toggle="tab" href="#Tab_0" aria-expanded="true">مصروفات  </a>
             </li>
 
             <li id="a_Resive" class="nav-item Respon_width" data_remark="tab_1_Remark">
-                <a id="a_Resive" class="nav-link" data-toggle="tab" href="#Tab_1"> ايرادات يومية</a>
+                <a id="a_Resive" class="nav-link" data-toggle="tab" href="#Tab_1"> ايرادات  </a>
             </li>
 
             <li id="a_View" class="nav-item Respon_width" data_remark="tab_2_Remark">
-                <a id="a_View" class="nav-link" data-toggle="tab" href="#Tab_2"> تقارير الماليات</a>
+                <a id="a_View" class="nav-link" data-toggle="tab" href="#Tab_2">  الماليات</a>
             </li>
 
             <li id="App_Ref" onclick="location.reload()" class="">
@@ -154,7 +159,7 @@
         </div>
 
         <div class="col-xs-12 col-lg-6 col-sm-12 ">
-            <label id="BalanceLab" >All Balance ( 0 )</label>
+            <label id="BalanceLab">All Balance ( 0 )</label>
         </div>
 
         <!-- Tab panes -->
@@ -270,7 +275,3 @@
 </script>
 @*<script src="~/ClientApp/Quotation/Notes.js"></script>*@
 <script src="~/ClientApp/Quotation/Money_Wallet.js"></script>
-<script>
-    $('#layout_Back').addClass('display_none')
-    $('#layout_Refresh').addClass('display_none')
-</script>

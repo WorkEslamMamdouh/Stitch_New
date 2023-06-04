@@ -168,7 +168,7 @@ namespace Money_Wallet {
         debugger
 
         if (flagSave == 1) {
-            setTimeout(function () { flagSave = 0; }, 1000);
+            setTimeout(function () { flagSave = 0; }, 800);
             
             return false
         }

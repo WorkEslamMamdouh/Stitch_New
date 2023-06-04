@@ -122,7 +122,7 @@ var Money_Wallet;
     function AppTans(Type) {
         debugger;
         if (flagSave == 1) {
-            setTimeout(function () { flagSave = 0; }, 1000);
+            setTimeout(function () { flagSave = 0; }, 800);
             return false;
         }
         if ($('#txtRemark').val().trim() == '') {
