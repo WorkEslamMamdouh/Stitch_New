@@ -20,12 +20,7 @@ a {
     text-decoration: none;
     font-weight: bold;
 }
-    &:hover, &.active
-
-{
-    background-color: #777;
-}
-
+ 
 
 
 body {

@@ -1,0 +1,227 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<style>
+
+    textarea {
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .active {
+        /*background-color: white;*/
+        font-weight: bold;
+    }
+
+    .actTab {
+        background-color: #ebebeb !important;
+        font-weight: bold;
+        border-radius: 19px 19px 0 0;
+        cursor: pointer;
+    }
+
+    .nav-item {
+        cursor: pointer !important;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+
+    .Add {
+        font-size: 23px !important;
+        color: wheat;
+    }
+
+    .display_none {
+        display: none !important;
+    }
+
+    .backposition {
+        position: absolute;
+        left: 0% !important;
+        top: 0% !important;
+        z-index: 99999 !important;
+    }
+
+    .Refreshposition {
+        position: absolute;
+        right: 1%;
+        top: 12.5%;
+        z-index: 99999 !important;
+    }
+    .Respon_width {
+        width: 30%;
+        font-size: 25px;
+    }
+
+
+    html, body.materialdesign {
+        background: #ebebeb;
+    }
+
+
+    a { 
+        color: #02a9a9 !important; 
+    }
+
+</style>
+<link href="~/NewStyle/css/Taps.css" rel="stylesheet" />
+
+
+<body class="materialdesign sparkline8-graph col-xs-12  " >
+
+    @*<table class="wrapper">
+            <tr id="div_Data" class="tabs">
+            </tr>
+            <p>Example line outside of tab box</p>
+        </table>*@
+
+    <div class="responsive__tabs animate__animated animate__backInLeft">
+        <!-- Nav tabs -->
+        <ul id="label_Tab" class="scrollable-tabs ">
+            <li id="Back" onclick="history.back()" class="nav-item">
+                <a id="Back" class="nav-link" data-toggle="tab" href="">
+                    @*<i id="Back" class="fa fa-backward back"></i>*@
+                    <i id="Back" class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;color: #df0303;"></i>
+                </a>
+            </li>
+
+            <li class="nav-item actTab active Respon_width" data_remark="tab_0_Remark"  >
+                <a id="a_Tab_0" class="nav-link" data-toggle="tab" href="#Tab_0" aria-expanded="true">مصروفات يومية</a>
+            </li>
+
+            <li class="nav-item Respon_width" data_remark="tab_1_Remark"  >
+                <a id="a_Tab_1" class="nav-link" data-toggle="tab" href="#Tab_1"> ايرادات يومية</a>
+            </li>
+
+            <li class="nav-item Respon_width" data_remark="tab_2_Remark"  >
+                <a id="a_Tab_2" class="nav-link" data-toggle="tab" href="#Tab_2"> تقارير الماليات</a>
+            </li>
+
+            <li id="App_Ref" onclick="location.reload()" class="">
+                <a class="" data-toggle="tab" href="">
+                    <i class="fa-solid fa-clock-rotate-left fa-beat Refresh"></i>
+                </a>
+
+            </li>
+
+
+
+
+
+        </ul>
+
+
+        <!-- Tab panes -->
+        <div id="Area_Tab" class="tab-content ">
+
+            <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                <label>All Balance ( 0 )</label>
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                <br />
+                <br />
+            </div>
+
+
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>Type</label>
+            </div>
+            <div class="col-xs-12 col-lg-5 col-sm-12 ">
+                <select id="TypeSours" class="form-control ">
+                    <option value="0">Cash</option>
+                    <option value="1">Al-ahly Bank</option>
+                    <option value="2">Cairo Bank</option>
+                </select>
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>Date</label>
+            </div>
+            <div class="col-xs-12 col-lg-5 col-sm-12 ">
+                <input id="txtdate" type="date" class="form-control " />
+            </div>
+
+
+            <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>Remark</label>
+            </div>
+            <div class="col-xs-12 col-lg-11 col-sm-12 ">
+                <textarea id="txtRemark" type="text" class="form-control " value="" spellcheck="false"></textarea>
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>Amount</label>
+            </div>
+            <div class="col-xs-12 col-lg-11 col-sm-12 ">
+                <input id="txtAmount" type="number" class="form-control " />
+            </div>
+
+
+            <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                <button id="btnExchange" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Exchange </button>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+<script>
+    //$('body').on('click', '.scrollable-tabs li', function () {
+    //    $('li').removeClass('actTab');
+    //    $('.scrollable-tabs li a.active').removeClass('active');
+
+    //    alert($(this).html())
+    //    console.log($(this).html())
+    //    if ($(this).html() != '<a class=" " data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>') {
+
+    //        $(this).addClass('actTab');
+    //        let id_Remark = $(this).attr('Data_Remark');
+
+    //        setTimeout(function () { $('#' + id_Remark + '').focus(); }, 150);
+    //    }
+
+
+    //});
+</script>
+@*<script src="~/ClientApp/Quotation/Notes.js"></script>*@
+<script src="~/ClientApp/Quotation/Money_Wallet.js"></script>
+<script>
+    $('#layout_Back').addClass('display_none')
+    $('#layout_Refresh').addClass('display_none')
+</script>

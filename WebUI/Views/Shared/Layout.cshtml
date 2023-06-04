@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="~/NewStyle/css/data-table/bootstrap-editable.css">
     <link rel="stylesheet" href="~/NewStyle/css/c3.min.css">
     <link rel="stylesheet" href="~/NewStyle/style.css">
+    <link rel="stylesheet" href="~/NewStyle/fontawesome/css/all.min.css">
     <link href="~/NewStyle/animate.min.css" rel="stylesheet" />
     <link href="~/NewStyle/LodBut/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/NewStyle/css/responsive.css">
@@ -134,9 +135,15 @@
     <input type="hidden" id="GetPass" name="name" value="" />
 
  
-    <a id="layout_Back" onclick="history.back()" class="backposition animate__animated animate__backInDown" data-toggle="tab" title="Back Page" href=""><i class="fa fa-backward back"></i></a>
+    <a id="layout_Back" onclick="history.back()" class="backposition animate__animated animate__backInDown" data-toggle="tab" title="Back Page" href="">
+        @*<i class="fa fa-backward back"></i>*@
+        <i class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;"></i>
+    </a>
 
-    <a id="layout_Refresh" onclick="location.reload()" class="Refreshposition animate__animated animate__backInDown" data-toggle="tab" title="Refresh" href=""><i class="fa fa-refresh Refresh"></i></a>
+    <a id="layout_Refresh" onclick="location.reload()" class="Refreshposition animate__animated animate__backInDown" data-toggle="tab" title="Refresh" href="">
+        @*<i class="fa fa-refresh Refresh"></i>*@
+        <i class="fa-solid fa-clock-rotate-left fa-beat Refresh"></i>
+    </a>
 
     <div id="cont" class="divcont">
         @RenderBody()

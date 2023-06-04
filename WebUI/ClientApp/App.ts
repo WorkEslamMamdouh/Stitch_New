@@ -760,6 +760,25 @@ function DateFormatRep(dateForm: string): string {
 }
 
 
+
+function DateStartYear() {
+
+    var today: Date = new Date();
+    var dd: string = today.getDate().toString();
+    var ReturnedDate: string;
+    var mm: string = (today.getMonth() + 1).toString();
+    var yyyy = today.getFullYear();
+    if (Number(dd) < 10) {
+        dd = ('0' + dd);
+    }
+    if (Number(mm) < 10) {
+        mm = ('0' + mm);
+    }
+    ReturnedDate = yyyy + '-' + '01' + '-' + '01';
+    return ReturnedDate;
+} 
+
+
 function DateStartMonth() {
 
     var today: Date = new Date();
@@ -1378,6 +1397,26 @@ function CompareTime(t1: string, t2: string): number {
     return h3;
 
 }
+
+
+
+function DateStartYear() {
+
+    var today: Date = new Date();
+    var dd: string = today.getDate().toString();
+    var ReturnedDate: string;
+    var mm: string = (today.getMonth() + 1).toString();
+    var yyyy = today.getFullYear();
+    if (Number(dd) < 10) {
+        dd = ('0' + dd);
+    }
+    if (Number(mm) < 10) {
+        mm = ('0' + mm);
+    }
+    ReturnedDate = yyyy + '-' + '01' + '-' + '01';
+    return ReturnedDate;
+}
+
 
 
 function Event_key(key: string, Nameinput: string, NameBtnEvent: string) {

@@ -593,6 +593,21 @@ function DateFormatRep(dateForm) {
         return DateFormatRep((new Date()).toString());
     }
 }
+function DateStartYear() {
+    var today = new Date();
+    var dd = today.getDate().toString();
+    var ReturnedDate;
+    var mm = (today.getMonth() + 1).toString();
+    var yyyy = today.getFullYear();
+    if (Number(dd) < 10) {
+        dd = ('0' + dd);
+    }
+    if (Number(mm) < 10) {
+        mm = ('0' + mm);
+    }
+    ReturnedDate = yyyy + '-' + '01' + '-' + '01';
+    return ReturnedDate;
+}
 function DateStartMonth() {
     var today = new Date();
     var dd = today.getDate().toString();

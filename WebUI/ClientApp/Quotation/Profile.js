@@ -191,7 +191,7 @@ var Profile;
             $('#Page_Profile').removeClass('display_none');
             InitalizeControls();
             InitalizeEvents();
-            txtDateFrom.value = DateStartMonth();
+            txtDateFrom.value = DateStartYear();
             txtDateTo.value = GetDate();
             InitializeGrid();
             btnShow_onclick();

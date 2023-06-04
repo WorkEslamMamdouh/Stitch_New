@@ -112,6 +112,11 @@ namespace Inv.WebUI.Controllers
             return View("~/Views/Customer/Get_ViewsIndex.cshtml");
         }
 
+
+        public ActionResult Page_Money_Wallet()
+        {
+            return View("~/Views/Customer/Money_WalletIndex.cshtml");
+        }
         public ActionResult TestIndex()
         {
             return View("~/Views/Customer/TestIndex.cshtml");

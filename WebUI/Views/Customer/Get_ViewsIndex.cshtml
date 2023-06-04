@@ -1,160 +1,73 @@
-﻿
-@{
-
-    Layout = "~/Views/Shared/Layout.cshtml";
-}
-
-<style>
-
-    .des {
-        width: 22% !important;
-    }
-
-    .uom {
-        width: 11% !important;
-    }
-
-    .Zero {
-        width: 0% !important;
-    }
-
-    .Price {
-        width: 9% !important;
-    }
-
-    .odd {
-        background-color: lightcoral;
-        font-weight: bold;
-        font-size: 16px;
-        color: black;
-    }
-
-    .even {
-        background-color: #fff2ce;
-        font-weight: bold;
-        font-size: 16px;
-        color: black;
-    }
-
-    tr {
-        background-color: #b9b9b9;
-        color: black;
-    }
-
-    .px-5 {
-        padding-left: 3rem !important;
-        padding-right: 3rem !important;
-    }
-
-    .px-Top_5 {
-        padding-top: 2px !important;
-    }
-</style>
-<body class="materialdesign">
-    <div class="content-inner-all animate__animated animate__backInLeft">
-        <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
-
-            <form id="form" class="mx-auto my-5 shadow p-2" method="POST">
-                <div class="col-xs-12 col-lg-12 col-sm-12">
-                    <h1 class="col-xs-12 col-lg-12 col-sm-12">Work</h1>
-                </div>
-
-                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
-                    <label>Url 1 </label>
-                </div>
-                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
-                    <input id="Url_1" type="text" class="form-control " value=""  name="Url1" placeholder="Url" />
-                </div>
-
-                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
-                    <label>Url 2 </label>
-                </div>
-                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
-                    <input id="Url_2" type="text" class="form-control " value="" name="Url2" placeholder="Url" />
-                </div>
-
-                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
-                    <label>Url 3 </label>
-                </div>
-                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
-                    <input id="Url_3" type="text" class="form-control " value="" name="Url3" placeholder="Url" />
-                </div>
-                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
-                    <label>Url 4 </label>
-                </div>
-                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
-                    <input id="Url_4" type="text" class="form-control " value="" name="Url4" placeholder="Url" />
-                </div>
-                <div class="col-xs-12 col-lg-1 col-sm-12 Top_5">
-                    <label>Url 5 </label>
-                </div>
-                <div class="col-xs-12 col-lg-11 col-sm-12 px-Top_5">
-                    <input id="Url_5" type="text" class="form-control " value="" name="Url5" placeholder="Url" />
-                </div>      
-                <div class="col-xs-12 col-lg-12 col-sm-12 px-Top_5">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-
-            </form>
-
-        </div>
-
-
-
-
-
-
-
-
-    </div>
-
-
-
-
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Monthly Expenses Calculator and Report</title>
     <script>
-        const url = "https://script.google.com/macros/s/AKfycbwuAsxh_U6Vcq7806hgmtm5SnhwFwOtDXsyyUFDQ3pH3v4pmtNZJYPozgrF8UuAv9qQ/exec" // enter your public ('access' - 'anyone') deployment URL (NOT test deployment!)
-        document.getElementById('form').action = url;
+        function calculateExpenses() {
+            // Get input values
+            var rent = parseFloat(document.getElementById("rent").value);
+            var utilities = parseFloat(document.getElementById("utilities").value);
+            var groceries = parseFloat(document.getElementById("groceries").value);
+            var transportation = parseFloat(document.getElementById("transportation").value);
+            var otherExpenses = parseFloat(document.getElementById("other-expenses").value);
 
-        // fetching the data from each column in the sheet
-        // then populating the respective datalist
-        fetch(`${url}?header=Url1`)
-            .then((response) => response.json())
-            .then(({ data }) => {
-                debugger
-                $('#Url_1').val(data[data.length - 1]) 
-            })
-            .catch((error) => console.error('!!!!!!!!', error));
+            // Calculate total expenses
+            var totalExpenses = rent + utilities + groceries + transportation + otherExpenses;
 
-        fetch(`${url}?header=Url2`)
-            .then((response) => response.json())
-            .then(({ data }) => {
-                $('#Url_2').val(data[data.length - 1]) 
-            })
-            .catch((error) => console.error('!!!!!!!!', error));
+            // Display the result
+            document.getElementById("total-expenses").textContent = "Total Monthly Expenses: $" + totalExpenses.toFixed(2);
+        }
 
-        fetch(`${url}?header=Url3`)
-            .then((response) => response.json())
-            .then(({ data }) => {
-                $('#Url_3').val(data[data.length - 1]) 
-            })
-            .catch((error) => console.error('!!!!!!!!', error));
+        function generateExpenseReport() {
+            // Get input values
+            var rent = parseFloat(document.getElementById("rent").value);
+            var utilities = parseFloat(document.getElementById("utilities").value);
+            var groceries = parseFloat(document.getElementById("groceries").value);
+            var transportation = parseFloat(document.getElementById("transportation").value);
+            var otherExpenses = parseFloat(document.getElementById("other-expenses").value);
 
-       
-        fetch(`${url}?header=Url4`)
-            .then((response) => response.json())
-            .then(({ data }) => {
-                $('#Url_4').val(data[data.length - 1]) 
-            })
-            .catch((error) => console.error('!!!!!!!!', error));
+            // Calculate total expenses
+            var totalExpenses = rent + utilities + groceries + transportation + otherExpenses;
 
+            // Generate expense report
+            var report = "Expense Report\n\n";
+            report += "Rent: $" + rent.toFixed(2) + "\n";
+            report += "Utilities: $" + utilities.toFixed(2) + "\n";
+            report += "Groceries: $" + groceries.toFixed(2) + "\n";
+            report += "Transportation: $" + transportation.toFixed(2) + "\n";
+            report += "Other Expenses: $" + otherExpenses.toFixed(2) + "\n";
+            report += "-----------------------\n";
+            report += "Total Expenses: $" + totalExpenses.toFixed(2);
 
-        fetch(`${url}?header=Url5`)
-            .then((response) => response.json())
-            .then(({ data }) => {
-                $('#Url_5').val(data[data.length - 1])
-            })
-            .catch((error) => console.error('!!!!!!!!', error));
-
+            // Display the report
+            document.getElementById("expense-report").textContent = report;
+        }
     </script>
+</head>
+<body>
+    <h1>Monthly Expenses Calculator and Report</h1>
 
-</body> 
+    <label for="rent">Rent:</label>
+    <input type="number" id="rent" step="0.01"><br>
+
+    <label for="utilities">Utilities:</label>
+    <input type="number" id="utilities" step="0.01"><br>
+
+    <label for="groceries">Groceries:</label>
+    <input type="number" id="groceries" step="0.01"><br>
+
+    <label for="transportation">Transportation:</label>
+    <input type="number" id="transportation" step="0.01"><br>
+
+    <label for="other-expenses">Other Expenses:</label>
+    <input type="number" id="other-expenses" step="0.01"><br>
+
+    <button onclick="calculateExpenses()">Calculate Expenses</button>
+
+    <p id="total-expenses"></p>
+
+    <button onclick="generateExpenseReport()">Generate Expense Report</button>
+
+    <pre id="expense-report"></pre>
+</body>
+</html>

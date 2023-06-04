@@ -256,7 +256,7 @@ namespace Profile {
 
             InitalizeControls();
             InitalizeEvents();
-            txtDateFrom.value = DateStartMonth();
+            txtDateFrom.value = DateStartYear();
             txtDateTo.value = GetDate();
             InitializeGrid();
             btnShow_onclick();

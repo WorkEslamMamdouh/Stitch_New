@@ -57,22 +57,29 @@
             <div class="col-xs-12 col-lg-12 col-sm-12  ">
                 <h1 class="col-xs-12 col-lg-12 col-sm-12 animate__animated animate__jackInTheBox">Eslam Mamdouh</h1>
             </div>
-             
-            <div class="col-xs-12 col-lg-6 col-sm-12 px-top" >
+
+            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
                 <button id="Open_Profile" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success animate__animated animate__fadeInBottomRight">      Profile </button>
             </div>
             <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
                 <button id="Open_Notes" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning  animate__animated animate__fadeInBottomRight">      Notes </button>
-            </div> 
+            </div>
             <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
                 <button id="Open_Data_Server" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info animate__animated animate__fadeInBottomRight ">      Data Server </button>
             </div>
             <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
                 <button id="Open_Get_Views" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger  animate__animated animate__fadeInBottomRight">    Work </button>
             </div>
+            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
+                <button id="Open_Test_Code" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info  animate__animated animate__fadeInBottomRight" style="background-color: burlywood;">    Test Code </button>
+            </div>
+
+            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
+                <button id="Open_Money_Wallet" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info  animate__animated animate__fadeInBottomRight" style="background-color: #002980;">    Money Wallet </button>
+            </div>
 
             <div id="Pages" class="col-xs-12 col-lg-12 col-sm-12">
-                
+
             </div>
 
 
@@ -102,13 +109,21 @@
         });
 
 
-        $("#Open_Get_Views").on('click', function () {
-
+        $("#Open_Get_Views").on('click', function () { 
             //alert('تحت الانشاء')
             window.open(Url.Action("Page_Get_Views", "Home"), "_self");
         });
 
-        
+        $("#Open_Test_Code").on('click', function () { 
+            //alert('تحت الانشاء')
+            window.open("https://onecompiler.com/javascript", "_self");
+        });
+
+
+        $("#Open_Money_Wallet").on('click', function () {
+            window.open(Url.Action("Page_Money_Wallet", "Home"), "_self");
+             
+        });
 
         
 
