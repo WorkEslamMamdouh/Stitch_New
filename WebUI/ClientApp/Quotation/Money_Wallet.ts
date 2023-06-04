@@ -5,18 +5,35 @@ $(document).ready(() => {
 
 namespace Money_Wallet {
 
-    var AllDisplay: Array<DataNotes> = new Array<DataNotes>();
+    var AllDisplay: Array<DataAll> = new Array<DataAll>();
+    var Display: Array<DataAll> = new Array<DataAll>();
+    var Model: DataAll = new DataAll();
 
-    var DetMaxLast = 0;
-    var CountGrid = 0;
-     
+    var btnExchange: HTMLButtonElement;
+    var btnReceipt: HTMLButtonElement;
+    var a_Expans: HTMLButtonElement;
+    var a_Resive: HTMLButtonElement;
+    var a_View: HTMLButtonElement;
 
-
+    var Glopl_Type = '1';
 
     export function InitalizeComponent() { 
-        Tabs_click(); 
-        //Get_All_Notes();
-        //AddButtonApp_Tap();
+        Tabs_click();
+        $('#txtdate').val(GetDate());
+
+        btnExchange = document.getElementById("btnExchange") as HTMLButtonElement;
+        btnReceipt = document.getElementById("btnReceipt") as HTMLButtonElement;
+        a_Expans = document.getElementById("a_Expans") as HTMLButtonElement;
+        a_Resive = document.getElementById("a_Resive") as HTMLButtonElement;
+
+        btnExchange.onclick = () => { AppTans(Glopl_Type) };
+        btnReceipt.onclick = () => { AppTans(Glopl_Type) };
+        a_Expans.onclick = () => { Glopl_Type = '1'; };
+        a_Resive.onclick = () => { Glopl_Type = '0'; };
+        //a_View.onclick = () => { };
+
+        Clean();
+
     } 
     function Tabs_click() {
 
@@ -30,171 +47,79 @@ namespace Money_Wallet {
             if ($(this).html() != '<a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="true"><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="false"><i class="fa fa-plus-circle Add"></i></a>') {
 
                 $(this).addClass('actTab');
-                let id_Remark = $(this).attr('Data_Remark');
+                  
+            
 
-                setTimeout(function () { $('#' + id_Remark + '').focus(); }, 150);
+                Clean();
             }
 
 
         });
-    } 
+    }  
 
-    function Get_All_Notes() {
+   
+
+    function AppTans(Type: string) {
 
         debugger
-        Ajax.CallAsync({
-            url: Url.Action("Get_All_Notes", "Profile"),
-            data: { Name_txt: "Note_" },
-            success: (d) => {
-                debugger
-                let result = JSON.parse(d)
+        Model = new DataAll();
 
-                AllDisplay = result as Array<DataNotes>;  
-                AllDisplay = AllDisplay.sort(dynamicSort("ID"));
-                 
-                debugger
-                CountGrid = 0;
-                for (var i = 0; i < AllDisplay.length; i++) {
-                    debugger
-                    BuildControls(i);
-                    DisplayDetailsControls(i, AllDisplay[i])
-                    CountGrid++;
-                }
-                AddButtonApp_Tap();
+        DocumentActions.AssignToModel(Model);//Insert Update 
+        Model.TrDate = DateFormatRep($('#txtdate').val())
+        Model.Type = $('#TypeSours').val();
+        Model.Title = Type;
 
-
-            }
-        })
-
-    }
-    function DisplayDetailsControls(cnt: number, DataDet: DataNotes) {
-
-        $("#ID" + cnt).val("0");
-        $("#tab_" + cnt + "_Remark").html(DataDet.Remark);
-    }
-    function BuildControls(cnt: number) {
-
-
-        var label_Html = "";
-        label_Html = `
-            <li class="nav-item" Data_Remark="tab_${cnt}_Remark">
-                <a id="a_Tab_${cnt}" class="nav-link active" data-toggle="tab" href="#Tab_${cnt}">Tab ( ${cnt + 1} )</a>
-            </li>`;
-
-        $("#label_Tab").append(label_Html);
-
-        var Area_Html = "";
-        Area_Html = `
-            <div class="tab-pane   active" id="Tab_${cnt}">
-                <div class="card">
-                    <input id="ID${cnt}" type="hidden" value="0" />
-                    <textarea class="tearea display_none" id="tab_${cnt}_Remark" cols="2" rows="32">  </textarea>
-                </div>
-            </div>`;
-
-        $("#Area_Tab").append(Area_Html);
-
-
-        //$("#btn_minus" + cnt).on('click', function () {
-        //    DeleteRow(cnt);
-        //});
-
-        $("#tab_" + cnt + "_Remark").on('change', function () {
-
-            //Set_Notes(cnt);
-                
-        });
-
-        $("#tab_" + cnt + "_Remark").on('keyup', function () {
-
-            //alert('keyup')
-            debugger
-            if ($("#ID" + cnt ).val() == "0") {
-                setTimeout(function () {
-                    Set_Notes(cnt);
-                    $("#ID" + cnt).val("0")
-                }, 2000);
-                $("#ID" + cnt).val("1")
-            }
-
-          
-
-        });
-
-
-    }
-    function AddNewRow() {
-
-        BuildControls(CountGrid); 
-        CountGrid++;
-
-    
-
-
-       
-        AddButtonApp_Tap();
-    } 
-    function AddButtonApp_Tap() {
-
-        setTimeout(function () {
-            let a_Tab = document.getElementById("a_Tab_" + (CountGrid - 1));
-            a_Tab.click();
-            a_Tab.focus();
-
-            $(".tearea").removeClass('display_none');
-
-             
-        }, 20);
-
-        //**********************************************************App_Tap*************************
-        const element = document.getElementById("App_Tap");
-        element.remove();
-
-        $("#label_Tab").append('<li id="App_Tap" class=""><a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a></li>');
-
-        $("#App_Tap").on('click', function () {
-            AddNewRow();
-        });
-
-        const label_Tab = document.getElementById("label_Tab"); 
-        label_Tab.scrollLeft = 1000;
-    }
-
-    function Set_Notes(cnt: number) {
+        //Model.ID = Number($('#txtTrNo').val());
+        Model.ID = 666;
 
         let Data = new Send_Data();
 
-        Data.ID = Number($('#ID' + cnt).val());
-        Data.Name_Txt_Master = "Note_" + cnt;
-        Data.Model = $("#tab_" + cnt + "_Remark").val();
-        Data.TypeDataSouce = "Note_" + cnt; 
+        Data.ID = Number($('#txtTrNo').val());
+        Data.Name_Txt_Master = "Catch_Receipt";
+        Data.Model = JSON.stringify(Model);  
+        Data.StatusFlag = 'u';
 
         debugger
         $.ajax({
-            url: Url.Action("Set_Data_Notes", "Profile"),
+            url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
             dataType: 'json',
             async: false,
             data: { Data: JSON.stringify(Data) },
             success: (d) => {
-                
-                //alert(100)
+                let result = JSON.parse(d)
+
+                Clean();
+                let res = result as Array<DataAll>;
+
+
+                //Display_Grid(res)
+
+                //JGrid.SelectedItem = Model;
+                //GridDoubleClick();
+
             }
         })
     }
 
-    function DeleteRow(RecNo: number) {
-        var statusFlag = $("#txt_StatusFlag" + RecNo).val();
-        if (statusFlag == "i")
-            $("#txt_StatusFlag" + RecNo).val("m");
-        else
-            $("#txt_StatusFlag" + RecNo).val("d");
 
-        $("#No_Row" + RecNo).attr("hidden", "true");
+    function Clean() {
+        $('#TypeSours').val('0'); 
+        $('#txtRemark').val('');
+        $('#txtdate').val(GetDate());
+        $('#txtAmount').val('');
+        setTimeout(function () { $('#txtRemark').focus(); }, 150);
 
+        $('#btnReceipt').addClass('display_none');
+        $('#btnExchange').addClass('display_none');
+
+        if (Glopl_Type == '1') {
+            $('#btnExchange').removeClass('display_none');
+        }
+        else {
+            $('#btnReceipt').removeClass('display_none'); 
+        }
     }
-
-
      
 }
 

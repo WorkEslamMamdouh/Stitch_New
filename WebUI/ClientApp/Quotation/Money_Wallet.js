@@ -4,12 +4,27 @@ $(document).ready(function () {
 var Money_Wallet;
 (function (Money_Wallet) {
     var AllDisplay = new Array();
-    var DetMaxLast = 0;
-    var CountGrid = 0;
+    var Display = new Array();
+    var Model = new DataAll();
+    var btnExchange;
+    var btnReceipt;
+    var a_Expans;
+    var a_Resive;
+    var a_View;
+    var Glopl_Type = '1';
     function InitalizeComponent() {
         Tabs_click();
-        //Get_All_Notes();
-        //AddButtonApp_Tap();
+        $('#txtdate').val(GetDate());
+        btnExchange = document.getElementById("btnExchange");
+        btnReceipt = document.getElementById("btnReceipt");
+        a_Expans = document.getElementById("a_Expans");
+        a_Resive = document.getElementById("a_Resive");
+        btnExchange.onclick = function () { AppTans(Glopl_Type); };
+        btnReceipt.onclick = function () { AppTans(Glopl_Type); };
+        a_Expans.onclick = function () { Glopl_Type = '1'; };
+        a_Resive.onclick = function () { Glopl_Type = '0'; };
+        //a_View.onclick = () => { };
+        Clean();
     }
     Money_Wallet.InitalizeComponent = InitalizeComponent;
     function Tabs_click() {
@@ -19,109 +34,55 @@ var Money_Wallet;
             $('.scrollable-tabs li a.active').removeClass('active');
             if ($(this).html() != '<a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="true"><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="false"><i class="fa fa-plus-circle Add"></i></a>') {
                 $(this).addClass('actTab');
-                var id_Remark_1 = $(this).attr('Data_Remark');
-                setTimeout(function () { $('#' + id_Remark_1 + '').focus(); }, 150);
+                Clean();
             }
         });
     }
-    function Get_All_Notes() {
+    function AppTans(Type) {
         debugger;
-        Ajax.CallAsync({
-            url: Url.Action("Get_All_Notes", "Profile"),
-            data: { Name_txt: "Note_" },
-            success: function (d) {
-                debugger;
-                var result = JSON.parse(d);
-                AllDisplay = result;
-                AllDisplay = AllDisplay.sort(dynamicSort("ID"));
-                debugger;
-                CountGrid = 0;
-                for (var i = 0; i < AllDisplay.length; i++) {
-                    debugger;
-                    BuildControls(i);
-                    DisplayDetailsControls(i, AllDisplay[i]);
-                    CountGrid++;
-                }
-                AddButtonApp_Tap();
-            }
-        });
-    }
-    function DisplayDetailsControls(cnt, DataDet) {
-        $("#ID" + cnt).val("0");
-        $("#tab_" + cnt + "_Remark").html(DataDet.Remark);
-    }
-    function BuildControls(cnt) {
-        var label_Html = "";
-        label_Html = "\n            <li class=\"nav-item\" Data_Remark=\"tab_" + cnt + "_Remark\">\n                <a id=\"a_Tab_" + cnt + "\" class=\"nav-link active\" data-toggle=\"tab\" href=\"#Tab_" + cnt + "\">Tab ( " + (cnt + 1) + " )</a>\n            </li>";
-        $("#label_Tab").append(label_Html);
-        var Area_Html = "";
-        Area_Html = "\n            <div class=\"tab-pane   active\" id=\"Tab_" + cnt + "\">\n                <div class=\"card\">\n                    <input id=\"ID" + cnt + "\" type=\"hidden\" value=\"0\" />\n                    <textarea class=\"tearea display_none\" id=\"tab_" + cnt + "_Remark\" cols=\"2\" rows=\"32\">  </textarea>\n                </div>\n            </div>";
-        $("#Area_Tab").append(Area_Html);
-        //$("#btn_minus" + cnt).on('click', function () {
-        //    DeleteRow(cnt);
-        //});
-        $("#tab_" + cnt + "_Remark").on('change', function () {
-            //Set_Notes(cnt);
-        });
-        $("#tab_" + cnt + "_Remark").on('keyup', function () {
-            //alert('keyup')
-            debugger;
-            if ($("#ID" + cnt).val() == "0") {
-                setTimeout(function () {
-                    Set_Notes(cnt);
-                    $("#ID" + cnt).val("0");
-                }, 2000);
-                $("#ID" + cnt).val("1");
-            }
-        });
-    }
-    function AddNewRow() {
-        BuildControls(CountGrid);
-        CountGrid++;
-        AddButtonApp_Tap();
-    }
-    function AddButtonApp_Tap() {
-        setTimeout(function () {
-            var a_Tab = document.getElementById("a_Tab_" + (CountGrid - 1));
-            a_Tab.click();
-            a_Tab.focus();
-            $(".tearea").removeClass('display_none');
-        }, 20);
-        //**********************************************************App_Tap*************************
-        var element = document.getElementById("App_Tap");
-        element.remove();
-        $("#label_Tab").append('<li id="App_Tap" class=""><a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a></li>');
-        $("#App_Tap").on('click', function () {
-            AddNewRow();
-        });
-        var label_Tab = document.getElementById("label_Tab");
-        label_Tab.scrollLeft = 1000;
-    }
-    function Set_Notes(cnt) {
+        Model = new DataAll();
+        DocumentActions.AssignToModel(Model); //Insert Update 
+        Model.TrDate = DateFormatRep($('#txtdate').val());
+        Model.Type = $('#TypeSours').val();
+        Model.Title = Type;
+        //Model.ID = Number($('#txtTrNo').val());
+        Model.ID = 666;
         var Data = new Send_Data();
-        Data.ID = Number($('#ID' + cnt).val());
-        Data.Name_Txt_Master = "Note_" + cnt;
-        Data.Model = $("#tab_" + cnt + "_Remark").val();
-        Data.TypeDataSouce = "Note_" + cnt;
+        Data.ID = Number($('#txtTrNo').val());
+        Data.Name_Txt_Master = "Catch_Receipt";
+        Data.Model = JSON.stringify(Model);
+        Data.StatusFlag = 'u';
         debugger;
         $.ajax({
-            url: Url.Action("Set_Data_Notes", "Profile"),
+            url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
             dataType: 'json',
             async: false,
             data: { Data: JSON.stringify(Data) },
             success: function (d) {
-                //alert(100)
+                var result = JSON.parse(d);
+                Clean();
+                var res = result;
+                //Display_Grid(res)
+                //JGrid.SelectedItem = Model;
+                //GridDoubleClick();
             }
         });
     }
-    function DeleteRow(RecNo) {
-        var statusFlag = $("#txt_StatusFlag" + RecNo).val();
-        if (statusFlag == "i")
-            $("#txt_StatusFlag" + RecNo).val("m");
-        else
-            $("#txt_StatusFlag" + RecNo).val("d");
-        $("#No_Row" + RecNo).attr("hidden", "true");
+    function Clean() {
+        $('#TypeSours').val('0');
+        $('#txtRemark').val('');
+        $('#txtdate').val(GetDate());
+        $('#txtAmount').val('');
+        setTimeout(function () { $('#txtRemark').focus(); }, 150);
+        $('#btnReceipt').addClass('display_none');
+        $('#btnExchange').addClass('display_none');
+        if (Glopl_Type == '1') {
+            $('#btnExchange').removeClass('display_none');
+        }
+        else {
+            $('#btnReceipt').removeClass('display_none');
+        }
     }
 })(Money_Wallet || (Money_Wallet = {}));
 //# sourceMappingURL=Money_Wallet.js.map

@@ -108,15 +108,15 @@
             </li>
 
             <li class="nav-item actTab active Respon_width" data_remark="tab_0_Remark"  >
-                <a id="a_Tab_0" class="nav-link" data-toggle="tab" href="#Tab_0" aria-expanded="true">مصروفات يومية</a>
+                <a id="a_Expans" class="nav-link" data-toggle="tab" href="#Tab_0" aria-expanded="true">مصروفات يومية</a>
             </li>
 
             <li class="nav-item Respon_width" data_remark="tab_1_Remark"  >
-                <a id="a_Tab_1" class="nav-link" data-toggle="tab" href="#Tab_1"> ايرادات يومية</a>
+                <a id="a_Resive" class="nav-link" data-toggle="tab" href="#Tab_1"> ايرادات يومية</a>
             </li>
 
             <li class="nav-item Respon_width" data_remark="tab_2_Remark"  >
-                <a id="a_Tab_2" class="nav-link" data-toggle="tab" href="#Tab_2"> تقارير الماليات</a>
+                <a id="a_View" class="nav-link" data-toggle="tab" href="#Tab_2"> تقارير الماليات</a>
             </li>
 
             <li id="App_Ref" onclick="location.reload()" class="">
@@ -135,13 +135,20 @@
 
         <!-- Tab panes -->
         <div id="Area_Tab" class="tab-content ">
-
             <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                <br />
+            </div>
+             
+            <div class="col-xs-12 col-lg-6 col-sm-12 ">
+                <label>TrNo ( 0 )</label>
+                <input id="txtTrNo" type="hidden" class="form-control " name="ID" /> 
+            </div>
+
+            <div class="col-xs-12 col-lg-6 col-sm-12 ">
                 <label>All Balance ( 0 )</label>
             </div>
 
             <div class="col-xs-12 col-lg-12 col-sm-12 ">
-                <br />
                 <br />
             </div>
 
@@ -161,7 +168,7 @@
                 <label>Date</label>
             </div>
             <div class="col-xs-12 col-lg-5 col-sm-12 ">
-                <input id="txtdate" type="date" class="form-control " />
+                <input id="txtdate" type="date"  name="TrDate"  class="form-control " />
             </div>
 
 
@@ -173,7 +180,7 @@
                 <label>Remark</label>
             </div>
             <div class="col-xs-12 col-lg-11 col-sm-12 ">
-                <textarea id="txtRemark" type="text" class="form-control " value="" spellcheck="false"></textarea>
+                <textarea id="txtRemark" type="text" class="form-control " value="" name="Remars" spellcheck="false"></textarea>
             </div>
 
             <div class="col-xs-12 col-lg-12 col-sm-12 ">
@@ -184,7 +191,7 @@
                 <label>Amount</label>
             </div>
             <div class="col-xs-12 col-lg-11 col-sm-12 ">
-                <input id="txtAmount" type="number" class="form-control " />
+                <input id="txtAmount" type="number" name="Amount" class="form-control " />
             </div>
 
 
@@ -194,6 +201,7 @@
 
             <div class="col-xs-12 col-lg-12 col-sm-12 ">
                 <button id="btnExchange" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Exchange </button>
+                <button id="btnReceipt" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Receipt </button>
             </div>
 
         </div>

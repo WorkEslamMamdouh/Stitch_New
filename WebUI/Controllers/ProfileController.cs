@@ -33,6 +33,7 @@ namespace Inv.WebUI.Controllers
             public string Type { get; set; }
             public string Title { get; set; }
             public string Remars { get; set; }
+            public decimal Amount { get; set; }
         } 
         
         public class DataDetails
@@ -205,7 +206,41 @@ namespace Inv.WebUI.Controllers
         }
 
 
-         
+
+
+        public ActionResult Add_Trans(string Data)
+        {
+
+            var rp = JsonConvert.DeserializeObject<Send_Data>(Data);
+
+            //******************************************Master*************************
+
+            var jsonData = GetData(rp.Name_Txt_Master);
+
+            List<DataAll> Data_List = JsonConvert.DeserializeObject<List<DataAll>>(jsonData);
+
+            var NewList = Data_List.Where(x => x.ID != rp.ID).ToList();
+
+            if (rp.StatusFlag != "d")
+            {
+                DataAll Data_Obj = JsonConvert.DeserializeObject<DataAll>(rp.Model);
+
+                NewList.Add(Data_Obj);
+            }
+
+            var New_Data = JsonConvert.SerializeObject(NewList);
+
+            SetData(rp.Name_Txt_Master, New_Data);
+             
+            //******************************************Get_Master*************************
+
+            var json = GetData(rp.Name_Txt_Master);
+
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         public ActionResult Set_Data_Notes(string Data)
         {
 

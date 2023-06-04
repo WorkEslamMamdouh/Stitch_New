@@ -1944,6 +1944,7 @@ class DataAll {
         this.Type = '';
         this.Title = '';
         this.Remars = '';
+        this.Amount = 0;
 
     }
     public ID: number;
@@ -1951,6 +1952,7 @@ class DataAll {
     public Type: string;
     public Title: string;
     public Remars: string;
+    public Amount: number;
 
 }
  
