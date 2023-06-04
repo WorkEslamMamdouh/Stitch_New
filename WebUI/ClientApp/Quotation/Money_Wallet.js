@@ -14,6 +14,7 @@ var Money_Wallet;
     var a_View;
     var txtSearch;
     var Glopl_Type = 'Exchange';
+    var flagSave = 0;
     function InitalizeComponent() {
         Tabs_click();
         InitializeGrid();
@@ -60,6 +61,8 @@ var Money_Wallet;
             { title: "TrDate", name: "TrDate", type: "text" },
             { title: "Type", name: "Type", type: "text" },
             { title: "Title", name: "Title", type: "text" },
+            { title: "Remars", name: "Remars", type: "text" },
+            { title: "Amount", name: "Amount", type: "text" },
             {
                 title: "Delete",
                 itemTemplate: function (s, item) {
@@ -81,7 +84,7 @@ var Money_Wallet;
         $("#JGrid").jsGrid("option", "pageIndex", 1);
         if (txtSearch.value != "") {
             var search_1 = txtSearch.value.toLowerCase();
-            var SearchDetails = Display.filter(function (x) { return x.ID.toString().search(search_1) >= 0 || x.Title.toLowerCase().search(search_1) >= 0
+            var SearchDetails = Display.filter(function (x) { return x.ID.toString().search(search_1) >= 0 || x.Amount.toString().search(search_1) >= 0 || x.Title.toLowerCase().search(search_1) >= 0
                 || x.Type.toLowerCase().search(search_1) >= 0 || x.Remars.toLowerCase().search(search_1) >= 0; });
             JGrid.DataSource = SearchDetails;
             JGrid.Bind();
@@ -118,6 +121,10 @@ var Money_Wallet;
     }
     function AppTans(Type) {
         debugger;
+        if (flagSave == 1) {
+            setTimeout(function () { flagSave = 0; }, 1000);
+            return false;
+        }
         if ($('#txtRemark').val().trim() == '') {
             Errorinput($('#txtRemark'));
             //alert('برجاء ادخال الملاخظات')
@@ -152,6 +159,7 @@ var Money_Wallet;
                 var res = result;
                 Display_Grid(res);
                 Clean();
+                flagSave = 1;
             }
         });
     }
@@ -180,10 +188,6 @@ var Money_Wallet;
         });
     }
     function Clean() {
-        debugger;
-        var MaxID = AllDisplay[0].ID;
-        $('#txtTrNo').val(MaxID + 1);
-        $('#TrNoLab').html('TrNo ( ' + (Number(MaxID) + 1) + ' )');
         $('#TypeSours').val('Cash');
         $('#txtRemark').val('');
         $('#txtdate').val(GetDate());
@@ -193,10 +197,30 @@ var Money_Wallet;
         $('#btnExchange').addClass('display_none');
         if (Glopl_Type == 'Exchange') {
             $('#btnExchange').removeClass('display_none');
+            Event_key('Enter', 'txtAmount', 'btnExchange');
         }
         else {
             $('#btnReceipt').removeClass('display_none');
+            Event_key('Enter', 'txtAmount', 'btnReceipt');
         }
+        AllBalance();
+    }
+    function AllBalance() {
+        debugger;
+        var MaxID = AllDisplay[0].ID;
+        $('#txtTrNo').val(MaxID + 1);
+        $('#TrNoLab').html('TrNo ( ' + (Number(MaxID) + 1) + ' )');
+        var Exchange = AllDisplay.filter(function (x) { return x.Title == 'Exchange'; });
+        var Receipt = AllDisplay.filter(function (x) { return x.Title == 'Receipt'; });
+        var Amount_Exch = 0;
+        for (var i = 0; i < Exchange.length; i++) {
+            Amount_Exch = Amount_Exch + Exchange[i].Amount;
+        }
+        var Amount_Rec = 0;
+        for (var i = 0; i < Receipt.length; i++) {
+            Amount_Rec = Amount_Rec + Receipt[i].Amount;
+        }
+        $('#BalanceLab').html('All Balance ( ' + (Number(Amount_Rec) - Number(Amount_Exch)) + ' ) $');
     }
 })(Money_Wallet || (Money_Wallet = {}));
 //# sourceMappingURL=Money_Wallet.js.map

@@ -19,6 +19,7 @@ namespace Money_Wallet {
 
     var Glopl_Type = 'Exchange';
 
+    var flagSave = 0;
     export function InitalizeComponent() {
 
         Tabs_click();
@@ -79,6 +80,8 @@ namespace Money_Wallet {
             { title: "TrDate", name: "TrDate", type: "text" },
             { title: "Type", name: "Type", type: "text" },
             { title: "Title", name: "Title", type: "text" },
+            { title: "Remars", name: "Remars", type: "text" },
+            { title: "Amount", name: "Amount", type: "text" },
             {
                 title: "Delete",
                 itemTemplate: (s: string, item: DataAll): HTMLInputElement => {
@@ -110,7 +113,7 @@ namespace Money_Wallet {
         if (txtSearch.value != "") {
 
             let search: string = txtSearch.value.toLowerCase();
-            let SearchDetails = Display.filter(x => x.ID.toString().search(search) >= 0 || x.Title.toLowerCase().search(search) >= 0
+            let SearchDetails = Display.filter(x => x.ID.toString().search(search) >= 0 || x.Amount.toString().search(search) >= 0 || x.Title.toLowerCase().search(search) >= 0
                 || x.Type.toLowerCase().search(search) >= 0 || x.Remars.toLowerCase().search(search) >= 0);
 
             JGrid.DataSource = SearchDetails;
@@ -164,6 +167,12 @@ namespace Money_Wallet {
 
         debugger
 
+        if (flagSave == 1) {
+            setTimeout(function () { flagSave = 0; }, 1000);
+            
+            return false
+        }
+
         if ($('#txtRemark').val().trim() == '') {
             Errorinput($('#txtRemark'))
             //alert('برجاء ادخال الملاخظات')
@@ -206,7 +215,8 @@ namespace Money_Wallet {
                 let res = result as Array<DataAll>;
                 Display_Grid(res)
                 Clean();
-                 
+
+                flagSave = 1;
 
             }
         })
@@ -252,12 +262,7 @@ namespace Money_Wallet {
 
 
     function Clean() {
-
-        debugger
-        let MaxID = AllDisplay[0].ID;
-        $('#txtTrNo').val(MaxID + 1);
-        $('#TrNoLab').html('TrNo ( ' + (Number(MaxID) + 1) + ' )');
-
+         
         $('#TypeSours').val('Cash');
         $('#txtRemark').val('');
         $('#txtdate').val(GetDate());
@@ -269,12 +274,47 @@ namespace Money_Wallet {
 
         if (Glopl_Type == 'Exchange') {
             $('#btnExchange').removeClass('display_none');
+            Event_key('Enter', 'txtAmount', 'btnExchange');
         }
         else {
-            $('#btnReceipt').removeClass('display_none'); 
+            $('#btnReceipt').removeClass('display_none');
+            Event_key('Enter', 'txtAmount', 'btnReceipt');
         }
+
+        AllBalance()
     }
-     
+
+    function AllBalance() {
+
+        debugger
+        let MaxID = AllDisplay[0].ID;
+        $('#txtTrNo').val(MaxID + 1);
+        $('#TrNoLab').html('TrNo ( ' + (Number(MaxID) + 1) + ' )');
+
+        let Exchange = AllDisplay.filter(x => x.Title == 'Exchange');
+        let Receipt = AllDisplay.filter(x => x.Title == 'Receipt');
+
+        let Amount_Exch: number = 0;
+        for (var i = 0; i < Exchange.length; i++) {
+
+            Amount_Exch = Amount_Exch + Exchange[i].Amount
+
+        }
+
+        let Amount_Rec: number = 0;
+        for (var i = 0; i < Receipt.length; i++) {
+
+            Amount_Rec = Amount_Rec + Receipt[i].Amount
+
+        }
+
+
+        $('#BalanceLab').html('All Balance ( ' + (Number(Amount_Rec) - Number(Amount_Exch)) + ' ) $');
+
+    }
+
+
+
 }
 
 
