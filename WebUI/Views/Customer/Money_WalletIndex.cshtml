@@ -63,13 +63,7 @@
         top: 0% !important;
         z-index: 99999 !important;
     }
-
-    .Refreshposition {
-        position: absolute;
-        right: 1%;
-        top: 12.5%;
-        z-index: 99999 !important;
-    }
+     
 
     .Respon_width {
         width: 30%;
@@ -87,8 +81,7 @@
     }
 </style>
 <script>
-    $('#layout_Back').addClass('display_none')
-    $('#layout_Refresh').addClass('display_none')
+
 </script>
 
 <link href="~/NewStyle/css/Taps.css" rel="stylesheet" />
@@ -113,7 +106,35 @@
             <p>Example line outside of tab box</p>
         </table>*@
 
-    <div class="responsive__tabs animate__animated animate__backInLeft">
+    <div id="Pass" class="display_none content-inner-all animate__animated animate__backInLeft">
+        <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <h1>Password</h1>
+            </div>
+            <div class="col-xs-12 col-lg-5 col-sm-12">
+            </div>
+            <div class="col-xs-12 col-lg-2 col-sm-12">
+                <input id="txtPassword" type="password" pattern="[0-9]*" inputmode="numeric" class="  form-control  " placeholder="Password" style="text-align: center;">
+
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+            </div>
+            <div class="col-xs-12 col-lg-5 col-sm-12">
+            </div>
+            <div class="col-xs-12 col-lg-2 col-sm-12">
+                <button id="btnLogin" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info"> Login </button>
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+        </div>
+    </div> 
+
+    <div id="Page_mone" class="responsive__tabs animate__animated animate__backInLeft display_none">
         <!-- Nav tabs -->
         <ul id="label_Tab" class="scrollable-tabs ">
             <li id="Back" onclick="history.back()" class="nav-item">
@@ -154,13 +175,15 @@
         </div>
 
         <div class="col-xs-12 col-lg-6 col-sm-12 ">
+            <label id="BalanceLab">All Balance ( 0 )</label>
+        </div>
+
+
+        <div class="col-xs-12 col-lg-6 col-sm-12 ">
             <label id="TrNoLab">TrNo ( 0 )</label>
             <input id="txtTrNo" type="hidden" class="form-control " name="ID" />
         </div>
 
-        <div class="col-xs-12 col-lg-6 col-sm-12 ">
-            <label id="BalanceLab">All Balance ( 0 )</label>
-        </div>
 
         <!-- Tab panes -->
         <div id="Rec_Exch_Tab" class="tab-content ">
@@ -209,7 +232,7 @@
                 <label>Amount</label>
             </div>
             <div class="col-xs-12 col-lg-11 col-sm-12 ">
-                <input id="txtAmount" type="number" name="Amount" class="form-control " />
+                <input id="txtAmount" type="tel"   inputmode="numeric" name="Amount" class="form-control " />
             </div>
 
 
@@ -230,6 +253,59 @@
                 <br />
             </div>
 
+            <div class="col-xs-2 col-lg-1 col-sm-2 ">
+                <label>TrTrans</label>
+            </div>
+            <div class="col-xs-4 col-lg-5 col-sm-4 ">
+                <select id="TypeSoursF" class="form-control ">
+                    <option value="All">All</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Al ahly Bank">Al-ahly Bank</option>
+                    <option value="Cairo Bank">Cairo Bank</option>
+                </select>
+            </div>
+
+            <div class="col-xs-2 col-lg-1 col-sm-2 ">
+                <label>TrType</label>
+            </div>
+
+            <div class="col-xs-4 col-lg-5 col-sm-4 ">
+                <select id="TrType" class="form-control ">
+                    <option value="All">All</option>
+                    <option value="Receipt">Receipt</option>
+                    <option value="Exchange">Exchange</option>
+                </select>
+            </div>
+
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+           <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>From Data</label>
+            </div>
+            <div class="col-xs-12 col-lg-5 col-sm-12">
+                <input id="txtDateFrom" type="date" class="form-control ">
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>To Data</label>
+            </div>
+            <div class="col-xs-12 col-lg-5 col-sm-12">
+                <input id="txtDateTo" type="date" class="form-control ">
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                <br />
+            </div>
+
+
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <button id="btnShow" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Show </button>
+            </div>
+
             <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
                 <div class="inside-table my-4">
@@ -245,6 +321,17 @@
                     <div id="JGrid">
 
                     </div>
+
+                    <div class="col-xs-12 col-lg-2 col-sm-12">
+                    </div>
+                    <div class="col-xs-12 col-lg-2 col-sm-12">
+                        <label style="font-weight: bold;font-size: 17px;"> Total Amount </label>
+                    </div>
+
+                    <div class="col-xs-12 col-lg-4 col-sm-12">
+                        <input id="txtTotal" type="text" class="  form-control " placeholder="Amount : ">
+                    </div>
+
                 </div>
 
             </div>

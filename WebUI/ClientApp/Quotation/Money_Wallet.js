@@ -7,32 +7,90 @@ var Money_Wallet;
     var Display = new Array();
     var Model = new DataAll();
     var JGrid = new JsGrid();
+    var btnShow;
     var btnExchange;
     var btnReceipt;
     var a_Expans;
     var a_Resive;
     var a_View;
+    var txtAmount;
     var txtSearch;
+    var btnLogin;
+    var txtDateFrom;
+    var txtDateTo;
+    var txtPassword;
     var Glopl_Type = 'Exchange';
     var flagSave = 0;
+    var totalAmount = 0;
+    var DataCatch_Receipt = "";
     function InitalizeComponent() {
-        Tabs_click();
-        InitializeGrid();
-        txtSearch = document.getElementById("txtSearch");
-        btnExchange = document.getElementById("btnExchange");
-        btnReceipt = document.getElementById("btnReceipt");
-        a_Expans = document.getElementById("a_Expans");
-        a_Resive = document.getElementById("a_Resive");
-        a_View = document.getElementById("a_View");
-        btnExchange.onclick = function () { AppTans(Glopl_Type); };
-        btnReceipt.onclick = function () { AppTans(Glopl_Type); };
-        a_Expans.onclick = function () { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
-        a_Resive.onclick = function () { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
-        a_View.onclick = function () { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
-        txtSearch.onkeyup = txtSearch_change;
-        DisplayAll();
+        debugger;
+        $('#Pass').removeClass('display_none');
+        $('#Page_mone').addClass('display_none');
+        btnLogin = document.getElementById("btnLogin");
+        txtPassword = document.getElementById("txtPassword");
+        btnLogin.onclick = btnLogin_onclick;
+        txtPassword.focus();
+        Event_key('Enter', 'txtPassword', 'btnLogin');
+        var pass = sessionStorage.getItem("EslamPassword");
+        if (pass != null) {
+            txtPassword.value = pass;
+            btnLogin_onclick();
+        }
+        else {
+            $('#Pass').removeClass('display_none');
+            txtPassword.focus();
+        }
     }
     Money_Wallet.InitalizeComponent = InitalizeComponent;
+    function btnLogin_onclick() {
+        var Done = false;
+        if (txtPassword.value.trim() == "619606") {
+            DataCatch_Receipt = "Catch_Receipt_01";
+            Done = true;
+        }
+        else if (txtPassword.value.trim() == "619") {
+            DataCatch_Receipt = "Catch_Receipt_02";
+            Done = true;
+        }
+        else if (txtPassword.value.trim() == "619619") {
+            DataCatch_Receipt = "Catch_Receipt_03";
+            Done = true;
+        }
+        else {
+            Errorinput(txtPassword);
+            Done = false;
+        }
+        if (Done) {
+            $('#layout_Back').addClass('display_none');
+            $('#layout_Refresh').addClass('display_none');
+            $('#Pass').addClass('display_none');
+            $('#Page_mone').removeClass('display_none');
+            Tabs_click();
+            InitializeGrid();
+            txtDateFrom = document.getElementById("txtDateFrom");
+            txtDateTo = document.getElementById("txtDateTo");
+            txtSearch = document.getElementById("txtSearch");
+            txtAmount = document.getElementById("txtAmount");
+            btnShow = document.getElementById("btnShow");
+            btnExchange = document.getElementById("btnExchange");
+            btnReceipt = document.getElementById("btnReceipt");
+            a_Expans = document.getElementById("a_Expans");
+            a_Resive = document.getElementById("a_Resive");
+            a_View = document.getElementById("a_View");
+            btnExchange.onclick = function () { AppTans(Glopl_Type); };
+            btnReceipt.onclick = function () { AppTans(Glopl_Type); };
+            a_Expans.onclick = function () { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
+            a_Resive.onclick = function () { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
+            a_View.onclick = function () { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
+            txtDateFrom.value = DateStartYear();
+            txtDateTo.value = GetDate();
+            txtSearch.onkeyup = txtSearch_change;
+            btnShow.onclick = DisplayAll;
+            DisplayAll();
+            sessionStorage.setItem("EslamPassword", txtPassword.value);
+        }
+    }
     function Tabs_click() {
         $('body').on('click', '.scrollable-tabs li', function () {
             debugger;
@@ -77,6 +135,17 @@ var Money_Wallet;
                     return txt;
                 }
             },
+            {
+                title: "Delete", visible: false,
+                itemTemplate: function (s, item) {
+                    var txt = document.createElement("input");
+                    txt.type = "button";
+                    txt.value = ("Delete");
+                    txt.className = "btn btn-custon-four btn-danger ";
+                    totalAmount = totalAmount + item.Amount;
+                    return txt;
+                }
+            },
         ];
         //JGrid.Bind();
     }
@@ -97,7 +166,7 @@ var Money_Wallet;
     function DisplayAll() {
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "Catch_Receipt" },
+            data: { Name_txt: DataCatch_Receipt },
             success: function (d) {
                 var result = JSON.parse(d);
                 var res = result;
@@ -107,17 +176,25 @@ var Money_Wallet;
     }
     function Display_Grid(_Display) {
         debugger;
+        totalAmount = 0;
         AllDisplay = _Display;
         AllDisplay = AllDisplay.sort(dynamicSortNew("ID"));
         Display = _Display;
-        //if (dbTypeF.value != "All") {
-        //    Display = Display.filter(x => x.Type == dbTypeF.value);
-        //}
-        //Display = Display.filter(x => x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value);
+        if ($('#TypeSoursF').val() != "All") {
+            Display = Display.filter(function (x) { return x.Type == $('#TypeSoursF').val(); });
+        }
+        if ($('#TrType').val() != "All") {
+            Display = Display.filter(function (x) { return x.Title == $('#TrType').val(); });
+        }
+        Display = Display.filter(function (x) { return x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value; });
         Display = Display.sort(dynamicSortNew("ID"));
         JGrid.DataSource = Display;
         JGrid.Bind();
         Clean();
+        for (var i = 0; i < Display.length; i++) {
+            totalAmount = totalAmount + Display[i].Amount;
+        }
+        $('#txtTotal').val(totalAmount.toFixed(2));
     }
     function AppTans(Type) {
         debugger;
@@ -136,15 +213,18 @@ var Money_Wallet;
             return false;
         }
         Model = new DataAll();
+        var Val = txtAmount.value;
+        txtAmount.value = eval(Val);
         DocumentActions.AssignToModel(Model); //Insert Update 
         Model.TrDate = DateFormatRep($('#txtdate').val());
         Model.Type = $('#TypeSours').val();
         Model.Title = Type;
+        Model.Amount = eval(Val);
         Model.ID = Number($('#txtTrNo').val());
         //Model.ID = 666;
         var Data = new Send_Data();
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "Catch_Receipt";
+        Data.Name_Txt_Master = DataCatch_Receipt;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'u';
         debugger;
@@ -169,7 +249,7 @@ var Money_Wallet;
         Model.ID = ID;
         var Data = new Send_Data();
         Data.ID = ID;
-        Data.Name_Txt_Master = "Catch_Receipt";
+        Data.Name_Txt_Master = DataCatch_Receipt;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'd';
         debugger;
@@ -207,7 +287,10 @@ var Money_Wallet;
     }
     function AllBalance() {
         debugger;
-        var MaxID = AllDisplay[0].ID;
+        var MaxID = 0;
+        if (AllDisplay.length > 0) {
+            MaxID = AllDisplay[0].ID;
+        }
         $('#txtTrNo').val(MaxID + 1);
         $('#TrNoLab').html('TrNo ( ' + (Number(MaxID) + 1) + ' )');
         var Exchange = AllDisplay.filter(function (x) { return x.Title == 'Exchange'; });

@@ -10,38 +10,121 @@ namespace Money_Wallet {
     var Model: DataAll = new DataAll();
     var JGrid: JsGrid = new JsGrid();
 
+    var btnShow: HTMLButtonElement;
     var btnExchange: HTMLButtonElement;
     var btnReceipt: HTMLButtonElement;
     var a_Expans: HTMLButtonElement;
     var a_Resive: HTMLButtonElement;
     var a_View: HTMLButtonElement;
+    var txtAmount: HTMLInputElement;
     var txtSearch: HTMLInputElement;
+    var btnLogin: HTMLButtonElement;
+    var txtDateFrom: HTMLInputElement;
+    var txtDateTo: HTMLInputElement;
 
+    var txtPassword: HTMLInputElement;
     var Glopl_Type = 'Exchange';
 
     var flagSave = 0;
+    var totalAmount = 0;
+    var DataCatch_Receipt = "";
     export function InitalizeComponent() {
 
-        Tabs_click();
-        InitializeGrid(); 
+        debugger
 
-        txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
-        btnExchange = document.getElementById("btnExchange") as HTMLButtonElement;
-        btnReceipt = document.getElementById("btnReceipt") as HTMLButtonElement;
-        a_Expans = document.getElementById("a_Expans") as HTMLButtonElement;
-        a_Resive = document.getElementById("a_Resive") as HTMLButtonElement;
-        a_View = document.getElementById("a_View") as HTMLButtonElement;
+        $('#Pass').removeClass('display_none');
+        $('#Page_mone').addClass('display_none');
 
-        btnExchange.onclick = () => { AppTans(Glopl_Type) };
-        btnReceipt.onclick = () => { AppTans(Glopl_Type) };
-        a_Expans.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
-        a_Resive.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
-        a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
+        btnLogin = document.getElementById("btnLogin") as HTMLButtonElement;
+        txtPassword = document.getElementById("txtPassword") as HTMLInputElement;
 
-        txtSearch.onkeyup = txtSearch_change;
+        btnLogin.onclick = btnLogin_onclick;
 
-        DisplayAll();
-    } 
+        txtPassword.focus();
+
+        Event_key('Enter', 'txtPassword', 'btnLogin');
+
+        let pass = sessionStorage.getItem("EslamPassword");
+        if (pass != null) {
+            txtPassword.value = pass;
+            btnLogin_onclick();
+        }
+        else {
+            $('#Pass').removeClass('display_none');
+            txtPassword.focus();
+        }
+
+
+    }
+
+    function btnLogin_onclick() {
+        let Done = false;
+        if (txtPassword.value.trim() == "619606") {
+
+            DataCatch_Receipt = "Catch_Receipt_01";
+            Done = true
+
+        }
+        else if (txtPassword.value.trim() == "619") {
+
+            DataCatch_Receipt = "Catch_Receipt_02";
+            Done = true
+
+        }
+        else if (txtPassword.value.trim() == "619619") {
+
+            DataCatch_Receipt = "Catch_Receipt_03";
+            Done = true
+        }
+        else {
+            Errorinput(txtPassword);
+            Done = false
+        }
+
+
+        if (Done) {
+
+            $('#layout_Back').addClass('display_none')
+            $('#layout_Refresh').addClass('display_none')
+
+            $('#Pass').addClass('display_none');
+            $('#Page_mone').removeClass('display_none');
+
+            Tabs_click();
+            InitializeGrid();
+
+            txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
+            txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
+            txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
+            txtAmount = document.getElementById("txtAmount") as HTMLInputElement;
+            btnShow = document.getElementById("btnShow") as HTMLButtonElement;
+            btnExchange = document.getElementById("btnExchange") as HTMLButtonElement;
+            btnReceipt = document.getElementById("btnReceipt") as HTMLButtonElement;
+            a_Expans = document.getElementById("a_Expans") as HTMLButtonElement;
+            a_Resive = document.getElementById("a_Resive") as HTMLButtonElement;
+            a_View = document.getElementById("a_View") as HTMLButtonElement;
+
+            btnExchange.onclick = () => { AppTans(Glopl_Type) };
+            btnReceipt.onclick = () => { AppTans(Glopl_Type) };
+            a_Expans.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
+            a_Resive.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
+            a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
+
+            txtDateFrom.value = DateStartYear();
+            txtDateTo.value = GetDate();
+
+            txtSearch.onkeyup = txtSearch_change;
+            btnShow.onclick = DisplayAll;
+
+            DisplayAll();
+
+            sessionStorage.setItem("EslamPassword", txtPassword.value);
+
+        }
+
+
+    }
+
     function Tabs_click() {
 
 
@@ -54,18 +137,18 @@ namespace Money_Wallet {
             if ($(this).html() != '<a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="true"><i class="fa fa-plus-circle Add"></i></a>' && $(this).html() != '<a class="" data-toggle="tab" href="" aria-expanded="false"><i class="fa fa-plus-circle Add"></i></a>') {
 
                 $(this).addClass('actTab');
-                  
-            
+
+
 
                 Clean();
             }
 
 
         });
-    }  
+    }
     function InitializeGrid() {
         JGrid.ElementName = "JGrid";
-        JGrid.PrimaryKey = "ID"; 
+        JGrid.PrimaryKey = "ID";
         JGrid.Paging = true;
         JGrid.PageSize = 10;
         JGrid.Sorting = true;
@@ -97,7 +180,19 @@ namespace Money_Wallet {
                     return txt;
                 }
             },
-             
+
+            {
+                title: "Delete", visible: false,
+                itemTemplate: (s: string, item: DataAll): HTMLInputElement => {
+                    let txt: HTMLInputElement = document.createElement("input");
+                    txt.type = "button";
+                    txt.value = ("Delete");
+                    txt.className = "btn btn-custon-four btn-danger ";
+                    totalAmount = totalAmount + item.Amount;
+                    return txt;
+                }
+            },
+
 
 
         ];
@@ -128,12 +223,12 @@ namespace Money_Wallet {
 
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "Catch_Receipt" },
+            data: { Name_txt: DataCatch_Receipt },
             success: (d) => {
                 let result = JSON.parse(d)
 
                 let res = result as Array<DataAll>;
-                 
+
                 Display_Grid(res)
 
 
@@ -145,15 +240,19 @@ namespace Money_Wallet {
 
     function Display_Grid(_Display: Array<DataAll>) {
         debugger
+        totalAmount = 0;
         AllDisplay = _Display;
         AllDisplay = AllDisplay.sort(dynamicSortNew("ID"));
 
         Display = _Display;
 
-        //if (dbTypeF.value != "All") {
-        //    Display = Display.filter(x => x.Type == dbTypeF.value);
-        //}
-        //Display = Display.filter(x => x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value);
+        if ($('#TypeSoursF').val() != "All") {
+            Display = Display.filter(x => x.Type == $('#TypeSoursF').val());
+        }
+        if ($('#TrType').val() != "All") {
+            Display = Display.filter(x => x.Title == $('#TrType').val());
+        }
+        Display = Display.filter(x => x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value);
 
         Display = Display.sort(dynamicSortNew("ID"));
         JGrid.DataSource = Display;
@@ -161,6 +260,10 @@ namespace Money_Wallet {
 
         Clean();
 
+        for (var i = 0; i < Display.length; i++) {
+            totalAmount = totalAmount + Display[i].Amount;
+        }
+        $('#txtTotal').val(totalAmount.toFixed(2));
     }
 
     function AppTans(Type: string) {
@@ -169,7 +272,7 @@ namespace Money_Wallet {
 
         if (flagSave == 1) {
             setTimeout(function () { flagSave = 0; }, 800);
-            
+
             return false
         }
 
@@ -187,22 +290,26 @@ namespace Money_Wallet {
 
         Model = new DataAll();
 
+        let Val = txtAmount.value;
+
+        txtAmount.value = eval(Val);
+
         DocumentActions.AssignToModel(Model);//Insert Update 
         Model.TrDate = DateFormatRep($('#txtdate').val())
         Model.Type = $('#TypeSours').val();
         Model.Title = Type;
-
+        Model.Amount = eval(Val);
         Model.ID = Number($('#txtTrNo').val());
         //Model.ID = 666;
 
         let Data = new Send_Data();
 
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "Catch_Receipt";
-        Data.Model = JSON.stringify(Model);  
+        Data.Name_Txt_Master = DataCatch_Receipt;
+        Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'u';
 
-        debugger            
+        debugger
         $.ajax({
             url: Url.Action("Add_Trans", "Profile"),
             type: "POST",
@@ -226,17 +333,17 @@ namespace Money_Wallet {
 
         JGrid.SelectedItem = Display.filter(x => x.ID == ID)[0];
 
-      
+
 
         Model = new DataAll();
-         
-         
+
+
         Model.ID = ID;
 
         let Data = new Send_Data();
 
         Data.ID = ID;
-        Data.Name_Txt_Master = "Catch_Receipt";
+        Data.Name_Txt_Master = DataCatch_Receipt;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'd';
 
@@ -262,7 +369,7 @@ namespace Money_Wallet {
 
 
     function Clean() {
-         
+
         $('#TypeSours').val('Cash');
         $('#txtRemark').val('');
         $('#txtdate').val(GetDate());
@@ -287,7 +394,10 @@ namespace Money_Wallet {
     function AllBalance() {
 
         debugger
-        let MaxID = AllDisplay[0].ID;
+        let MaxID = 0;
+        if (AllDisplay.length > 0) {
+            MaxID = AllDisplay[0].ID; 
+        } 
         $('#txtTrNo').val(MaxID + 1);
         $('#TrNoLab').html('TrNo ( ' + (Number(MaxID) + 1) + ' )');
 
