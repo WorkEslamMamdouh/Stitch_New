@@ -110,21 +110,285 @@
             color: #89dc00;
         }
 
-        .Refreshposition {
+
+            .Refresh:hover {
+                color: #008f8f;
+            }
+
+            .Refresh:active {
+                color: #008f8f;
+            }
+    </style>
+
+
+
+    <style>
+
+        textarea {
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .active {
+            /*background-color: white;*/
+            font-weight: bold;
+        }
+
+        .actTab {
+            background-color: white !important;
+            font-weight: bold;
+            border-radius: 19px 19px 0 0;
+            cursor: pointer;
+        }
+
+        .nav-item {
+            cursor: pointer !important;
+        }
+
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+
+        .Add {
+            font-size: 23px !important;
+            color: wheat;
+        }
+
+        .display_none {
+            display: none !important;
+        }
+
+        .backposition {
             position: absolute;
-            right: 3%;
-            top: 2%;
+            left: 0% !important;
+            top: 0% !important;
             z-index: 99999 !important;
         }
 
-        .Refresh:hover {
-            color: #008f8f;
-        }
-
-        .Refresh:active {
-            color: #008f8f;
+        .Refreshposition {
+            position: absolute;
+            right: 1%;
+            /*top: 12.5%;*/
+            z-index: 99999 !important;
         }
     </style>
+    <link href="~/NewStyle/css/Taps.css" rel="stylesheet" />
+
+
+
+    <style>
+
+        textarea {
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .active {
+            /*background-color: white;*/
+            font-weight: bold;
+        }
+
+        .actTab {
+            background-color: #ebebeb !important;
+            font-weight: bold;
+            border-radius: 19px 19px 0 0;
+            cursor: pointer;
+        }
+
+        .nav-item {
+            cursor: pointer !important;
+        }
+
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+
+        .Add {
+            font-size: 23px !important;
+            color: wheat;
+        }
+
+        .display_none {
+            display: none !important;
+        }
+
+        .backposition {
+            position: absolute;
+            left: 0% !important;
+            top: 0% !important;
+            z-index: 99999 !important;
+        }
+
+
+        .Respon_width {
+            width: 30%;
+            font-size: 4.6vw;
+        }
+
+
+        html, body.materialdesign {
+            background: #ebebeb;
+        }
+
+
+        a {
+            color: #02a9a9 !important;
+        }
+    </style>
+
+    <link href="~/NewStyle/css/Taps.css" rel="stylesheet" />
+
+
+    <link href="~/Scripts/IgGrid/infragistics.css" rel="stylesheet" />
+    <link href="~/Scripts/IgGrid/theme.css" rel="stylesheet" />
+    <link href="~/Scripts/jsgrid/jsgrid-theme.css" rel="stylesheet" />
+    <link href="~/Scripts/jsgrid/jsgrid-theme.min.css" rel="stylesheet" />
+    <link href="~/Scripts/jsgrid/jsgrid.css" rel="stylesheet" />
+    <link href="~/Scripts/jsgrid/jsgrid.min.css" rel="stylesheet" />
+    <link href="~/Scripts/jsgrid/jsgrid-theme.css" rel="stylesheet" />
+    <link href="~/Scripts/jsgrid/jsgrid-theme.min.css" rel="stylesheet" />
+    <link href="~/Scripts/jsgrid/jsgrid.css" rel="stylesheet" />
+    <link href="~/Scripts/jsgrid/jsgrid.min.css" rel="stylesheet" />
+
+
+
+    <style>
+
+        .des {
+            width: 22% !important;
+        }
+
+        .uom {
+            width: 11% !important;
+        }
+
+        .Zero {
+            width: 0% !important;
+        }
+
+        .Price {
+            width: 9% !important;
+        }
+
+        .odd {
+            background-color: lightcoral;
+            font-weight: bold;
+            font-size: 16px;
+            color: black;
+        }
+
+        .even {
+            background-color: #fff2ce;
+            font-weight: bold;
+            font-size: 16px;
+            color: black;
+        }
+
+        tr {
+            background-color: #9ecbd6bf;
+            color: black;
+        }
+
+        .px-5 {
+            padding-left: 3rem !important;
+            padding-right: 3rem !important;
+        }
+
+        .disabledDiv {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+    </style>
+
+    <style>
+        .display_hidden {
+            display: none !important;
+        }
+
+        .Text_right {
+            text-align: left;
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .Text_left {
+            text-align: left;
+        }
+
+        .Search_grid {
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        .Delet {
+            width: 0.1% !important;
+        }
+
+        .Ser {
+            width: 0.7% !important;
+        }
+
+        .Decs {
+            width: 5% !important;
+        }
+
+        .Rem {
+            width: 10% !important;
+        }
+
+        .Url {
+            width: 5% !important;
+        }
+
+        .Ope {
+            width: 2% !important;
+        }
+
+        .wid {
+            width: 417px !important;
+        }
+    </style>
+
 </head>
 
 <body id="main-menu" class=" materialdesign mini-navbar">

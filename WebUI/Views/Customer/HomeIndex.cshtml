@@ -1,8 +1,4 @@
-﻿
-@{
-
-    Layout = "~/Views/Shared/Layout.cshtml";
-}
+﻿ 
 
 <style>
 
@@ -92,40 +88,5 @@
 
     </div>
 
-
-
-    <script>
-
-        $("#Open_Profile").on('click', function () {
-            window.open(Url.Action("ProfileIndex", "Home"), "_self");
-        });
-
-        $("#Open_Notes").on('click', function () {
-            window.open(Url.Action("NotesIndex", "Home"), "_self");
-        });
-
-        $("#Open_Data_Server").on('click', function () {
-            window.open(Url.Action("TestIndex", "Home"), "_self");
-        });
-
-
-        $("#Open_Get_Views").on('click', function () { 
-            //alert('تحت الانشاء')
-            window.open(Url.Action("Page_Get_Views", "Home"), "_self");
-        });
-
-        $("#Open_Test_Code").on('click', function () { 
-            //alert('تحت الانشاء')
-            window.open("https://onecompiler.com/javascript", "_self");
-        });
-
-
-        $("#Open_Money_Wallet").on('click', function () {
-            window.open(Url.Action("Page_Money_Wallet", "Home"), "_self");
-             
-        });
-
-        
-
-    </script>
+     
 </body> 

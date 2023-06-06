@@ -1,17 +1,13 @@
 $(document).ready(function () {
-    Notes.InitalizeComponent();
-});
-var Notes;
-(function (Notes) {
     var AllDisplay = new Array();
     var DetMaxLast = 0;
     var CountGrid = 0;
-    function InitalizeComponent() {
+    NotesInitalizeComponent();
+    function NotesInitalizeComponent() {
         Tabs_click();
         Get_All_Notes();
         AddButtonApp_Tap();
     }
-    Notes.InitalizeComponent = InitalizeComponent;
     function Tabs_click() {
         $('body').on('click', '.scrollable-tabs li', function () {
             debugger;
@@ -123,5 +119,5 @@ var Notes;
             $("#txt_StatusFlag" + RecNo).val("d");
         $("#No_Row" + RecNo).attr("hidden", "true");
     }
-})(Notes || (Notes = {}));
+});
 //# sourceMappingURL=Notes.js.map

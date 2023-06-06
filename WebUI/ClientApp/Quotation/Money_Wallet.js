@@ -1,8 +1,4 @@
 $(document).ready(function () {
-    Money_Wallet.InitalizeComponent();
-});
-var Money_Wallet;
-(function (Money_Wallet) {
     var AllDisplay = new Array();
     var Display = new Array();
     var Model = new DataAll();
@@ -23,7 +19,8 @@ var Money_Wallet;
     var flagSave = 0;
     var totalAmount = 0;
     var DataCatch_Receipt = "";
-    function InitalizeComponent() {
+    WalletInitalizeComponent();
+    function WalletInitalizeComponent() {
         debugger;
         $('#Pass').removeClass('display_none');
         $('#Page_mone').addClass('display_none');
@@ -42,7 +39,6 @@ var Money_Wallet;
             txtPassword.focus();
         }
     }
-    Money_Wallet.InitalizeComponent = InitalizeComponent;
     function btnLogin_onclick() {
         var Done = false;
         if (txtPassword.value.trim() == "619606") {
@@ -305,5 +301,5 @@ var Money_Wallet;
         }
         $('#BalanceLab').html('All Balance ( ' + (Number(Amount_Rec) - Number(Amount_Exch)) + ' ) $');
     }
-})(Money_Wallet || (Money_Wallet = {}));
+});
 //# sourceMappingURL=Money_Wallet.js.map

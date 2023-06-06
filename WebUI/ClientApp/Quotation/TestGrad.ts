@@ -1,9 +1,5 @@
 ﻿
-$(document).ready(() => {
-    TestGrad.InitalizeComponent();
-})
-
-namespace TestGrad {
+$(document).ready(() => { 
 
     var Grid: ESGrid = new ESGrid();
 
@@ -15,7 +11,9 @@ namespace TestGrad {
     var Database: HTMLSelectElement;
     var top: HTMLSelectElement;
 
-    export function InitalizeComponent() {
+    TestGradInitalizeComponent();
+
+    function TestGradInitalizeComponent() {
 
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
         GenerateModels = document.getElementById('GenerateModels') as HTMLButtonElement
@@ -563,7 +561,7 @@ namespace TestGrad {
         //alert(Grid.ESG.SelectedKey);
     }
 
-}
+})
 
 
 

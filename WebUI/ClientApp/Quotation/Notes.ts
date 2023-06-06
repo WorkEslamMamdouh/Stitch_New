@@ -1,9 +1,5 @@
 ﻿
 $(document).ready(() => {
-    Notes.InitalizeComponent();
-})
-
-namespace Notes {
 
     var AllDisplay: Array<DataNotes> = new Array<DataNotes>();
 
@@ -11,9 +7,9 @@ namespace Notes {
     var CountGrid = 0;
      
 
+    NotesInitalizeComponent();
 
-
-    export function InitalizeComponent() { 
+      function NotesInitalizeComponent() {
         Tabs_click(); 
         Get_All_Notes();
         AddButtonApp_Tap();
@@ -194,9 +190,7 @@ namespace Notes {
 
     }
 
-
-     
-}
+})
 
 
 

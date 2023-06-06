@@ -831,6 +831,7 @@
     <Content Include="Views\Customer\Get_ViewsIndex.cshtml" />
     <Content Include="Views\Customer\HomeIndex.cshtml" />
     <Content Include="Views\Customer\Money_WalletIndex.cshtml" />
+    <Content Include="Views\Home\AllPagesIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -849,6 +850,7 @@
     <TypeScriptCompile Include="ClientApp\App.ts" />
     <TypeScriptCompile Include="ClientApp\ClientGeneralTools.ts" />
     <TypeScriptCompile Include="ClientApp\EslamGrid.ts" />
+    <TypeScriptCompile Include="ClientApp\Quotation\AllPages.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Money_Wallet.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Notes.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Profile.ts" />

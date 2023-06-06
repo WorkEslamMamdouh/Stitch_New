@@ -1,11 +1,5 @@
-﻿/// <reference path="../iggrid.ts" /> 
-
-
+﻿ 
 $(document).ready(() => {
-    Profile.InitalizeComponent();
-})
-
-namespace Profile {
 
     var AllDisplay: Array<DataAll> = new Array<DataAll>();
     var Display: Array<DataAll> = new Array<DataAll>();
@@ -44,7 +38,9 @@ namespace Profile {
     var CountGrid = 0;
     let DetMaxLast = 0;
 
-    export function InitalizeComponent() {
+    ProfileInitalizeComponent();
+
+    function ProfileInitalizeComponent() {
 
         btnLogin = document.getElementById("btnLogin") as HTMLButtonElement;
         txtPassword = document.getElementById("txtPassword") as HTMLInputElement;
@@ -264,6 +260,8 @@ namespace Profile {
         }
         else {
             Errorinput(txtPassword);
+            $('#Pass').removeClass('display_none');
+            txtPassword.focus();
         }
 
            
@@ -696,7 +694,7 @@ namespace Profile {
         }, 500);
 
     }
-}
+})
 
 
 

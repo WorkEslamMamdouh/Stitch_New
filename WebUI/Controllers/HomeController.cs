@@ -20,6 +20,16 @@ namespace Inv.WebUI.Controllers
             //Session["SystemProperties"] = SessionManager.SessionRecord;
 
             return View("HomeIndex");
+        }  
+        public ActionResult AllPagesIndex()
+        {
+
+            //Session["ErrorUrl"] = "";//Url.Action("LoginIndex", "Login");
+            //SessionManager.SessionRecord.CompanyNameAr = "";
+
+            //Session["SystemProperties"] = SessionManager.SessionRecord;
+
+            return View("AllPagesIndex");
         }
 
         public ActionResult Admin()

@@ -1,9 +1,5 @@
 ﻿
-$(document).ready(() => {
-    Money_Wallet.InitalizeComponent();
-})
-
-namespace Money_Wallet {
+$(document).ready(() => { 
 
     var AllDisplay: Array<DataAll> = new Array<DataAll>();
     var Display: Array<DataAll> = new Array<DataAll>();
@@ -28,7 +24,10 @@ namespace Money_Wallet {
     var flagSave = 0;
     var totalAmount = 0;
     var DataCatch_Receipt = "";
-    export function InitalizeComponent() {
+
+    WalletInitalizeComponent();
+
+    function WalletInitalizeComponent() {
 
         debugger
 
@@ -425,7 +424,7 @@ namespace Money_Wallet {
 
 
 
-}
+})
 
 
 

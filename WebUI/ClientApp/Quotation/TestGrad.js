@@ -1,8 +1,4 @@
 $(document).ready(function () {
-    TestGrad.InitalizeComponent();
-});
-var TestGrad;
-(function (TestGrad) {
     var Grid = new ESGrid();
     //var ShowData: HTMLButtonElement; 
     var GenerateModels;
@@ -11,7 +7,8 @@ var TestGrad;
     var DataSours;
     var Database;
     var top;
-    function InitalizeComponent() {
+    TestGradInitalizeComponent();
+    function TestGradInitalizeComponent() {
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
         GenerateModels = document.getElementById('GenerateModels');
         Conact = document.getElementById('Conact');
@@ -38,7 +35,6 @@ var TestGrad;
         //ShowData.onclick = ShowData_onclick;
         InitializeGridControl();
     }
-    TestGrad.InitalizeComponent = InitalizeComponent;
     function Conact_onclick() {
         var rp = new SqlEnt();
         //rp.Database = $('#Database').val();
@@ -379,5 +375,5 @@ var TestGrad;
     function DoubleClicked() {
         //alert(Grid.ESG.SelectedKey);
     }
-})(TestGrad || (TestGrad = {}));
+});
 //# sourceMappingURL=TestGrad.js.map

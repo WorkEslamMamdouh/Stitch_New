@@ -1,9 +1,4 @@
-/// <reference path="../iggrid.ts" /> 
 $(document).ready(function () {
-    Profile.InitalizeComponent();
-});
-var Profile;
-(function (Profile) {
     var AllDisplay = new Array();
     var Display = new Array();
     var Model = new DataAll();
@@ -33,7 +28,8 @@ var Profile;
     var Flag_IsNew = false;
     var CountGrid = 0;
     var DetMaxLast = 0;
-    function InitalizeComponent() {
+    ProfileInitalizeComponent();
+    function ProfileInitalizeComponent() {
         btnLogin = document.getElementById("btnLogin");
         txtPassword = document.getElementById("txtPassword");
         btnLogin.onclick = btnLogin_onclick;
@@ -50,7 +46,6 @@ var Profile;
             txtPassword.focus();
         }
     }
-    Profile.InitalizeComponent = InitalizeComponent;
     function InitalizeControls() {
         btnShow = document.getElementById("btnShow");
         btnAdd = document.getElementById("btnAdd");
@@ -199,6 +194,8 @@ var Profile;
         }
         else {
             Errorinput(txtPassword);
+            $('#Pass').removeClass('display_none');
+            txtPassword.focus();
         }
     }
     function btnShow_onclick() {
@@ -489,5 +486,5 @@ var Profile;
             });
         }, 500);
     }
-})(Profile || (Profile = {}));
+});
 //# sourceMappingURL=Profile.js.map
