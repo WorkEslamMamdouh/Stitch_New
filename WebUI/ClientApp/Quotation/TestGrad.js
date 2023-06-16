@@ -9,6 +9,8 @@ $(document).ready(function () {
     var top;
     TestGradInitalizeComponent();
     function TestGradInitalizeComponent() {
+        $("#layout_Refresh").removeClass('display_none');
+        $("#layout_Back").removeClass('display_none');
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
         GenerateModels = document.getElementById('GenerateModels');
         Conact = document.getElementById('Conact');

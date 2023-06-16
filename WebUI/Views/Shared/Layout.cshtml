@@ -387,6 +387,11 @@
         .wid {
             width: 417px !important;
         }
+
+
+        ._Name_file {
+            width: 189px !important;
+        }
     </style>
 
 </head>
@@ -398,17 +403,16 @@
     <input type="hidden" id="GetAPIUrl" name="name" value="@System.Configuration.ConfigurationManager.AppSettings["ServiceUrl"]" />
     <input type="hidden" id="GetPass" name="name" value="" />
 
- 
-    <a id="layout_Back" onclick="history.back()" class="backposition animate__animated animate__backInDown" data-toggle="tab" title="Back Page" href="">
-        @*<i class="fa fa-backward back"></i>*@
+
+    <a id="layout_Back" @*onclick="history.back()"*@ class="backposition animate__animated animate__backInDown" data-toggle="tab" title="Back Page" href="">  
         <i class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;"></i>
     </a>
 
-    <a id="layout_Refresh" onclick="location.reload()" class="Refreshposition animate__animated animate__backInDown" data-toggle="tab" title="Refresh" href="">
-        @*<i class="fa fa-refresh Refresh"></i>*@
+    <a id="layout_Refresh" @*onclick="location.reload()"*@ class="Refreshposition animate__animated animate__backInDown" data-toggle="tab" title="Refresh" href="">   
         <i class="fa-solid fa-clock-rotate-left fa-beat Refresh"></i>
     </a>
 
+     
     <div id="cont" class="divcont">
         @RenderBody()
     </div>
@@ -457,32 +461,6 @@
 
 
 
-
-  
-    @*<script src="~/NewStyle/LodBut/Loder.js"></script>*@
-    <script>
-
-        //window.onbeforeunload = confirmExit;
-        //function confirmExit() {
-        //    alert("confirm exit is being called");
-        //    return false;
-        //}
-        //if (myWindow.closed) {
-        //    callback();
-        //    return;
-        //}
-        //window.onunload = function () { alert("Bye now!"); }
-        //$(window).unload(function () { alert("Bye now!"); });
-
-
-
-        $(window).on("load", function (e) {
-            //alert($('#GetPass').val())
-        });
-
-         
-       
-
-    </script>
+    <script src="~/ClientApp/Quotation/AllPages.js"></script>
 </body>
 </html>

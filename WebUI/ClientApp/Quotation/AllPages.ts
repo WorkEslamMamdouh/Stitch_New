@@ -5,112 +5,14 @@ $(document).ready(() => {
 
 namespace AllPages {
 
-
-    var Html_Home = `
-<style>
-
-    .des {
-        width: 22% !important;
-    }
-
-    .uom {
-        width: 11% !important;
-    }
-
-    .Zero {
-        width: 0% !important;
-    }
-
-    .Price {
-        width: 9% !important;
-    }
-
-    .odd {
-        background-color: lightcoral;
-        font-weight: bold;
-        font-size: 16px;
-        color: black;
-    }
-    .even {
-        background-color: #fff2ce;
-        font-weight: bold;
-        font-size: 16px;
-        color: black;
-    }
-    tr {
-        background-color: #b9b9b9;
-        color: black;
-    }
-
-    .px-5 {
-        padding-left: 3rem !important;
-        padding-right: 3rem !important;
-    }
-
-    .px-top {
-        padding-bottom: 10% !important;
-    }
-
-</style>
-<body class="materialdesign"  >
-    <div class="content-inner-all">
-        <div class="sparkline8-graph col-xs-12 animate__animated animate__backInLeft" style=" border-radius: 50px;background-color: #000000b3;color: aliceblue;font-weight: bold; ">
-
-
-            <div class="col-xs-12 col-lg-12 col-sm-12  ">
-                <h1 class="col-xs-12 col-lg-12 col-sm-12 animate__animated animate__jackInTheBox">Eslam Mamdouh</h1>
-            </div>
-
-            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
-                <button id="Open_Profile" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success animate__animated animate__fadeInBottomRight">      Profile </button>
-            </div>
-            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
-                <button id="Open_Notes" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning  animate__animated animate__fadeInBottomRight">      Notes </button>
-            </div>
-            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
-                <button id="Open_Data_Server" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info animate__animated animate__fadeInBottomRight ">      Data Server </button>
-            </div>
-            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
-                <button id="Open_Get_Views" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger  animate__animated animate__fadeInBottomRight">    Work </button>
-            </div>
-            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
-                <button id="Open_Test_Code" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info  animate__animated animate__fadeInBottomRight" style="background-color: burlywood;">    Test Code </button>
-            </div>
-
-            <div class="col-xs-12 col-lg-6 col-sm-12 px-top">
-                <button id="Open_Money_Wallet" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info  animate__animated animate__fadeInBottomRight" style="background-color: #002980;">    Money Wallet </button>
-            </div>
-
-            <div id="Pages" class="col-xs-12 col-lg-12 col-sm-12">
-
-            </div>
-
-
-
-        </div>
-
-
-
-
-
-    </div>
-
-
-
-    <script>
-
-       
-
-
-    </script>
-</body> `;
+     
 
     var Html_Notes = `
  
 <body class="materialdesign"> 
-    <div class="responsive__tabs animate__animated animate__backInLeft"> 
+    <div class="responsive__tabs animate__animated animate__zoomIn"> 
         <ul id="label_Tab" class="scrollable-tabs ">
-      <li id="Back" onclick="history.back()" class="nav-item">
+      <li id="Back" class="nav-item">
                     <a id="Back" class="nav-link" data-toggle="tab" href="">
                         <i id="Back" class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;color: #df0303;"></i>
                     </a>
@@ -132,7 +34,7 @@ namespace AllPages {
 <body class="materialdesign sparkline8-graph col-xs-12  ">
  
 
-    <div id="Pass" class="display_none content-inner-all animate__animated animate__backInLeft">
+    <div id="Pass" class="display_none content-inner-all animate__animated animate__zoomIn">
         <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br />
@@ -160,10 +62,10 @@ namespace AllPages {
         </div>
     </div>
 
-    <div id="Page_mone" class="responsive__tabs animate__animated animate__backInLeft display_none">
+    <div id="Page_mone" class="responsive__tabs animate__animated animate__zoomIn display_none">
  
         <ul id="label_Tab" class="scrollable-tabs ">
-            <li id="Back" onclick="history.back()" class="nav-item">
+            <li id="Back"   class="nav-item">
                 <a id="Back" class="nav-link" data-toggle="tab" href=""> 
                     <i id="Back" class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;color: #df0303;"></i>
                 </a>
@@ -181,9 +83,9 @@ namespace AllPages {
                 <a id="a_View" class="nav-link" data-toggle="tab" href="#Tab_2">  الماليات</a>
             </li>
 
-            <li id="App_Ref" onclick="location.reload()" class="">
-                <a class="" data-toggle="tab" href="">
-                    <i class="fa-solid fa-clock-rotate-left fa-beat Refresh"></i>
+            <li id="App_Ref" class="">
+                <a id="App_Ref" class="" data-toggle="tab" href="">
+                    <i id="App_Ref" class="fa-solid fa-clock-rotate-left fa-beat Refresh"></i>
                 </a>
 
             </li>
@@ -193,49 +95,46 @@ namespace AllPages {
 
 
         </ul>
-
-
+ 
         <div class="col-xs-12 col-lg-12 col-sm-12 ">
-            <br />
+                 
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="CairoLab"> ( 0 )</label>
+                    </div>
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="Al_ahlyLab"> ( 0 )</label>
+                    </div>
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="OutDebtLab"> ( 0 )</label>
+                    </div>
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="InDebtLab"> ( 0 )</label>
+                    </div>
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="CashLab"> ( 0 )</label>
+                    </div>
+                   <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="BalanceLab"> ( 0 )</label>
+                    </div>
         </div>
 
-        <div class="col-xs-12 col-lg-6 col-sm-12 ">
-            <label id="BalanceLab">All Balance ( 0 )</label>
-        </div>
+    
 
-
-        <div class="col-xs-12 col-lg-6 col-sm-12 ">
-            <label id="TrNoLab">TrNo ( 0 )</label>
-            <input id="txtTrNo" type="hidden" class="form-control " name="ID" />
-        </div>
+ 
 
  
         <div id="Rec_Exch_Tab" class="tab-content ">
 
-
-            <div class="col-xs-12 col-lg-12 col-sm-12 ">
-                <br />
-            </div>
+ 
 
 
-            <div class="col-xs-12 col-lg-1 col-sm-12 ">
-                <label>Type</label>
-            </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12 ">
-                <select id="TypeSours" class="form-control ">
-                    <option value="Cash">Cash</option>
-                    <option value="Al ahly Bank">Al-ahly Bank</option>
-                    <option value="Cairo Bank">Cairo Bank</option>
-                </select>
-            </div>
 
-            <div class="col-xs-12 col-lg-1 col-sm-12 ">
-                <label>Date</label>
+            <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                <input id="txtdate" type="date" name="TrDate" class="form-control  "  />
             </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12 ">
-                <input id="txtdate" type="date" name="TrDate" class="form-control " />
+             <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                <input id="txtTrNo" type="number" disabled class="form-control " name="ID" />
             </div>
-
 
             <div class="col-xs-12 col-lg-12 col-sm-12 ">
                 <br />
@@ -245,18 +144,23 @@ namespace AllPages {
                 <label>Remark</label>
             </div>
             <div class="col-xs-12 col-lg-11 col-sm-12 ">
-                <textarea id="txtRemark" type="text" class="form-control " value="" name="Remars" spellcheck="false"></textarea>
+                <textarea id="txtRemark" type="text" class="form-control " value="" name="Remars" placeholder="Remars"  spellcheck="false"></textarea>
             </div>
 
             <div class="col-xs-12 col-lg-12 col-sm-12 ">
                 <br />
             </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12 ">
-                <label>Amount</label>
-            </div>
-            <div class="col-xs-12 col-lg-11 col-sm-12 ">
-                <input id="txtAmount" type="tel" inputmode="numeric" name="Amount" class="form-control " />
+ 
+            <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                <select id="TypeSours" class="form-control ">
+                    <option value="Cash">Cash</option>
+                    <option value="Cairo Bank">Cairo Bank</option>
+                    <option value="Al ahly Bank">Al-ahly Bank</option>
+                    <option value="Debt">Debt</option>
+                </select>
+            </div> 
+            <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                <input id="txtAmount" type="tel" inputmode="numeric" name="Amount" placeholder="Amount" class="form-control " />
             </div>
 
 
@@ -284,8 +188,9 @@ namespace AllPages {
                 <select id="TypeSoursF" class="form-control ">
                     <option value="All">All</option>
                     <option value="Cash">Cash</option>
-                    <option value="Al ahly Bank">Al-ahly Bank</option>
                     <option value="Cairo Bank">Cairo Bank</option>
+                    <option value="Al ahly Bank">Al-ahly Bank</option>
+                    <option value="Debt">Debt</option>
                 </select>
             </div>
 
@@ -346,15 +251,41 @@ namespace AllPages {
 
                     </div>
 
-                    <div class="col-xs-12 col-lg-2 col-sm-12">
-                    </div>
-                    <div class="col-xs-12 col-lg-2 col-sm-12">
-                        <label style="font-weight: bold;font-size: 17px;"> Total Amount </label>
-                    </div>
+                       <div class="col-xs-12 col-lg-4 col-sm-12">
+                            <div class="col-xs-5 col-lg-4 col-sm-5">
+                                <label style="font-weight: bold;font-size: 17px;"> Total Rece </label>
+                            </div>
 
-                    <div class="col-xs-12 col-lg-4 col-sm-12">
-                        <input id="txtTotal" type="text" class="  form-control " placeholder="Amount : ">
-                    </div>
+                            <div class="col-xs-7 col-lg-8 col-sm-7">
+                                <input id="txtTotalReceipt" type="text" disabled class="  form-control " placeholder="Amount : " style="background-color: aquamarine;">
+                            </div>
+
+                      </div>
+
+                     <div class="col-xs-12 col-lg-4 col-sm-12">
+                   
+
+                            <div class="col-xs-5 col-lg-4 col-sm-5">
+                                <label style="font-weight: bold;font-size: 17px;"> Total Exch </label>
+                            </div>
+
+                            <div class="col-xs-7 col-lg-8 col-sm-7">
+                                <input id="txtTotalExchange" type="text" disabled class="  form-control " placeholder="Amount : " style="background-color: #ff7f7f;">
+                            </div>
+
+                     </div>
+
+                    
+                      <div class="col-xs-12 col-lg-4 col-sm-12">
+                            <div class="col-xs-5 col-lg-4 col-sm-5">
+                                <label style="font-weight: bold;font-size: 17px;"> Total All </label>
+                            </div>
+
+                            <div class="col-xs-7 col-lg-8 col-sm-7">
+                                <input id="txtTotal" type="text" disabled class="  form-control " placeholder="Amount : ">
+                            </div>
+                     </div>
+                  
 
                 </div>
 
@@ -374,7 +305,7 @@ namespace AllPages {
 
 
 <body class="materialdesign">
-    <div id="Pass" class="display_none content-inner-all animate__animated animate__backInLeft">
+    <div id="Pass" class="display_none content-inner-all animate__animated animate__zoomIn">
         <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br />
@@ -401,7 +332,7 @@ namespace AllPages {
             </div>
         </div>
     </div>
-    <div id="Page_Profile" class="content-inner-all display_none animate__animated animate__backInLeft">
+    <div id="Page_Profile" class="content-inner-all display_none animate__animated animate__zoomIn">
         <div id="id_div_Filter" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
             <div class="col-xs-12 col-lg-12 col-sm-12">
@@ -526,6 +457,7 @@ namespace AllPages {
             <div class="col-xs-12 col-lg-7 col-sm-12">
                 <input id="txtTitle" type="text" name="Title" class="_copy _dis form-control ">
             </div>
+          
 
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br />
@@ -555,6 +487,17 @@ namespace AllPages {
 
             </div>
             <div class="col-xs-12 col-lg-12 col-sm-12">
+                   <form method="post" enctype="multipart/form-data">
+                            <div class="col-xs-8 col-lg-8 col-sm-8">
+                                <input type="file" name="fileUpload" id="fileUploadInput" class="_dis" disabled  style="background: #0051a3;color: aliceblue;font-weight: bold;" />
+                                <input type="hidden"   id="fileName"   />
+                            </div>
+                            <div class="col-xs-8 col-lg-4 col-sm-8">
+                                <input type="button" value="Upload" id="Btn_fileUpload"  class=" btn btn-custon-four btn-success"  onclick="uploadFile()" /> 
+                            </div>
+                    </form>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br />
             </div>
 
@@ -578,7 +521,10 @@ namespace AllPages {
                                     <th class=" Text_right Decs" style="width: 5% !important;" data-field="number" tabindex="0"><div class="th-inner ">Description</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Rem" style="width: 10%  !important;" data-field="number" tabindex="0"><div class="th-inner ">Remark</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Url" style="width: 5% !important;" data-field="number" tabindex="0"><div class="th-inner ">Url</div><div class="fht-cell"></div></th>
-                                    <th class=" Text_right Ope" style="width: 2% !important;" data-field="number" tabindex="0"><div class="th-inner ">Open</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ope" style="width: 2% !important;" data-field="number" tabindex="0"><div class="th-inner ">Open Url</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ope" style="width: 2% !important;" data-field="number" tabindex="0"><div class="th-inner ">Upload</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ope" style="width: 2% !important;" data-field="number" tabindex="0"><div class="th-inner ">Open File</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Url" style="width: 2% !important;" data-field="number" tabindex="0"><div class="th-inner ">Name File</div><div class="fht-cell"></div></th>
 
                                 </tr>
                             </thead>
@@ -604,21 +550,22 @@ namespace AllPages {
 
     </div>
 
-    <div id="Upload" class="content-inner-all display_none animate__animated animate__backInLeft">
+    <div id="Upload" class="content-inner-all display_none animate__animated animate__zoomIn">
         <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <br />
-            </div>
+            
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <h1>Upload</h1>
             </div>
-            <div class="col-xs-12 col-lg-12 col-sm-12">
+            <div class="col-xs-6 col-lg-6 col-sm-6">
                 <button id="btnBack_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning"> Back </button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="btnDownload_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success"> Download </button>
             </div>
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br />
             </div>
-            <div id="Page" class="col-xs-12 col-lg-12 col-sm-12">
+            <div id="PageFile" class="col-xs-12 col-lg-12 col-sm-12">
 
             </div>
 
@@ -627,8 +574,7 @@ namespace AllPages {
             </div>
         </div>
     </div>
-
-
+ 
 
 </body>`;
 
@@ -676,7 +622,7 @@ namespace AllPages {
 
 </style>
 <body class="materialdesign">
-    <div class="content-inner-all animate__animated animate__backInLeft">
+    <div class="content-inner-all animate__animated animate__zoomIn">
         <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
 
@@ -823,59 +769,123 @@ namespace AllPages {
 `;
 
 
-
+    var glopalBtn = "";
     export function InitalizeComponent() {
- 
+
+        debugger 
+
+
         LodePageHome();
 
+
+        $("#layout_Refresh").attr('style', '');
+
+        $("#layout_Refresh").addClass('display_none');
+        $("#layout_Back").addClass('display_none');
+
+
+        $("#layout_Refresh").on('click', function () {
+            var glopalBtn = localStorage.getItem('glopalBtn');
+            $("#" + glopalBtn + "").click();
+        });
+
+
+        $("#layout_Back").on('click', function () {
+            $('#Home_Page').removeClass('display_none');
+            $('#Body_Page').addClass('display_none');
+
+
+            $("#layout_Refresh").addClass('display_none');
+            $("#layout_Back").addClass('display_none');
+
+            $("#layout_Refresh").attr('style', '');
+        });
 
     }
 
     function LodePageHome() {
 
-        Home();
+        let NumOpen = localStorage.getItem('HomePage');
+        if (NumOpen != '1') {
+            Home(); 
+        }
 
         $("#Open_Profile").on('click', function () {
             Profile();
+            glopalBtn = "Open_Profile";
+            localStorage.setItem('glopalBtn', glopalBtn);
         });
 
         $("#Open_Notes").on('click', function () {
             Notes();
+            glopalBtn = "Open_Notes";
+            localStorage.setItem('glopalBtn', glopalBtn);
         });
 
         $("#Open_Data_Server").on('click', function () {
             Data_Server();
+            glopalBtn = "Open_Data_Server";
+            localStorage.setItem('glopalBtn', glopalBtn);
         });
 
         $("#Open_Money_Wallet").on('click', function () {
-            Wallet();
-
+            Wallet(); 
+            glopalBtn = "Open_Money_Wallet";
+            localStorage.setItem('glopalBtn', glopalBtn);
         });
 
         $("#Open_Get_Views").on('click', function () {
-            //alert('تحت الانشاء')
+            //alert("تحت")
             window.open(Url.Action("Page_Get_Views", "Home"), "_self");
         });
 
-        $("#Open_Test_Code").on('click', function () {
-            //alert('تحت الانشاء')
+        $("#Open_Test_Code").on('click', function () { 
             window.open("https://onecompiler.com/javascript", "_self");
         });
 
+         
 
+
+        
 
     }
-
+     
 
     function Home() {
-        $('#Body_Page').html('');
 
-        $('#Body_Page').append(Html_Home);
+        localStorage.setItem('HomePage', '1');
+
+        $('#Home_Page').removeClass('display_none');
+        $('#Body_Page').addClass('display_none');
+
+
     }
 
 
     function Profile() {
         LodePage(Html_Profile, 'ClientApp/Quotation/Profile.js')
+
+        var container = document.createElement('div');
+
+        // Step 2: Set the HTML content of the element
+        //container.innerHTML = page;
+
+        // Step 3: Create a new <script> element
+        var scriptElement = document.createElement('script');
+
+        // Step 4: Set the src attribute of the <script> element
+        scriptElement.src = 'ClientApp/Quotation/uploadFile.js';
+        //scriptElement.src = 'ClientApp/Quotation/Notes.js';
+
+        scriptElement.onload = function () {
+        };
+
+        // Step 5: Append the <script> element to the HTML element
+        container.appendChild(scriptElement);
+
+        // Append the container element to the desired location on the page
+        var bodyPage = document.getElementById('Body_Page');
+        bodyPage.appendChild(container);
     }
 
     function Notes() {
@@ -898,7 +908,11 @@ namespace AllPages {
 
     function LodePage(page: string, Pathscript: string) {
 
+        debugger
         $('#Body_Page').html('');
+
+        $('#Home_Page').addClass('display_none');
+        $('#Body_Page').removeClass('display_none');
 
         var container = document.createElement('div');
 
@@ -921,6 +935,7 @@ namespace AllPages {
         // Append the container element to the desired location on the page
         var bodyPage = document.getElementById('Body_Page');
         bodyPage.appendChild(container);
+
 
     }
 

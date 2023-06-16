@@ -14,6 +14,7 @@ $(document).ready(function () {
     var btnUpdate;
     var btnUpload;
     var btnBack_Up;
+    var btnDownload_Up;
     var btnBack;
     var btnLogin;
     var btnAddDetails;
@@ -28,15 +29,19 @@ $(document).ready(function () {
     var Flag_IsNew = false;
     var CountGrid = 0;
     var DetMaxLast = 0;
+    var GloplePath = "";
+    var NameFile = "";
     ProfileInitalizeComponent();
     function ProfileInitalizeComponent() {
+        $("#layout_Refresh").removeClass('display_none');
+        $("#layout_Back").removeClass('display_none');
         btnLogin = document.getElementById("btnLogin");
         txtPassword = document.getElementById("txtPassword");
         btnLogin.onclick = btnLogin_onclick;
         txtPassword.focus();
         Event_key('Enter', 'txtPassword', 'btnLogin');
         debugger;
-        var pass = sessionStorage.getItem("EslamPassword");
+        var pass = sessionStorage.getItem("EslamPasswordProfile");
         if (pass != null) {
             txtPassword.value = pass;
             btnLogin_onclick();
@@ -53,6 +58,7 @@ $(document).ready(function () {
         btnUpdate = document.getElementById("btnUpdate");
         btnUpload = document.getElementById("btnUpload");
         btnBack_Up = document.getElementById("btnBack_Up");
+        btnDownload_Up = document.getElementById("btnDownload_Up");
         btnBack = document.getElementById("btnBack");
         btnAddDetails = document.getElementById("btnAddDetails");
         //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
@@ -76,7 +82,7 @@ $(document).ready(function () {
         //btnUpload.onclick = Upload;
         //btnUpload.onclick = () => { window.open('https://app.mediafire.com/myfiles', "_blank");  };
         btnBack_Up.onclick = function () { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
-        //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
+        btnDownload_Up.onclick = Download;
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
         $("._copy").on('dblclick', function () {
@@ -132,14 +138,26 @@ $(document).ready(function () {
         ];
         //JGrid.Bind();
     }
-    function Upload() {
-        //var Page = document.getElementById('Page');
-        //Page.innerHTML = ' <iframe src="https://app.mediafire.com/" frameBorder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
+    function Download() {
+        var imageUrl = GloplePath;
+        var filename = NameFile;
+        var link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = filename;
+        // Trigger the download
+        link.click();
+    }
+    function Upload(Path) {
+        debugger;
         //let newWindow = open('https://app.mediafire.com/myfiles', 'example', 'width=800,height=800')
         //newWindow.focus();
-        //$('#Pass').addClass('display_none');
-        //$('#Page_Profile').addClass('display_none');
-        //$('#Upload').removeClass('display_none');
+        //PageFile.innerHTML = ' <iframe src="http://localhost:61563/SavePath/Dropbox/FileUpload/Screenshot (1).png" frameborder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
+        GloplePath = Path;
+        var PageFile = document.getElementById('PageFile');
+        PageFile.innerHTML = ' <iframe src="' + Path + '" frameborder="0" scrolling="auto" width="1000" height="1000" style=" width: 101%; margin-left: 2%;margin-left: -1% !important;"></iframe>';
+        $('#Pass').addClass('display_none');
+        $('#Page_Profile').addClass('display_none');
+        $('#Upload').removeClass('display_none');
     }
     function btnPage_Get_Views_onclick() {
         debugger;
@@ -190,7 +208,11 @@ $(document).ready(function () {
             txtDateTo.value = GetDate();
             InitializeGrid();
             btnShow_onclick();
-            sessionStorage.setItem("EslamPassword", "619606");
+            sessionStorage.setItem("EslamPasswordProfile", "619606");
+            //setTimeout(function () {
+            //    $("#Btn_fileUpload").val('Upload')
+            //    //GetPathFileUpload();
+            //}, 800);
         }
         else {
             Errorinput(txtPassword);
@@ -201,7 +223,7 @@ $(document).ready(function () {
     function btnShow_onclick() {
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "All_Data" },
+            data: { Name_txt: "Profile_Master" },
             success: function (d) {
                 var result = JSON.parse(d);
                 var res = result;
@@ -211,6 +233,15 @@ $(document).ready(function () {
             }
         });
     }
+    //function GetPathFileUpload() {
+    //    Ajax.CallAsync({
+    //        url: Url.Action("GetPathFileUpload", "Profile"), 
+    //        success: (d) => {
+    //            debugger
+    //            GlopPathFile = d;
+    //        }
+    //    })
+    //}
     function btnSave_onClick() {
         setTimeout(function () {
             //if (!Validation()) {
@@ -256,7 +287,7 @@ $(document).ready(function () {
         debugger;
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "Data_Details" },
+            data: { Name_txt: "Profile_Details" },
             success: function (d) {
                 var result = JSON.parse(d);
                 var res = result;
@@ -276,6 +307,8 @@ $(document).ready(function () {
                     DisplayDetailsControls(i, DisplayDetails[i]);
                     CountGrid++;
                 }
+                $("#Btn_fileUpload").val('Upload');
+                $("#Btn_fileUpload").addClass('display_none');
             }
         });
     }
@@ -286,16 +319,29 @@ $(document).ready(function () {
         $("#txtDesc" + cnt).val(DataDet.Desc);
         $("#txtRemars" + cnt).val(DataDet.Remark);
         $("#txtUrl" + cnt).val(DataDet.Url);
+        $("#txtFile" + cnt).val(DataDet.Ex_Field);
     }
     function BuildControls(cnt) {
         var html = "";
-        html = "<tr id= \"No_Row" + cnt + "\" class=\"\">\n                    <input id=\"txtCollectDetailID" + cnt + "\" type=\"hidden\" class=\"form-control display_none\"  />\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtDesc" + cnt + "\" type=\"text\" disabled class=\"wid _copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"wid _copy _dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtUrl" + cnt + "\" type=\"text\" disabled class=\"wid _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_Open" + cnt + "\" type=\"button\"   class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-folder-open\" ></i></button>\n\t\t                </div>\n\t                </td>\n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
+        html = "<tr id= \"No_Row" + cnt + "\" class=\"\">\n                    <input id=\"txtCollectDetailID" + cnt + "\" type=\"hidden\" class=\"form-control display_none\"  />\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtDesc" + cnt + "\" type=\"text\" disabled class=\"wid _copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"wid _copy _dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtUrl" + cnt + "\" type=\"text\" disabled class=\"wid _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>   \n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_Open" + cnt + "\" type=\"button\"   class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-window-maximize\" ></i></button>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_Upload" + cnt + "\" type=\"button\"  disabled  class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;background-color: #0ba70a;\"><i class=\"fa fa-cloud-upload\" ></i></button>\n                            \n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_OpenFile" + cnt + "\" type=\"button\"   class=\"_dis btn btn-custon-four btn-info\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;background-color: #c47000;\"><i class=\"fa fa-folder-open\" ></i></button>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <input id=\"txtFile" + cnt + "\" type=\"text\" disabled class=\"_Name_file   form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
         $("#div_Data").append(html);
         $("#btn_minus" + cnt).on('click', function () {
             DeleteRow(cnt);
         });
         $("#btn_Open" + cnt).on('click', function () {
             window.open($("#txtUrl" + cnt).val().trim(), "_blank");
+        });
+        $("#btn_Upload" + cnt).on('click', function () {
+            $("#Btn_fileUpload").click();
+            setTimeout(function () {
+                $("#txtFile" + cnt).val($("#fileName").val());
+            }, 500);
+        });
+        $("#btn_OpenFile" + cnt).on('click', function () {
+            NameFile = $("#txtFile" + cnt).val();
+            var path = location.origin + "/SavePath/Dropbox/FileUpload/" + NameFile;
+            //window.open(path, "_blank");   
+            Upload(path);
         });
         $("._copy").on('dblclick', function () {
             copyToClipboard(this.id);
@@ -383,7 +429,7 @@ $(document).ready(function () {
                 SingModelDetails.Desc = $("#txtDesc" + i).val();
                 SingModelDetails.Remark = $("#txtRemars" + i).val();
                 SingModelDetails.Url = $("#txtUrl" + i).val();
-                SingModelDetails.Ex_Field = "";
+                SingModelDetails.Ex_Field = $("#txtFile" + i).val();
                 ModelDetails.push(SingModelDetails);
             }
         }
@@ -391,8 +437,8 @@ $(document).ready(function () {
     function Update(StatusFlag) {
         var Data = new Send_Data();
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "All_Data";
-        Data.Name_Txt_Detail = "Data_Details";
+        Data.Name_Txt_Master = "Profile_Master";
+        Data.Name_Txt_Detail = "Profile_Details";
         Data.Model = JSON.stringify(Model);
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "DataAll";
@@ -422,8 +468,8 @@ $(document).ready(function () {
         var Data = new Send_Data();
         debugger;
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "All_Data";
-        Data.Name_Txt_Detail = "Data_Details";
+        Data.Name_Txt_Master = "Profile_Master";
+        Data.Name_Txt_Detail = "Profile_Details";
         Data.Model = JSON.stringify(Model);
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "DataAll";
@@ -465,8 +511,8 @@ $(document).ready(function () {
             debugger;
             debugger;
             Data.ID = Number($('#txtTrNo').val());
-            Data.Name_Txt_Master = "All_Data";
-            Data.Name_Txt_Detail = "Data_Details";
+            Data.Name_Txt_Master = "Profile_Master";
+            Data.Name_Txt_Detail = "Profile_Details";
             Data.Model = JSON.stringify(Model);
             Data.ModelDetails = JSON.stringify(ModelDetails);
             Data.TypeDataSouce = "DataAll";

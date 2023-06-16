@@ -9,7 +9,30 @@ $(document).ready(() => {
 
     NotesInitalizeComponent();
 
-      function NotesInitalizeComponent() {
+    function NotesInitalizeComponent() {
+
+        $("#layout_Refresh").removeClass('display_none');
+
+        //$("#layout_Refresh").on('click', function () {
+        //    var glopalBtn = localStorage.getItem('glopalBtn');
+        //    $("#" + glopalBtn + "").click();
+        //});
+
+        $("#layout_Refresh").attr('style','top: 17.5%;');
+        
+
+        $("#Back").on('click', function () {
+            $('#Home_Page').removeClass('display_none');
+            $('#Body_Page').addClass('display_none');
+
+
+            $("#layout_Refresh").addClass('display_none');
+            $("#layout_Back").addClass('display_none');
+
+            $("#layout_Refresh").attr('style', '');
+        });
+
+
         Tabs_click(); 
         Get_All_Notes();
         AddButtonApp_Tap();
@@ -40,7 +63,7 @@ $(document).ready(() => {
         debugger
         Ajax.CallAsync({
             url: Url.Action("Get_All_Notes", "Profile"),
-            data: { Name_txt: "Note_" },
+            data: { Name_txt: "Notepad_" },
             success: (d) => {
                 debugger
                 let result = JSON.parse(d)
@@ -161,9 +184,9 @@ $(document).ready(() => {
         let Data = new Send_Data();
 
         Data.ID = Number($('#ID' + cnt).val());
-        Data.Name_Txt_Master = "Note_" + cnt;
+        Data.Name_Txt_Master = "Notepad_" + cnt;
         Data.Model = $("#tab_" + cnt + "_Remark").val();
-        Data.TypeDataSouce = "Note_" + cnt; 
+        Data.TypeDataSouce = "Notepad_" + cnt; 
 
         debugger
         $.ajax({

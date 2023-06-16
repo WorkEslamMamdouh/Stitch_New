@@ -1,73 +1,33 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Monthly Expenses Calculator and Report</title>
-    <script>
-        function calculateExpenses() {
-            // Get input values
-            var rent = parseFloat(document.getElementById("rent").value);
-            var utilities = parseFloat(document.getElementById("utilities").value);
-            var groceries = parseFloat(document.getElementById("groceries").value);
-            var transportation = parseFloat(document.getElementById("transportation").value);
-            var otherExpenses = parseFloat(document.getElementById("other-expenses").value);
+﻿@{
 
-            // Calculate total expenses
-            var totalExpenses = rent + utilities + groceries + transportation + otherExpenses;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
 
-            // Display the result
-            document.getElementById("total-expenses").textContent = "Total Monthly Expenses: $" + totalExpenses.toFixed(2);
-        }
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="fileUpload" id="fileUploadInput" style="background: #0051a3;color: aliceblue;font-weight: bold;" />
+    <input type="button" value="Upload" onclick="uploadFile()" />
+</form>
+<script>
+    function uploadFile() {
+        debugger
+        var fileInput = document.getElementById("fileUploadInput");
+        var file = fileInput.files[0];
 
-        function generateExpenseReport() {
-            // Get input values
-            var rent = parseFloat(document.getElementById("rent").value);
-            var utilities = parseFloat(document.getElementById("utilities").value);
-            var groceries = parseFloat(document.getElementById("groceries").value);
-            var transportation = parseFloat(document.getElementById("transportation").value);
-            var otherExpenses = parseFloat(document.getElementById("other-expenses").value);
+        var formData = new FormData();
+        formData.append("fileUpload", file);
 
-            // Calculate total expenses
-            var totalExpenses = rent + utilities + groceries + transportation + otherExpenses;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/FileUpload/Upload"); // Replace with your server endpoint URL
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // File uploaded successfully
+                console.log("File uploaded!");
+            } else {
+                // File upload failed
+                console.error("File upload failed!");
+            }
+        };
+        xhr.send(formData);
+    }
 
-            // Generate expense report
-            var report = "Expense Report\n\n";
-            report += "Rent: $" + rent.toFixed(2) + "\n";
-            report += "Utilities: $" + utilities.toFixed(2) + "\n";
-            report += "Groceries: $" + groceries.toFixed(2) + "\n";
-            report += "Transportation: $" + transportation.toFixed(2) + "\n";
-            report += "Other Expenses: $" + otherExpenses.toFixed(2) + "\n";
-            report += "-----------------------\n";
-            report += "Total Expenses: $" + totalExpenses.toFixed(2);
-
-            // Display the report
-            document.getElementById("expense-report").textContent = report;
-        }
-    </script>
-</head>
-<body>
-    <h1>Monthly Expenses Calculator and Report</h1>
-
-    <label for="rent">Rent:</label>
-    <input type="number" id="rent" step="0.01"><br>
-
-    <label for="utilities">Utilities:</label>
-    <input type="number" id="utilities" step="0.01"><br>
-
-    <label for="groceries">Groceries:</label>
-    <input type="number" id="groceries" step="0.01"><br>
-
-    <label for="transportation">Transportation:</label>
-    <input type="number" id="transportation" step="0.01"><br>
-
-    <label for="other-expenses">Other Expenses:</label>
-    <input type="number" id="other-expenses" step="0.01"><br>
-
-    <button onclick="calculateExpenses()">Calculate Expenses</button>
-
-    <p id="total-expenses"></p>
-
-    <button onclick="generateExpenseReport()">Generate Expense Report</button>
-
-    <pre id="expense-report"></pre>
-</body>
-</html>
+</script>

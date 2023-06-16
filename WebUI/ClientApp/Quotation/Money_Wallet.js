@@ -20,10 +20,24 @@ $(document).ready(function () {
     var totalAmount = 0;
     var DataCatch_Receipt = "";
     WalletInitalizeComponent();
+    var FlagUpdate = false;
     function WalletInitalizeComponent() {
         debugger;
+        $("#App_Ref").on('click', function () {
+            var glopalBtn = localStorage.getItem('glopalBtn');
+            $("#" + glopalBtn + "").click();
+        });
+        $("#Back").on('click', function () {
+            $('#Home_Page').removeClass('display_none');
+            $('#Body_Page').addClass('display_none');
+            $("#layout_Refresh").addClass('display_none');
+            $("#layout_Back").addClass('display_none');
+            $("#layout_Refresh").attr('style', '');
+        });
         $('#Pass').removeClass('display_none');
         $('#Page_mone').addClass('display_none');
+        $('#layout_Back').removeClass('display_none');
+        $('#layout_Refresh').removeClass('display_none');
         btnLogin = document.getElementById("btnLogin");
         txtPassword = document.getElementById("txtPassword");
         btnLogin.onclick = btnLogin_onclick;
@@ -42,15 +56,23 @@ $(document).ready(function () {
     function btnLogin_onclick() {
         var Done = false;
         if (txtPassword.value.trim() == "619606") {
-            DataCatch_Receipt = "Catch_Receipt_01";
-            Done = true;
-        }
-        else if (txtPassword.value.trim() == "619") {
-            DataCatch_Receipt = "Catch_Receipt_02";
+            DataCatch_Receipt = "Wallet_01";
             Done = true;
         }
         else if (txtPassword.value.trim() == "619619") {
-            DataCatch_Receipt = "Catch_Receipt_03";
+            DataCatch_Receipt = "Wallet_02";
+            Done = true;
+        }
+        else if (txtPassword.value.trim() == "619") {
+            DataCatch_Receipt = "Wallet_03";
+            Done = true;
+        }
+        else if (txtPassword.value.trim() == "123") {
+            DataCatch_Receipt = "Wallet_04";
+            Done = true;
+        }
+        else if (txtPassword.value.trim() == "1") {
+            DataCatch_Receipt = "Wallet_05";
             Done = true;
         }
         else {
@@ -85,6 +107,7 @@ $(document).ready(function () {
             btnShow.onclick = DisplayAll;
             DisplayAll();
             sessionStorage.setItem("EslamPassword", txtPassword.value);
+            $('.jsgrid-grid-body').scrollLeft(300);
         }
     }
     function Tabs_click() {
@@ -100,9 +123,10 @@ $(document).ready(function () {
     }
     function InitializeGrid() {
         JGrid.ElementName = "JGrid";
+        JGrid.OnRowDoubleClicked = GridDoubleClick;
         JGrid.PrimaryKey = "ID";
         JGrid.Paging = true;
-        JGrid.PageSize = 10;
+        JGrid.PageSize = 15;
         JGrid.Sorting = true;
         JGrid.InsertionMode = JsGridInsertionMode.Binding;
         JGrid.Editing = false;
@@ -115,8 +139,31 @@ $(document).ready(function () {
             { title: "TrDate", name: "TrDate", type: "text" },
             { title: "Type", name: "Type", type: "text" },
             { title: "Title", name: "Title", type: "text" },
-            { title: "Remars", name: "Remars", type: "text" },
-            { title: "Amount", name: "Amount", type: "text" },
+            { title: "Remars", name: "Remars", type: "text", width: "300px" },
+            {
+                title: "Amount", css: "ColumPadding", name: "Amount", width: "120px",
+                itemTemplate: function (s, item) {
+                    var txt = document.createElement("label");
+                    txt.innerHTML = "( " + item.Amount.toString() + " ) $";
+                    if (item.Title == "Exchange") {
+                        if (item.Type == "Debt") {
+                            txt.style.color = "#ea8813";
+                        }
+                        else {
+                            txt.style.color = "Red";
+                        }
+                    }
+                    else {
+                        if (item.Type == "Debt") {
+                            txt.style.color = "#a11dda";
+                        }
+                        else {
+                            txt.style.color = "#00b020";
+                        }
+                    }
+                    return txt;
+                }
+            },
             {
                 title: "Delete",
                 itemTemplate: function (s, item) {
@@ -131,19 +178,26 @@ $(document).ready(function () {
                     return txt;
                 }
             },
-            {
-                title: "Delete", visible: false,
-                itemTemplate: function (s, item) {
-                    var txt = document.createElement("input");
-                    txt.type = "button";
-                    txt.value = ("Delete");
-                    txt.className = "btn btn-custon-four btn-danger ";
-                    totalAmount = totalAmount + item.Amount;
-                    return txt;
-                }
-            },
         ];
         //JGrid.Bind();
+    }
+    function GridDoubleClick() {
+        debugger;
+        FlagUpdate = true;
+        txtAmount.value = JGrid.SelectedItem.Amount;
+        $('#txtdate').val(DateFormat(JGrid.SelectedItem.TrDate));
+        $('#txtTrNo').val(JGrid.SelectedItem.ID);
+        $('#TypeSours').val(JGrid.SelectedItem.Type);
+        $('#txtRemark').val(JGrid.SelectedItem.Remars);
+        if (JGrid.SelectedItem.Title == "Exchange") {
+            $('#a_Expans').click();
+        }
+        else {
+            $('#a_Resive').click();
+        }
+        setTimeout(function () {
+            FlagUpdate = false;
+        }, 500);
     }
     function txtSearch_change() {
         $("#JGrid").jsGrid("option", "pageIndex", 1);
@@ -187,10 +241,20 @@ $(document).ready(function () {
         JGrid.DataSource = Display;
         JGrid.Bind();
         Clean();
-        for (var i = 0; i < Display.length; i++) {
-            totalAmount = totalAmount + Display[i].Amount;
+        var DisplayEx = Display.filter(function (x) { return x.Type != 'Debt' && x.Title == 'Exchange'; });
+        var DisplayRec = Display.filter(function (x) { return x.Type != 'Debt' && x.Title == 'Receipt'; });
+        var AmountEx = 0;
+        for (var i = 0; i < DisplayEx.length; i++) {
+            AmountEx = AmountEx + DisplayEx[i].Amount;
         }
-        $('#txtTotal').val(totalAmount.toFixed(2));
+        var AmountRec = 0;
+        for (var i = 0; i < DisplayRec.length; i++) {
+            AmountRec = AmountRec + DisplayRec[i].Amount;
+        }
+        $('#txtTotalExchange').val(AmountEx.toFixed(2));
+        $('#txtTotalReceipt').val(AmountRec.toFixed(2));
+        $('#txtTotal').val((AmountRec - AmountEx).toFixed(2));
+        $('.jsgrid-grid-body').scrollLeft(500);
     }
     function AppTans(Type) {
         debugger;
@@ -264,10 +328,12 @@ $(document).ready(function () {
         });
     }
     function Clean() {
-        $('#TypeSours').val('Cash');
-        $('#txtRemark').val('');
-        $('#txtdate').val(GetDate());
-        $('#txtAmount').val('');
+        if (!FlagUpdate) {
+            $('#TypeSours').val('Cash');
+            $('#txtRemark').val('');
+            $('#txtdate').val(GetDate());
+            $('#txtAmount').val('');
+        }
         setTimeout(function () { $('#txtRemark').focus(); }, 150);
         $('#btnReceipt').addClass('display_none');
         $('#btnExchange').addClass('display_none');
@@ -283,23 +349,69 @@ $(document).ready(function () {
     }
     function AllBalance() {
         debugger;
-        var MaxID = 0;
-        if (AllDisplay.length > 0) {
-            MaxID = AllDisplay[0].ID;
+        if (!FlagUpdate) {
+            var MaxID = 0;
+            if (AllDisplay.length > 0) {
+                MaxID = AllDisplay[0].ID;
+            }
+            $('#txtTrNo').val(MaxID + 1);
+            $('#txtTrNo').attr('style', 'text-align: center;background: #004895;color: white;');
         }
-        $('#txtTrNo').val(MaxID + 1);
-        $('#TrNoLab').html('TrNo ( ' + (Number(MaxID) + 1) + ' )');
-        var Exchange = AllDisplay.filter(function (x) { return x.Title == 'Exchange'; });
-        var Receipt = AllDisplay.filter(function (x) { return x.Title == 'Receipt'; });
-        var Amount_Exch = 0;
-        for (var i = 0; i < Exchange.length; i++) {
-            Amount_Exch = Amount_Exch + Exchange[i].Amount;
+        else {
+            $('#txtTrNo').attr('style', 'text-align: center;background: #009563;color: white;');
         }
-        var Amount_Rec = 0;
-        for (var i = 0; i < Receipt.length; i++) {
-            Amount_Rec = Amount_Rec + Receipt[i].Amount;
+        //******************************************* Exchange********************************
+        var DebtAmountEx = 0; //مديونيه
+        var CashAmountEx = 0;
+        var Cairo_BankAmountEx = 0;
+        var Al_ahly_BankAmountEx = 0;
+        var CashEx = AllDisplay.filter(function (x) { return x.Type == 'Cash' && x.Title == 'Exchange'; });
+        var Cairo_BankEx = AllDisplay.filter(function (x) { return x.Type == 'Cairo Bank' && x.Title == 'Exchange'; });
+        var Al_ahly_BankEx = AllDisplay.filter(function (x) { return x.Type == 'Al ahly Bank' && x.Title == 'Exchange'; });
+        var DebtEx = AllDisplay.filter(function (x) { return x.Type == 'Debt' && x.Title == 'Exchange'; });
+        for (var i = 0; i < DebtEx.length; i++) {
+            DebtAmountEx = DebtAmountEx + DebtEx[i].Amount;
         }
-        $('#BalanceLab').html('All Balance ( ' + (Number(Amount_Rec) - Number(Amount_Exch)) + ' ) $');
+        for (var i = 0; i < CashEx.length; i++) {
+            CashAmountEx = CashAmountEx + CashEx[i].Amount;
+        }
+        for (var i = 0; i < Cairo_BankEx.length; i++) {
+            Cairo_BankAmountEx = Cairo_BankAmountEx + Cairo_BankEx[i].Amount;
+        }
+        for (var i = 0; i < Al_ahly_BankEx.length; i++) {
+            Al_ahly_BankAmountEx = Al_ahly_BankAmountEx + Al_ahly_BankEx[i].Amount;
+        }
+        //**************************************************** Receipt**************************************
+        var DebtAmountRec = 0; //مديونيه
+        var CashAmountRec = 0; //كاش
+        var Cairo_BankAmountRec = 0; //بنك القاهره
+        var Al_ahly_BankAmountRec = 0; //بنك الاهلي
+        var CashRec = AllDisplay.filter(function (x) { return x.Type == 'Cash' && x.Title == 'Receipt'; });
+        var Cairo_BankRec = AllDisplay.filter(function (x) { return x.Type == 'Cairo Bank' && x.Title == 'Receipt'; });
+        var Al_ahly_BankRec = AllDisplay.filter(function (x) { return x.Type == 'Al ahly Bank' && x.Title == 'Receipt'; });
+        var DebtRec = AllDisplay.filter(function (x) { return x.Type == 'Debt' && x.Title == 'Receipt'; });
+        for (var i = 0; i < DebtRec.length; i++) {
+            DebtAmountRec = DebtAmountRec + DebtRec[i].Amount;
+        }
+        for (var i = 0; i < CashRec.length; i++) {
+            CashAmountRec = CashAmountRec + CashRec[i].Amount;
+        }
+        for (var i = 0; i < Cairo_BankRec.length; i++) {
+            Cairo_BankAmountRec = Cairo_BankAmountRec + Cairo_BankRec[i].Amount;
+        }
+        for (var i = 0; i < Al_ahly_BankRec.length; i++) {
+            Al_ahly_BankAmountRec = Al_ahly_BankAmountRec + Al_ahly_BankRec[i].Amount;
+        }
+        //****************************************Total***********************************************
+        $('#InDebtLab').html('InDebt ( ' + (Number(DebtAmountRec)) + ' ) $');
+        $('#OutDebtLab').html('OutDebt ( ' + (Number(DebtAmountEx)) + ' ) $');
+        $('#CashLab').html('Cash ( ' + (Number(CashAmountRec) - Number(CashAmountEx)) + ' ) $');
+        $('#CairoLab').html('Cairo ( ' + (Number(Cairo_BankAmountRec) - Number(Cairo_BankAmountEx)) + ' ) $');
+        $('#Al_ahlyLab').html('Al_ahly ( ' + (Number(Al_ahly_BankAmountRec) - Number(Al_ahly_BankAmountEx)) + ' ) $');
+        //****************************************AllTotal***********************************************
+        var AllTotal_Rec = CashAmountRec + Cairo_BankAmountRec + Al_ahly_BankAmountRec;
+        var AllTotal_Exch = CashAmountEx + Cairo_BankAmountEx + Al_ahly_BankAmountEx;
+        $('#BalanceLab').html('All ( ' + (Number(AllTotal_Rec) - Number(AllTotal_Exch)) + ' ) $');
     }
 });
 //# sourceMappingURL=Money_Wallet.js.map

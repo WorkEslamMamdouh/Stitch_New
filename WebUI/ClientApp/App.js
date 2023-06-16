@@ -593,21 +593,6 @@ function DateFormatRep(dateForm) {
         return DateFormatRep((new Date()).toString());
     }
 }
-function DateStartYear() {
-    var today = new Date();
-    var dd = today.getDate().toString();
-    var ReturnedDate;
-    var mm = (today.getMonth() + 1).toString();
-    var yyyy = today.getFullYear();
-    if (Number(dd) < 10) {
-        dd = ('0' + dd);
-    }
-    if (Number(mm) < 10) {
-        mm = ('0' + mm);
-    }
-    ReturnedDate = yyyy + '-' + '01' + '-' + '01';
-    return ReturnedDate;
-}
 function DateStartMonth() {
     var today = new Date();
     var dd = today.getDate().toString();
@@ -1101,6 +1086,21 @@ function CompareTime(t1, t2) {
     var m2 = Number(t2.slice(3, 5));
     var h3 = (h1 - h2) * 60 + (m1 - m2);
     return h3;
+}
+function DateStartYear() {
+    var today = new Date();
+    var dd = today.getDate().toString();
+    var ReturnedDate;
+    var mm = (today.getMonth() + 1).toString();
+    var yyyy = today.getFullYear();
+    if (Number(dd) < 10) {
+        dd = ('0' + dd);
+    }
+    if (Number(mm) < 10) {
+        mm = ('0' + mm);
+    }
+    ReturnedDate = yyyy + '-' + '01' + '-' + '01';
+    return ReturnedDate;
 }
 function Event_key(key, Nameinput, NameBtnEvent) {
     var input = document.getElementById(Nameinput);

@@ -88,23 +88,44 @@ namespace Inv.WebUI.Controllers
             //return ObjClass;
         }
 
+        public JsonResult GetPathFileUpload()
+        {
+
+            string Path = Server.MapPath("/SavePath/Dropbox/FileUpload/");
+
+
+            return Json(Path, JsonRequestBehavior.AllowGet);
+
+        }
+
         public string GetData(string Name_txt)
         {
 
-            string Str = Server.MapPath("/SavePath/");
+            string Str = Server.MapPath("/SavePath/Dropbox/");
 
             var jsonData = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Server.UrlPathEncode(Str + "" + Name_txt + ".txt"));
 
-            return jsonData;
+
+            string base64Encoded = jsonData;
+            string base64Decoded;
+            byte[] data = System.Convert.FromBase64String(base64Encoded);
+            base64Decoded = Encoding.UTF8.GetString(data);
+
+
+            return base64Decoded;
 
         }
 
         public void SetData(string Name_txt, string Model)
         {
 
-            string Str = Server.MapPath("/SavePath/");
+            string originalString = Model;
+            byte[] bytes = Encoding.UTF8.GetBytes(originalString);
+            string base64EncodedString = Convert.ToBase64String(bytes);
 
-            System.IO.File.WriteAllText(System.Web.HttpContext.Current.Server.UrlPathEncode(Str + "" + Name_txt + ".txt"), Model);
+            string Str = Server.MapPath("/SavePath/Dropbox/");
+
+            System.IO.File.WriteAllText(System.Web.HttpContext.Current.Server.UrlPathEncode(Str + "" + Name_txt + ".txt"), base64EncodedString);
 
 
         }
@@ -203,6 +224,7 @@ namespace Inv.WebUI.Controllers
             var json  = GetData(rp.Name_Txt_Master);
 
             return Json(json, JsonRequestBehavior.AllowGet);
+
         }
 
 

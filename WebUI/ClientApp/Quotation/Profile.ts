@@ -20,6 +20,7 @@ $(document).ready(() => {
     var btnUpdate: HTMLButtonElement;
     var btnUpload: HTMLButtonElement;
     var btnBack_Up: HTMLButtonElement;
+    var btnDownload_Up: HTMLButtonElement;
     var btnBack: HTMLButtonElement;
     var btnLogin: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
@@ -36,11 +37,18 @@ $(document).ready(() => {
 
     var Flag_IsNew = false;
     var CountGrid = 0;
-    let DetMaxLast = 0;
-
+    let DetMaxLast = 0; 
+    var GloplePath = "";
+    var NameFile = "";
     ProfileInitalizeComponent();
 
     function ProfileInitalizeComponent() {
+
+        
+
+        $("#layout_Refresh").removeClass('display_none');
+        $("#layout_Back").removeClass('display_none');
+
 
         btnLogin = document.getElementById("btnLogin") as HTMLButtonElement;
         txtPassword = document.getElementById("txtPassword") as HTMLInputElement;
@@ -52,7 +60,7 @@ $(document).ready(() => {
         Event_key('Enter', 'txtPassword', 'btnLogin');
 
         debugger
-        let pass = sessionStorage.getItem("EslamPassword");
+        let pass = sessionStorage.getItem("EslamPasswordProfile");
         if (pass != null) {
             txtPassword.value = pass;
             btnLogin_onclick();
@@ -71,6 +79,7 @@ $(document).ready(() => {
         btnUpdate = document.getElementById("btnUpdate") as HTMLButtonElement;
         btnUpload = document.getElementById("btnUpload") as HTMLButtonElement;
         btnBack_Up = document.getElementById("btnBack_Up") as HTMLButtonElement;
+        btnDownload_Up = document.getElementById("btnDownload_Up") as HTMLButtonElement;
         btnBack = document.getElementById("btnBack") as HTMLButtonElement;
         btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
         //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
@@ -97,7 +106,7 @@ $(document).ready(() => {
         //btnUpload.onclick = Upload;
         //btnUpload.onclick = () => { window.open('https://app.mediafire.com/myfiles', "_blank");  };
         btnBack_Up.onclick = () => { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
-        //btnPage_Get_Views.onclick = btnPage_Get_Views_onclick; 
+        btnDownload_Up.onclick = Download; 
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
 
@@ -160,24 +169,40 @@ $(document).ready(() => {
         ];
         //JGrid.Bind();
     }
+    function Download() {
 
-    function Upload() {
-         
+        var imageUrl = GloplePath;
+        var filename = NameFile;
 
-        //var Page = document.getElementById('Page');
-        //Page.innerHTML = ' <iframe src="https://app.mediafire.com/" frameBorder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
+        var link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = filename;
+
+        // Trigger the download
+        link.click();
+
+
+    }
+    function Upload(Path: string) {
+
+        debugger
 
         //let newWindow = open('https://app.mediafire.com/myfiles', 'example', 'width=800,height=800')
         //newWindow.focus();
-         
+        //PageFile.innerHTML = ' <iframe src="http://localhost:61563/SavePath/Dropbox/FileUpload/Screenshot (1).png" frameborder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
 
-        //$('#Pass').addClass('display_none');
-        //$('#Page_Profile').addClass('display_none');
-        //$('#Upload').removeClass('display_none');
+          GloplePath = Path;
+
+        var PageFile = document.getElementById('PageFile');
+        PageFile.innerHTML = ' <iframe src="' + Path +'" frameborder="0" scrolling="auto" width="1000" height="1000" style=" width: 101%; margin-left: 2%;margin-left: -1% !important;"></iframe>';
+
+        $('#Pass').addClass('display_none');
+        $('#Page_Profile').addClass('display_none');
+        $('#Upload').removeClass('display_none');
 
     }
 
-    
+ 
 
     function btnPage_Get_Views_onclick() {
 
@@ -256,7 +281,14 @@ $(document).ready(() => {
             txtDateTo.value = GetDate();
             InitializeGrid();
             btnShow_onclick();
-            sessionStorage.setItem("EslamPassword", "619606");
+            sessionStorage.setItem("EslamPasswordProfile", "619606");
+
+            //setTimeout(function () {
+
+            //    $("#Btn_fileUpload").val('Upload')
+            //    //GetPathFileUpload();
+            //}, 800);
+             
         }
         else {
             Errorinput(txtPassword);
@@ -264,13 +296,15 @@ $(document).ready(() => {
             txtPassword.focus();
         }
 
-           
+
+
+
     }
     function btnShow_onclick() {
 
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "All_Data" },
+            data: { Name_txt: "Profile_Master" },
             success: (d) => {
                 let result = JSON.parse(d)
 
@@ -286,6 +320,19 @@ $(document).ready(() => {
 
 
     }
+
+    //function GetPathFileUpload() {
+
+    //    Ajax.CallAsync({
+    //        url: Url.Action("GetPathFileUpload", "Profile"), 
+    //        success: (d) => {
+    //            debugger
+    //            GlopPathFile = d;
+    //        }
+    //    })
+
+
+    //}
     function btnSave_onClick() {
 
         setTimeout(function () {
@@ -341,7 +388,7 @@ $(document).ready(() => {
         debugger
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "Data_Details" },
+            data: { Name_txt: "Profile_Details" },
             success: (d) => {
                 let result = JSON.parse(d)
 
@@ -367,7 +414,8 @@ $(document).ready(() => {
                     CountGrid++;
                 }
 
-
+                $("#Btn_fileUpload").val('Upload')
+                $("#Btn_fileUpload").addClass('display_none');
             }
         })
 
@@ -380,6 +428,7 @@ $(document).ready(() => {
         $("#txtDesc" + cnt).val(DataDet.Desc);
         $("#txtRemars" + cnt).val(DataDet.Remark);
         $("#txtUrl" + cnt).val(DataDet.Url);
+        $("#txtFile" + cnt).val(DataDet.Ex_Field);
 
 
     }
@@ -412,10 +461,26 @@ $(document).ready(() => {
 		                <div class="form-group">
                             <input id="txtUrl${cnt}" type="text" disabled class="wid _dis form-control" name=""  />
 		                </div>
+	                </td>   
+                    <td>
+		                <div class="form-group">
+			               <button id="btn_Open${cnt}" type="button"   class="_dis btn btn-custon-four btn-info" style="font-weight: bold;font-size: 22PX;width: 34px;padding: unset;"><i class="fa fa-window-maximize" ></i></button>
+		                </div>
 	                </td>
                     <td>
 		                <div class="form-group">
-			               <button id="btn_Open${cnt}" type="button"   class="_dis btn btn-custon-four btn-info" style="font-weight: bold;font-size: 22PX;width: 34px;padding: unset;"><i class="fa fa-folder-open" ></i></button>
+			               <button id="btn_Upload${cnt}" type="button"  disabled  class="_dis btn btn-custon-four btn-info" style="font-weight: bold;font-size: 22PX;width: 34px;padding: unset;background-color: #0ba70a;"><i class="fa fa-cloud-upload" ></i></button>
+                            
+		                </div>
+	                </td> 
+                    <td>
+		                <div class="form-group">
+			               <button id="btn_OpenFile${cnt}" type="button"   class="_dis btn btn-custon-four btn-info" style="font-weight: bold;font-size: 22PX;width: 34px;padding: unset;background-color: #c47000;"><i class="fa fa-folder-open" ></i></button>
+		                </div>
+	                </td>
+                    <td>
+		                <div class="form-group">
+			               <input id="txtFile${cnt}" type="text" disabled class="_Name_file   form-control" name=""  />
 		                </div>
 	                </td>
                     
@@ -432,8 +497,30 @@ $(document).ready(() => {
 
         $("#btn_Open" + cnt).on('click', function () {
             window.open($("#txtUrl" + cnt).val().trim(), "_blank");  
-        });
-         
+        }); 
+
+        $("#btn_Upload" + cnt).on('click', function () {
+            $("#Btn_fileUpload").click();
+             
+            setTimeout(function () {
+
+            $("#txtFile" + cnt).val($("#fileName").val());
+
+            }, 500);
+             
+        }); 
+
+        $("#btn_OpenFile" + cnt).on('click', function () {
+
+              NameFile = $("#txtFile" + cnt).val();
+            let path = location.origin + "/SavePath/Dropbox/FileUpload/" + NameFile;
+             
+            //window.open(path, "_blank");   
+
+            Upload(path);
+             
+        }); 
+
         $("._copy").on('dblclick', function () {
             copyToClipboard(this.id);
         });
@@ -540,8 +627,8 @@ $(document).ready(() => {
                 SingModelDetails.Ser = Number($("#txtSerial" + i).val());
                 SingModelDetails.Desc = $("#txtDesc" + i).val();
                 SingModelDetails.Remark = $("#txtRemars" + i).val();
-                SingModelDetails.Url = $("#txtUrl" + i).val();
-                SingModelDetails.Ex_Field = "";
+                SingModelDetails.Url = $("#txtUrl" + i).val(); 
+                SingModelDetails.Ex_Field = $("#txtFile" + i).val();
 
                 ModelDetails.push(SingModelDetails);
             }
@@ -555,8 +642,8 @@ $(document).ready(() => {
         let Data = new Send_Data();
 
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "All_Data";
-        Data.Name_Txt_Detail = "Data_Details";
+        Data.Name_Txt_Master = "Profile_Master";
+        Data.Name_Txt_Detail = "Profile_Details";
         Data.Model = JSON.stringify(Model);
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "DataAll";
@@ -597,8 +684,8 @@ $(document).ready(() => {
         debugger
 
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "All_Data";
-        Data.Name_Txt_Detail = "Data_Details";
+        Data.Name_Txt_Master = "Profile_Master";
+        Data.Name_Txt_Detail = "Profile_Details";
         Data.Model = JSON.stringify(Model);
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "DataAll";
@@ -667,8 +754,8 @@ $(document).ready(() => {
                 debugger
 
                 Data.ID = Number($('#txtTrNo').val());
-                Data.Name_Txt_Master = "All_Data";
-                Data.Name_Txt_Detail = "Data_Details";
+            Data.Name_Txt_Master = "Profile_Master";
+            Data.Name_Txt_Detail = "Profile_Details";
                 Data.Model = JSON.stringify(Model);
                 Data.ModelDetails = JSON.stringify(ModelDetails);
                 Data.TypeDataSouce = "DataAll";

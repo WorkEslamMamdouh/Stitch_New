@@ -1964,6 +1964,7 @@ class DataDetails {
         this.Desc = '';
         this.Remark = '';
         this.Url = '';
+        this.File = '';
         this.Ex_Field = '';
         this.StatusFlag = '';
 
@@ -1974,6 +1975,7 @@ class DataDetails {
     public Desc: string;
     public Remark: string;
     public Url: string;
+    public File: string;
     public Ex_Field: string;
     public StatusFlag: string;
 

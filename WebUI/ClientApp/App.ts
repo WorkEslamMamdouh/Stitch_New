@@ -759,25 +759,7 @@ function DateFormatRep(dateForm: string): string {
     }
 }
 
-
-
-function DateStartYear() {
-
-    var today: Date = new Date();
-    var dd: string = today.getDate().toString();
-    var ReturnedDate: string;
-    var mm: string = (today.getMonth() + 1).toString();
-    var yyyy = today.getFullYear();
-    if (Number(dd) < 10) {
-        dd = ('0' + dd);
-    }
-    if (Number(mm) < 10) {
-        mm = ('0' + mm);
-    }
-    ReturnedDate = yyyy + '-' + '01' + '-' + '01';
-    return ReturnedDate;
-} 
-
+ 
 
 function DateStartMonth() {
 

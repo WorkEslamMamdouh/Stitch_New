@@ -1,9 +1,7 @@
-/// <reference path="poupitems/poupitems.ts" />
-/// <reference path="poupitems/poupitems.ts" />
+/// <reference path="poupitems/poupitems.ts" /> 
 var SystemTools = /** @class */ (function () {
     function SystemTools() {
         this.orgCondition = "";
-        this.SysSession = GetSystemSession('Home');
     }
     SystemTools.prototype.apiUrl = function (controller, action) {
         var apiUrl = $("#GetAPIUrl").val() + controller + "/" + action;
@@ -12,23 +10,6 @@ var SystemTools = /** @class */ (function () {
     SystemTools.prototype.apiUrlCore = function (controller, action) {
         var apiUrl = $("#GetAPIUrlCore").val() + controller + "/" + action;
         return (apiUrl);
-    };
-    SystemTools.prototype.getJsonData = function (model, type) {
-        if (type === void 0) { type = ""; }
-        switch (type) {
-            case "Insert":
-                model.CreatedAt = DateTimeFormat(GetCurrentDate().toString());
-                model.CreatedBy = this.SysSession.CurrentEnvironment.UserCode;
-                break;
-            case "Update":
-                model.UpdatedAt = DateTimeFormat(GetCurrentDate().toString());
-                model.UpdatedBy = this.SysSession.CurrentEnvironment.UserCode;
-                break;
-            default:
-                break;
-        }
-        var res = JSON.stringify(model);
-        return res;
     };
     SystemTools.prototype.GetResourceByName = function (callbackfn) {
         var func = callbackfn.toString().split(".")[1].split(";")[0];

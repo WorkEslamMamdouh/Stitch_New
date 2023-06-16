@@ -1,9 +1,7 @@
-﻿/// <reference path="poupitems/poupitems.ts" />
-/// <reference path="poupitems/poupitems.ts" />
+﻿/// <reference path="poupitems/poupitems.ts" /> 
 class SystemTools {
     constructor() {
-        this.orgCondition = "";
-        this.SysSession = GetSystemSession('Home');
+        this.orgCondition = ""; 
     }
 
     public orgCondition: string;
@@ -21,26 +19,7 @@ class SystemTools {
         var apiUrl = $("#GetAPIUrlCore").val() + controller + "/" + action;
         return (apiUrl);
     }
-
-    public getJsonData(model: any, type: string = ""): any {
-
-        switch (type) {
-
-            case "Insert":
-                model.CreatedAt = DateTimeFormat(GetCurrentDate().toString());
-                model.CreatedBy = this.SysSession.CurrentEnvironment.UserCode;
-                break;
-            case "Update":
-                model.UpdatedAt = DateTimeFormat(GetCurrentDate().toString());
-                model.UpdatedBy = this.SysSession.CurrentEnvironment.UserCode;
-                break;
-            default:
-                break;
-        }
-
-        var res = JSON.stringify(model)
-        return res;
-    }
+     
 
     public GetResourceByName<T>(callbackfn: (value: T, index: number, array: T[]) => any): string {
 
