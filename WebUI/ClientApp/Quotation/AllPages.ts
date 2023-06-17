@@ -556,11 +556,15 @@ namespace AllPages {
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <h1>Upload</h1>
             </div>
-            <div class="col-xs-6 col-lg-6 col-sm-6">
+            <div class="col-xs-4 col-lg-4 col-sm-4">
                 <button id="btnBack_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning"> Back </button>
             </div>
-            <div class="col-xs-6 col-lg-6 col-sm-6">
+            <div class="col-xs-4 col-lg-4 col-sm-4">
                 <button id="btnDownload_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success"> Download </button>
+            </div>
+            <div class="col-xs-4 col-lg-4 col-sm-4">
+                <button id="btnShare_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info"> Share </button>
+                    <input id="txtCopy" type="hidden"  value="" name="" />
             </div>
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br />

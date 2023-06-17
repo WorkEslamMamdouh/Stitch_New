@@ -15,11 +15,13 @@ $(document).ready(function () {
     var btnUpload;
     var btnBack_Up;
     var btnDownload_Up;
+    var btnShare_Up;
     var btnBack;
     var btnLogin;
     var btnAddDetails;
     //var btnPage_Get_Views: HTMLButtonElement;
     var txtPassword;
+    var txtCopy;
     var txtSearch;
     var txtDateFrom;
     var txtDateTo;
@@ -59,6 +61,7 @@ $(document).ready(function () {
         btnUpload = document.getElementById("btnUpload");
         btnBack_Up = document.getElementById("btnBack_Up");
         btnDownload_Up = document.getElementById("btnDownload_Up");
+        btnShare_Up = document.getElementById("btnShare_Up");
         btnBack = document.getElementById("btnBack");
         btnAddDetails = document.getElementById("btnAddDetails");
         //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
@@ -66,6 +69,7 @@ $(document).ready(function () {
         dbTypeF = document.getElementById("dbTypeF");
         dbTypeH = document.getElementById("dbTypeH");
         ////////
+        txtCopy = document.getElementById("txtCopy");
         txtSearch = document.getElementById("txtSearch");
         txtDateFrom = document.getElementById("txtDateFrom");
         txtDateTo = document.getElementById("txtDateTo");
@@ -83,6 +87,7 @@ $(document).ready(function () {
         //btnUpload.onclick = () => { window.open('https://app.mediafire.com/myfiles', "_blank");  };
         btnBack_Up.onclick = function () { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
         btnDownload_Up.onclick = Download;
+        btnShare_Up.onclick = Share;
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
         $("._copy").on('dblclick', function () {
@@ -137,6 +142,21 @@ $(document).ready(function () {
             },
         ];
         //JGrid.Bind();
+    }
+    function Share() {
+        debugger;
+        txtCopy.value = GloplePath;
+        copyToClipboard('txtCopy');
+        //txtCopy.focus();
+        //txtCopy.select();
+        //try {
+        //    var successful = document.execCommand('copy');
+        //    var msg = successful ? 'successful' : 'unsuccessful';
+        //    console.log('Copying text command was ' + msg);
+        //} catch (err) {
+        //    console.log('Oops, unable to copy');
+        //}
+        alert(GloplePath);
     }
     function Download() {
         var imageUrl = GloplePath;

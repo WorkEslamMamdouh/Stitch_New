@@ -21,12 +21,14 @@ $(document).ready(() => {
     var btnUpload: HTMLButtonElement;
     var btnBack_Up: HTMLButtonElement;
     var btnDownload_Up: HTMLButtonElement;
+    var btnShare_Up: HTMLButtonElement;
     var btnBack: HTMLButtonElement;
     var btnLogin: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
     //var btnPage_Get_Views: HTMLButtonElement;
 
     var txtPassword: HTMLInputElement;
+    var txtCopy: HTMLInputElement;
     var txtSearch: HTMLInputElement;
     var txtDateFrom: HTMLInputElement;
     var txtDateTo: HTMLInputElement;
@@ -80,6 +82,7 @@ $(document).ready(() => {
         btnUpload = document.getElementById("btnUpload") as HTMLButtonElement;
         btnBack_Up = document.getElementById("btnBack_Up") as HTMLButtonElement;
         btnDownload_Up = document.getElementById("btnDownload_Up") as HTMLButtonElement;
+        btnShare_Up = document.getElementById("btnShare_Up") as HTMLButtonElement;
         btnBack = document.getElementById("btnBack") as HTMLButtonElement;
         btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
         //btnPage_Get_Views = document.getElementById("btnPage_Get_Views") as HTMLButtonElement;
@@ -88,6 +91,7 @@ $(document).ready(() => {
         dbTypeF = document.getElementById("dbTypeF") as HTMLSelectElement;
         dbTypeH = document.getElementById("dbTypeH") as HTMLSelectElement;
         ////////
+        txtCopy = document.getElementById("txtCopy") as HTMLInputElement;
         txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
         txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
         txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
@@ -107,6 +111,7 @@ $(document).ready(() => {
         //btnUpload.onclick = () => { window.open('https://app.mediafire.com/myfiles', "_blank");  };
         btnBack_Up.onclick = () => { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
         btnDownload_Up.onclick = Download; 
+        btnShare_Up.onclick = Share;
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
 
@@ -168,6 +173,28 @@ $(document).ready(() => {
 
         ];
         //JGrid.Bind();
+    }
+    function Share() {
+
+        debugger 
+
+        txtCopy.value = GloplePath
+
+        copyToClipboard('txtCopy');
+
+        //txtCopy.focus();
+        //txtCopy.select();
+
+        //try {
+        //    var successful = document.execCommand('copy');
+        //    var msg = successful ? 'successful' : 'unsuccessful';
+        //    console.log('Copying text command was ' + msg);
+        //} catch (err) {
+        //    console.log('Oops, unable to copy');
+        //}
+
+        alert(GloplePath);
+
     }
     function Download() {
 
