@@ -938,7 +938,7 @@ namespace AllPages {
         $("#layout_Refresh").addClass('display_none');
         $("#layout_Back").addClass('display_none');
 
-        if (pass != null) {
+        if (pass != null && pass != "") {
             txtPassword.value = pass;
             txtUser.value = Name;
             GetUsers();

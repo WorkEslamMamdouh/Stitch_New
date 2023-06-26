@@ -165,6 +165,10 @@
     $('#Name_Eslam').click(function (e) {
         $('#Home_Page').addClass('animate__animated animate__zoomOut')
 
+        sessionStorage.setItem("AddUserPass", "");
+        sessionStorage.setItem("AddUserName", "");
+        sessionStorage.setItem("AddUserID", "");
+
         setTimeout(function () {
 
             location.reload();
