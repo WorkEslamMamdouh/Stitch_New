@@ -1,4 +1,4 @@
-﻿ 
+﻿
 $(document).ready(() => {
 
     var AllDisplay: Array<DataAll> = new Array<DataAll>();
@@ -38,7 +38,7 @@ $(document).ready(() => {
 
     var Flag_IsNew = false;
     var CountGrid = 0;
-    let DetMaxLast = 0; 
+    let DetMaxLast = 0;
     var GloplePath = "";
     var NameFile = "";
     var NameModelMaster = "";
@@ -48,13 +48,14 @@ $(document).ready(() => {
 
     function ProfileInitalizeComponent() {
 
-        
+
+        debugger
 
         $("#layout_Refresh").removeClass('display_none');
         $("#layout_Back").removeClass('display_none');
 
 
-         
+
         $('#Page_Profile').removeClass('display_none');
 
         let ID = sessionStorage.getItem("AddUserID");
@@ -69,13 +70,12 @@ $(document).ready(() => {
         txtDateTo.value = GetDate();
         InitializeGrid();
         btnShow_onclick();
-        sessionStorage.setItem("EslamPasswordProfile", "619606");
 
-            //setTimeout(function () {
+        //setTimeout(function () {
 
-            //    $("#Btn_fileUpload").val('Upload')
-            //    //GetPathFileUpload();
-            //}, 800);
+        //    $("#Btn_fileUpload").val('Upload')
+        //    //GetPathFileUpload();
+        //}, 800);
 
 
     }
@@ -115,16 +115,16 @@ $(document).ready(() => {
         //btnUpload.onclick = Upload;
         //btnUpload.onclick = () => { window.open('https://app.mediafire.com/myfiles', "_blank");  };
         btnBack_Up.onclick = () => { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
-        btnDownload_Up.onclick = Download; 
-        btnShare_Up.onclick = Share; 
+        btnDownload_Up.onclick = Download;
+        btnShare_Up.onclick = Share;
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
 
         $("._copy").on('dblclick', function () {
             copyToClipboard(this.id);
         });
- 
-         
+
+
     }
     function InitializeGrid() {
         JGrid.ElementName = "JGrid";
@@ -140,12 +140,12 @@ $(document).ready(() => {
         JGrid.OnItemEditing = () => { };
         JGrid.Columns = [
             { title: "ID", name: "ID", type: "text", width: " ", visible: false },
-            { title: "TrNo", name: "ID", type: "text"  },
+            { title: "TrNo", name: "ID", type: "text" },
             { title: "TrDate", name: "TrDate", type: "text" },
-            { title: "Type", name: "Type", type: "text"  },
+            { title: "Type", name: "Type", type: "text" },
             { title: "Title", name: "Title", type: "text" },
             {
-                title: "Delete", 
+                title: "Delete",
                 itemTemplate: (s: string, item: DataAll): HTMLInputElement => {
                     let txt: HTMLInputElement = document.createElement("input");
                     txt.type = "button";
@@ -160,7 +160,7 @@ $(document).ready(() => {
                 }
             },
             {
-                title: "Copy", 
+                title: "Copy",
                 itemTemplate: (s: string, item: DataAll): HTMLInputElement => {
                     let txt: HTMLInputElement = document.createElement("input");
                     txt.type = "button";
@@ -193,13 +193,13 @@ $(document).ready(() => {
 
         debugger
 
-        var url =  GloplePath;
+        var url = GloplePath;
         var filename = NameFile;
 
         //var link = document.createElement('a');
         //link.href = imageUrl;
         //link.download = filename;
-         
+
         //link.click();
 
         fetch(url)
@@ -261,10 +261,10 @@ $(document).ready(() => {
         //newWindow.focus();
         //PageFile.innerHTML = ' <iframe src="http://localhost:61563/SavePath/Dropbox/FileUpload/Screenshot (1).png" frameborder="0" scrolling="auto" width="1000" height="1000" style="margin-left: 2%;"></iframe>';
 
-          GloplePath = Path;
+        GloplePath = Path;
 
         var PageFile = document.getElementById('PageFile');
-        PageFile.innerHTML = ' <iframe src="' + Path +'" frameborder="0" scrolling="auto" width="1000" height="1000" style=" width: 101%; margin-left: 2%;margin-left: -1% !important;"></iframe>';
+        PageFile.innerHTML = ' <iframe src="' + Path + '" frameborder="0" scrolling="auto" width="1000" height="1000" style=" width: 101%; margin-left: 2%;margin-left: -1% !important;"></iframe>';
 
         $('#Pass').addClass('display_none');
         $('#Page_Profile').addClass('display_none');
@@ -275,7 +275,7 @@ $(document).ready(() => {
 
     }
 
- 
+
 
     function btnPage_Get_Views_onclick() {
 
@@ -340,20 +340,33 @@ $(document).ready(() => {
             JGrid.Bind();
         }
 
-    } 
+    }
     function btnShow_onclick() {
 
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
             data: { Name_txt: NameModelMaster },
-            success: (d) => {
-                let result = JSON.parse(d)
+            success: (Pro) => {
+                debugger
+                if (Pro != "Error") {
+                    
+                    let result = JSON.parse(Pro)
 
-                let res = result as Array<DataAll>;
+                    let res = result as Array<DataAll>;
 
-                $('#Div_control').addClass('display_none');
-                disabled();
-                Display_Grid(res)
+                    $('#Div_control').addClass('display_none');
+                    disabled();
+                    Display_Grid(res)
+                }
+                else {
+                    let res: Array<DataAll> ;
+
+                    $('#Div_control').addClass('display_none');
+                    disabled();
+                    JGrid.DataSource = res;
+                    JGrid.Bind();
+
+                }
 
 
             }
@@ -440,7 +453,7 @@ $(document).ready(() => {
                 AllDisplayDetails = res;
                 AllDisplayDetails = AllDisplayDetails.sort(dynamicSortNew("ID"));
 
-                  DetMaxLast = AllDisplayDetails[0].ID + 1;
+                DetMaxLast = AllDisplayDetails[0].ID + 1;
 
                 DisplayDetails = res;
                 DisplayDetails = DisplayDetails.filter(x => x.MasterID == MasterID);
@@ -537,31 +550,31 @@ $(document).ready(() => {
         });
 
         $("#btn_Open" + cnt).on('click', function () {
-            window.open($("#txtUrl" + cnt).val().trim(), "_blank");  
-        }); 
+            window.open($("#txtUrl" + cnt).val().trim(), "_blank");
+        });
 
         $("#btn_Upload" + cnt).on('click', function () {
             $("#Btn_fileUpload").click();
-             
+
             setTimeout(function () {
 
-            $("#txtFile" + cnt).val($("#fileName").val());
+                $("#txtFile" + cnt).val($("#fileName").val());
 
             }, 500);
-             
-        }); 
+
+        });
 
         $("#btn_OpenFile" + cnt).on('click', function () {
 
-              NameFile = $("#txtFile" + cnt).val();
+            NameFile = $("#txtFile" + cnt).val();
             let Url = location.origin + "/SavePath/Dropbox/FileUpload/" + NameFile;
             //var path = window.location.origin + '/Downlad/?D=' + Url + '&N=' + NameFile;
-             
+
             //window.open(path, "_blank");   
 
             Upload(Url);
-             
-        }); 
+
+        });
 
         $("._copy").on('dblclick', function () {
             copyToClipboard(this.id);
@@ -578,7 +591,7 @@ $(document).ready(() => {
         $('._dis').removeAttr('disabled')
         $('._Cont').removeClass('display_none')
 
-        
+
         $("#ID" + CountGrid).val(DetMaxLast)
         DetMaxLast++;
     }
@@ -639,9 +652,15 @@ $(document).ready(() => {
         $("#Div_control :input").val("");
         txtTrDate.value = GetDate();
         dbTypeH.selectedIndex = 0;
+  
+        if (AllDisplay.length > 0) {
+            let MaxID = AllDisplay[0].ID;
+            $('#txtTrNo').val(MaxID + 1);
+        }
+        else {
+            $('#txtTrNo').val('1');
+        }
 
-        let MaxID = AllDisplay[0].ID;
-        $('#txtTrNo').val(MaxID + 1);
 
         $('#txtTitle').focus();
 
@@ -669,7 +688,7 @@ $(document).ready(() => {
                 SingModelDetails.Ser = Number($("#txtSerial" + i).val());
                 SingModelDetails.Desc = $("#txtDesc" + i).val();
                 SingModelDetails.Remark = $("#txtRemars" + i).val();
-                SingModelDetails.Url = $("#txtUrl" + i).val(); 
+                SingModelDetails.Url = $("#txtUrl" + i).val();
                 SingModelDetails.Ex_Field = $("#txtFile" + i).val();
 
                 ModelDetails.push(SingModelDetails);
@@ -779,7 +798,7 @@ $(document).ready(() => {
             Assign();
 
             let Data = new Send_Data();
-             
+
 
             debugger
 
@@ -792,18 +811,18 @@ $(document).ready(() => {
             }
 
             debugger
-             
-                debugger
 
-                Data.ID = Number($('#txtTrNo').val());
+            debugger
+
+            Data.ID = Number($('#txtTrNo').val());
             Data.Name_Txt_Master = NameModelMaster;
             Data.Name_Txt_Detail = NameModelDetails;
-                Data.Model = JSON.stringify(Model);
-                Data.ModelDetails = JSON.stringify(ModelDetails);
-                Data.TypeDataSouce = "DataAll";
-                Data.StatusFlag = "u";
+            Data.Model = JSON.stringify(Model);
+            Data.ModelDetails = JSON.stringify(ModelDetails);
+            Data.TypeDataSouce = "DataAll";
+            Data.StatusFlag = "u";
 
-                debugger
+            debugger
             $.ajax({
                 url: Url.Action("Update_Data", "Profile"),
                 type: "POST",
@@ -811,15 +830,15 @@ $(document).ready(() => {
                 async: false,
                 data: { Data: JSON.stringify(Data) },
                 success: (d) => {
-                        let result = JSON.parse(d)
+                    let result = JSON.parse(d)
 
-                        let res = result as Array<DataAll>;
-                        Display_Grid(res)
+                    let res = result as Array<DataAll>;
+                    Display_Grid(res)
 
 
-                    }
-                })
-                 
+                }
+            })
+
         }, 500);
 
     }

@@ -259,13 +259,22 @@ $(document).ready(() => {
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
             data: { Name_txt: DataCatch_Receipt },
-            success: (d) => {
-                let result = JSON.parse(d)
+            success: (Pro) => {
+                if (Pro != "Error") {
+                    let result = JSON.parse(Pro)
 
-                let res = result as Array<DataAll>;
+                    let res = result as Array<DataAll>;
 
-                Display_Grid(res)
+                    Display_Grid(res)
+                }
+                else {
+                    let res: Array<DataAll>;
 
+                    JGrid.DataSource = res;
+                    JGrid.Bind();
+
+                    Clean();
+                }
 
             }
         })

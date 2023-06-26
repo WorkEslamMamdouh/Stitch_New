@@ -19,7 +19,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using NPOI.SS.Formula.Functions;
 using System.Web.Script.Serialization;
 using System.Web;
-using System.Collections; 
+using System.Collections;
 
 namespace Inv.WebUI.Controllers
 {//eslam 1 dec 2020
@@ -34,20 +34,20 @@ namespace Inv.WebUI.Controllers
             public string Title { get; set; }
             public string Remars { get; set; }
             public decimal Amount { get; set; }
-        } 
-        
+        }
+
         public class Settings_Users
         {
-            public int ID { get; set; } 
+            public int ID { get; set; }
             public string Type { get; set; }
             public string NameUesr { get; set; }
             public string PassUesr { get; set; }
             public string Title { get; set; }
-            public string Remars { get; set; } 
-            public int Status { get; set; } 
+            public string Remars { get; set; }
+            public int Status { get; set; }
         }
 
-         
+
 
         public class DataDetails
         {
@@ -60,16 +60,16 @@ namespace Inv.WebUI.Controllers
             public string Ex_Field { get; set; }
             public string StatusFlag { get; set; }
         }
-        
+
         public class DataNotes
         {
             public int ID { get; set; }
-            public int MasterID { get; set; } 
-            public string Remark { get; set; } 
-            public string Ex_Field { get; set; } 
+            public int MasterID { get; set; }
+            public string Remark { get; set; }
+            public string Ex_Field { get; set; }
         }
 
-         
+
         public class Send_Data
         {
             public int ID { get; set; }
@@ -81,7 +81,7 @@ namespace Inv.WebUI.Controllers
             public string StatusFlag { get; set; }
         }
 
- 
+
         public List<T> GetListClass(string jsonData, string NameClass)
         {
             Type type = AppDomain.CurrentDomain.GetAssemblies()
@@ -95,7 +95,7 @@ namespace Inv.WebUI.Controllers
 
             //var ObjClass = JsonConvert.DeserializeObject(jsonData, genericListType);
 
-         var  obj = JsonConvert.DeserializeObject<List<T>>(jsonData);
+            var obj = JsonConvert.DeserializeObject<List<T>>(jsonData);
             return obj.ToList();
 
             //return ObjClass;
@@ -116,7 +116,18 @@ namespace Inv.WebUI.Controllers
 
             string Str = Server.MapPath("/SavePath/Dropbox/");
 
-            var jsonData = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Server.UrlPathEncode(Str + "" + Name_txt + ".txt"));
+            string jsonData = "";
+
+            try
+            {
+
+                jsonData = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Server.UrlPathEncode(Str + "" + Name_txt + ".txt"));
+            }
+            catch (Exception)
+            {
+
+                return "Error";
+            }
 
 
             string base64Encoded = jsonData;
@@ -166,12 +177,15 @@ namespace Inv.WebUI.Controllers
                 try
                 {
                     var jsonData = GetData(Name_txt + i);
-
-                    Model_Notes.ID = i; 
+                    if (jsonData == "Error")
+                    {
+                        break;
+                    }
+                    Model_Notes.ID = i;
                     Model_Notes.Remark = jsonData;
-                    List_Notes.Add(Model_Notes);    
+                    List_Notes.Add(Model_Notes);
                 }
-                catch  
+                catch
                 {
 
                     break;
@@ -208,7 +222,7 @@ namespace Inv.WebUI.Controllers
             var New_Data = JsonConvert.SerializeObject(NewList);
 
             SetData(rp.Name_Txt_Master, New_Data);
-              
+
             //******************************************Get_Master*************************
 
             var json = GetData(rp.Name_Txt_Master);
@@ -218,17 +232,25 @@ namespace Inv.WebUI.Controllers
         }
 
         public ActionResult Update_Data(string Data)
-        { 
+        {
 
             var rp = JsonConvert.DeserializeObject<Send_Data>(Data);
 
             //******************************************Master*************************
 
             var jsonData = GetData(rp.Name_Txt_Master);
-             
-            List<DataAll> Data_List = JsonConvert.DeserializeObject<List<DataAll>>(jsonData);
 
-            var NewList = Data_List.Where(x => x.ID != rp.ID).ToList();
+            List<DataAll> NewList = new List<DataAll>();
+            try
+            {
+            List<DataAll> Data_List = JsonConvert.DeserializeObject<List<DataAll>>(jsonData);
+                NewList = Data_List.Where(x => x.ID != rp.ID).ToList();
+
+            }
+            catch (Exception Ex)
+            {
+
+            }
 
             if (rp.StatusFlag != "d")
             {
@@ -236,29 +258,36 @@ namespace Inv.WebUI.Controllers
 
                 NewList.Add(Data_Obj);
             }
-           
+
             var New_Data = JsonConvert.SerializeObject(NewList);
 
             SetData(rp.Name_Txt_Master, New_Data);
 
             //******************************************Detail*************************
-             
+
             var jsonDataDetail = GetData(rp.Name_Txt_Detail);
 
-            List<DataDetails>  Detail_Data_List = JsonConvert.DeserializeObject<List<DataDetails>>(jsonDataDetail);
 
-            var NewDetail_List = Detail_Data_List.Where(x => x.MasterID != rp.ID).ToList();
+            List<DataDetails> NewDetail_List = new List<DataDetails>();
+            try
+            {
+            List<DataDetails> Detail_Data_List = JsonConvert.DeserializeObject<List<DataDetails>>(jsonDataDetail);
+                NewDetail_List = Detail_Data_List.Where(x => x.MasterID != rp.ID).ToList();
+            }
+            catch (Exception Ex)
+            {
 
+            }
             if (rp.ModelDetails != "[]" && rp.StatusFlag != "d")
             {
                 List<DataDetails> DetailsData_Obj = JsonConvert.DeserializeObject<List<DataDetails>>(rp.ModelDetails);
 
                 foreach (var item in DetailsData_Obj)
                 {
-                    NewDetail_List.Add(item); 
+                    NewDetail_List.Add(item);
                 }
             }
-             
+
             var NewDetail_Data = JsonConvert.SerializeObject(NewDetail_List);
 
             SetData(rp.Name_Txt_Detail, NewDetail_Data);
@@ -266,7 +295,7 @@ namespace Inv.WebUI.Controllers
 
             //******************************************Get_Master*************************
 
-            var json  = GetData(rp.Name_Txt_Master);
+            var json = GetData(rp.Name_Txt_Master);
 
             return Json(json, JsonRequestBehavior.AllowGet);
 
@@ -284,9 +313,18 @@ namespace Inv.WebUI.Controllers
 
             var jsonData = GetData(rp.Name_Txt_Master);
 
-            List<DataAll> Data_List = JsonConvert.DeserializeObject<List<DataAll>>(jsonData);
 
-            var NewList = Data_List.Where(x => x.ID != rp.ID).ToList();
+            List<DataAll> NewList = new List<DataAll>();
+            try
+            {
+            List<DataAll> Data_List = JsonConvert.DeserializeObject<List<DataAll>>(jsonData);
+                NewList = Data_List.Where(x => x.ID != rp.ID).ToList();
+
+            }
+            catch (Exception Ex)
+            {
+
+            }
 
             if (rp.StatusFlag != "d")
             {
@@ -298,7 +336,7 @@ namespace Inv.WebUI.Controllers
             var New_Data = JsonConvert.SerializeObject(NewList);
 
             SetData(rp.Name_Txt_Master, New_Data);
-             
+
             //******************************************Get_Master*************************
 
             var json = GetData(rp.Name_Txt_Master);
@@ -314,9 +352,9 @@ namespace Inv.WebUI.Controllers
             var rp = JsonConvert.DeserializeObject<Send_Data>(Data);
 
             //******************************************Master*************************
-              
+
             SetData(rp.Name_Txt_Master, rp.Model);
-             
+
 
             return Json("", JsonRequestBehavior.AllowGet);
         }

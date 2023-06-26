@@ -183,10 +183,18 @@ $(document).ready(function () {
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
             data: { Name_txt: DataCatch_Receipt },
-            success: function (d) {
-                var result = JSON.parse(d);
-                var res = result;
-                Display_Grid(res);
+            success: function (Pro) {
+                if (Pro != "Error") {
+                    var result = JSON.parse(Pro);
+                    var res = result;
+                    Display_Grid(res);
+                }
+                else {
+                    var res = void 0;
+                    JGrid.DataSource = res;
+                    JGrid.Bind();
+                    Clean();
+                }
             }
         });
     }

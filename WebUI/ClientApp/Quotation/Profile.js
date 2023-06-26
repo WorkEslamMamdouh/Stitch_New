@@ -36,6 +36,7 @@ $(document).ready(function () {
     var NameModelDetails = "";
     ProfileInitalizeComponent();
     function ProfileInitalizeComponent() {
+        debugger;
         $("#layout_Refresh").removeClass('display_none');
         $("#layout_Back").removeClass('display_none');
         $('#Page_Profile').removeClass('display_none');
@@ -48,7 +49,6 @@ $(document).ready(function () {
         txtDateTo.value = GetDate();
         InitializeGrid();
         btnShow_onclick();
-        sessionStorage.setItem("EslamPasswordProfile", "619606");
         //setTimeout(function () {
         //    $("#Btn_fileUpload").val('Upload')
         //    //GetPathFileUpload();
@@ -255,12 +255,22 @@ $(document).ready(function () {
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
             data: { Name_txt: NameModelMaster },
-            success: function (d) {
-                var result = JSON.parse(d);
-                var res = result;
-                $('#Div_control').addClass('display_none');
-                disabled();
-                Display_Grid(res);
+            success: function (Pro) {
+                debugger;
+                if (Pro != "Error") {
+                    var result = JSON.parse(Pro);
+                    var res = result;
+                    $('#Div_control').addClass('display_none');
+                    disabled();
+                    Display_Grid(res);
+                }
+                else {
+                    var res = void 0;
+                    $('#Div_control').addClass('display_none');
+                    disabled();
+                    JGrid.DataSource = res;
+                    JGrid.Bind();
+                }
             }
         });
     }
@@ -440,8 +450,13 @@ $(document).ready(function () {
         $("#Div_control :input").val("");
         txtTrDate.value = GetDate();
         dbTypeH.selectedIndex = 0;
-        var MaxID = AllDisplay[0].ID;
-        $('#txtTrNo').val(MaxID + 1);
+        if (AllDisplay.length > 0) {
+            var MaxID = AllDisplay[0].ID;
+            $('#txtTrNo').val(MaxID + 1);
+        }
+        else {
+            $('#txtTrNo').val('1');
+        }
         $('#txtTitle').focus();
         document.body.scrollTop = 800;
         document.documentElement.scrollTop = 800;
