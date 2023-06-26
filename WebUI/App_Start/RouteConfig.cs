@@ -14,6 +14,15 @@ namespace Inv.WebUI
         
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+
+            routes.MapRoute(
+            name: "OpenDownlad",
+            url: "{Downlad}",
+            defaults: new { controller = "Home", action = "DownladIndex" }
+            );
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

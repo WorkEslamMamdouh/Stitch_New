@@ -836,6 +836,7 @@
     <Content Include="Views\Customer\HomeIndex.cshtml" />
     <Content Include="Views\Customer\Money_WalletIndex.cshtml" />
     <Content Include="Views\Home\AllPagesIndex.cshtml" />
+    <Content Include="Views\Home\DownladIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -857,6 +858,7 @@
     <TypeScriptCompile Include="ClientApp\Quotation\AllPages.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Money_Wallet.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Notes.ts" />
+    <TypeScriptCompile Include="ClientApp\Quotation\Settings.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Profile.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\TestGrad.ts" />
     <TypeScriptCompile Include="ClientApp\Entities.ts" />

@@ -1955,6 +1955,25 @@ class DataAll {
     public Amount: number;
 
 }
+
+class Settings_Users {
+    constructor() { 
+        this.ID = 0; 
+        this.Type = '';
+        this.NameUesr = '';
+        this.PassUesr = '';
+        this.Title = '';
+        this.Remars = '';  
+        this.Status = 0;
+    }
+    public ID: number; 
+    public Type: string;
+    public NameUesr: string;
+    public PassUesr: string;
+    public Title: string;
+    public Remars: string;  
+    public Status: number;
+}
  
 class DataDetails {
     constructor() { 

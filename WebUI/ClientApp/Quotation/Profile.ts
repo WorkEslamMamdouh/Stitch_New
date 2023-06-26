@@ -28,7 +28,6 @@ $(document).ready(() => {
     //var btnPage_Get_Views: HTMLButtonElement;
 
     var txtPassword: HTMLInputElement;
-    var txtCopy: HTMLInputElement;
     var txtSearch: HTMLInputElement;
     var txtDateFrom: HTMLInputElement;
     var txtDateTo: HTMLInputElement;
@@ -91,7 +90,6 @@ $(document).ready(() => {
         dbTypeF = document.getElementById("dbTypeF") as HTMLSelectElement;
         dbTypeH = document.getElementById("dbTypeH") as HTMLSelectElement;
         ////////
-        txtCopy = document.getElementById("txtCopy") as HTMLInputElement;
         txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
         txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
         txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
@@ -111,7 +109,7 @@ $(document).ready(() => {
         //btnUpload.onclick = () => { window.open('https://app.mediafire.com/myfiles', "_blank");  };
         btnBack_Up.onclick = () => { $('#Upload').addClass('display_none'); $('#Page_Profile').removeClass('display_none'); $('#Page').html(''); };
         btnDownload_Up.onclick = Download; 
-        btnShare_Up.onclick = Share;
+        btnShare_Up.onclick = Share; 
         //********************************onchange****************************
         txtSearch.onkeyup = txtSearch_change;
 
@@ -176,40 +174,78 @@ $(document).ready(() => {
     }
     function Share() {
 
-        debugger 
+        var url = window.location.origin + '/Downlad/?D=' + GloplePath + '&N=' + NameFile;
 
-        txtCopy.value = GloplePath
+        $('#txtShare').val(url);
 
-        copyToClipboard('txtCopy');
-
-        //txtCopy.focus();
-        //txtCopy.select();
-
-        //try {
-        //    var successful = document.execCommand('copy');
-        //    var msg = successful ? 'successful' : 'unsuccessful';
-        //    console.log('Copying text command was ' + msg);
-        //} catch (err) {
-        //    console.log('Oops, unable to copy');
-        //}
-
-        alert(GloplePath);
+        copyToClipboard('txtShare');
+        alert("تم أخذ اللينك نسخ يمكنك ارساله الان");
 
     }
     function Download() {
 
-        var imageUrl = GloplePath;
+        debugger
+
+        var url =  GloplePath;
         var filename = NameFile;
 
-        var link = document.createElement('a');
-        link.href = imageUrl;
-        link.download = filename;
+        //var link = document.createElement('a');
+        //link.href = imageUrl;
+        //link.download = filename;
+         
+        //link.click();
 
-        // Trigger the download
-        link.click();
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                const downloadLink = document.createElement("a");
+                downloadLink.href = URL.createObjectURL(blob);
 
+                downloadLink.download = filename;
+                downloadLink.click();
+                URL.revokeObjectURL(downloadLink.href);
+                alert('Done Download')
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+
+
+        //downloadFileWithProgress(url, filename)
 
     }
+
+    function downloadFileWithProgress(url, filename) {
+        debugger
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                const anchor = document.createElement('a');
+                anchor.href = URL.createObjectURL(blob);
+                anchor.download = filename;
+                anchor.style.display = 'none'; // Hide the anchor element
+
+                document.body.appendChild(anchor); // Append the anchor element to the document body
+                anchor.click(); // Trigger a click event on the anchor element
+                document.body.removeChild(anchor); // Remove the anchor element from the document body after the download starts
+                URL.revokeObjectURL(anchor.href); // Clean up the URL object
+            })
+            .catch(error => {
+                console.error('Error downloading file:', error);
+            });
+    }
+
+    function downloadFile(url, filename) {
+        debugger
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+
+        // Simulate a click event on the link element to start the download
+        link.dispatchEvent(new MouseEvent('click'));
+    }
+
     function Upload(Path: string) {
 
         debugger
@@ -226,6 +262,9 @@ $(document).ready(() => {
         $('#Pass').addClass('display_none');
         $('#Page_Profile').addClass('display_none');
         $('#Upload').removeClass('display_none');
+
+        localStorage.setItem('NameFile', NameFile)
+        localStorage.setItem('GloplePath', GloplePath)
 
     }
 
@@ -540,11 +579,12 @@ $(document).ready(() => {
         $("#btn_OpenFile" + cnt).on('click', function () {
 
               NameFile = $("#txtFile" + cnt).val();
-            let path = location.origin + "/SavePath/Dropbox/FileUpload/" + NameFile;
+            let Url = location.origin + "/SavePath/Dropbox/FileUpload/" + NameFile;
+            //var path = window.location.origin + '/Downlad/?D=' + Url + '&N=' + NameFile;
              
             //window.open(path, "_blank");   
 
-            Upload(path);
+            Upload(Url);
              
         }); 
 

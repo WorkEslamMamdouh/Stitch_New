@@ -36,6 +36,19 @@ namespace Inv.WebUI.Controllers
             public decimal Amount { get; set; }
         } 
         
+        public class Settings_Users
+        {
+            public int ID { get; set; } 
+            public string Type { get; set; }
+            public string NameUesr { get; set; }
+            public string PassUesr { get; set; }
+            public string Title { get; set; }
+            public string Remars { get; set; } 
+            public int Status { get; set; } 
+        }
+
+         
+
         public class DataDetails
         {
             public int ID { get; set; }
@@ -169,6 +182,38 @@ namespace Inv.WebUI.Controllers
             var All_Notes = JsonConvert.SerializeObject(List_Notes);
 
             return Json(All_Notes, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult Update_DataSetting(string Data)
+        {
+
+            var rp = JsonConvert.DeserializeObject<Send_Data>(Data);
+
+            //******************************************Master*************************
+
+            var jsonData = GetData(rp.Name_Txt_Master);
+
+            List<Settings_Users> Data_List = JsonConvert.DeserializeObject<List<Settings_Users>>(jsonData);
+
+            var NewList = Data_List.Where(x => x.ID != rp.ID).ToList();
+
+            if (rp.StatusFlag != "d")
+            {
+                Settings_Users Data_Obj = JsonConvert.DeserializeObject<Settings_Users>(rp.Model);
+
+                NewList.Add(Data_Obj);
+            }
+
+            var New_Data = JsonConvert.SerializeObject(NewList);
+
+            SetData(rp.Name_Txt_Master, New_Data);
+              
+            //******************************************Get_Master*************************
+
+            var json = GetData(rp.Name_Txt_Master);
+
+            return Json(json, JsonRequestBehavior.AllowGet);
 
         }
 

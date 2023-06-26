@@ -96,13 +96,20 @@ namespace AllPages {
 
         </ul>
  
-        <div class="col-xs-12 col-lg-12 col-sm-12 ">
+        <button class="Balance">Show Balance $</button>
+        <div class="col-xs-12 col-lg-12 col-sm-12 content "  >
                  
                     <div class="col-xs-6 col-lg-6 col-sm-6 ">
                             <label id="CairoLab"> ( 0 )</label>
                     </div>
                     <div class="col-xs-6 col-lg-6 col-sm-6 ">
                             <label id="Al_ahlyLab"> ( 0 )</label>
+                    </div>
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="Bal_HomeLab"> ( 0 )</label>
+                    </div>
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="AAIBLab"> ( 0 )</label>
                     </div>
                     <div class="col-xs-6 col-lg-6 col-sm-6 ">
                             <label id="OutDebtLab"> ( 0 )</label>
@@ -119,7 +126,6 @@ namespace AllPages {
         </div>
 
     
-
  
 
  
@@ -154,9 +160,11 @@ namespace AllPages {
             <div class="col-xs-6 col-lg-6 col-sm-6 ">
                 <select id="TypeSours" class="form-control ">
                     <option value="Cash">Cash</option>
+                    <option value="Debt">Debt</option>
+                    <option value="Bal Home">Bal Home</option>
                     <option value="Cairo Bank">Cairo Bank</option>
                     <option value="Al ahly Bank">Al-ahly Bank</option>
-                    <option value="Debt">Debt</option>
+                    <option value="AAIB">AAIB</option>
                 </select>
             </div> 
             <div class="col-xs-6 col-lg-6 col-sm-6 ">
@@ -177,9 +185,7 @@ namespace AllPages {
 
 
         <div id="Views_Tab" class="tab-content display_none ">
-            <div class="col-xs-12 col-lg-12 col-sm-12 ">
-                <br />
-            </div>
+          
 
             <div class="col-xs-2 col-lg-1 col-sm-2 ">
                 <label>TrTrans</label>
@@ -188,9 +194,11 @@ namespace AllPages {
                 <select id="TypeSoursF" class="form-control ">
                     <option value="All">All</option>
                     <option value="Cash">Cash</option>
+                    <option value="Debt">Debt</option>
+                    <option value="Bal Home">Bal Home</option>
                     <option value="Cairo Bank">Cairo Bank</option>
                     <option value="Al ahly Bank">Al-ahly Bank</option>
-                    <option value="Debt">Debt</option>
+                    <option value="AAIB">AAIB</option>
                 </select>
             </div>
 
@@ -560,11 +568,11 @@ namespace AllPages {
                 <button id="btnBack_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning"> Back </button>
             </div>
             <div class="col-xs-4 col-lg-4 col-sm-4">
-                <button id="btnDownload_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success"> Download </button>
+                <button id="btnDownload_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success"   >Download</button>
             </div>
             <div class="col-xs-4 col-lg-4 col-sm-4">
                 <button id="btnShare_Up" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info"> Share </button>
-                    <input id="txtCopy" type="hidden"  value="" name="" />
+                <input id="txtShare" type="hidden" class="_copy _dis form-control ">
             </div>
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br />
@@ -773,6 +781,207 @@ namespace AllPages {
 `;
 
 
+
+    var Html_Settings = `
+
+
+
+<body class="materialdesign">
+    <div id="Pass" class="display_none content-inner-all animate__animated animate__zoomIn">
+        <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <h1>Password</h1>
+            </div>
+            <div class="col-xs-12 col-lg-5 col-sm-12">
+            </div>
+            <div class="col-xs-12 col-lg-2 col-sm-12">
+                <input id="txtPassword" type="password" pattern="[0-9]*" inputmode="numeric" class="  form-control  " placeholder="Password" style="text-align: center;">
+
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+            </div>
+            <div class="col-xs-12 col-lg-5 col-sm-12">
+            </div>
+            <div class="col-xs-12 col-lg-2 col-sm-12">
+                <button id="btnLogin" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info"> Login </button>
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+        </div>
+    </div>
+    <div id="Page_Profile" class="content-inner-all display_none animate__animated animate__zoomIn">
+        <div id="id_div_Filter" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+
+                <h1 class="col-xs-12 col-lg-12 col-sm-12">My Profile</h1>
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>Type</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 ">
+                <select id="dbTypeF" class="form-control ">
+                   <option value="All">All</option>
+                   <option value="Admin">Admin</option>
+                    <option value="User All">User All</option>
+                    <option value="Profile">Profile</option>
+                    <option value="Wallet">Wallet</option>
+                    <option value="Notes">Notes</option>
+                    <option value="Work">Work</option>
+                </select>
+            </div>
+ 
+
+            <div class="col-xs-12">
+                <br />
+            </div>
+
+
+            <div class="col-xs-12">
+                <br />
+            </div>
+            <div class="col-xs-12">
+                <br />
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="btnShow" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Show </button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="btnAdd" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Add </button>
+            </div>
+
+
+
+
+            <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
+
+                <div class="inside-table my-4">
+                    <div class="col-xs-12 col-lg-1 col-sm-12">
+                        <label style="font-weight: bold;font-size: 17px;"> Search 🔎</label>
+                    </div>
+                    <div class="col-xs-12 col-lg-4 col-sm-12">
+                        <input id="txtSearch" type="text" class="  form-control " placeholder="Search : ">
+                    </div>
+
+
+                    <h2 id="searchTitle">  <br /></h2>
+                    <div id="JGrid">
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div id="Div_control" class="sparkline8-graph col-xs-12 display_none" style="border-radius: 50px;">
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <button id="btnUpdate" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">     Update </button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="btnBack" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning">     Back </button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="btnSave" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Save </button>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>TrNo</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 ">
+                <input id="txtTrNo" type="number" name="ID" disabled="disabled" class="  form-control ">
+            </div>
+
+            
+            <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label>Type</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 ">
+                <select id="dbTypeH" class="form-control _dis" name="Type">
+                    <option value="Admin">Admin</option>
+                    <option value="User All">User All</option>
+                    <option value="Profile">Profile</option>
+                    <option value="Wallet">Wallet</option>
+                    <option value="Notes">Notes</option>
+                    <option value="Work">Work</option>
+                </select>
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>Title</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <input id="txtTitle" type="text" name="Title" class="_copy _dis form-control ">
+            </div>
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>NameUesr</label>
+            </div>
+            <div class="col-xs-12 col-lg-4 col-sm-12">
+                <input id="txtNameUesr" type="text" name="NameUesr" class="_copy _dis form-control ">
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>PassUesr</label>
+            </div>
+            <div class="col-xs-12 col-lg-4 col-sm-12">
+                <input id="txtPassUesr" type="text" name="PassUesr" class="_copy _dis form-control ">
+            </div>
+            <div class="col-xs-5 col-lg-1 col-sm-5">
+                <label>Status</label>
+            </div>
+            <div class="col-xs-5 col-lg-1 col-sm-5">
+               <input id="txtStatus" type="checkbox" name="Status" class="_copy _dis form-control ">
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br />
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>Remars</label>
+            </div>
+            <div class="col-xs-12 col-lg-11 col-sm-12">
+                <textarea id="txtRemars" type="text" name="Remars" class="_copy _dis form-control "></textarea>
+            </div>
+ 
+  
+
+        </div>
+
+
+
+
+    </div>
+
+   
+
+</body>`;
+
+
+
     var glopalBtn = "";
     export function InitalizeComponent() {
 
@@ -843,8 +1052,10 @@ namespace AllPages {
             window.open(Url.Action("Page_Get_Views", "Home"), "_self");
         });
 
-        $("#Open_Test_Code").on('click', function () { 
-            window.open("https://onecompiler.com/javascript", "_self");
+        $("#Open_Settings").on('click', function () {
+            Settings();
+            glopalBtn = "Open_Settings";
+            localStorage.setItem('glopalBtn', glopalBtn);
         });
 
          
@@ -868,6 +1079,31 @@ namespace AllPages {
 
     function Profile() {
         LodePage(Html_Profile, 'ClientApp/Quotation/Profile.js')
+
+
+        //var container1 = document.createElement('div');
+
+        //// Step 2: Set the HTML content of the element
+        ////container.innerHTML = page;
+
+        //// Step 3: Create a new <script> element
+        //var scriptElement1 = document.createElement('script');
+
+        //// Step 4: Set the src attribute of the <script> element
+        //scriptElement1.src = 'ClientApp/Quotation/FileSaver.min.js';
+        ////scriptElement.src = 'ClientApp/Quotation/Notes.js';
+
+        //scriptElement1.onload = function () {
+        //};
+
+        //// Step 5: Append the <script> element to the HTML element
+        //container1.appendChild(scriptElement1);
+
+        //// Append the container element to the desired location on the page
+        //var bodyPage1 = document.getElementById('Body_Page');
+        //bodyPage1.appendChild(container1);
+
+
 
         var container = document.createElement('div');
 
@@ -909,6 +1145,10 @@ namespace AllPages {
         LodePage(Html_Wallet, 'ClientApp/Quotation/Money_Wallet.js')
     }
 
+    function  Settings() {
+        debugger
+        LodePage(Html_Settings, 'ClientApp/Quotation/Settings.js')
+    }
 
     function LodePage(page: string, Pathscript: string) {
 

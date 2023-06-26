@@ -21,7 +21,6 @@ $(document).ready(function () {
     var btnAddDetails;
     //var btnPage_Get_Views: HTMLButtonElement;
     var txtPassword;
-    var txtCopy;
     var txtSearch;
     var txtDateFrom;
     var txtDateTo;
@@ -69,7 +68,6 @@ $(document).ready(function () {
         dbTypeF = document.getElementById("dbTypeF");
         dbTypeH = document.getElementById("dbTypeH");
         ////////
-        txtCopy = document.getElementById("txtCopy");
         txtSearch = document.getElementById("txtSearch");
         txtDateFrom = document.getElementById("txtDateFrom");
         txtDateTo = document.getElementById("txtDateTo");
@@ -144,28 +142,59 @@ $(document).ready(function () {
         //JGrid.Bind();
     }
     function Share() {
-        debugger;
-        txtCopy.value = GloplePath;
-        copyToClipboard('txtCopy');
-        //txtCopy.focus();
-        //txtCopy.select();
-        //try {
-        //    var successful = document.execCommand('copy');
-        //    var msg = successful ? 'successful' : 'unsuccessful';
-        //    console.log('Copying text command was ' + msg);
-        //} catch (err) {
-        //    console.log('Oops, unable to copy');
-        //}
-        alert(GloplePath);
+        var url = window.location.origin + '/Downlad/?D=' + GloplePath + '&N=' + NameFile;
+        $('#txtShare').val(url);
+        copyToClipboard('txtShare');
+        alert("تم أخذ اللينك نسخ يمكنك ارساله الان");
     }
     function Download() {
-        var imageUrl = GloplePath;
+        debugger;
+        var url = GloplePath;
         var filename = NameFile;
+        //var link = document.createElement('a');
+        //link.href = imageUrl;
+        //link.download = filename;
+        //link.click();
+        fetch(url)
+            .then(function (response) { return response.blob(); })
+            .then(function (blob) {
+            var downloadLink = document.createElement("a");
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = filename;
+            downloadLink.click();
+            URL.revokeObjectURL(downloadLink.href);
+            alert('Done Download');
+        })
+            .catch(function (error) {
+            console.error("Error:", error);
+        });
+        //downloadFileWithProgress(url, filename)
+    }
+    function downloadFileWithProgress(url, filename) {
+        debugger;
+        fetch(url)
+            .then(function (response) { return response.blob(); })
+            .then(function (blob) {
+            var anchor = document.createElement('a');
+            anchor.href = URL.createObjectURL(blob);
+            anchor.download = filename;
+            anchor.style.display = 'none'; // Hide the anchor element
+            document.body.appendChild(anchor); // Append the anchor element to the document body
+            anchor.click(); // Trigger a click event on the anchor element
+            document.body.removeChild(anchor); // Remove the anchor element from the document body after the download starts
+            URL.revokeObjectURL(anchor.href); // Clean up the URL object
+        })
+            .catch(function (error) {
+            console.error('Error downloading file:', error);
+        });
+    }
+    function downloadFile(url, filename) {
+        debugger;
         var link = document.createElement('a');
-        link.href = imageUrl;
+        link.href = url;
         link.download = filename;
-        // Trigger the download
-        link.click();
+        // Simulate a click event on the link element to start the download
+        link.dispatchEvent(new MouseEvent('click'));
     }
     function Upload(Path) {
         debugger;
@@ -178,6 +207,8 @@ $(document).ready(function () {
         $('#Pass').addClass('display_none');
         $('#Page_Profile').addClass('display_none');
         $('#Upload').removeClass('display_none');
+        localStorage.setItem('NameFile', NameFile);
+        localStorage.setItem('GloplePath', GloplePath);
     }
     function btnPage_Get_Views_onclick() {
         debugger;
@@ -359,9 +390,10 @@ $(document).ready(function () {
         });
         $("#btn_OpenFile" + cnt).on('click', function () {
             NameFile = $("#txtFile" + cnt).val();
-            var path = location.origin + "/SavePath/Dropbox/FileUpload/" + NameFile;
+            var Url = location.origin + "/SavePath/Dropbox/FileUpload/" + NameFile;
+            //var path = window.location.origin + '/Downlad/?D=' + Url + '&N=' + NameFile;
             //window.open(path, "_blank");   
-            Upload(path);
+            Upload(Url);
         });
         $("._copy").on('dblclick', function () {
             copyToClipboard(this.id);

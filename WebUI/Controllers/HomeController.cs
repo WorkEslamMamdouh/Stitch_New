@@ -23,13 +23,13 @@ namespace Inv.WebUI.Controllers
         }  
         public ActionResult AllPagesIndex()
         {
-
-            //Session["ErrorUrl"] = "";//Url.Action("LoginIndex", "Login");
-            //SessionManager.SessionRecord.CompanyNameAr = "";
-
-            //Session["SystemProperties"] = SessionManager.SessionRecord;
-
+             
             return View("AllPagesIndex");
+        }
+
+        public ActionResult DownladIndex(string D, string N)
+        { 
+            return View("DownladIndex");
         }
 
         public ActionResult Admin()

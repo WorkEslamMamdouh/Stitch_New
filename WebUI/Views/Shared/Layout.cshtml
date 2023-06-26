@@ -392,6 +392,54 @@
         ._Name_file {
             width: 189px !important;
         }
+
+
+
+        /***********************************************************/
+
+        .Balance {
+            background-color: #459a8f;
+            color: white;
+            cursor: pointer;
+            padding: 8px;
+            width: 100%;
+            border: none;
+            text-align: center;
+            outline: none;
+            font-size: 15px;
+        }
+
+            .active_Balance, .Balance:hover {
+                /*background-color: #276e31;*/
+                background-color: #000000;
+            }
+
+            .Balance:after {
+                content: '\002B';
+                color: white;
+                font-weight: bold;
+                float: right;
+                margin-left: 5px; 
+            }
+
+        .active_Balance:after {
+            content: "\2212";
+        }
+
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #000000;
+            border-radius: 0px 0px 30px 30px;
+            color: antiquewhite;
+            margin-bottom: 9px;
+        }
+
+
+     
     </style>
 
 </head>

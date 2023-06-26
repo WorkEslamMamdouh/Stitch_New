@@ -153,6 +153,24 @@ $(document).ready(() => {
             sessionStorage.setItem("EslamPassword", txtPassword.value);
 
             $('.jsgrid-grid-body').scrollLeft(300);
+
+
+
+            var coll = document.getElementsByClassName("Balance");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function () {
+                    this.classList.toggle("active_Balance");
+                    var content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            }
+
         }
 
 
@@ -180,6 +198,7 @@ $(document).ready(() => {
         });
     }
     function InitializeGrid() {
+        
         JGrid.ElementName = "JGrid";
         JGrid.OnRowDoubleClicked = GridDoubleClick;
         JGrid.PrimaryKey = "ID";
@@ -193,7 +212,7 @@ $(document).ready(() => {
         JGrid.OnItemEditing = () => { };
         JGrid.Columns = [
             { title: "ID", name: "ID", type: "text", width: " ", visible: false },
-            { title: "TrNo", name: "ID", type: "text" },
+            { title: "TrNo", name: "ID", type: "number" },
             { title: "TrDate", name: "TrDate", type: "text" },
             { title: "Type", name: "Type", type: "text" },
             { title: "Title", name: "Title", type: "text" },
@@ -498,11 +517,15 @@ $(document).ready(() => {
         let CashAmountEx = 0;
         let Cairo_BankAmountEx = 0
         let Al_ahly_BankAmountEx = 0;
+        let Bal_HomeAmountEx = 0;
+        let AAIBAmountEx = 0;
 
         let CashEx = AllDisplay.filter(x => x.Type == 'Cash' && x.Title == 'Exchange');
         let Cairo_BankEx = AllDisplay.filter(x => x.Type == 'Cairo Bank' && x.Title == 'Exchange');
         let Al_ahly_BankEx = AllDisplay.filter(x => x.Type == 'Al ahly Bank' && x.Title == 'Exchange');
         let DebtEx = AllDisplay.filter(x => x.Type == 'Debt' && x.Title == 'Exchange');
+        let Bal_HomeEx = AllDisplay.filter(x => x.Type == 'Bal Home' && x.Title == 'Exchange');
+        let AAIBEx = AllDisplay.filter(x => x.Type == 'AAIB' && x.Title == 'Exchange');
 
         for (var i = 0; i < DebtEx.length; i++) {
             DebtAmountEx = DebtAmountEx + DebtEx[i].Amount
@@ -520,16 +543,30 @@ $(document).ready(() => {
             Al_ahly_BankAmountEx = Al_ahly_BankAmountEx + Al_ahly_BankEx[i].Amount
         }
 
+
+        for (var i = 0; i < Bal_HomeEx.length; i++) {
+            Bal_HomeAmountEx = Bal_HomeAmountEx + Bal_HomeEx[i].Amount
+        }
+
+        for (var i = 0; i < AAIBEx.length; i++) {
+            AAIBAmountEx = AAIBAmountEx + AAIBEx[i].Amount
+        }
+
+
         //**************************************************** Receipt**************************************
         let DebtAmountRec = 0; //مديونيه
         let CashAmountRec = 0; //كاش
         let Cairo_BankAmountRec = 0 //بنك القاهره
         let Al_ahly_BankAmountRec = 0; //بنك الاهلي
+        let Bal_HomeAmountRec = 0; // رصيد البيت
+        let AAIBAmountRec = 0; //بنك العربي الافريقي
 
         let CashRec = AllDisplay.filter(x => x.Type == 'Cash' && x.Title == 'Receipt');
         let Cairo_BankRec = AllDisplay.filter(x => x.Type == 'Cairo Bank' && x.Title == 'Receipt');
         let Al_ahly_BankRec = AllDisplay.filter(x => x.Type == 'Al ahly Bank' && x.Title == 'Receipt');
         let DebtRec = AllDisplay.filter(x => x.Type == 'Debt' && x.Title == 'Receipt');
+        let Bal_HomeRec = AllDisplay.filter(x => x.Type == 'Bal Home' && x.Title == 'Receipt');
+        let AAIBRec = AllDisplay.filter(x => x.Type == 'AAIB' && x.Title == 'Receipt');
 
         for (var i = 0; i < DebtRec.length; i++) {
             DebtAmountRec = DebtAmountRec + DebtRec[i].Amount
@@ -546,6 +583,15 @@ $(document).ready(() => {
         for (var i = 0; i < Al_ahly_BankRec.length; i++) {
             Al_ahly_BankAmountRec = Al_ahly_BankAmountRec + Al_ahly_BankRec[i].Amount
         }
+
+        for (var i = 0; i < Bal_HomeRec.length; i++) {
+            Bal_HomeAmountRec = Bal_HomeAmountRec + Bal_HomeRec[i].Amount
+        }
+
+        for (var i = 0; i < AAIBRec.length; i++) {
+            AAIBAmountRec = AAIBAmountRec + AAIBRec[i].Amount
+        }
+
         //****************************************Total***********************************************
         $('#InDebtLab').html('InDebt ( ' + (Number(DebtAmountRec)) + ' ) $');
 
@@ -553,15 +599,19 @@ $(document).ready(() => {
 
         $('#CashLab').html('Cash ( ' + (Number(CashAmountRec) - Number(CashAmountEx)) + ' ) $');
 
+        $('#Bal_HomeLab').html('Bal Home ( ' + (Number(Bal_HomeAmountRec) - Number(Bal_HomeAmountEx)) + ' ) $');
+
         $('#CairoLab').html('Cairo ( ' + (Number(Cairo_BankAmountRec) - Number(Cairo_BankAmountEx)) + ' ) $');
 
         $('#Al_ahlyLab').html('Al_ahly ( ' + (Number(Al_ahly_BankAmountRec) - Number(Al_ahly_BankAmountEx)) + ' ) $');
+
+        $('#AAIBLab').html('AAIB ( ' + (Number(AAIBAmountRec) - Number(AAIBAmountEx)) + ' ) $');
 
         //****************************************AllTotal***********************************************
         let AllTotal_Rec = CashAmountRec + Cairo_BankAmountRec + Al_ahly_BankAmountRec;
         let AllTotal_Exch = CashAmountEx + Cairo_BankAmountEx + Al_ahly_BankAmountEx;
 
-        $('#BalanceLab').html('All ( ' + (Number(AllTotal_Rec) - Number(AllTotal_Exch)) + ' ) $');
+        $('#BalanceLab').html('All Bal ( ' + (Number(AllTotal_Rec) - Number(AllTotal_Exch)) + ' ) $');
 
 
     }

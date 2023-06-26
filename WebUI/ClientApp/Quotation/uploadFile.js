@@ -33,3 +33,27 @@ function uploadFile() {
     };
     xhr.send(formData);
 }
+
+
+function Download() {
+
+    debugger
+
+
+
+    
+    var url = encodeURIComponent(localStorage.getItem('GloplePath'));
+    var filename = localStorage.getItem('NameFile');
+     
+    fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+            saveAs(blob, filename);
+            alert('Done Download')
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+
+     
+}
