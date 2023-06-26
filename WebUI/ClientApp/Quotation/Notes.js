@@ -2,6 +2,7 @@ $(document).ready(function () {
     var AllDisplay = new Array();
     var DetMaxLast = 0;
     var CountGrid = 0;
+    var NameModel = "";
     NotesInitalizeComponent();
     function NotesInitalizeComponent() {
         $("#layout_Refresh").removeClass('display_none');
@@ -17,6 +18,8 @@ $(document).ready(function () {
             $("#layout_Back").addClass('display_none');
             $("#layout_Refresh").attr('style', '');
         });
+        var ID = sessionStorage.getItem("AddUserID");
+        NameModel = "Notepad/Notepad_" + ID + "_";
         Tabs_click();
         Get_All_Notes();
         AddButtonApp_Tap();
@@ -37,7 +40,7 @@ $(document).ready(function () {
         debugger;
         Ajax.CallAsync({
             url: Url.Action("Get_All_Notes", "Profile"),
-            data: { Name_txt: "Notepad_" },
+            data: { Name_txt: NameModel },
             success: function (d) {
                 debugger;
                 var result = JSON.parse(d);
@@ -109,9 +112,9 @@ $(document).ready(function () {
     function Set_Notes(cnt) {
         var Data = new Send_Data();
         Data.ID = Number($('#ID' + cnt).val());
-        Data.Name_Txt_Master = "Notepad_" + cnt;
+        Data.Name_Txt_Master = NameModel + cnt;
         Data.Model = $("#tab_" + cnt + "_Remark").val();
-        Data.TypeDataSouce = "Notepad_" + cnt;
+        Data.TypeDataSouce = NameModel + cnt;
         debugger;
         $.ajax({
             url: Url.Action("Set_Data_Notes", "Profile"),

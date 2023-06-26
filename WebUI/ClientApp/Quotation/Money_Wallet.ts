@@ -13,12 +13,10 @@ $(document).ready(() => {
     var a_Resive: HTMLButtonElement;
     var a_View: HTMLButtonElement;
     var txtAmount: HTMLInputElement;
-    var txtSearch: HTMLInputElement;
-    var btnLogin: HTMLButtonElement;
+    var txtSearch: HTMLInputElement; 
     var txtDateFrom: HTMLInputElement;
     var txtDateTo: HTMLInputElement;
-
-    var txtPassword: HTMLInputElement;
+     
     var Glopl_Type = 'Exchange';
 
     var flagSave = 0;
@@ -50,131 +48,78 @@ $(document).ready(() => {
             $("#layout_Refresh").attr('style', '');
         });
 
+         
+         
 
-        $('#Pass').removeClass('display_none');
-        $('#Page_mone').addClass('display_none');
+      
 
-        $('#layout_Back').removeClass('display_none')
-        $('#layout_Refresh').removeClass('display_none')
+        let ID = sessionStorage.getItem("AddUserID");
 
-        btnLogin = document.getElementById("btnLogin") as HTMLButtonElement;
-        txtPassword = document.getElementById("txtPassword") as HTMLInputElement;
+        DataCatch_Receipt = "Wallet/Wallet_0" + ID;
 
-        btnLogin.onclick = btnLogin_onclick;
 
-        txtPassword.focus();
 
-        Event_key('Enter', 'txtPassword', 'btnLogin');
 
-        let pass = sessionStorage.getItem("EslamPassword");
-        if (pass != null) {
-            txtPassword.value = pass;
-            btnLogin_onclick();
+
+
+
+
+        $('#layout_Back').addClass('display_none')
+        $('#layout_Refresh').addClass('display_none')
+
+        $('#Pass').addClass('display_none');
+        $('#Page_mone').removeClass('display_none');
+
+        Tabs_click();
+        InitializeGrid();
+
+        txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
+        txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
+        txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
+        txtAmount = document.getElementById("txtAmount") as HTMLInputElement;
+        btnShow = document.getElementById("btnShow") as HTMLButtonElement;
+        btnExchange = document.getElementById("btnExchange") as HTMLButtonElement;
+        btnReceipt = document.getElementById("btnReceipt") as HTMLButtonElement;
+        a_Expans = document.getElementById("a_Expans") as HTMLButtonElement;
+        a_Resive = document.getElementById("a_Resive") as HTMLButtonElement;
+        a_View = document.getElementById("a_View") as HTMLButtonElement;
+
+        btnExchange.onclick = () => { AppTans(Glopl_Type) };
+        btnReceipt.onclick = () => { AppTans(Glopl_Type) };
+        a_Expans.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
+        a_Resive.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
+        a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
+
+        txtDateFrom.value = DateStartYear();
+        txtDateTo.value = GetDate();
+
+        txtSearch.onkeyup = txtSearch_change;
+        btnShow.onclick = DisplayAll;
+
+        DisplayAll();
+
+
+        $('.jsgrid-grid-body').scrollLeft(300);
+
+
+
+        var coll = document.getElementsByClassName("Balance");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active_Balance");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
         }
-        else {
-            $('#Pass').removeClass('display_none');
-            txtPassword.focus();
-        }
-
-
     }
 
-    function btnLogin_onclick() {
-        let Done = false;
-        if (txtPassword.value.trim() == "619606") {
-
-            DataCatch_Receipt = "Wallet_01";
-            Done = true
-
-        }
-        else if (txtPassword.value.trim() == "619619") {
-
-            DataCatch_Receipt = "Wallet_02";
-            Done = true
-
-        }
-        else if (txtPassword.value.trim() == "619") {
-
-            DataCatch_Receipt = "Wallet_03";
-            Done = true
-        }
-        else if (txtPassword.value.trim() == "123") {
-
-            DataCatch_Receipt = "Wallet_04";
-            Done = true
-        }
-        else if (txtPassword.value.trim() == "1") {
-
-            DataCatch_Receipt = "Wallet_05";
-            Done = true
-        }
-        else {
-            Errorinput(txtPassword);
-            Done = false
-        }
-
-
-        if (Done) {
-
-            $('#layout_Back').addClass('display_none')
-            $('#layout_Refresh').addClass('display_none')
-
-            $('#Pass').addClass('display_none');
-            $('#Page_mone').removeClass('display_none');
-
-            Tabs_click();
-            InitializeGrid();
-
-            txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
-            txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
-            txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
-            txtAmount = document.getElementById("txtAmount") as HTMLInputElement;
-            btnShow = document.getElementById("btnShow") as HTMLButtonElement;
-            btnExchange = document.getElementById("btnExchange") as HTMLButtonElement;
-            btnReceipt = document.getElementById("btnReceipt") as HTMLButtonElement;
-            a_Expans = document.getElementById("a_Expans") as HTMLButtonElement;
-            a_Resive = document.getElementById("a_Resive") as HTMLButtonElement;
-            a_View = document.getElementById("a_View") as HTMLButtonElement;
-             
-            btnExchange.onclick = () => { AppTans(Glopl_Type) };
-            btnReceipt.onclick = () => { AppTans(Glopl_Type) };
-            a_Expans.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
-            a_Resive.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
-            a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
-
-            txtDateFrom.value = DateStartYear();
-            txtDateTo.value = GetDate();
-
-            txtSearch.onkeyup = txtSearch_change;
-            btnShow.onclick = DisplayAll;
-
-            DisplayAll();
-
-            sessionStorage.setItem("EslamPassword", txtPassword.value);
-
-            $('.jsgrid-grid-body').scrollLeft(300);
-
-
-
-            var coll = document.getElementsByClassName("Balance");
-            var i;
-
-            for (i = 0; i < coll.length; i++) {
-                coll[i].addEventListener("click", function () {
-                    this.classList.toggle("active_Balance");
-                    var content = this.nextElementSibling;
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                    } else {
-                        content.style.maxHeight = content.scrollHeight + "px";
-                    }
-                });
-            }
-
-        }
-
-
-    }
+   
 
     function Tabs_click() {
 
@@ -599,7 +544,7 @@ $(document).ready(() => {
 
         $('#CashLab').html('Cash ( ' + (Number(CashAmountRec) - Number(CashAmountEx)) + ' ) $');
 
-        $('#Bal_HomeLab').html('Bal Home ( ' + (Number(Bal_HomeAmountRec) - Number(Bal_HomeAmountEx)) + ' ) $');
+        $('#Bal_HomeLab').html('Home ( ' + (Number(Bal_HomeAmountRec) - Number(Bal_HomeAmountEx)) + ' ) $');
 
         $('#CairoLab').html('Cairo ( ' + (Number(Cairo_BankAmountRec) - Number(Cairo_BankAmountEx)) + ' ) $');
 

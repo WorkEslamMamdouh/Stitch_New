@@ -6,7 +6,7 @@ $(document).ready(() => {
     var DetMaxLast = 0;
     var CountGrid = 0;
      
-
+    var NameModel = "";
     NotesInitalizeComponent();
 
     function NotesInitalizeComponent() {
@@ -31,6 +31,12 @@ $(document).ready(() => {
 
             $("#layout_Refresh").attr('style', '');
         });
+
+
+
+        let ID = sessionStorage.getItem("AddUserID");
+
+        NameModel = "Notepad/Notepad_" + ID+"_";
 
 
         Tabs_click(); 
@@ -63,7 +69,7 @@ $(document).ready(() => {
         debugger
         Ajax.CallAsync({
             url: Url.Action("Get_All_Notes", "Profile"),
-            data: { Name_txt: "Notepad_" },
+            data: { Name_txt: NameModel },
             success: (d) => {
                 debugger
                 let result = JSON.parse(d)
@@ -184,9 +190,9 @@ $(document).ready(() => {
         let Data = new Send_Data();
 
         Data.ID = Number($('#ID' + cnt).val());
-        Data.Name_Txt_Master = "Notepad_" + cnt;
+        Data.Name_Txt_Master = NameModel + cnt;
         Data.Model = $("#tab_" + cnt + "_Remark").val();
-        Data.TypeDataSouce = "Notepad_" + cnt; 
+        Data.TypeDataSouce = NameModel + cnt;
 
         debugger
         $.ajax({

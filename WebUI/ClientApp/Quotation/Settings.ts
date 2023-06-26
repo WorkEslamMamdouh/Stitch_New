@@ -18,8 +18,8 @@ $(document).ready(() => {
     var dbTypeH: HTMLSelectElement;
 
     var Flag_IsNew = false;  
+    var NameModel ="";
     SettingsInitalizeComponent();
-
     function SettingsInitalizeComponent() {
 
         
@@ -27,9 +27,10 @@ $(document).ready(() => {
         $("#layout_Refresh").removeClass('display_none');
         $("#layout_Back").removeClass('display_none');
 
-
-        $('#Pass').addClass('display_none');
+         
         $('#Page_Profile').removeClass('display_none');
+        debugger
+        NameModel = "Settings/Settings_Users";
 
         InitalizeControls();
         InitalizeEvents(); 
@@ -133,7 +134,7 @@ $(document).ready(() => {
 
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "Settings_Users" },
+            data: { Name_txt: NameModel },
             success: (d) => {
                 let result = JSON.parse(d)
 
@@ -265,7 +266,7 @@ $(document).ready(() => {
         let Data = new Send_Data();
 
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "Settings_Users"; 
+        Data.Name_Txt_Master = NameModel; 
         Data.Model = JSON.stringify(Model); 
         Data.TypeDataSouce = "Settings_Users";
         Data.StatusFlag = StatusFlag;

@@ -11,10 +11,8 @@ $(document).ready(function () {
     var a_View;
     var txtAmount;
     var txtSearch;
-    var btnLogin;
     var txtDateFrom;
     var txtDateTo;
-    var txtPassword;
     var Glopl_Type = 'Exchange';
     var flagSave = 0;
     var totalAmount = 0;
@@ -34,94 +32,48 @@ $(document).ready(function () {
             $("#layout_Back").addClass('display_none');
             $("#layout_Refresh").attr('style', '');
         });
-        $('#Pass').removeClass('display_none');
-        $('#Page_mone').addClass('display_none');
-        $('#layout_Back').removeClass('display_none');
-        $('#layout_Refresh').removeClass('display_none');
-        btnLogin = document.getElementById("btnLogin");
-        txtPassword = document.getElementById("txtPassword");
-        btnLogin.onclick = btnLogin_onclick;
-        txtPassword.focus();
-        Event_key('Enter', 'txtPassword', 'btnLogin');
-        var pass = sessionStorage.getItem("EslamPassword");
-        if (pass != null) {
-            txtPassword.value = pass;
-            btnLogin_onclick();
-        }
-        else {
-            $('#Pass').removeClass('display_none');
-            txtPassword.focus();
-        }
-    }
-    function btnLogin_onclick() {
-        var Done = false;
-        if (txtPassword.value.trim() == "619606") {
-            DataCatch_Receipt = "Wallet_01";
-            Done = true;
-        }
-        else if (txtPassword.value.trim() == "619619") {
-            DataCatch_Receipt = "Wallet_02";
-            Done = true;
-        }
-        else if (txtPassword.value.trim() == "619") {
-            DataCatch_Receipt = "Wallet_03";
-            Done = true;
-        }
-        else if (txtPassword.value.trim() == "123") {
-            DataCatch_Receipt = "Wallet_04";
-            Done = true;
-        }
-        else if (txtPassword.value.trim() == "1") {
-            DataCatch_Receipt = "Wallet_05";
-            Done = true;
-        }
-        else {
-            Errorinput(txtPassword);
-            Done = false;
-        }
-        if (Done) {
-            $('#layout_Back').addClass('display_none');
-            $('#layout_Refresh').addClass('display_none');
-            $('#Pass').addClass('display_none');
-            $('#Page_mone').removeClass('display_none');
-            Tabs_click();
-            InitializeGrid();
-            txtDateFrom = document.getElementById("txtDateFrom");
-            txtDateTo = document.getElementById("txtDateTo");
-            txtSearch = document.getElementById("txtSearch");
-            txtAmount = document.getElementById("txtAmount");
-            btnShow = document.getElementById("btnShow");
-            btnExchange = document.getElementById("btnExchange");
-            btnReceipt = document.getElementById("btnReceipt");
-            a_Expans = document.getElementById("a_Expans");
-            a_Resive = document.getElementById("a_Resive");
-            a_View = document.getElementById("a_View");
-            btnExchange.onclick = function () { AppTans(Glopl_Type); };
-            btnReceipt.onclick = function () { AppTans(Glopl_Type); };
-            a_Expans.onclick = function () { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
-            a_Resive.onclick = function () { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
-            a_View.onclick = function () { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
-            txtDateFrom.value = DateStartYear();
-            txtDateTo.value = GetDate();
-            txtSearch.onkeyup = txtSearch_change;
-            btnShow.onclick = DisplayAll;
-            DisplayAll();
-            sessionStorage.setItem("EslamPassword", txtPassword.value);
-            $('.jsgrid-grid-body').scrollLeft(300);
-            var coll = document.getElementsByClassName("Balance");
-            var i;
-            for (i = 0; i < coll.length; i++) {
-                coll[i].addEventListener("click", function () {
-                    this.classList.toggle("active_Balance");
-                    var content = this.nextElementSibling;
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                    }
-                    else {
-                        content.style.maxHeight = content.scrollHeight + "px";
-                    }
-                });
-            }
+        var ID = sessionStorage.getItem("AddUserID");
+        DataCatch_Receipt = "Wallet/Wallet_0" + ID;
+        $('#layout_Back').addClass('display_none');
+        $('#layout_Refresh').addClass('display_none');
+        $('#Pass').addClass('display_none');
+        $('#Page_mone').removeClass('display_none');
+        Tabs_click();
+        InitializeGrid();
+        txtDateFrom = document.getElementById("txtDateFrom");
+        txtDateTo = document.getElementById("txtDateTo");
+        txtSearch = document.getElementById("txtSearch");
+        txtAmount = document.getElementById("txtAmount");
+        btnShow = document.getElementById("btnShow");
+        btnExchange = document.getElementById("btnExchange");
+        btnReceipt = document.getElementById("btnReceipt");
+        a_Expans = document.getElementById("a_Expans");
+        a_Resive = document.getElementById("a_Resive");
+        a_View = document.getElementById("a_View");
+        btnExchange.onclick = function () { AppTans(Glopl_Type); };
+        btnReceipt.onclick = function () { AppTans(Glopl_Type); };
+        a_Expans.onclick = function () { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
+        a_Resive.onclick = function () { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
+        a_View.onclick = function () { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
+        txtDateFrom.value = DateStartYear();
+        txtDateTo.value = GetDate();
+        txtSearch.onkeyup = txtSearch_change;
+        btnShow.onclick = DisplayAll;
+        DisplayAll();
+        $('.jsgrid-grid-body').scrollLeft(300);
+        var coll = document.getElementsByClassName("Balance");
+        var i;
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active_Balance");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                }
+                else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
         }
     }
     function Tabs_click() {
@@ -440,7 +392,7 @@ $(document).ready(function () {
         $('#InDebtLab').html('InDebt ( ' + (Number(DebtAmountRec)) + ' ) $');
         $('#OutDebtLab').html('OutDebt ( ' + (Number(DebtAmountEx)) + ' ) $');
         $('#CashLab').html('Cash ( ' + (Number(CashAmountRec) - Number(CashAmountEx)) + ' ) $');
-        $('#Bal_HomeLab').html('Bal Home ( ' + (Number(Bal_HomeAmountRec) - Number(Bal_HomeAmountEx)) + ' ) $');
+        $('#Bal_HomeLab').html('Home ( ' + (Number(Bal_HomeAmountRec) - Number(Bal_HomeAmountEx)) + ' ) $');
         $('#CairoLab').html('Cairo ( ' + (Number(Cairo_BankAmountRec) - Number(Cairo_BankAmountEx)) + ' ) $');
         $('#Al_ahlyLab').html('Al_ahly ( ' + (Number(Al_ahly_BankAmountRec) - Number(Al_ahly_BankAmountEx)) + ' ) $');
         $('#AAIBLab').html('AAIB ( ' + (Number(AAIBAmountRec) - Number(AAIBAmountEx)) + ' ) $');

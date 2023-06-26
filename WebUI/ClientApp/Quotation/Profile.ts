@@ -41,6 +41,9 @@ $(document).ready(() => {
     let DetMaxLast = 0; 
     var GloplePath = "";
     var NameFile = "";
+    var NameModelMaster = "";
+    var NameModelDetails = "";
+
     ProfileInitalizeComponent();
 
     function ProfileInitalizeComponent() {
@@ -51,25 +54,29 @@ $(document).ready(() => {
         $("#layout_Back").removeClass('display_none');
 
 
-        btnLogin = document.getElementById("btnLogin") as HTMLButtonElement;
-        txtPassword = document.getElementById("txtPassword") as HTMLInputElement;
+         
+        $('#Page_Profile').removeClass('display_none');
 
-        btnLogin.onclick = btnLogin_onclick;
+        let ID = sessionStorage.getItem("AddUserID");
 
-        txtPassword.focus();
+        NameModelMaster = "Profile/Profile_Master_" + ID + "";
+        NameModelDetails = "Profile/Profile_Details_" + ID + "";
 
-        Event_key('Enter', 'txtPassword', 'btnLogin');
 
-        debugger
-        let pass = sessionStorage.getItem("EslamPasswordProfile");
-        if (pass != null) {
-            txtPassword.value = pass;
-            btnLogin_onclick();
-        }
-        else {
-            $('#Pass').removeClass('display_none');
-            txtPassword.focus();
-        }
+        InitalizeControls();
+        InitalizeEvents();
+        txtDateFrom.value = DateStartYear();
+        txtDateTo.value = GetDate();
+        InitializeGrid();
+        btnShow_onclick();
+        sessionStorage.setItem("EslamPasswordProfile", "619606");
+
+            //setTimeout(function () {
+
+            //    $("#Btn_fileUpload").val('Upload')
+            //    //GetPathFileUpload();
+            //}, 800);
+
 
     }
 
@@ -333,44 +340,12 @@ $(document).ready(() => {
             JGrid.Bind();
         }
 
-    }
-    function btnLogin_onclick() { 
-
-        if (txtPassword.value.trim() == "619606") {
-
-            $('#Pass').addClass('display_none');
-            $('#Page_Profile').removeClass('display_none');
-
-            InitalizeControls();
-            InitalizeEvents();
-            txtDateFrom.value = DateStartYear();
-            txtDateTo.value = GetDate();
-            InitializeGrid();
-            btnShow_onclick();
-            sessionStorage.setItem("EslamPasswordProfile", "619606");
-
-            //setTimeout(function () {
-
-            //    $("#Btn_fileUpload").val('Upload')
-            //    //GetPathFileUpload();
-            //}, 800);
-             
-        }
-        else {
-            Errorinput(txtPassword);
-            $('#Pass').removeClass('display_none');
-            txtPassword.focus();
-        }
-
-
-
-
-    }
+    } 
     function btnShow_onclick() {
 
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "Profile_Master" },
+            data: { Name_txt: NameModelMaster },
             success: (d) => {
                 let result = JSON.parse(d)
 
@@ -454,7 +429,7 @@ $(document).ready(() => {
         debugger
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: "Profile_Details" },
+            data: { Name_txt: NameModelDetails },
             success: (d) => {
                 let result = JSON.parse(d)
 
@@ -709,8 +684,8 @@ $(document).ready(() => {
         let Data = new Send_Data();
 
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "Profile_Master";
-        Data.Name_Txt_Detail = "Profile_Details";
+        Data.Name_Txt_Master = NameModelMaster;
+        Data.Name_Txt_Detail = NameModelDetails;
         Data.Model = JSON.stringify(Model);
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "DataAll";
@@ -751,8 +726,8 @@ $(document).ready(() => {
         debugger
 
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = "Profile_Master";
-        Data.Name_Txt_Detail = "Profile_Details";
+        Data.Name_Txt_Master = NameModelMaster;
+        Data.Name_Txt_Detail = NameModelDetails;
         Data.Model = JSON.stringify(Model);
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "DataAll";
@@ -821,8 +796,8 @@ $(document).ready(() => {
                 debugger
 
                 Data.ID = Number($('#txtTrNo').val());
-            Data.Name_Txt_Master = "Profile_Master";
-            Data.Name_Txt_Detail = "Profile_Details";
+            Data.Name_Txt_Master = NameModelMaster;
+            Data.Name_Txt_Detail = NameModelDetails;
                 Data.Model = JSON.stringify(Model);
                 Data.ModelDetails = JSON.stringify(ModelDetails);
                 Data.TypeDataSouce = "DataAll";

@@ -34,33 +34,7 @@ namespace AllPages {
 <body class="materialdesign sparkline8-graph col-xs-12  ">
  
 
-    <div id="Pass" class="display_none content-inner-all animate__animated animate__zoomIn">
-        <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <br />
-            </div>
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <h1>Password</h1>
-            </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-2 col-sm-12">
-                <input id="txtPassword" type="password" pattern="[0-9]*" inputmode="numeric" class="  form-control  " placeholder="Password" style="text-align: center;">
-
-            </div>
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-2 col-sm-12">
-                <button id="btnLogin" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info"> Login </button>
-            </div>
-
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <br />
-            </div>
-        </div>
-    </div>
+  
 
     <div id="Page_mone" class="responsive__tabs animate__animated animate__zoomIn display_none">
  
@@ -313,33 +287,7 @@ namespace AllPages {
 
 
 <body class="materialdesign">
-    <div id="Pass" class="display_none content-inner-all animate__animated animate__zoomIn">
-        <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <br />
-            </div>
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <h1>Password</h1>
-            </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-2 col-sm-12">
-                <input id="txtPassword" type="password" pattern="[0-9]*" inputmode="numeric" class="  form-control  " placeholder="Password" style="text-align: center;">
-
-            </div>
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-2 col-sm-12">
-                <button id="btnLogin" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info"> Login </button>
-            </div>
-
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <br />
-            </div>
-        </div>
-    </div>
+    
     <div id="Page_Profile" class="content-inner-all display_none animate__animated animate__zoomIn">
         <div id="id_div_Filter" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
@@ -787,39 +735,13 @@ namespace AllPages {
 
 
 <body class="materialdesign">
-    <div id="Pass" class="display_none content-inner-all animate__animated animate__zoomIn">
-        <div id=" " class="sparkline8-graph col-xs-12  " style="border-radius: 50px;">
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <br />
-            </div>
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <h1>Password</h1>
-            </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-2 col-sm-12">
-                <input id="txtPassword" type="password" pattern="[0-9]*" inputmode="numeric" class="  form-control  " placeholder="Password" style="text-align: center;">
-
-            </div>
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12">
-            </div>
-            <div class="col-xs-12 col-lg-2 col-sm-12">
-                <button id="btnLogin" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info"> Login </button>
-            </div>
-
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <br />
-            </div>
-        </div>
-    </div>
+    
     <div id="Page_Profile" class="content-inner-all display_none animate__animated animate__zoomIn">
         <div id="id_div_Filter" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
             <div class="col-xs-12 col-lg-12 col-sm-12">
 
-                <h1 class="col-xs-12 col-lg-12 col-sm-12">My Profile</h1>
+                <h1 class="col-xs-12 col-lg-12 col-sm-12">My Setting</h1>
             </div>
 
             <div class="col-xs-12 col-lg-1 col-sm-12 ">
@@ -983,38 +905,148 @@ namespace AllPages {
 
 
     var glopalBtn = "";
+    var btnLogin: HTMLButtonElement;
+
+    var txtPassword: HTMLInputElement;
+    var txtUser: HTMLInputElement;
+
+    var _Users: Array<Settings_Users>;
     export function InitalizeComponent() {
 
         debugger 
 
 
-        LodePageHome();
 
 
-        $("#layout_Refresh").attr('style', '');
+        btnLogin = document.getElementById("btnLogin") as HTMLButtonElement;
+        txtPassword = document.getElementById("txtPassword") as HTMLInputElement;
+        txtUser = document.getElementById("txtUser") as HTMLInputElement;
+
+        btnLogin.onclick = GetUsers;
+
+        txtPassword.focus();
+        txtUser.focus();
+
+        Event_key('Enter', 'txtUser', 'btnLogin');
+        Event_key('Enter', 'txtPassword', 'btnLogin');
+
+        debugger
+        let pass = sessionStorage.getItem("AddUserPass");
+        let Name = sessionStorage.getItem("AddUserName");
+        let ID = sessionStorage.getItem("AddUserID");
 
         $("#layout_Refresh").addClass('display_none');
         $("#layout_Back").addClass('display_none');
 
+        if (pass != null) {
+            txtPassword.value = pass;
+            txtUser.value = Name;
+            GetUsers();
+        }
+        else {
+            $('#Home_Pass').removeClass('display_none');
+            txtPassword.focus();
+            txtUser.focus();
+           
+        }
 
-        $("#layout_Refresh").on('click', function () {
-            var glopalBtn = localStorage.getItem('glopalBtn');
-            $("#" + glopalBtn + "").click();
-        });
+        //**************************************************************
 
-
-        $("#layout_Back").on('click', function () {
-            $('#Home_Page').removeClass('display_none');
-            $('#Body_Page').addClass('display_none');
-
-
-            $("#layout_Refresh").addClass('display_none');
-            $("#layout_Back").addClass('display_none');
-
-            $("#layout_Refresh").attr('style', '');
-        });
-
+     
     }
+    function GetUsers() {
+        Ajax.CallAsync({
+            url: Url.Action("Get_Data", "Profile"),
+            data: { Name_txt: "Settings/Settings_Users" },
+            success: (d) => {
+                debugger
+                let result = JSON.parse(d) 
+                  _Users = result as Array<Settings_Users>;
+
+                let User = _Users.filter(x => x.PassUesr == txtPassword.value.trim() && x.NameUesr == txtUser.value.trim() && x.Status == 1)
+
+                if (User.length > 0) {
+
+                    $('#Home_Pass').addClass('display_none');
+                    $('#Home_Page').removeClass('display_none');
+
+
+                    LodePageHome();
+
+
+                    $("#layout_Refresh").attr('style', '');
+
+                    $("#layout_Refresh").addClass('display_none');
+                    $("#layout_Back").addClass('display_none');
+
+
+                    $("#layout_Refresh").on('click', function () {
+                        var glopalBtn = localStorage.getItem('glopalBtn');
+                        $("#" + glopalBtn + "").click();
+                    });
+
+
+                    $("#layout_Back").on('click', function () {
+                        $('#Home_Page').removeClass('display_none');
+                        $('#Body_Page').addClass('display_none');
+
+
+                        $("#layout_Refresh").addClass('display_none');
+                        $("#layout_Back").addClass('display_none');
+
+                        $("#layout_Refresh").attr('style', '');
+                    });
+
+
+
+                    sessionStorage.setItem("AddUserPass", txtPassword.value.trim());
+                    sessionStorage.setItem("AddUserName", txtUser.value.trim());
+                    sessionStorage.setItem("AddUserID", User[0].ID.toString());
+
+
+                    if (User[0].Type == "Admin") {
+                        $("#_Profile").removeClass('display_none');
+                        $("#_Notes").removeClass('display_none');
+                        $("#_Server").removeClass('display_none');
+                        $("#_Work").removeClass('display_none');
+                        $("#_Wallet").removeClass('display_none');
+                        $("#_Settings").removeClass('display_none');
+
+                    }
+                    if (User[0].Type == "User All") {
+                        $("#_Profile").removeClass('display_none');
+                        $("#_Notes").removeClass('display_none');
+                        $("#_Server").removeClass('display_none');
+                        $("#_Work").removeClass('display_none');
+                        $("#_Wallet").removeClass('display_none');
+
+                    }
+                    if (User[0].Type == "Profile") {
+                        $("#_Profile").removeClass('display_none');
+                    }
+                    if (User[0].Type == "Wallet") {
+                        $("#_Wallet").removeClass('display_none');
+                    }
+                    if (User[0].Type == "Notes") {
+                        $("#_Notes").removeClass('display_none');
+                    }
+                    if (User[0].Type == "Work") {
+                        $("#_Work").removeClass('display_none');
+                    }
+
+                }
+                else {
+                    Errorinput(txtPassword);
+                    Errorinput(txtUser); 
+                    $('#Home_Pass').removeClass('display_none');
+                    txtPassword.focus();
+                }
+
+
+            }
+        })
+    }
+     
 
     function LodePageHome() {
 
