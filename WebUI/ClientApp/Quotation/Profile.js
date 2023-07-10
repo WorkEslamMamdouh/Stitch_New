@@ -12,11 +12,11 @@ $(document).ready(function () {
     var btnAdd;
     var btnSave;
     var btnUpdate;
+    var btnBack;
     var btnUpload;
     var btnBack_Up;
     var btnDownload_Up;
     var btnShare_Up;
-    var btnBack;
     var btnLogin;
     var btnAddDetails;
     //var btnPage_Get_Views: HTMLButtonElement;

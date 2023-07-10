@@ -1956,6 +1956,64 @@ class DataAll {
 
 }
 
+
+
+class Wallet_Definitions {
+    constructor() {
+        this.ID = 0; 
+        this.Serial = 0; 
+        this.Type = ''; 
+        this.Remars = '';
+        this.NameBal = '';
+        this.Amount = 0;
+        this.CUSTOM1 = '';
+        this.CUSTOM2 = '';
+        this.CUSTOM3 = '';
+        this.CUSTOM4 = '';
+    }
+    public ID: number;
+    public Serial: number; 
+    public Type: string; 
+    public Remars: string;
+    public NameBal: string;
+    public Amount: number;
+    public CUSTOM1: string;
+    public CUSTOM2: string;
+    public CUSTOM3: string;
+    public CUSTOM4: string;
+}
+
+
+
+class Wallet_Data {
+    constructor() {
+        this.ID = 0;
+        this.TrDate = "";
+        this.Type = '';
+        this.TypeTo = '';
+        this.Title = '';
+        this.Remars = '';
+        this.Amount = 0;
+        this.CUSTOM1 = '';
+        this.CUSTOM2 = '';
+        this.CUSTOM3 = '';
+        this.CUSTOM4 = '';
+    }
+    public ID: number;
+    public TrDate: string;
+    public Type: string;
+    public TypeTo: string;
+    public Title: string;
+    public Remars: string;
+    public Amount: number;
+    public CUSTOM1: string;
+    public CUSTOM2: string;
+    public CUSTOM3: string;
+    public CUSTOM4: string;
+}
+
+
+
 class Settings_Users {
     constructor() { 
         this.ID = 0; 

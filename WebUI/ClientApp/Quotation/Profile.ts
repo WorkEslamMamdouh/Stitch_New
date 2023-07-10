@@ -18,11 +18,11 @@ $(document).ready(() => {
     var btnAdd: HTMLButtonElement;
     var btnSave: HTMLButtonElement;
     var btnUpdate: HTMLButtonElement;
+    var btnBack: HTMLButtonElement;
     var btnUpload: HTMLButtonElement;
     var btnBack_Up: HTMLButtonElement;
     var btnDownload_Up: HTMLButtonElement;
     var btnShare_Up: HTMLButtonElement;
-    var btnBack: HTMLButtonElement;
     var btnLogin: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
     //var btnPage_Get_Views: HTMLButtonElement;

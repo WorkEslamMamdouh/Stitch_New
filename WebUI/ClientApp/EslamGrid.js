@@ -567,6 +567,7 @@ function BuildGridControl(flagDisplay, Grid) {
             Column_td.attr('style', '' + Grid.Column[u].style + '  !important;');
         }
         ;
+        //------------------------------------------------------------------------------------------
     };
     for (var u = 0; u < Grid.Column.length; u++) {
         _loop_1(u);

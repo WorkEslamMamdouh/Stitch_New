@@ -36,6 +36,39 @@ namespace Inv.WebUI.Controllers
             public decimal Amount { get; set; }
         }
 
+        public class Wallet_Data
+        {
+            public int ID { get; set; }
+            public string TrDate { get; set; }
+            public string Type { get; set; }
+            public string TypeTo { get; set; }
+            public string Title { get; set; }
+            public string Remars { get; set; }
+            public decimal Amount { get; set; }
+            public string CUSTOM1 { get; set; }
+            public string CUSTOM2 { get; set; }
+            public string CUSTOM3 { get; set; }
+            public string CUSTOM4 { get; set; }
+        }
+
+
+        public class Wallet_Definitions
+        {
+            public int ID { get; set; } 
+            public int Serial { get; set; } 
+            public string Type { get; set; }
+            public string Remars { get; set; } 
+            public string NameBal { get; set; }
+            public decimal Amount { get; set; }
+            public string CUSTOM1 { get; set; }
+            public string CUSTOM2 { get; set; }
+            public string CUSTOM3 { get; set; }
+            public string CUSTOM4 { get; set; }
+        }
+
+
+         
+
         public class Settings_Users
         {
             public int ID { get; set; }
@@ -303,6 +336,44 @@ namespace Inv.WebUI.Controllers
 
 
 
+        public ActionResult Update_Data_Wallet_Def(string Data)
+        {
+
+            var rp = JsonConvert.DeserializeObject<Send_Data>(Data);
+             
+
+            //******************************************Detail*************************
+
+            var jsonDataDetail = GetData(rp.Name_Txt_Detail);
+
+
+            List<Wallet_Definitions> NewDetail_List = new List<Wallet_Definitions>();
+        
+
+            if (rp.ModelDetails != "[]" && rp.StatusFlag != "d")
+            {
+                List<Wallet_Definitions> DetailsData_Obj = JsonConvert.DeserializeObject<List<Wallet_Definitions>>(rp.ModelDetails);
+
+                foreach (var item in DetailsData_Obj)
+                {
+                    NewDetail_List.Add(item);
+                }
+            }
+
+            var NewDetail_Data = JsonConvert.SerializeObject(NewDetail_List);
+
+            SetData(rp.Name_Txt_Detail, NewDetail_Data);
+
+
+            //******************************************Get_Detail*************************
+
+            var json = GetData(rp.Name_Txt_Detail);
+
+            return Json(json, JsonRequestBehavior.AllowGet);
+
+        }
+
+
 
         public ActionResult Add_Trans(string Data)
         {
@@ -314,10 +385,10 @@ namespace Inv.WebUI.Controllers
             var jsonData = GetData(rp.Name_Txt_Master);
 
 
-            List<DataAll> NewList = new List<DataAll>();
+            List<Wallet_Data> NewList = new List<Wallet_Data>();
             try
             {
-            List<DataAll> Data_List = JsonConvert.DeserializeObject<List<DataAll>>(jsonData);
+            List<Wallet_Data> Data_List = JsonConvert.DeserializeObject<List<Wallet_Data>>(jsonData);
                 NewList = Data_List.Where(x => x.ID != rp.ID).ToList();
 
             }
@@ -328,7 +399,7 @@ namespace Inv.WebUI.Controllers
 
             if (rp.StatusFlag != "d")
             {
-                DataAll Data_Obj = JsonConvert.DeserializeObject<DataAll>(rp.Model);
+                Wallet_Data Data_Obj = JsonConvert.DeserializeObject<Wallet_Data>(rp.Model);
 
                 NewList.Add(Data_Obj);
             }

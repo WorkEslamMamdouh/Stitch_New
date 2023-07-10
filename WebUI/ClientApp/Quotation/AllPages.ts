@@ -28,7 +28,6 @@ namespace AllPages {
 </body>
 `;
 
-
     var Html_Wallet = `
 
 <body class="materialdesign sparkline8-graph col-xs-12  ">
@@ -53,8 +52,20 @@ namespace AllPages {
                 <a id="a_Resive" class="nav-link" data-toggle="tab" href="#Tab_1"> ايرادات  </a>
             </li>
 
+            <li id="a_Transfers" class="nav-item Respon_width" data_remark="">
+                <a id="a_Transfers" class="nav-link" data-toggle="tab" href="#Tab_3"> تحويلات  </a>
+            </li>
+
+            <li id="a_Shahadat" class="nav-item Respon_width" data_remark="">
+                <a id="a_Shahadat" class="nav-link" data-toggle="tab" href="#Tab_4"> شهادات  </a>
+            </li>
+
             <li id="a_View" class="nav-item Respon_width" data_remark="tab_2_Remark">
                 <a id="a_View" class="nav-link" data-toggle="tab" href="#Tab_2">  الماليات</a>
+            </li>
+
+            <li id="a_Definitions" class="nav-item Respon_width" data_remark="">
+                <a id="a_Definitions" class="nav-link" data-toggle="tab" href="#Tab_4"> التعريفات  </a>
             </li>
 
             <li id="App_Ref" class="">
@@ -71,7 +82,7 @@ namespace AllPages {
         </ul>
  
         <button class="Balance">Show Balance $</button>
-        <div class="col-xs-12 col-lg-12 col-sm-12 content "  >
+        <div id="Div_Show_Balance" class="col-xs-12 col-lg-12 col-sm-12 content "  >
                  
                     <div class="col-xs-6 col-lg-6 col-sm-6 ">
                             <label id="CairoLab"> ( 0 )</label>
@@ -134,14 +145,25 @@ namespace AllPages {
             <div class="col-xs-6 col-lg-6 col-sm-6 ">
                 <select id="TypeSours" class="form-control ">
                     <option value="Cash">Cash</option>
-                    <option value="Debt">Debt</option>
+                    <option class="Not_Trans" value="Debt">Debt</option>
                     <option value="Bal Home">Bal Home</option>
                     <option value="Cairo Bank">Cairo Bank</option>
                     <option value="Al ahly Bank">Al-ahly Bank</option>
                     <option value="AAIB">AAIB</option>
                 </select>
             </div> 
-            <div class="col-xs-6 col-lg-6 col-sm-6 ">
+    
+            <div class="col-xs-6 col-lg-6 col-sm-6 ToTransfers">
+                <select id="TypeSoursTrans" class="form-control ">
+                    <option value="Cash">To Cash</option> 
+                    <option value="Bal Home">To Home</option>
+                    <option value="Cairo Bank">To Cairo Bank</option>
+                    <option value="Al ahly Bank">To Al-ahly Bank</option>
+                    <option value="AAIB">To AAIB</option>
+                </select>
+            </div> 
+
+            <div id="AreaAmount" class="col-xs-6 col-lg-6 col-sm-6 ">
                 <input id="txtAmount" type="tel" inputmode="numeric" name="Amount" placeholder="Amount" class="form-control " />
             </div>
 
@@ -153,6 +175,7 @@ namespace AllPages {
             <div class="col-xs-12 col-lg-12 col-sm-12 ">
                 <button id="btnExchange" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Exchange </button>
                 <button id="btnReceipt" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Receipt </button>
+                <button id="btnTransfers" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Transfers </button>
             </div>
 
         </div>
@@ -275,11 +298,83 @@ namespace AllPages {
 
         </div>
 
+        <div id="Definitions_Tab" class="tab-content display_none ">
+
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <button id="btnUpdate" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">     Update </button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="btnBack" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-warning">     Back </button>
+            </div>
+            <div class="col-xs-6 col-lg-6 col-sm-6">
+                <button id="btnSave" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Save </button>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br/>
+            </div>
+
+            <div class="bootstrap-table">
+                <div class="fixed-table-toolbar">
+                    <div class="bs-bars pull-left">
+                    </div>
+                </div>
+                <div class="fixed-table-container" style="padding-bottom: 0px;">
+                    <div class="fixed-table-header" style="display: none;">
+                        <table></table>
+                    </div>
+                    <div class="fixed-table-body" style="height: 460px; overflow: scroll;">
+                        <div class="fixed-table-loading" style="top: 41px;">Loading, please wait...</div>
+                        <table id="table_Grad1" data-toggle="table" data-page-number="2" data-page-size="5" data-pagination="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="false" data-click-to-select="true" data-toolbar="#toolbar" class="table table-hover">
+                            <thead id="thead_Grad1">
+                                <tr>
+                                    <th class=" Text_right Delet" style="width: 0.1% !important;" data-field="number" tabindex="0"><div class="th-inner ">  </div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Serial</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Decs" style="width: 5% !important;" data-field="number" tabindex="0"><div class="th-inner ">Name Ball</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right  " style="" data-field="number" tabindex="0"><div class="th-inner ">Opening Balance</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Rem" style="width: 10%  !important;" data-field="number" tabindex="0"><div class="th-inner ">Remark</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Receipt</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Exchange</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Sum Total</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Active</div><div class="fht-cell"></div></th>
+                                 
+
+                                </tr>
+                            </thead>
+                            <tbody id="div_Data_Def"></tbody>
+                        </table>
+                        <div class="d-flex justify-content-start mr-1">
+                            <button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="fixed-table-footer" style="display: none;">
+                        <table><tbody><tr></tr></tbody></table>
+                    </div><div class="fixed-table-pagination" style="display: none;"><div class="pull-left pagination-detail"><span class="pagination-info">Showing 6 to 0 of 0 rows</span><span class="page-list" style="display: none;"><span class="btn-group dropup"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="page-size">5</span> <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li role="menuitem"><a href="#">10</a></li></ul></span> rows per page</span></div><div class="pull-right pagination" style="display: none;"><ul class="pagination"><li class="page-pre"><a href="#">‹</a></li><li class="page-next"><a href="#">›</a></li></ul></div></div>
+
+                </div>
+            </div>
+
+
+          
+
+       </div>
+
+
+
+
+
+       <div id="Shahadat_Tab" class="tab-content display_none ">
+
+
+       </div>   
+
+
+
     </div>
 
 
 </body>
 `;
+
 
 
     var Html_Profile = `

@@ -1,27 +1,41 @@
 ﻿
 $(document).ready(() => {
 
-    var AllDisplay: Array<DataAll> = new Array<DataAll>();
-    var Display: Array<DataAll> = new Array<DataAll>();
-    var Model: DataAll = new DataAll();
+    var Wallet_Def: Array<Wallet_Definitions> = new Array<Wallet_Definitions>();
+    var ModelDetails: Array<Wallet_Definitions> = new Array<Wallet_Definitions>();
+    var AllDisplay: Array<Wallet_Data> = new Array<Wallet_Data>();
+    var Display: Array<Wallet_Data> = new Array<Wallet_Data>();
+    var Model: Wallet_Data = new Wallet_Data();
     var JGrid: JsGrid = new JsGrid();
 
-    var btnShow: HTMLButtonElement;
     var btnExchange: HTMLButtonElement;
     var btnReceipt: HTMLButtonElement;
+    var btnTransfers: HTMLButtonElement;
     var a_Expans: HTMLButtonElement;
     var a_Resive: HTMLButtonElement;
+    var a_Transfers: HTMLButtonElement;
     var a_View: HTMLButtonElement;
+    var a_Definitions: HTMLButtonElement;
+    var a_Shahadat: HTMLButtonElement;
     var txtAmount: HTMLInputElement;
-    var txtSearch: HTMLInputElement; 
+    var txtSearch: HTMLInputElement;
     var txtDateFrom: HTMLInputElement;
     var txtDateTo: HTMLInputElement;
-     
+
+    var btnShow: HTMLButtonElement;
+    var btnSave: HTMLButtonElement;
+    var btnUpdate: HTMLButtonElement;
+    var btnBack: HTMLButtonElement;
+    var btnAddDetails: HTMLButtonElement;
+
     var Glopl_Type = 'Exchange';
 
     var flagSave = 0;
     var totalAmount = 0;
-    var DataCatch_Receipt = "";
+    var CountGrid = 0;
+    var DetMaxLast = 0;
+    var Comp_Wallet = "";
+    var Comp_Definitions = "";
 
     WalletInitalizeComponent();
 
@@ -30,6 +44,7 @@ $(document).ready(() => {
     function WalletInitalizeComponent() {
 
         debugger
+
 
 
         $("#App_Ref").on('click', function () {
@@ -48,14 +63,15 @@ $(document).ready(() => {
             $("#layout_Refresh").attr('style', '');
         });
 
-         
-         
 
-      
+
+
+
 
         let ID = sessionStorage.getItem("AddUserID");
 
-        DataCatch_Receipt = "Wallet/Wallet_0" + ID;
+        Comp_Wallet = "Wallet/Wallet_0" + ID;
+        Comp_Definitions = "Wallet/Def_Wallet_0" + ID;
 
 
 
@@ -78,23 +94,43 @@ $(document).ready(() => {
         txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
         txtAmount = document.getElementById("txtAmount") as HTMLInputElement;
         btnShow = document.getElementById("btnShow") as HTMLButtonElement;
+        btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
+        btnSave = document.getElementById("btnSave") as HTMLButtonElement;
+        btnUpdate = document.getElementById("btnUpdate") as HTMLButtonElement;
+        btnBack = document.getElementById("btnBack") as HTMLButtonElement;
         btnExchange = document.getElementById("btnExchange") as HTMLButtonElement;
         btnReceipt = document.getElementById("btnReceipt") as HTMLButtonElement;
+        btnTransfers = document.getElementById("btnTransfers") as HTMLButtonElement;
         a_Expans = document.getElementById("a_Expans") as HTMLButtonElement;
         a_Resive = document.getElementById("a_Resive") as HTMLButtonElement;
+        a_Transfers = document.getElementById("a_Transfers") as HTMLButtonElement;
         a_View = document.getElementById("a_View") as HTMLButtonElement;
+        a_Definitions = document.getElementById("a_Definitions") as HTMLButtonElement;
+        a_Shahadat = document.getElementById("a_Shahadat") as HTMLButtonElement;
 
         btnExchange.onclick = () => { AppTans(Glopl_Type) };
         btnReceipt.onclick = () => { AppTans(Glopl_Type) };
-        a_Expans.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
-        a_Resive.onclick = () => { $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
-        a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); };
+        btnTransfers.onclick = () => { AppTans(Glopl_Type) };
+        a_Expans.onclick = () => { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
+        a_Resive.onclick = () => { $('.Hid_Ex').removeClass('display_none'); $('.Hid_Rec').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
+        a_Transfers.onclick = () => { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Transfers'; };
+        a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
+        a_Definitions.onclick = () => { $('#Definitions_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
+        a_Shahadat.onclick = () => { $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); };
 
         txtDateFrom.value = DateStartYear();
         txtDateTo.value = GetDate();
 
         txtSearch.onkeyup = txtSearch_change;
         btnShow.onclick = DisplayAll;
+        btnSave.onclick = btnSave_onClick;
+        btnUpdate.onclick = btnUpdate_onclick;
+        btnBack.onclick = btnBack_onclick;
+        btnAddDetails.onclick = AddNewRow;
+
+        GetDefinitions();
+
+
 
         DisplayAll();
 
@@ -117,9 +153,14 @@ $(document).ready(() => {
                 }
             });
         }
+
+
+
+
     }
 
-   
+
+
 
     function Tabs_click() {
 
@@ -143,7 +184,7 @@ $(document).ready(() => {
         });
     }
     function InitializeGrid() {
-        
+
         JGrid.ElementName = "JGrid";
         JGrid.OnRowDoubleClicked = GridDoubleClick;
         JGrid.PrimaryKey = "ID";
@@ -164,32 +205,35 @@ $(document).ready(() => {
             { title: "Remars", name: "Remars", type: "text", width: "300px" },
             {
                 title: "Amount", css: "ColumPadding", name: "Amount", width: "120px",
-                itemTemplate: (s: string, item: DataAll): HTMLLabelElement => {
+                itemTemplate: (s: string, item: Wallet_Data): HTMLLabelElement => {
                     let txt: HTMLLabelElement = document.createElement("label");
 
-                    txt.innerHTML = "( " + item.Amount.toString()+" ) $";
+                    txt.innerHTML = "( " + item.Amount.toString() + " ) $";
                     if (item.Title == "Exchange") {
                         if (item.Type == "Debt") {
-                            txt.style.color = "#ea8813"; 
+                            txt.style.color = "#ea8813";
                         }
                         else {
-                            txt.style.color = "Red"; 
+                            txt.style.color = "Red";
                         }
                     }
-                    else {
+                    else if (item.Title == "Receipt") {
                         if (item.Type == "Debt") {
-                            txt.style.color = "#a11dda"; 
+                            txt.style.color = "#a11dda";
                         }
                         else {
                             txt.style.color = "#00b020";
                         }
+                    }
+                    else if (item.Title == "Transfers") {
+                        txt.style.color = "rgb(91 192 222)";
                     }
                     return txt;
                 }
             },
             {
                 title: "Delete",
-                itemTemplate: (s: string, item: DataAll): HTMLInputElement => {
+                itemTemplate: (s: string, item: Wallet_Data): HTMLInputElement => {
                     let txt: HTMLInputElement = document.createElement("input");
                     txt.type = "button";
                     txt.value = ("Delete");
@@ -210,7 +254,35 @@ $(document).ready(() => {
         ];
         //JGrid.Bind();
     }
+    function fillddTypeSours() {
 
+        $('#TypeSoursF').html('<option value="All">All</option>')
+        $('#TypeSours').html("")
+        $('#TypeSoursTrans').html("")
+        for (var u = 0; u < Wallet_Def.length; u++) {
+            $('#TypeSoursF').append('<option value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].NameBal + '</option>');
+
+            let Nameclass = '';
+
+            $('.Hid_Rec').removeClass('display_none')
+            $('.Hid_Ex').removeClass('display_none')
+
+            if (Wallet_Def[u].CUSTOM1 != "true") {
+                Nameclass = ' Hid_Rec';
+            }
+
+            if (Wallet_Def[u].CUSTOM2 != "true") {
+                Nameclass = Nameclass + ' Hid_Ex';
+            }
+
+            if (Wallet_Def[u].CUSTOM4 == "true") {
+                $('#TypeSours').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].NameBal + '</option>');
+                $('#TypeSoursTrans').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">To ' + Wallet_Def[u].NameBal + '</option>');
+            }
+
+        }
+
+    }
     function GridDoubleClick() {
 
         debugger
@@ -219,14 +291,20 @@ $(document).ready(() => {
         $('#txtdate').val(DateFormat(JGrid.SelectedItem.TrDate));
         $('#txtTrNo').val(JGrid.SelectedItem.ID);
         $('#TypeSours').val(JGrid.SelectedItem.Type);
+        $('#TypeSoursTrans').val(JGrid.SelectedItem.TypeTo);
         $('#txtRemark').val(JGrid.SelectedItem.Remars);
 
         if (JGrid.SelectedItem.Title == "Exchange") {
             $('#a_Expans').click();
         }
-        else {
+        else if (JGrid.SelectedItem.Title == "Receipt") {
             $('#a_Resive').click();
         }
+        else if (JGrid.SelectedItem.Title == "Transfers") {
+            $('#a_Resive').click();
+            $('#a_Transfers').click();
+        }
+
 
         setTimeout(function () {
             FlagUpdate = false;
@@ -258,17 +336,17 @@ $(document).ready(() => {
 
         Ajax.CallAsync({
             url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: DataCatch_Receipt },
+            data: { Name_txt: Comp_Wallet },
             success: (Pro) => {
                 if (Pro != "Error") {
                     let result = JSON.parse(Pro)
 
-                    let res = result as Array<DataAll>;
+                    let res = result as Array<Wallet_Data>;
 
                     Display_Grid(res)
                 }
                 else {
-                    let res: Array<DataAll>;
+                    let res: Array<Wallet_Data>;
 
                     JGrid.DataSource = res;
                     JGrid.Bind();
@@ -282,7 +360,7 @@ $(document).ready(() => {
 
     }
 
-    function Display_Grid(_Display: Array<DataAll>) {
+    function Display_Grid(_Display: Array<Wallet_Data>) {
         debugger
         totalAmount = 0;
         AllDisplay = _Display;
@@ -336,17 +414,23 @@ $(document).ready(() => {
 
         if ($('#txtRemark').val().trim() == '') {
             Errorinput($('#txtRemark'))
-            //alert('برجاء ادخال الملاخظات')
+            return false
+        }
+
+
+        if ($('#TypeSours').val() == $('#TypeSoursTrans').val() && Type == 'Transfers') {
+            Errorinput($('#TypeSoursTrans'))
             return false
         }
 
         if ($('#txtAmount').val().trim() == '') {
             Errorinput($('#txtAmount'))
-            //alert('برجاء ادخال المبلغ')
             return false
         }
 
-        Model = new DataAll();
+
+
+        Model = new Wallet_Data();
 
         let Val = txtAmount.value;
 
@@ -355,6 +439,7 @@ $(document).ready(() => {
         DocumentActions.AssignToModel(Model);//Insert Update 
         Model.TrDate = DateFormatRep($('#txtdate').val())
         Model.Type = $('#TypeSours').val();
+        Model.TypeTo = $('#TypeSoursTrans').val();
         Model.Title = Type;
         Model.Amount = eval(Val);
         Model.ID = Number($('#txtTrNo').val());
@@ -363,7 +448,7 @@ $(document).ready(() => {
         let Data = new Send_Data();
 
         Data.ID = Number($('#txtTrNo').val());
-        Data.Name_Txt_Master = DataCatch_Receipt;
+        Data.Name_Txt_Master = Comp_Wallet;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'u';
 
@@ -377,11 +462,13 @@ $(document).ready(() => {
             success: (d) => {
                 let result = JSON.parse(d)
 
-                let res = result as Array<DataAll>;
+                let res = result as Array<Wallet_Data>;
                 Display_Grid(res)
                 Clean();
 
                 flagSave = 1;
+
+
 
             }
         })
@@ -393,7 +480,7 @@ $(document).ready(() => {
 
 
 
-        Model = new DataAll();
+        Model = new Wallet_Data();
 
 
         Model.ID = ID;
@@ -401,7 +488,7 @@ $(document).ready(() => {
         let Data = new Send_Data();
 
         Data.ID = ID;
-        Data.Name_Txt_Master = DataCatch_Receipt;
+        Data.Name_Txt_Master = Comp_Wallet;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'd';
 
@@ -415,7 +502,7 @@ $(document).ready(() => {
             success: (d) => {
                 let result = JSON.parse(d)
 
-                let res = result as Array<DataAll>;
+                let res = result as Array<Wallet_Data>;
                 Display_Grid(res)
                 Clean();
 
@@ -429,7 +516,8 @@ $(document).ready(() => {
     function Clean() {
 
         if (!FlagUpdate) {
-            $('#TypeSours').val('Cash');
+            $('#TypeSours').prop('selectedIndex', 0)
+            $('#TypeSoursTrans').prop('selectedIndex', 0)
             $('#txtRemark').val('');
             $('#txtdate').val(GetDate());
             $('#txtAmount').val('');
@@ -439,22 +527,29 @@ $(document).ready(() => {
 
         $('#btnReceipt').addClass('display_none');
         $('#btnExchange').addClass('display_none');
+        $('#btnTransfers').addClass('display_none');
+        $('.Not_Trans').removeClass('display_none');
+        $('.ToTransfers').addClass('display_none');
+        $('#AreaAmount').attr('class', 'col-xs-6 col-lg-6 col-sm-6');
 
         if (Glopl_Type == 'Exchange') {
             $('#btnExchange').removeClass('display_none');
             Event_key('Enter', 'txtAmount', 'btnExchange');
         }
-        else {
+        else if (Glopl_Type == 'Receipt') {
             $('#btnReceipt').removeClass('display_none');
             Event_key('Enter', 'txtAmount', 'btnReceipt');
         }
+        else if (Glopl_Type == 'Transfers') {
+            $('#btnTransfers').removeClass('display_none');
+            Event_key('Enter', 'txtAmount', 'btnTransfers');
 
-        AllBalance()
-    }
+            $('.Not_Trans').addClass('display_none');
+            $('.ToTransfers').removeClass('display_none');
+            $('#AreaAmount').attr('class', 'col-xs-12 col-lg-12 col-sm-12');
+        }
 
-    function AllBalance() {
 
-        debugger
         if (!FlagUpdate) {
             let MaxID = 0;
             if (AllDisplay.length > 0) {
@@ -466,6 +561,17 @@ $(document).ready(() => {
         else {
             $('#txtTrNo').attr('style', 'text-align: center;background: #009563;color: white;')
         }
+
+        //AllBalance(); 
+        Sum_AllBalance();
+    }
+
+    //*************************************************Display_AllBalance****************************************
+
+    function AllBalance() {
+
+        debugger
+
         //******************************************* Exchange********************************
         let DebtAmountEx = 0; //مديونيه
         let CashAmountEx = 0;
@@ -473,13 +579,15 @@ $(document).ready(() => {
         let Al_ahly_BankAmountEx = 0;
         let Bal_HomeAmountEx = 0;
         let AAIBAmountEx = 0;
-
-        let CashEx = AllDisplay.filter(x => x.Type == 'Cash' && x.Title == 'Exchange');
-        let Cairo_BankEx = AllDisplay.filter(x => x.Type == 'Cairo Bank' && x.Title == 'Exchange');
-        let Al_ahly_BankEx = AllDisplay.filter(x => x.Type == 'Al ahly Bank' && x.Title == 'Exchange');
+        debugger
+        let CashEx = AllDisplay.filter(x => x.Type == 'Cash' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
+        let Cairo_BankEx = AllDisplay.filter(x => x.Type == 'Cairo Bank' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
+        let Al_ahly_BankEx = AllDisplay.filter(x => x.Type == 'Al ahly Bank' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
         let DebtEx = AllDisplay.filter(x => x.Type == 'Debt' && x.Title == 'Exchange');
-        let Bal_HomeEx = AllDisplay.filter(x => x.Type == 'Bal Home' && x.Title == 'Exchange');
-        let AAIBEx = AllDisplay.filter(x => x.Type == 'AAIB' && x.Title == 'Exchange');
+        let Bal_HomeEx = AllDisplay.filter(x => x.Type == 'Bal Home' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
+        debugger
+        let AAIBEx = AllDisplay.filter(x => x.Type == 'AAIB' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
+
 
         for (var i = 0; i < DebtEx.length; i++) {
             DebtAmountEx = DebtAmountEx + DebtEx[i].Amount
@@ -515,12 +623,14 @@ $(document).ready(() => {
         let Bal_HomeAmountRec = 0; // رصيد البيت
         let AAIBAmountRec = 0; //بنك العربي الافريقي
 
-        let CashRec = AllDisplay.filter(x => x.Type == 'Cash' && x.Title == 'Receipt');
-        let Cairo_BankRec = AllDisplay.filter(x => x.Type == 'Cairo Bank' && x.Title == 'Receipt');
-        let Al_ahly_BankRec = AllDisplay.filter(x => x.Type == 'Al ahly Bank' && x.Title == 'Receipt');
+        debugger
+        let CashRec = AllDisplay.filter(x => x.Type == 'Cash' && x.Title == 'Receipt' || (x.TypeTo == 'Cash' && x.Title == 'Transfers'));
+        let Cairo_BankRec = AllDisplay.filter(x => x.Type == 'Cairo Bank' && x.Title == 'Receipt' || (x.TypeTo == 'Cairo Bank' && x.Title == 'Transfers'));
+        let Al_ahly_BankRec = AllDisplay.filter(x => x.Type == 'Al ahly Bank' && x.Title == 'Receipt' || (x.TypeTo == 'Al ahly Bank' && x.Title == 'Transfers'));
         let DebtRec = AllDisplay.filter(x => x.Type == 'Debt' && x.Title == 'Receipt');
-        let Bal_HomeRec = AllDisplay.filter(x => x.Type == 'Bal Home' && x.Title == 'Receipt');
-        let AAIBRec = AllDisplay.filter(x => x.Type == 'AAIB' && x.Title == 'Receipt');
+        let Bal_HomeRec = AllDisplay.filter(x => x.Type == 'Bal Home' && x.Title == 'Receipt' || (x.TypeTo == 'Bal Home' && x.Title == 'Transfers'));
+        debugger
+        let AAIBRec = AllDisplay.filter(x => x.Type == 'AAIB' && x.Title == 'Receipt' || (x.TypeTo == 'AAIB' && x.Title == 'Transfers'));
 
         for (var i = 0; i < DebtRec.length; i++) {
             DebtAmountRec = DebtAmountRec + DebtRec[i].Amount
@@ -547,6 +657,7 @@ $(document).ready(() => {
         }
 
         //****************************************Total***********************************************
+        debugger
         $('#InDebtLab').html('InDebt ( ' + (Number(DebtAmountRec)) + ' ) $');
 
         $('#OutDebtLab').html('OutDebt ( ' + (Number(DebtAmountEx)) + ' ) $');
@@ -570,7 +681,354 @@ $(document).ready(() => {
 
     }
 
+    function Sum_AllBalance() {
 
+        $('#Div_Show_Balance').html('')
+        debugger
+        let AllTotal = 0;
+        let Wallet_Def_IsActive = Wallet_Def.filter(x => x.CUSTOM4 == "true");
+        for (var xx = 0; xx < Wallet_Def_IsActive.length; xx++) {
+            debugger
+
+            //**********************************************Build**********************************
+            let idBal = Wallet_Def_IsActive[xx].NameBal
+            idBal = idBal.replace(/ /g, "_");
+            let html_Balance = ` 
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="${idBal}"> ( 0 )</label>
+                    </div>`;
+
+            $('#Div_Show_Balance').append(html_Balance)
+
+            //******************************************* Sum Exchange********************************
+            let EXAmount = 0;
+            let Exchange = AllDisplay.filter(x => x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
+
+            if (Wallet_Def_IsActive[xx].CUSTOM2 == "true") {
+                for (var i1 = 0; i1 < Exchange.length; i1++) {
+                    EXAmount = EXAmount + Exchange[i1].Amount
+                }
+            }
+
+
+            //**************************************************** Receipt**************************************
+
+            let RecAmount = 0;
+            let Receipt = AllDisplay.filter(x => x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Receipt' || (x.TypeTo == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Transfers'));
+
+            if (Wallet_Def_IsActive[xx].CUSTOM1 == "true") {
+                for (var i2 = 0; i2 < Receipt.length; i2++) {
+                    RecAmount = RecAmount + Receipt[i2].Amount
+                }
+            }
+            RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
+            //****************************************Total***********************************************
+            $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].NameBal + ' ( ' + (Number(RecAmount) - Number(EXAmount)) + ' ) $');
+
+            if (Wallet_Def_IsActive[xx].CUSTOM3 == "true") {
+                AllTotal = AllTotal + (Number(RecAmount) - Number(EXAmount));
+            }
+
+        }
+        //****************************************AllTotal***********************************************
+        let html_Balance = ` 
+                    <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <label id="BalanceLab"> ( 0 )</label>
+                    </div>`;
+
+        $('#Div_Show_Balance').append(html_Balance)
+        $('#BalanceLab').html('All Bal ( ' + (Number(AllTotal.toFixed(2))) + ' ) $');
+    }
+
+    //*************************************************Def****************************************
+
+
+
+    function GetDefinitions() {
+        debugger
+        Ajax.CallAsync({
+            url: Url.Action("Get_Data", "Profile"),
+            data: { Name_txt: Comp_Definitions },
+            success: (Pro) => {
+                debugger
+                if (Pro != "Error") {
+                    let result = JSON.parse(Pro)
+                    debugger
+                    Wallet_Def = result as Array<Wallet_Definitions>;
+                    Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
+
+                    DetMaxLast = Wallet_Def[0].ID + 1;
+
+                    Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
+
+                    DisplayDetails();
+
+                    fillddTypeSours();
+                }
+
+            }
+        })
+
+
+    }
+
+    function BuildControls(cnt: number) {
+
+        var html = "";
+        html = `<tr id= "No_Row${cnt}" class=""> 
+                    <td>
+		                <div class="form-group">
+			               <button id="btn_minus${cnt}" type="button" class="_Cont display_none btn btn-custon-four btn-danger" style="font-weight: bold;font-size: 22PX;width: 34px;padding: unset;"><i class="fa fa-minus-circle" ></i></button>
+		                </div>
+	                </td> 
+                    <td>
+		                <div class="form-group">
+                            <input id="txtSerial${cnt}" type="text" disabled class=" _dis form-control" name=""  />
+		                </div>
+	                </td>
+                    <td>
+		                <div class="form-group">
+                            <input id="txtNameBal${cnt}" type="text" disabled class="wid _copy _dis form-control condisa" name=""   />
+		                </div>
+	                </td>
+                    <td>
+		                <div class="form-group">
+                            <input id="txtAmount${cnt}" type="number" disabled class="  _copy _dis form-control condisa" name=""   />
+		                </div>
+	                </td>
+                    <td>
+		                <div class="form-group"> 
+                            <textarea id="txtRemars${cnt}" type="text"  disabled class="wid _copy _dis form-control " style="height: 43px;" ></textarea>
+		                </div>
+	                </td>
+                    <td>
+		                <div class="form-group">
+                            <input id="CH_Sum_Receipt${cnt}" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                </div>
+	                </td>
+                    <td>
+		                <div class="form-group">
+                            <input id="CH_Sum_Exchange${cnt}" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                </div>
+	                </td> 
+                    <td>
+		                <div class="form-group">
+                            <input id="CH_Sum_AllTotal${cnt}" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                </div>
+	                </td>
+                     <td>
+		                <div class="form-group">
+                            <input id="CH_Active${cnt}" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                </div>
+	                </td>
+                    
+                    
+                    
+               <input id="txt_StatusFlag${cnt}" type="hidden"   />
+               <input id="ID${cnt}" type="hidden"   />
+               <input id="MasterID${cnt}" type="hidden"   />
+                </tr>`;
+        $("#div_Data_Def").append(html);
+
+
+        $("#btn_minus" + cnt).on('click', function () {
+            DeleteRow(cnt);
+        });
+
+
+
+    }
+    function DisplayDetailsControls(cnt: number, DataDet: Wallet_Definitions) {
+
+        $("#ID" + cnt).val(DataDet.ID);
+        $("#txtSerial" + cnt).val(DataDet.Serial);
+        $("#txtNameBal" + cnt).val(DataDet.NameBal);
+        $("#txtRemars" + cnt).val(DataDet.Remars);
+        $("#txtAmount" + cnt).val(DataDet.Amount);
+
+        $("#CH_Sum_Receipt" + cnt).prop('checked', DataDet.CUSTOM1 == "false" ? false : true);
+        $("#CH_Sum_Exchange" + cnt).prop('checked', DataDet.CUSTOM2 == "false" ? false : true);
+        $("#CH_Sum_AllTotal" + cnt).prop('checked', DataDet.CUSTOM3 == "false" ? false : true);
+        $("#CH_Active" + cnt).prop('checked', DataDet.CUSTOM4 == "false" ? false : true);
+        $("#txt_StatusFlag" + cnt).val('');
+
+
+
+    }
+    function DisplayDetails() {
+
+        CountGrid = 0;
+        $("#div_Data_Def").html('');
+        for (var i = 0; i < Wallet_Def.length; i++) {
+            debugger
+            BuildControls(i);
+            DisplayDetailsControls(i, Wallet_Def[i])
+            CountGrid++;
+        }
+
+        disabled();
+
+    }
+    function AddNewRow() {
+
+        BuildControls(CountGrid);
+        $("#txt_StatusFlag" + CountGrid).val("i"); //In Insert mode 
+        CountGrid++;
+        Insert_Serial();
+        $(".btn-minus").removeClass("display_none");
+        $('._dis').removeAttr('disabled')
+        $('._Cont').removeClass('display_none')
+
+
+        $("#ID" + CountGrid).val(DetMaxLast)
+        DetMaxLast++;
+    }
+    function DeleteRow(RecNo: number) {
+        var statusFlag = $("#txt_StatusFlag" + RecNo).val();
+        if (statusFlag == "i")
+            $("#txt_StatusFlag" + RecNo).val("m");
+        else
+            $("#txt_StatusFlag" + RecNo).val("d");
+
+        $("#No_Row" + RecNo).attr("hidden", "true");
+
+        Insert_Serial();
+
+    }
+    function Insert_Serial() {
+
+        let Chack_Flag = false;
+        let flagval = "";
+        let Ser = 1;
+        for (let i = 0; i < CountGrid; i++) {
+            flagval = $("#txt_StatusFlag" + i).val();
+            if (flagval != "d" && flagval != "m") {
+                $("#txtSerial" + i).val(Ser);
+                Ser++;
+            }
+            if (flagval == 'd' || flagval == 'm' || flagval == 'i') {
+                Chack_Flag = true
+            }
+            if (Chack_Flag) {
+                if ($("#txt_StatusFlag" + i).val() != 'i' && $("#txt_StatusFlag" + i).val() != 'm' && $("#txt_StatusFlag" + i).val() != 'd') {
+                    $("#txt_StatusFlag" + i).val('u');
+                }
+            }
+        }
+
+    }
+
+
+    function btnSave_onClick() {
+
+        setTimeout(function () {
+
+            //if (!Validation()) {
+            //    return;
+            //}
+
+            Assign();
+            Update('u');
+
+        }, 100);
+    }
+
+    function btnBack_onclick() {
+
+        DisplayDetails();
+    }
+    function btnUpdate_onclick() {
+
+        Enabled();
+
+    }
+
+
+    function Assign() {
+        debugger
+
+        ModelDetails = new Array<Wallet_Definitions>();
+
+
+        for (var i = 0; i < CountGrid; i++) {
+            let SingModelDetails = new Wallet_Definitions();
+
+            if ($("#txt_StatusFlag" + i).val() == '' || $("#txt_StatusFlag" + i).val() == 'i' || $("#txt_StatusFlag" + i).val() == 'u') {
+
+                SingModelDetails.ID = Number($("#ID" + i).val());
+                SingModelDetails.Serial = Number($("#txtSerial" + i).val());
+                SingModelDetails.NameBal = $("#txtNameBal" + i).val().trim();
+                SingModelDetails.Amount = Number($("#txtAmount" + i).val());
+                SingModelDetails.Remars = $("#txtRemars" + i).val();
+
+                SingModelDetails.CUSTOM1 = "" + ($("#CH_Sum_Receipt" + i).prop('checked')) + "";
+                SingModelDetails.CUSTOM2 = "" + ($("#CH_Sum_Exchange" + i).prop('checked')) + "";
+                SingModelDetails.CUSTOM3 = "" + ($("#CH_Sum_AllTotal" + i).prop('checked')) + "";
+                SingModelDetails.CUSTOM4 = "" + ($("#CH_Active" + i).prop('checked')) + "";
+
+                ModelDetails.push(SingModelDetails);
+            }
+
+        }
+
+    }
+
+    function Update(StatusFlag: string) {
+
+        let Data = new Send_Data();
+
+
+
+        Data.Name_Txt_Detail = Comp_Definitions;
+        console.log(ModelDetails);
+        Data.ModelDetails = JSON.stringify(ModelDetails);
+        Data.TypeDataSouce = "Wallet_Definitions";
+        Data.StatusFlag = StatusFlag;
+
+        debugger
+        $.ajax({
+            url: Url.Action("Update_Data_Wallet_Def", "Profile"),
+            type: "POST",
+            dataType: 'json',
+            async: false,
+            data: { Data: JSON.stringify(Data) },
+            success: (d) => {
+                let result = JSON.parse(d)
+
+                Wallet_Def = result as Array<Wallet_Definitions>;
+
+                Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
+
+                DetMaxLast = Wallet_Def[0].ID + 1;
+
+                Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
+
+                DisplayDetails();
+
+                Clean();
+
+                fillddTypeSours();
+            }
+        })
+    }
+
+
+    function Enabled() {
+        $('._dis').removeAttr('disabled')
+        $('._Cont').removeClass('display_none')
+        $('#btnBack').removeClass('display_none')
+        $('#btnSave').removeClass('display_none')
+        $('#btnUpdate').addClass('display_none')
+
+    }
+    function disabled() {
+        $('._dis').attr('disabled', 'disabled')
+        $('._Cont').addClass('display_none')
+        $('#btnBack').addClass('display_none')
+        $('#btnSave').addClass('display_none')
+        $('#btnUpdate').removeClass('display_none')
+
+    }
 
 })
 
