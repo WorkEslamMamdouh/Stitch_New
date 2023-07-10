@@ -240,7 +240,14 @@ $(document).ready(() => {
                     txt.type = "button";
                     txt.value = ("Delete");
                     txt.id = "butDelete" + item.ID;
-                    txt.className = "btn btn-custon-four btn-danger ";
+                    if (item.ID == -1) {
+                        txt.className = " display_none btn btn-custon-four btn-danger ";
+
+                    }
+                    else {
+                        txt.className = "btn btn-custon-four btn-danger ";
+
+                    }
 
                     txt.onclick = (e) => {
                         Delete(item.ID);
@@ -370,6 +377,24 @@ $(document).ready(() => {
 
         Display = _Display;
 
+        debugger
+        for (var d = 0; d < Wallet_Def.length; d++) {
+            debugger 
+            if (Wallet_Def[d].Amount > 0) {
+
+            let DisOpen_ball: Wallet_Data = new Wallet_Data();
+            DisOpen_ball.ID = -1;
+            DisOpen_ball.Amount = Wallet_Def[d].Amount
+            DisOpen_ball.Type = Wallet_Def[d].NameBal
+            DisOpen_ball.Title = "Receipt"
+            DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
+                DisOpen_ball.TrDate = "2023-01-01";
+                Display.push(DisOpen_ball)
+            }
+
+        }
+        debugger
+
         if ($('#TypeSoursF').val() != "All") {
             Display = Display.filter(x => x.Type == $('#TypeSoursF').val());
         }
@@ -379,6 +404,8 @@ $(document).ready(() => {
         Display = Display.filter(x => x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value);
 
         Display = Display.sort(dynamicSortNew("ID"));
+
+        $("#JGrid").jsGrid("option", "pageIndex", 1);
         JGrid.DataSource = Display;
         JGrid.Bind();
 
@@ -1014,6 +1041,7 @@ $(document).ready(() => {
 
     function btnBack_onclick() {
 
+        DisplayHedDef(Wal_HedDef)
         DisplayDetails();
     }
     function btnUpdate_onclick() {
