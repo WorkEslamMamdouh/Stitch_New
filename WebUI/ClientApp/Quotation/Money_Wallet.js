@@ -568,16 +568,21 @@ $(document).ready(function () {
                     var result = JSON.parse(Pro);
                     debugger;
                     var _Def = result;
-                    var Data_hed = JSON.parse(_Def.Wallet_HedDef);
-                    Wal_HedDef = Data_hed;
-                    DisplayHedDef(Wal_HedDef);
-                    var Detal = JSON.parse(_Def.Wallet_Definitions);
-                    Wallet_Def = Detal;
-                    Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
-                    DetMaxLast = Wallet_Def[0].ID + 1;
-                    Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
-                    DisplayDetails();
-                    fillddTypeSours();
+                    if (_Def.Wallet_HedDef != "Error") {
+                        var Data_hed = JSON.parse(_Def.Wallet_HedDef);
+                        Wal_HedDef = Data_hed;
+                        DisplayHedDef(Wal_HedDef);
+                    }
+                    if (_Def.Wallet_Definitions != "Error") {
+                        var Detal = JSON.parse(_Def.Wallet_Definitions);
+                        Wallet_Def = Detal;
+                        Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
+                        DetMaxLast = Wallet_Def[0].ID + 1;
+                        Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
+                        DisplayDetails();
+                        fillddTypeSours();
+                    }
+                    disabled();
                     Set_Roll_HedDef();
                 }
             }

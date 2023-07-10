@@ -159,7 +159,7 @@ $(document).ready(() => {
         }
 
 
-        
+
 
     }
 
@@ -379,15 +379,15 @@ $(document).ready(() => {
 
         debugger
         for (var d = 0; d < Wallet_Def.length; d++) {
-            debugger 
+            debugger
             if (Wallet_Def[d].Amount > 0) {
 
-            let DisOpen_ball: Wallet_Data = new Wallet_Data();
-            DisOpen_ball.ID = -1;
-            DisOpen_ball.Amount = Wallet_Def[d].Amount
-            DisOpen_ball.Type = Wallet_Def[d].NameBal
-            DisOpen_ball.Title = "Receipt"
-            DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
+                let DisOpen_ball: Wallet_Data = new Wallet_Data();
+                DisOpen_ball.ID = -1;
+                DisOpen_ball.Amount = Wallet_Def[d].Amount
+                DisOpen_ball.Type = Wallet_Def[d].NameBal
+                DisOpen_ball.Title = "Receipt"
+                DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
                 DisOpen_ball.TrDate = "2023-01-01";
                 Display.push(DisOpen_ball)
             }
@@ -785,25 +785,31 @@ $(document).ready(() => {
                     debugger
                     let _Def = result as All_Definitions;
 
-                    let Data_hed = JSON.parse(_Def.Wallet_HedDef)
-                    Wal_HedDef = Data_hed as Wallet_HedDef;
+                    if (_Def.Wallet_HedDef != "Error") {
 
-                    DisplayHedDef(Wal_HedDef)
+                        let Data_hed = JSON.parse(_Def.Wallet_HedDef)
+                        Wal_HedDef = Data_hed as Wallet_HedDef;
 
-                    let Detal = JSON.parse(_Def.Wallet_Definitions)
+                        DisplayHedDef(Wal_HedDef)
+                    }
 
-                    Wallet_Def = Detal as Array<Wallet_Definitions>;
-                    Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
+                    if (_Def.Wallet_Definitions != "Error") {
+                        let Detal = JSON.parse(_Def.Wallet_Definitions)
 
-                    DetMaxLast = Wallet_Def[0].ID + 1;
+                        Wallet_Def = Detal as Array<Wallet_Definitions>;
+                        Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
 
-                    Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
+                        DetMaxLast = Wallet_Def[0].ID + 1;
 
-                    DisplayDetails();
+                        Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
 
-                    fillddTypeSours();
+                        DisplayDetails();
 
-                    Set_Roll_HedDef();
+                        fillddTypeSours();
+
+                    }
+                    disabled();
+                        Set_Roll_HedDef();
                 }
 
             }
