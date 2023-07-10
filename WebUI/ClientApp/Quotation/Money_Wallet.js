@@ -1,9 +1,11 @@
 $(document).ready(function () {
+    var Wal_HedDef = new Wallet_HedDef();
     var Wallet_Def = new Array();
     var ModelDetails = new Array();
     var AllDisplay = new Array();
     var Display = new Array();
     var Model = new Wallet_Data();
+    var Model_Wal_HedDef = new Wallet_HedDef();
     var JGrid = new JsGrid();
     var btnExchange;
     var btnReceipt;
@@ -30,6 +32,7 @@ $(document).ready(function () {
     var DetMaxLast = 0;
     var Comp_Wallet = "";
     var Comp_Definitions = "";
+    var Comp_HedDef = "";
     WalletInitalizeComponent();
     var FlagUpdate = false;
     function WalletInitalizeComponent() {
@@ -48,6 +51,7 @@ $(document).ready(function () {
         var ID = sessionStorage.getItem("AddUserID");
         Comp_Wallet = "Wallet/Wallet_0" + ID;
         Comp_Definitions = "Wallet/Def_Wallet_0" + ID;
+        Comp_HedDef = "Wallet/Def_Wallet_Hed_0" + ID;
         $('#layout_Back').addClass('display_none');
         $('#layout_Refresh').addClass('display_none');
         $('#Pass').addClass('display_none');
@@ -535,22 +539,81 @@ $(document).ready(function () {
     function GetDefinitions() {
         debugger;
         Ajax.CallAsync({
-            url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: Comp_Definitions },
+            url: Url.Action("Get_Two_Data", "Profile"),
+            data: { Name_txt1: Comp_HedDef, Name_txt2: Comp_Definitions },
             success: function (Pro) {
                 debugger;
                 if (Pro != "Error") {
                     var result = JSON.parse(Pro);
                     debugger;
-                    Wallet_Def = result;
+                    var _Def = result;
+                    var Data_hed = JSON.parse(_Def.Wallet_HedDef);
+                    Wal_HedDef = Data_hed;
+                    DisplayHedDef(Wal_HedDef);
+                    var Detal = JSON.parse(_Def.Wallet_Definitions);
+                    Wallet_Def = Detal;
                     Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
                     DetMaxLast = Wallet_Def[0].ID + 1;
                     Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
                     DisplayDetails();
                     fillddTypeSours();
+                    Set_Roll_HedDef();
                 }
             }
         });
+    }
+    function Set_Roll_HedDef() {
+        debugger;
+        $('.Hed').addClass('display_none');
+        if (Wal_HedDef.CUSTOM1 == "true") {
+            $('#a_Resive').removeClass('display_none');
+        }
+        if (Wal_HedDef.CUSTOM2 == "true") {
+            $('#a_Expans').removeClass('display_none');
+        }
+        if (Wal_HedDef.CUSTOM3 == "true") {
+            $('#a_Transfers').removeClass('display_none');
+        }
+        if (Wal_HedDef.CUSTOM4 == "true") {
+            $('#a_Shahadat').removeClass('display_none');
+        }
+        if (Wal_HedDef.CUSTOM5 == "true") {
+            $('#a_View').removeClass('display_none');
+        }
+        DisplayOneTap();
+    }
+    function DisplayOneTap() {
+        debugger;
+        if ($('#a_Expans').is(':visible')) {
+            $('#a_Expans').click();
+            return;
+        }
+        else if ($('#a_Resive').is(':visible')) {
+            $('#a_Resive').click();
+            return;
+        }
+        else if ($('#a_Transfers').is(':visible')) {
+            $('#a_Transfers').click();
+            return;
+        }
+        else if ($('#a_Shahadat').is(':visible')) {
+            $('#a_Shahadat').click();
+            return;
+        }
+        else if ($('#a_View').is(':visible')) {
+            $('#a_View').click();
+            return;
+        }
+        else {
+            $('#a_Definitions').click();
+        }
+    }
+    function DisplayHedDef(Data) {
+        $("#CH_Hed_Receipt").prop('checked', Data.CUSTOM1 == "false" ? false : true);
+        $("#CH_Hed_Exchange").prop('checked', Data.CUSTOM2 == "false" ? false : true);
+        $("#CH_Hed_Transfers").prop('checked', Data.CUSTOM3 == "false" ? false : true);
+        $("#CH_Hed_Shahadat").prop('checked', Data.CUSTOM4 == "false" ? false : true);
+        $("#CH_Hed_Report").prop('checked', Data.CUSTOM5 == "false" ? false : true);
     }
     function BuildControls(cnt) {
         var html = "";
@@ -641,6 +704,12 @@ $(document).ready(function () {
     function Assign() {
         debugger;
         ModelDetails = new Array();
+        Model_Wal_HedDef = new Wallet_HedDef();
+        Model_Wal_HedDef.CUSTOM1 = "" + ($("#CH_Hed_Receipt").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM2 = "" + ($("#CH_Hed_Exchange").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM3 = "" + ($("#CH_Hed_Transfers").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM4 = "" + ($("#CH_Hed_Shahadat").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM5 = "" + ($("#CH_Hed_Report").prop('checked')) + "";
         for (var i = 0; i < CountGrid; i++) {
             var SingModelDetails = new Wallet_Definitions();
             if ($("#txt_StatusFlag" + i).val() == '' || $("#txt_StatusFlag" + i).val() == 'i' || $("#txt_StatusFlag" + i).val() == 'u') {
@@ -659,8 +728,10 @@ $(document).ready(function () {
     }
     function Update(StatusFlag) {
         var Data = new Send_Data();
+        Data.Name_Txt_Master = Comp_HedDef;
         Data.Name_Txt_Detail = Comp_Definitions;
         console.log(ModelDetails);
+        Data.Model = JSON.stringify(Model_Wal_HedDef);
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "Wallet_Definitions";
         Data.StatusFlag = StatusFlag;
@@ -677,9 +748,11 @@ $(document).ready(function () {
                 Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
                 DetMaxLast = Wallet_Def[0].ID + 1;
                 Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
+                Wal_HedDef = Model_Wal_HedDef;
                 DisplayDetails();
                 Clean();
                 fillddTypeSours();
+                Set_Roll_HedDef();
             }
         });
     }

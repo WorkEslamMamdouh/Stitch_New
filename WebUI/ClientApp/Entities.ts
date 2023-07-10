@@ -111,8 +111,7 @@ class SlsInvoiceMasterDetails extends SecurityClass {
     }
     public Sls_Ivoice: Sls_Ivoice;
     public Sls_InvoiceDetail: Array<Sls_InvoiceDetail>;
-
-
+     
 }
 class Customcustomer extends SecurityClass {
     constructor() {
@@ -1934,6 +1933,7 @@ class ModelSql  {
     public sqlEnt: SqlEnt;
     public Model: Array<any>;
 }
+ 
 
 
 
@@ -1981,6 +1981,31 @@ class Wallet_Definitions {
     public CUSTOM2: string;
     public CUSTOM3: string;
     public CUSTOM4: string;
+}
+
+class Wallet_HedDef {
+    constructor() {
+ 
+        this.CUSTOM1 = '';
+        this.CUSTOM2 = '';
+        this.CUSTOM3 = '';
+        this.CUSTOM4 = '';
+        this.CUSTOM5 = '';
+        this.CUSTOM6 = '';
+        this.CUSTOM7 = '';
+        this.CUSTOM8 = '';
+        this.CUSTOM9 = '';
+    }
+ 
+    public CUSTOM1: string;
+    public CUSTOM2: string;
+    public CUSTOM3: string;
+    public CUSTOM4: string;
+    public CUSTOM5: string;
+    public CUSTOM6: string;
+    public CUSTOM7: string;
+    public CUSTOM8: string;
+    public CUSTOM9: string;
 }
 
 
@@ -2071,7 +2096,16 @@ class DataNotes {
     public Ex_Field: string;  
 }
 
+class All_Definitions {
+    constructor() { 
+        this.Wallet_HedDef = '';
+        this.Wallet_Definitions = '';
+    } 
+    public Wallet_HedDef: string;
+    public Wallet_Definitions: string;
+}
 
+ 
 
 class Send_Data {
     constructor() { 

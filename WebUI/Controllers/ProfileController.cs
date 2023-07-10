@@ -65,7 +65,19 @@ namespace Inv.WebUI.Controllers
             public string CUSTOM3 { get; set; }
             public string CUSTOM4 { get; set; }
         }
-
+        
+        public class Wallet_HedDef
+        { 
+            public string CUSTOM1 { get; set; }
+            public string CUSTOM2 { get; set; }
+            public string CUSTOM3 { get; set; }
+            public string CUSTOM4 { get; set; }
+            public string CUSTOM5 { get; set; }
+            public string CUSTOM6 { get; set; }
+            public string CUSTOM7 { get; set; }
+            public string CUSTOM8 { get; set; }
+            public string CUSTOM9 { get; set; }
+        }
 
          
 
@@ -101,7 +113,14 @@ namespace Inv.WebUI.Controllers
             public string Remark { get; set; }
             public string Ex_Field { get; set; }
         }
+        
+        public class All_Definitions
+        { 
+            public string Wallet_HedDef { get; set; }
+            public string Wallet_Definitions { get; set; }
+        }
 
+ 
 
         public class Send_Data
         {
@@ -194,6 +213,24 @@ namespace Inv.WebUI.Controllers
             var jsonData = GetData(Name_txt);
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult Get_Two_Data(string Name_txt1 , string Name_txt2)
+        {
+
+
+            var jsonData1 = GetData(Name_txt1);
+            var jsonData2 = GetData(Name_txt2);
+
+            All_Definitions Data = new All_Definitions();
+
+            Data.Wallet_HedDef = jsonData1;
+            Data.Wallet_Definitions = jsonData2;
+
+            var All_jsonData = JsonConvert.SerializeObject(Data);
+
+            return Json(All_jsonData, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -340,7 +377,16 @@ namespace Inv.WebUI.Controllers
         {
 
             var rp = JsonConvert.DeserializeObject<Send_Data>(Data);
-             
+
+            //******************************************Master*************************
+              
+            Wallet_HedDef Data_Obj = JsonConvert.DeserializeObject<Wallet_HedDef>(rp.Model); 
+
+            var New_Data = JsonConvert.SerializeObject(Data_Obj);
+
+            SetData(rp.Name_Txt_Master, New_Data);
+
+
 
             //******************************************Detail*************************
 

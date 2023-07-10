@@ -1,11 +1,13 @@
 ﻿
 $(document).ready(() => {
 
+    var Wal_HedDef: Wallet_HedDef = new Wallet_HedDef();
     var Wallet_Def: Array<Wallet_Definitions> = new Array<Wallet_Definitions>();
     var ModelDetails: Array<Wallet_Definitions> = new Array<Wallet_Definitions>();
     var AllDisplay: Array<Wallet_Data> = new Array<Wallet_Data>();
     var Display: Array<Wallet_Data> = new Array<Wallet_Data>();
     var Model: Wallet_Data = new Wallet_Data();
+    var Model_Wal_HedDef: Wallet_HedDef = new Wallet_HedDef();
     var JGrid: JsGrid = new JsGrid();
 
     var btnExchange: HTMLButtonElement;
@@ -36,6 +38,7 @@ $(document).ready(() => {
     var DetMaxLast = 0;
     var Comp_Wallet = "";
     var Comp_Definitions = "";
+    var Comp_HedDef = "";
 
     WalletInitalizeComponent();
 
@@ -72,6 +75,7 @@ $(document).ready(() => {
 
         Comp_Wallet = "Wallet/Wallet_0" + ID;
         Comp_Definitions = "Wallet/Def_Wallet_0" + ID;
+        Comp_HedDef = "Wallet/Def_Wallet_Hed_0" + ID;
 
 
 
@@ -155,11 +159,9 @@ $(document).ready(() => {
         }
 
 
-
+        
 
     }
-
-
 
 
     function Tabs_click() {
@@ -747,14 +749,23 @@ $(document).ready(() => {
     function GetDefinitions() {
         debugger
         Ajax.CallAsync({
-            url: Url.Action("Get_Data", "Profile"),
-            data: { Name_txt: Comp_Definitions },
+            url: Url.Action("Get_Two_Data", "Profile"),
+            data: { Name_txt1: Comp_HedDef, Name_txt2: Comp_Definitions },
             success: (Pro) => {
                 debugger
                 if (Pro != "Error") {
                     let result = JSON.parse(Pro)
                     debugger
-                    Wallet_Def = result as Array<Wallet_Definitions>;
+                    let _Def = result as All_Definitions;
+
+                    let Data_hed = JSON.parse(_Def.Wallet_HedDef)
+                    Wal_HedDef = Data_hed as Wallet_HedDef;
+
+                    DisplayHedDef(Wal_HedDef)
+
+                    let Detal = JSON.parse(_Def.Wallet_Definitions)
+
+                    Wallet_Def = Detal as Array<Wallet_Definitions>;
                     Wallet_Def = Wallet_Def.sort(dynamicSortNew("ID"));
 
                     DetMaxLast = Wallet_Def[0].ID + 1;
@@ -764,10 +775,78 @@ $(document).ready(() => {
                     DisplayDetails();
 
                     fillddTypeSours();
+
+                    Set_Roll_HedDef();
                 }
 
             }
         })
+
+
+    }
+
+    function Set_Roll_HedDef() {
+
+        debugger
+
+        $('.Hed').addClass('display_none')
+        if (Wal_HedDef.CUSTOM1 == "true") {
+            $('#a_Resive').removeClass('display_none')
+        }
+        if (Wal_HedDef.CUSTOM2 == "true") {
+            $('#a_Expans').removeClass('display_none')
+        }
+        if (Wal_HedDef.CUSTOM3 == "true") {
+            $('#a_Transfers').removeClass('display_none')
+        }
+        if (Wal_HedDef.CUSTOM4 == "true") {
+            $('#a_Shahadat').removeClass('display_none')
+        }
+        if (Wal_HedDef.CUSTOM5 == "true") {
+            $('#a_View').removeClass('display_none')
+        }
+
+        DisplayOneTap();
+    }
+
+
+    function DisplayOneTap() {
+
+        debugger
+        if ($('#a_Expans').is(':visible')) {
+            $('#a_Expans').click();
+            return
+        }
+        else if ($('#a_Resive').is(':visible')) {
+            $('#a_Resive').click();
+            return
+        }
+        else if ($('#a_Transfers').is(':visible')) {
+            $('#a_Transfers').click();
+            return
+        }
+        else if ($('#a_Shahadat').is(':visible')) {
+            $('#a_Shahadat').click();
+            return
+        }
+        else if ($('#a_View').is(':visible')) {
+            $('#a_View').click();
+            return
+        }
+        else {
+            $('#a_Definitions').click();
+        }
+    }
+
+
+    function DisplayHedDef(Data: Wallet_HedDef) {
+
+
+        $("#CH_Hed_Receipt").prop('checked', Data.CUSTOM1 == "false" ? false : true);
+        $("#CH_Hed_Exchange").prop('checked', Data.CUSTOM2 == "false" ? false : true);
+        $("#CH_Hed_Transfers").prop('checked', Data.CUSTOM3 == "false" ? false : true);
+        $("#CH_Hed_Shahadat").prop('checked', Data.CUSTOM4 == "false" ? false : true);
+        $("#CH_Hed_Report").prop('checked', Data.CUSTOM5 == "false" ? false : true);
 
 
     }
@@ -948,7 +1027,13 @@ $(document).ready(() => {
         debugger
 
         ModelDetails = new Array<Wallet_Definitions>();
+        Model_Wal_HedDef = new Wallet_HedDef();
 
+        Model_Wal_HedDef.CUSTOM1 = "" + ($("#CH_Hed_Receipt").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM2 = "" + ($("#CH_Hed_Exchange").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM3 = "" + ($("#CH_Hed_Transfers").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM4 = "" + ($("#CH_Hed_Shahadat").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM5 = "" + ($("#CH_Hed_Report").prop('checked')) + "";
 
         for (var i = 0; i < CountGrid; i++) {
             let SingModelDetails = new Wallet_Definitions();
@@ -978,9 +1063,10 @@ $(document).ready(() => {
         let Data = new Send_Data();
 
 
-
+        Data.Name_Txt_Master = Comp_HedDef;
         Data.Name_Txt_Detail = Comp_Definitions;
         console.log(ModelDetails);
+        Data.Model = JSON.stringify(Model_Wal_HedDef);
         Data.ModelDetails = JSON.stringify(ModelDetails);
         Data.TypeDataSouce = "Wallet_Definitions";
         Data.StatusFlag = StatusFlag;
@@ -1003,11 +1089,15 @@ $(document).ready(() => {
 
                 Wallet_Def = Wallet_Def.sort(dynamicSort("Serial"));
 
+                Wal_HedDef = Model_Wal_HedDef;
+
                 DisplayDetails();
 
                 Clean();
 
                 fillddTypeSours();
+
+                Set_Roll_HedDef();
             }
         })
     }

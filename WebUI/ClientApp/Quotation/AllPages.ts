@@ -44,23 +44,23 @@ namespace AllPages {
                 </a>
             </li>
 
-            <li id="a_Expans" class="nav-item actTab active Respon_width" data_remark="tab_0_Remark">
+            <li id="a_Expans" class="Hed display_none nav-item actTab active Respon_width" data_remark="tab_0_Remark">
                 <a id="a_Expans" class="nav-link" data-toggle="tab" href="#Tab_0" aria-expanded="true">مصروفات  </a>
             </li>
 
-            <li id="a_Resive" class="nav-item Respon_width" data_remark="tab_1_Remark">
+            <li id="a_Resive" class="Hed display_none nav-item Respon_width" data_remark="tab_1_Remark">
                 <a id="a_Resive" class="nav-link" data-toggle="tab" href="#Tab_1"> ايرادات  </a>
             </li>
 
-            <li id="a_Transfers" class="nav-item Respon_width" data_remark="">
+            <li id="a_Transfers" class="Hed display_none nav-item Respon_width" data_remark="">
                 <a id="a_Transfers" class="nav-link" data-toggle="tab" href="#Tab_3"> تحويلات  </a>
             </li>
 
-            <li id="a_Shahadat" class="nav-item Respon_width" data_remark="">
+            <li id="a_Shahadat" class="Hed display_none nav-item Respon_width" data_remark="">
                 <a id="a_Shahadat" class="nav-link" data-toggle="tab" href="#Tab_4"> شهادات  </a>
             </li>
 
-            <li id="a_View" class="nav-item Respon_width" data_remark="tab_2_Remark">
+            <li id="a_View" class="Hed display_none nav-item Respon_width" data_remark="tab_2_Remark">
                 <a id="a_View" class="nav-link" data-toggle="tab" href="#Tab_2">  الماليات</a>
             </li>
 
@@ -310,6 +310,68 @@ namespace AllPages {
                 <button id="btnSave" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Save </button>
             </div>
             <div class="col-xs-12 col-lg-12 col-sm-12">
+                <br/>
+            </div>
+
+ <div class="bootstrap-table">
+                <div class="fixed-table-toolbar">
+                    <div class="bs-bars pull-left">
+                    </div>
+                </div>
+                <div class="fixed-table-container" style="padding-bottom: 0px;">
+                    <div class="fixed-table-header" style="display: none;">
+                        <table></table>
+                    </div>
+                    <div class="fixed-table-body" style=" ">
+                        <div class="fixed-table-loading" style="top: 41px;">Loading, please wait...</div>
+                        <table id="table_Grad21" data-toggle="table" data-page-number="2" data-page-size="5" data-pagination="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="false" data-click-to-select="true" data-toolbar="#toolbar" class="table table-hover">
+                            <thead id="thead_Grad21">
+                                <tr> 
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Receipt</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Exchange</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Transfers</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Shahadat</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Report Money</div><div class="fht-cell"></div></th>
+ 
+                                </tr>
+                            </thead>
+                            <tbody id="">
+                                     <td>
+		                                <div class="form-group">
+                                            <input id="CH_Hed_Receipt" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                                </div>
+	                                </td>
+                                     <td>
+		                                <div class="form-group">
+                                            <input id="CH_Hed_Exchange" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                                </div>
+	                                </td>
+                                     <td>
+		                                <div class="form-group">
+                                            <input id="CH_Hed_Transfers" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                                </div>
+	                                </td>
+                                     <td>
+		                                <div class="form-group">
+                                            <input id="CH_Hed_Shahadat" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                                </div>
+	                                </td>
+                                     <td>
+		                                <div class="form-group">
+                                            <input id="CH_Hed_Report" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                                </div>
+	                                </td>
+                            </tbody>
+                        </table> 
+                    </div>
+                    <div class="fixed-table-footer" style="display: none;">
+                        <table><tbody><tr></tr></tbody></table>
+                    </div><div class="fixed-table-pagination" style="display: none;"><div class="pull-left pagination-detail"><span class="pagination-info">Showing 6 to 0 of 0 rows</span><span class="page-list" style="display: none;"><span class="btn-group dropup"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="page-size">5</span> <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li role="menuitem"><a href="#">10</a></li></ul></span> rows per page</span></div><div class="pull-right pagination" style="display: none;"><ul class="pagination"><li class="page-pre"><a href="#">‹</a></li><li class="page-next"><a href="#">›</a></li></ul></div></div>
+
+                </div>
+            </div>
+
+           <div class="col-xs-12 col-lg-12 col-sm-12">
                 <br/>
             </div>
 
