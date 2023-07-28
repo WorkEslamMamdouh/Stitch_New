@@ -1195,6 +1195,7 @@ var Wallet_Definitions = /** @class */ (function () {
         this.CUSTOM2 = '';
         this.CUSTOM3 = '';
         this.CUSTOM4 = '';
+        this.CUSTOM5 = '';
     }
     return Wallet_Definitions;
 }());
@@ -1221,6 +1222,9 @@ var Wallet_Data = /** @class */ (function () {
         this.Title = '';
         this.Remars = '';
         this.Amount = 0;
+        this.Prc = 0;
+        this.DueDate = '';
+        this.TypePeriod = '';
         this.CUSTOM1 = '';
         this.CUSTOM2 = '';
         this.CUSTOM3 = '';

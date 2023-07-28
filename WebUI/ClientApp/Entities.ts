@@ -1970,6 +1970,7 @@ class Wallet_Definitions {
         this.CUSTOM2 = '';
         this.CUSTOM3 = '';
         this.CUSTOM4 = '';
+        this.CUSTOM5 = '';
     }
     public ID: number;
     public Serial: number; 
@@ -1981,6 +1982,7 @@ class Wallet_Definitions {
     public CUSTOM2: string;
     public CUSTOM3: string;
     public CUSTOM4: string;
+    public CUSTOM5: string;
 }
 
 class Wallet_HedDef {
@@ -2019,6 +2021,9 @@ class Wallet_Data {
         this.Title = '';
         this.Remars = '';
         this.Amount = 0;
+        this.Prc = 0;
+        this.DueDate = '';
+        this.TypePeriod = '';
         this.CUSTOM1 = '';
         this.CUSTOM2 = '';
         this.CUSTOM3 = '';
@@ -2031,6 +2036,9 @@ class Wallet_Data {
     public Title: string;
     public Remars: string;
     public Amount: number;
+    public Prc: number;
+    public DueDate : string; 
+    public TypePeriod : string; 
     public CUSTOM1: string;
     public CUSTOM2: string;
     public CUSTOM3: string;

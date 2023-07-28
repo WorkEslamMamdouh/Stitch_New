@@ -45,6 +45,9 @@ namespace Inv.WebUI.Controllers
             public string Title { get; set; }
             public string Remars { get; set; }
             public decimal Amount { get; set; }
+            public decimal Prc { get; set; } 
+            public string DueDate { get; set; } 
+            public string TypePeriod { get; set; } 
             public string CUSTOM1 { get; set; }
             public string CUSTOM2 { get; set; }
             public string CUSTOM3 { get; set; }
@@ -64,6 +67,7 @@ namespace Inv.WebUI.Controllers
             public string CUSTOM2 { get; set; }
             public string CUSTOM3 { get; set; }
             public string CUSTOM4 { get; set; }
+            public string CUSTOM5 { get; set; }
         }
         
         public class Wallet_HedDef

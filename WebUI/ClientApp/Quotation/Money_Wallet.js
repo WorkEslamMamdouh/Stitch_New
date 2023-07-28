@@ -10,6 +10,7 @@ $(document).ready(function () {
     var btnExchange;
     var btnReceipt;
     var btnTransfers;
+    var btnFreeze;
     var a_Expans;
     var a_Resive;
     var a_Transfers;
@@ -17,6 +18,9 @@ $(document).ready(function () {
     var a_Definitions;
     var a_Shahadat;
     var txtAmount;
+    var txtPrcSH;
+    var txtdateDueSH;
+    var txtAmountSH;
     var txtSearch;
     var txtDateFrom;
     var txtDateTo;
@@ -25,6 +29,7 @@ $(document).ready(function () {
     var btnUpdate;
     var btnBack;
     var btnAddDetails;
+    var TypePeriod;
     var Glopl_Type = 'Exchange';
     var flagSave = 0;
     var totalAmount = 0;
@@ -58,10 +63,14 @@ $(document).ready(function () {
         $('#Page_mone').removeClass('display_none');
         Tabs_click();
         InitializeGrid();
+        TypePeriod = document.getElementById("TypePeriod");
         txtDateFrom = document.getElementById("txtDateFrom");
         txtDateTo = document.getElementById("txtDateTo");
         txtSearch = document.getElementById("txtSearch");
         txtAmount = document.getElementById("txtAmount");
+        txtdateDueSH = document.getElementById("txtdateDueSH");
+        txtAmountSH = document.getElementById("txtAmountSH");
+        txtPrcSH = document.getElementById("txtPrcSH");
         btnShow = document.getElementById("btnShow");
         btnAddDetails = document.getElementById("btnAddDetails");
         btnSave = document.getElementById("btnSave");
@@ -70,6 +79,7 @@ $(document).ready(function () {
         btnExchange = document.getElementById("btnExchange");
         btnReceipt = document.getElementById("btnReceipt");
         btnTransfers = document.getElementById("btnTransfers");
+        btnFreeze = document.getElementById("btnFreeze");
         a_Expans = document.getElementById("a_Expans");
         a_Resive = document.getElementById("a_Resive");
         a_Transfers = document.getElementById("a_Transfers");
@@ -79,14 +89,19 @@ $(document).ready(function () {
         btnExchange.onclick = function () { AppTans(Glopl_Type); };
         btnReceipt.onclick = function () { AppTans(Glopl_Type); };
         btnTransfers.onclick = function () { AppTans(Glopl_Type); };
-        a_Expans.onclick = function () { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
-        a_Resive.onclick = function () { $('.Hid_Ex').removeClass('display_none'); $('.Hid_Rec').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
-        a_Transfers.onclick = function () { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Transfers'; };
+        btnFreeze.onclick = function () { AppTansShahada(Glopl_Type); };
+        a_Expans.onclick = function () { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
+        a_Resive.onclick = function () { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Hid_Rec').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
+        a_Transfers.onclick = function () { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Transfers'; };
         a_View.onclick = function () { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Definitions.onclick = function () { $('#Definitions_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
-        a_Shahadat.onclick = function () { $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); };
+        a_Shahadat.onclick = function () { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Shaha_Ex').addClass('display_none'); $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Shahadat'; };
         txtDateFrom.value = DateStartYear();
         txtDateTo.value = GetDate();
+        TypePeriod.onchange = SumPrc;
+        txtdateDueSH.onchange = SumPrc;
+        txtAmountSH.onkeyup = SumPrc;
+        txtPrcSH.onkeyup = SumPrc;
         txtSearch.onkeyup = txtSearch_change;
         btnShow.onclick = DisplayAll;
         btnSave.onclick = btnSave_onClick;
@@ -110,6 +125,7 @@ $(document).ready(function () {
                 }
             });
         }
+        setTimeout(function () { $('#Page_Loding').removeClass("display_none"); }, 500);
     }
     function Tabs_click() {
         $('body').on('click', '.scrollable-tabs li', function () {
@@ -145,7 +161,7 @@ $(document).ready(function () {
                 title: "Amount", css: "ColumPadding", name: "Amount", width: "120px",
                 itemTemplate: function (s, item) {
                     var txt = document.createElement("label");
-                    txt.innerHTML = "( " + item.Amount.toString() + " ) $";
+                    txt.innerHTML = "( " + item.Amount.toLocaleString('en-US', { maximumFractionDigits: 1 }) + " ) $";
                     if (item.Title == "Exchange") {
                         if (item.Type == "Debt") {
                             txt.style.color = "#ea8813";
@@ -194,8 +210,9 @@ $(document).ready(function () {
         $('#TypeSoursF').html('<option value="All">All</option>');
         $('#TypeSours').html("");
         $('#TypeSoursTrans').html("");
+        $('#TypeSoursSH').html("");
         for (var u = 0; u < Wallet_Def.length; u++) {
-            $('#TypeSoursF').append('<option value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].NameBal + '</option>');
+            $('#TypeSoursF').append('<option value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].Remars + '</option>');
             var Nameclass = '';
             $('.Hid_Rec').removeClass('display_none');
             $('.Hid_Ex').removeClass('display_none');
@@ -205,21 +222,19 @@ $(document).ready(function () {
             if (Wallet_Def[u].CUSTOM2 != "true") {
                 Nameclass = Nameclass + ' Hid_Ex';
             }
+            if (Wallet_Def[u].CUSTOM5 != "true") {
+                Nameclass = Nameclass + ' Shaha_Ex';
+            }
             if (Wallet_Def[u].CUSTOM4 == "true") {
-                $('#TypeSours').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].NameBal + '</option>');
-                $('#TypeSoursTrans').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">To ' + Wallet_Def[u].NameBal + '</option>');
+                $('#TypeSours').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].Remars + '</option>');
+                $('#TypeSoursTrans').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">To ' + Wallet_Def[u].Remars + '</option>');
+                $('#TypeSoursSH').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].Remars + '</option>');
             }
         }
     }
     function GridDoubleClick() {
         debugger;
         FlagUpdate = true;
-        txtAmount.value = JGrid.SelectedItem.Amount;
-        $('#txtdate').val(DateFormat(JGrid.SelectedItem.TrDate));
-        $('#txtTrNo').val(JGrid.SelectedItem.ID);
-        $('#TypeSours').val(JGrid.SelectedItem.Type);
-        $('#TypeSoursTrans').val(JGrid.SelectedItem.TypeTo);
-        $('#txtRemark').val(JGrid.SelectedItem.Remars);
         if (JGrid.SelectedItem.Title == "Exchange") {
             $('#a_Expans').click();
         }
@@ -227,12 +242,44 @@ $(document).ready(function () {
             $('#a_Resive').click();
         }
         else if (JGrid.SelectedItem.Title == "Transfers") {
-            $('#a_Resive').click();
             $('#a_Transfers').click();
         }
-        setTimeout(function () {
-            FlagUpdate = false;
-        }, 500);
+        else if (JGrid.SelectedItem.Title == "Shahadat") {
+            $('#a_Shahadat').click();
+        }
+        if (JGrid.SelectedItem.Title != "Shahadat") {
+            setTimeout(function () {
+                txtAmount.value = JGrid.SelectedItem.Amount;
+                $('#txtdate').val(DateFormat(JGrid.SelectedItem.TrDate));
+                $('#txtTrNo').val(JGrid.SelectedItem.ID);
+                $('#TypeSours').val(JGrid.SelectedItem.Type);
+                $('#TypeSoursTrans').val(JGrid.SelectedItem.TypeTo);
+                $('#txtRemark').val(JGrid.SelectedItem.Remars);
+            }, 100);
+            setTimeout(function () {
+                FlagUpdate = false;
+            }, 500);
+        }
+        if (JGrid.SelectedItem.Title == "Shahadat") {
+            setTimeout(function () {
+                $('#txtAmountSH').val(JGrid.SelectedItem.Amount);
+                $('#txtPrcSH').val(JGrid.SelectedItem.Prc);
+                $('#txtdateSH').val(DateFormat(JGrid.SelectedItem.TrDate));
+                $('#txtdateDueSH').val(DateFormat(JGrid.SelectedItem.DueDate));
+                $('#txtTrNoSH').val(JGrid.SelectedItem.ID);
+                $('#TypeSoursSH').val(JGrid.SelectedItem.Type);
+                $('#txtRemarkSH').val(JGrid.SelectedItem.Remars);
+                $('#TypePeriod').val(JGrid.SelectedItem.TypePeriod);
+                $("#ActiveSH").prop('checked', JGrid.SelectedItem.CUSTOM1 == "false" ? false : true);
+                $('#txtAmountDuePay').val(JGrid.SelectedItem.CUSTOM2);
+                $('#txtAllDue').val(JGrid.SelectedItem.CUSTOM3);
+                $('#txtAllAmountDue').val(Number(JGrid.SelectedItem.CUSTOM3) + Number(JGrid.SelectedItem.Amount));
+                SumPrc();
+            }, 100);
+            setTimeout(function () {
+                FlagUpdate = false;
+            }, 500);
+        }
     }
     function txtSearch_change() {
         $("#JGrid").jsGrid("option", "pageIndex", 1);
@@ -259,10 +306,25 @@ $(document).ready(function () {
                     Display_Grid(res);
                 }
                 else {
-                    var res = void 0;
-                    JGrid.DataSource = res;
+                    Display = new Array();
+                    for (var d = 0; d < Wallet_Def.length; d++) {
+                        debugger;
+                        if (Wallet_Def[d].Amount > 0) {
+                            var DisOpen_ball = new Wallet_Data();
+                            DisOpen_ball.ID = -1;
+                            DisOpen_ball.Amount = Wallet_Def[d].Amount;
+                            DisOpen_ball.Type = Wallet_Def[d].NameBal;
+                            DisOpen_ball.Title = "Receipt";
+                            DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
+                            DisOpen_ball.TrDate = "2023-01-01";
+                            Display.push(DisOpen_ball);
+                        }
+                    }
+                    AllDisplay = Display;
+                    JGrid.DataSource = Display;
                     JGrid.Bind();
-                    Clean();
+                    setTimeout(function () { Clean(); }, 50);
+                    TotalGrid();
                 }
             }
         });
@@ -282,8 +344,10 @@ $(document).ready(function () {
                 DisOpen_ball.Amount = Wallet_Def[d].Amount;
                 DisOpen_ball.Type = Wallet_Def[d].NameBal;
                 DisOpen_ball.Title = "Receipt";
-                DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
-                DisOpen_ball.TrDate = "2023-01-01";
+                DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].Remars;
+                var today = new Date();
+                var yyyy = today.getFullYear();
+                DisOpen_ball.TrDate = "" + yyyy + "-01-01";
                 Display.push(DisOpen_ball);
             }
         }
@@ -291,8 +355,11 @@ $(document).ready(function () {
         if ($('#TypeSoursF').val() != "All") {
             Display = Display.filter(function (x) { return x.Type == $('#TypeSoursF').val(); });
         }
-        if ($('#TrType').val() != "All") {
+        if ($('#TrType').val() != "All" && $('#TrType').val() != "Open_Bal") {
             Display = Display.filter(function (x) { return x.Title == $('#TrType').val(); });
+        }
+        if ($('#TrType').val() == "Open_Bal") {
+            Display = Display.filter(function (x) { return x.ID == -1; });
         }
         Display = Display.filter(function (x) { return x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value; });
         Display = Display.sort(dynamicSortNew("ID"));
@@ -300,8 +367,12 @@ $(document).ready(function () {
         JGrid.DataSource = Display;
         JGrid.Bind();
         Clean();
-        var DisplayEx = Display.filter(function (x) { return x.Type != 'Debt' && x.Title == 'Exchange'; });
-        var DisplayRec = Display.filter(function (x) { return x.Type != 'Debt' && x.Title == 'Receipt'; });
+        TotalGrid();
+        $('.jsgrid-grid-body').scrollLeft(500);
+    }
+    function TotalGrid() {
+        var DisplayEx = Display.filter(function (x) { return x.Title == 'Exchange'; });
+        var DisplayRec = Display.filter(function (x) { return x.Title == 'Receipt'; });
         var AmountEx = 0;
         for (var i = 0; i < DisplayEx.length; i++) {
             AmountEx = AmountEx + DisplayEx[i].Amount;
@@ -313,7 +384,6 @@ $(document).ready(function () {
         $('#txtTotalExchange').val(AmountEx.toFixed(2));
         $('#txtTotalReceipt').val(AmountRec.toFixed(2));
         $('#txtTotal').val((AmountRec - AmountEx).toFixed(2));
-        $('.jsgrid-grid-body').scrollLeft(500);
     }
     function AppTans(Type) {
         debugger;
@@ -362,6 +432,7 @@ $(document).ready(function () {
                 Display_Grid(res);
                 Clean();
                 flagSave = 1;
+                setTimeout(function () { flagSave = 0; }, 800);
             }
         });
     }
@@ -396,8 +467,28 @@ $(document).ready(function () {
             $('#txtRemark').val('');
             $('#txtdate').val(GetDate());
             $('#txtAmount').val('');
+            //**********************************Shahada**************************       
+            $('#txtTrNoSH').val('');
+            $('#TypeSoursSH').prop('selectedIndex', 0);
+            $('#TypePeriod').prop('selectedIndex', 0);
+            $('#txtRemarkSH').val('');
+            $('#txtdateSH').val(GetDate());
+            $('#txtdateDueSH').val(GetDateyyyy_1());
+            $('#txtAmountSH').val('');
+            $('#txtPrcSH').val('');
+            $("#ActiveSH").prop('checked', true);
+            $('#txtAmountDuePay').val('');
+            $('#txtAllDue').val('');
+            $('#txtAllAmountDue').val('');
         }
-        setTimeout(function () { $('#txtRemark').focus(); }, 150);
+        setTimeout(function () {
+            if ($('#txtRemark').is(":hidden")) {
+                $('#txtRemarkSH').focus();
+            }
+            else {
+                $('#txtRemark').focus();
+            }
+        }, 150);
         $('#btnReceipt').addClass('display_none');
         $('#btnExchange').addClass('display_none');
         $('#btnTransfers').addClass('display_none');
@@ -426,14 +517,17 @@ $(document).ready(function () {
             }
             $('#txtTrNo').val(MaxID + 1);
             $('#txtTrNo').attr('style', 'text-align: center;background: #004895;color: white;');
+            $('#txtTrNoSH').val(MaxID + 1);
+            $('#txtTrNoSH').attr('style', 'text-align: center;background: #004895;color: white;');
         }
         else {
             $('#txtTrNo').attr('style', 'text-align: center;background: #009563;color: white;');
+            $('#txtTrNoSH').attr('style', 'text-align: center;background: #009563;color: white;');
         }
         //AllBalance(); 
         Sum_AllBalance();
     }
-    //*************************************************Display_AllBalance****************************************
+    //*************************************************Display_AllBalance**************************************** 
     function AllBalance() {
         debugger;
         //******************************************* Exchange********************************
@@ -536,7 +630,8 @@ $(document).ready(function () {
                     EXAmount = EXAmount + Exchange[i1].Amount;
                 }
             }
-            //**************************************************** Receipt**************************************
+            //****************************************************Sum Receipt**************************************
+            debugger;
             var RecAmount = 0;
             var Receipt = AllDisplay.filter(function (x) { return x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Receipt' || (x.TypeTo == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Transfers'); });
             if (Wallet_Def_IsActive[xx].CUSTOM1 == "true") {
@@ -544,9 +639,10 @@ $(document).ready(function () {
                     RecAmount = RecAmount + Receipt[i2].Amount;
                 }
             }
-            RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
+            //RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
+            //***************************************************************SetValHtml*********************************************  
+            $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].Remars + ' ( ' + (Number(RecAmount) - Number(EXAmount)).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
             //****************************************Total***********************************************
-            $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].NameBal + ' ( ' + (Number(RecAmount) - Number(EXAmount)) + ' ) $');
             if (Wallet_Def_IsActive[xx].CUSTOM3 == "true") {
                 AllTotal = AllTotal + (Number(RecAmount) - Number(EXAmount));
             }
@@ -554,9 +650,93 @@ $(document).ready(function () {
         //****************************************AllTotal***********************************************
         var html_Balance = " \n                    <div class=\"col-xs-6 col-lg-6 col-sm-6 \">\n                            <label id=\"BalanceLab\"> ( 0 )</label>\n                    </div>";
         $('#Div_Show_Balance').append(html_Balance);
-        $('#BalanceLab').html('All Bal ( ' + (Number(AllTotal.toFixed(2))) + ' ) $');
+        $('#BalanceLab').html('All Bal ( ' + (Number(AllTotal.toFixed(2))).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
     }
-    //*************************************************Def****************************************
+    //*************************************************Shahadat****************************************
+    function SumPrc() {
+        debugger;
+        var Amount = Number($('#txtAmountSH').val());
+        var Prc = (Number($('#txtPrcSH').val()) / 100);
+        var NumYear = getYearDifference($('#txtdateSH').val(), $('#txtdateDueSH').val());
+        var calacul = Amount * Prc; //حساب الفائده علي السنه
+        var period = Number($('#TypePeriod').val());
+        var AmountDue = 0;
+        var allAmount = 0;
+        if (period != 0) {
+            AmountDue = (calacul / 12) * period;
+        }
+        else {
+            var NumMonths = getMonthsDifference($('#txtdateSH').val(), $('#txtdateDueSH').val());
+            AmountDue = (calacul / 12) * NumMonths;
+        }
+        allAmount = calacul * NumYear;
+        $('#txtAmountDuePay').val(Number(Number(AmountDue).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+        $('#txtAllAmountDue').val(Number((allAmount + Amount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+        $('#txtAllDue').val(Number(Number(allAmount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+        // Remove commas from the number string to convert it to a valid number format
+        //var numberString = "1,583.3";
+        //var number = parseFloat(numberString.replace(/,/g, ''));
+    }
+    function AppTansShahada(Type) {
+        debugger;
+        if (flagSave == 1) {
+            setTimeout(function () { flagSave = 0; }, 800);
+            return false;
+        }
+        if ($('#txtRemarkSH').val().trim() == '') {
+            Errorinput($('#txtRemarkSH'));
+            return false;
+        }
+        if (Number($('#txtPrcSH').val()) == 0) {
+            Errorinput($('#txtPrcSH'));
+            return false;
+        }
+        if (Number($('#txtAmountSH').val()) == 0) {
+            Errorinput($('#txtAmountSH'));
+            return false;
+        }
+        Model = new Wallet_Data();
+        var Val = $('#txtAmountSH').val();
+        $('#txtAmountSH').val(eval(Val));
+        //DocumentActions.AssignToModel(Model);//Insert Update 
+        Model.ID = Number($('#txtTrNoSH').val());
+        Model.TrDate = DateFormatRep($('#txtdateSH').val());
+        Model.Type = $('#TypeSoursSH').val();
+        Model.TypeTo = '';
+        Model.Title = Type;
+        Model.Remars = $('#txtRemarkSH').val();
+        ;
+        Model.Amount = Number($('#txtAmountSH').val());
+        Model.Prc = Number($('#txtPrcSH').val());
+        Model.DueDate = DateFormatRep($('#txtdateDueSH').val());
+        Model.TypePeriod = $('#TypePeriod').val();
+        Model.CUSTOM1 = "" + ($("#ActiveSH").prop('checked')) + "";
+        Model.CUSTOM2 = $('#txtAmountDuePay').val();
+        Model.CUSTOM3 = $('#txtAllDue').val();
+        Model.CUSTOM4 = '';
+        var Data = new Send_Data();
+        Data.ID = Number($('#txtTrNoSH').val());
+        Data.Name_Txt_Master = Comp_Wallet;
+        Data.Model = JSON.stringify(Model);
+        Data.StatusFlag = 'u';
+        debugger;
+        $.ajax({
+            url: Url.Action("Add_Trans", "Profile"),
+            type: "POST",
+            dataType: 'json',
+            async: false,
+            data: { Data: JSON.stringify(Data) },
+            success: function (d) {
+                var result = JSON.parse(d);
+                var res = result;
+                Display_Grid(res);
+                Clean();
+                flagSave = 1;
+                setTimeout(function () { flagSave = 0; }, 800);
+            }
+        });
+    }
+    //*************************************************Definitions****************************************
     function GetDefinitions() {
         debugger;
         Ajax.CallAsync({
@@ -643,7 +823,7 @@ $(document).ready(function () {
     }
     function BuildControls(cnt) {
         var html = "";
-        html = "<tr id= \"No_Row" + cnt + "\" class=\"\"> \n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtNameBal" + cnt + "\" type=\"text\" disabled class=\"wid _copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtAmount" + cnt + "\" type=\"number\" disabled class=\"  _copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"wid _copy _dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Sum_Receipt" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Sum_Exchange" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Sum_AllTotal" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                     <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Active" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    \n                    \n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
+        html = "<tr id= \"No_Row" + cnt + "\" class=\"\"> \n                    <td>\n\t\t                <div class=\"form-group\">\n\t\t\t               <button id=\"btn_minus" + cnt + "\" type=\"button\" class=\"_Cont display_none btn btn-custon-four btn-danger\" style=\"font-weight: bold;font-size: 22PX;width: 34px;padding: unset;\"><i class=\"fa fa-minus-circle\" ></i></button>\n\t\t                </div>\n\t                </td> \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtSerial" + cnt + "\" type=\"text\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtNameBal" + cnt + "\" type=\"text\" disabled class=\"wid _copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"txtAmount" + cnt + "\" type=\"number\" disabled class=\"  _copy _dis form-control condisa\" name=\"\"   />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\"> \n                            <textarea id=\"txtRemars" + cnt + "\" type=\"text\"  disabled class=\"wid _copy _dis form-control \" style=\"height: 43px;\" ></textarea>\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Sum_Receipt" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Sum_Exchange" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                   \n                    <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Sum_AllTotal" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                     <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Shahadat" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                     <td>\n\t\t                <div class=\"form-group\">\n                            <input id=\"CH_Active" + cnt + "\" type=\"checkbox\" disabled class=\" _dis form-control\" name=\"\"  />\n\t\t                </div>\n\t                </td>\n                    \n                    \n                    \n               <input id=\"txt_StatusFlag" + cnt + "\" type=\"hidden\"   />\n               <input id=\"ID" + cnt + "\" type=\"hidden\"   />\n               <input id=\"MasterID" + cnt + "\" type=\"hidden\"   />\n                </tr>";
         $("#div_Data_Def").append(html);
         $("#btn_minus" + cnt).on('click', function () {
             DeleteRow(cnt);
@@ -659,6 +839,7 @@ $(document).ready(function () {
         $("#CH_Sum_Exchange" + cnt).prop('checked', DataDet.CUSTOM2 == "false" ? false : true);
         $("#CH_Sum_AllTotal" + cnt).prop('checked', DataDet.CUSTOM3 == "false" ? false : true);
         $("#CH_Active" + cnt).prop('checked', DataDet.CUSTOM4 == "false" ? false : true);
+        $("#CH_Shahadat" + cnt).prop('checked', DataDet.CUSTOM5 == "false" ? false : true);
         $("#txt_StatusFlag" + cnt).val('');
     }
     function DisplayDetails() {
@@ -749,6 +930,7 @@ $(document).ready(function () {
                 SingModelDetails.CUSTOM2 = "" + ($("#CH_Sum_Exchange" + i).prop('checked')) + "";
                 SingModelDetails.CUSTOM3 = "" + ($("#CH_Sum_AllTotal" + i).prop('checked')) + "";
                 SingModelDetails.CUSTOM4 = "" + ($("#CH_Active" + i).prop('checked')) + "";
+                SingModelDetails.CUSTOM5 = "" + ($("#CH_Shahadat" + i).prop('checked')) + "";
                 ModelDetails.push(SingModelDetails);
             }
         }

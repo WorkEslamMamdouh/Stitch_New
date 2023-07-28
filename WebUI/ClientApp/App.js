@@ -932,13 +932,27 @@ function GetResourceList(Sourcekey) {
     });
     return result;
 }
-// Doha
 function GetDate() {
     var today = new Date();
     var dd = today.getDate().toString();
     var ReturnedDate;
     var mm = (today.getMonth() + 1).toString();
     var yyyy = today.getFullYear();
+    if (Number(dd) < 10) {
+        dd = ('0' + dd);
+    }
+    if (Number(mm) < 10) {
+        mm = ('0' + mm);
+    }
+    ReturnedDate = yyyy + '-' + mm + '-' + dd;
+    return ReturnedDate;
+}
+function GetDateyyyy_1() {
+    var today = new Date();
+    var dd = today.getDate().toString();
+    var ReturnedDate;
+    var mm = (today.getMonth() + 1).toString();
+    var yyyy = Number(today.getFullYear()) + 1;
     if (Number(dd) < 10) {
         dd = ('0' + dd);
     }
@@ -1101,6 +1115,32 @@ function DateStartYear() {
     }
     ReturnedDate = yyyy + '-' + '01' + '-' + '01';
     return ReturnedDate;
+}
+function getMonthsDifference(date1, date2) {
+    // Create Date objects from the input
+    debugger;
+    var d1 = new Date(date1);
+    var d2 = new Date(date2);
+    // Calculate the difference in years and months
+    var yearsDiff = d2.getFullYear() - d1.getFullYear();
+    var monthsDiff = d2.getMonth() - d1.getMonth();
+    // Handle cases where the dates are not on the same day of the month
+    if (d2.getDate() < d1.getDate()) {
+        monthsDiff -= 1;
+    }
+    // Convert years difference to months and add to the months difference
+    monthsDiff += yearsDiff * 12;
+    return monthsDiff;
+}
+function getYearDifference(date1, date2) {
+    // Create Date objects from the input
+    debugger;
+    var d1 = new Date(date1);
+    var d2 = new Date(date2);
+    // Calculate the difference in years and months
+    var yearsDiff = d2.getFullYear() - d1.getFullYear();
+    // Convert years difference to months and add to the months difference 
+    return yearsDiff;
 }
 function Event_key(key, Nameinput, NameBtnEvent) {
     var input = document.getElementById(Nameinput);

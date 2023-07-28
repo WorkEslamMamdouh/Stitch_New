@@ -13,6 +13,7 @@ $(document).ready(() => {
     var btnExchange: HTMLButtonElement;
     var btnReceipt: HTMLButtonElement;
     var btnTransfers: HTMLButtonElement;
+    var btnFreeze: HTMLButtonElement;
     var a_Expans: HTMLButtonElement;
     var a_Resive: HTMLButtonElement;
     var a_Transfers: HTMLButtonElement;
@@ -20,6 +21,9 @@ $(document).ready(() => {
     var a_Definitions: HTMLButtonElement;
     var a_Shahadat: HTMLButtonElement;
     var txtAmount: HTMLInputElement;
+    var txtPrcSH: HTMLInputElement;
+    var txtdateDueSH: HTMLInputElement;
+    var txtAmountSH: HTMLInputElement;
     var txtSearch: HTMLInputElement;
     var txtDateFrom: HTMLInputElement;
     var txtDateTo: HTMLInputElement;
@@ -29,6 +33,9 @@ $(document).ready(() => {
     var btnUpdate: HTMLButtonElement;
     var btnBack: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
+    var TypePeriod: HTMLSelectElement;
+
+
 
     var Glopl_Type = 'Exchange';
 
@@ -93,10 +100,14 @@ $(document).ready(() => {
         Tabs_click();
         InitializeGrid();
 
+        TypePeriod = document.getElementById("TypePeriod") as HTMLSelectElement;
         txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
         txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
         txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
         txtAmount = document.getElementById("txtAmount") as HTMLInputElement;
+        txtdateDueSH = document.getElementById("txtdateDueSH") as HTMLInputElement;
+        txtAmountSH = document.getElementById("txtAmountSH") as HTMLInputElement;
+        txtPrcSH = document.getElementById("txtPrcSH") as HTMLInputElement;
         btnShow = document.getElementById("btnShow") as HTMLButtonElement;
         btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
         btnSave = document.getElementById("btnSave") as HTMLButtonElement;
@@ -105,6 +116,7 @@ $(document).ready(() => {
         btnExchange = document.getElementById("btnExchange") as HTMLButtonElement;
         btnReceipt = document.getElementById("btnReceipt") as HTMLButtonElement;
         btnTransfers = document.getElementById("btnTransfers") as HTMLButtonElement;
+        btnFreeze = document.getElementById("btnFreeze") as HTMLButtonElement;
         a_Expans = document.getElementById("a_Expans") as HTMLButtonElement;
         a_Resive = document.getElementById("a_Resive") as HTMLButtonElement;
         a_Transfers = document.getElementById("a_Transfers") as HTMLButtonElement;
@@ -115,15 +127,21 @@ $(document).ready(() => {
         btnExchange.onclick = () => { AppTans(Glopl_Type) };
         btnReceipt.onclick = () => { AppTans(Glopl_Type) };
         btnTransfers.onclick = () => { AppTans(Glopl_Type) };
-        a_Expans.onclick = () => { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
-        a_Resive.onclick = () => { $('.Hid_Ex').removeClass('display_none'); $('.Hid_Rec').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
-        a_Transfers.onclick = () => { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Transfers'; };
+        btnFreeze.onclick = () => { AppTansShahada(Glopl_Type) };
+        a_Expans.onclick = () => { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
+        a_Resive.onclick = () => { $('.Shaha_Ex').removeClass('display_none');  $('.Hid_Ex').removeClass('display_none'); $('.Hid_Rec').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
+        a_Transfers.onclick = () => { $('.Shaha_Ex').removeClass('display_none');  $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Transfers'; };
         a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Definitions.onclick = () => { $('#Definitions_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
-        a_Shahadat.onclick = () => { $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); };
+        a_Shahadat.onclick = () => { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Shaha_Ex').addClass('display_none'); $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Shahadat'; };
 
         txtDateFrom.value = DateStartYear();
         txtDateTo.value = GetDate();
+
+        TypePeriod.onchange = SumPrc;
+        txtdateDueSH.onchange = SumPrc;
+        txtAmountSH.onkeyup = SumPrc;
+        txtPrcSH.onkeyup = SumPrc;
 
         txtSearch.onkeyup = txtSearch_change;
         btnShow.onclick = DisplayAll;
@@ -159,6 +177,7 @@ $(document).ready(() => {
         }
 
 
+        setTimeout(function () { $('#Page_Loding').removeClass("display_none") }, 500);
 
 
     }
@@ -210,7 +229,7 @@ $(document).ready(() => {
                 itemTemplate: (s: string, item: Wallet_Data): HTMLLabelElement => {
                     let txt: HTMLLabelElement = document.createElement("label");
 
-                    txt.innerHTML = "( " + item.Amount.toString() + " ) $";
+                    txt.innerHTML = "( " + item.Amount.toLocaleString('en-US', { maximumFractionDigits: 1 }) + " ) $";
                     if (item.Title == "Exchange") {
                         if (item.Type == "Debt") {
                             txt.style.color = "#ea8813";
@@ -268,8 +287,9 @@ $(document).ready(() => {
         $('#TypeSoursF').html('<option value="All">All</option>')
         $('#TypeSours').html("")
         $('#TypeSoursTrans').html("")
+        $('#TypeSoursSH').html("")
         for (var u = 0; u < Wallet_Def.length; u++) {
-            $('#TypeSoursF').append('<option value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].NameBal + '</option>');
+            $('#TypeSoursF').append('<option value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].Remars + '</option>');
 
             let Nameclass = '';
 
@@ -284,10 +304,17 @@ $(document).ready(() => {
                 Nameclass = Nameclass + ' Hid_Ex';
             }
 
-            if (Wallet_Def[u].CUSTOM4 == "true") {
-                $('#TypeSours').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].NameBal + '</option>');
-                $('#TypeSoursTrans').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">To ' + Wallet_Def[u].NameBal + '</option>');
+            if (Wallet_Def[u].CUSTOM5 != "true") {
+                Nameclass = Nameclass + ' Shaha_Ex';
             }
+
+            if (Wallet_Def[u].CUSTOM4 == "true") {
+                $('#TypeSours').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].Remars + '</option>');
+                $('#TypeSoursTrans').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">To ' + Wallet_Def[u].Remars + '</option>');
+                $('#TypeSoursSH').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].Remars + '</option>');
+            }
+
+
 
         }
 
@@ -296,12 +323,7 @@ $(document).ready(() => {
 
         debugger
         FlagUpdate = true;
-        txtAmount.value = JGrid.SelectedItem.Amount;
-        $('#txtdate').val(DateFormat(JGrid.SelectedItem.TrDate));
-        $('#txtTrNo').val(JGrid.SelectedItem.ID);
-        $('#TypeSours').val(JGrid.SelectedItem.Type);
-        $('#TypeSoursTrans').val(JGrid.SelectedItem.TypeTo);
-        $('#txtRemark').val(JGrid.SelectedItem.Remars);
+
 
         if (JGrid.SelectedItem.Title == "Exchange") {
             $('#a_Expans').click();
@@ -310,14 +332,58 @@ $(document).ready(() => {
             $('#a_Resive').click();
         }
         else if (JGrid.SelectedItem.Title == "Transfers") {
-            $('#a_Resive').click();
+
             $('#a_Transfers').click();
         }
 
+        else if (JGrid.SelectedItem.Title == "Shahadat") {
 
-        setTimeout(function () {
-            FlagUpdate = false;
-        }, 500);
+            $('#a_Shahadat').click();
+        }
+
+
+        if (JGrid.SelectedItem.Title != "Shahadat") {
+
+            setTimeout(function () {
+                txtAmount.value = JGrid.SelectedItem.Amount;
+                $('#txtdate').val(DateFormat(JGrid.SelectedItem.TrDate));
+                $('#txtTrNo').val(JGrid.SelectedItem.ID);
+                $('#TypeSours').val(JGrid.SelectedItem.Type);
+                $('#TypeSoursTrans').val(JGrid.SelectedItem.TypeTo);
+                $('#txtRemark').val(JGrid.SelectedItem.Remars);
+            }, 100);
+
+            setTimeout(function () {
+                FlagUpdate = false;
+            }, 500);
+
+        }
+
+
+        if (JGrid.SelectedItem.Title == "Shahadat") {
+
+            setTimeout(function () {
+                $('#txtAmountSH').val(JGrid.SelectedItem.Amount);
+                $('#txtPrcSH').val(JGrid.SelectedItem.Prc);
+                $('#txtdateSH').val(DateFormat(JGrid.SelectedItem.TrDate));
+                $('#txtdateDueSH').val(DateFormat(JGrid.SelectedItem.DueDate));
+                $('#txtTrNoSH').val(JGrid.SelectedItem.ID);
+                $('#TypeSoursSH').val(JGrid.SelectedItem.Type);
+                $('#txtRemarkSH').val(JGrid.SelectedItem.Remars);
+                $('#TypePeriod').val(JGrid.SelectedItem.TypePeriod);
+                $("#ActiveSH").prop('checked', JGrid.SelectedItem.CUSTOM1 == "false" ? false : true);
+                $('#txtAmountDuePay').val(JGrid.SelectedItem.CUSTOM2);
+                $('#txtAllDue').val(JGrid.SelectedItem.CUSTOM3);
+                $('#txtAllAmountDue').val(Number(JGrid.SelectedItem.CUSTOM3) + Number(JGrid.SelectedItem.Amount));
+                SumPrc();
+            }, 100);
+
+            setTimeout(function () {
+                FlagUpdate = false;
+            }, 500);
+
+        }
+
 
     }
 
@@ -348,6 +414,7 @@ $(document).ready(() => {
             data: { Name_txt: Comp_Wallet },
             success: (Pro) => {
                 if (Pro != "Error") {
+
                     let result = JSON.parse(Pro)
 
                     let res = result as Array<Wallet_Data>;
@@ -355,12 +422,32 @@ $(document).ready(() => {
                     Display_Grid(res)
                 }
                 else {
-                    let res: Array<Wallet_Data>;
 
-                    JGrid.DataSource = res;
+                    Display = new Array<Wallet_Data>();
+
+                    for (var d = 0; d < Wallet_Def.length; d++) {
+                        debugger
+                        if (Wallet_Def[d].Amount > 0) {
+
+                            let DisOpen_ball: Wallet_Data = new Wallet_Data();
+                            DisOpen_ball.ID = -1;
+                            DisOpen_ball.Amount = Wallet_Def[d].Amount
+                            DisOpen_ball.Type = Wallet_Def[d].NameBal
+                            DisOpen_ball.Title = "Receipt"
+                            DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
+                            DisOpen_ball.TrDate = "2023-01-01";
+                            Display.push(DisOpen_ball)
+                        }
+
+                    }
+                    AllDisplay = Display;
+                    JGrid.DataSource = Display;
                     JGrid.Bind();
 
-                    Clean();
+                    setTimeout(function () { Clean(); }, 50);
+
+
+                    TotalGrid();
                 }
 
             }
@@ -387,9 +474,13 @@ $(document).ready(() => {
                 DisOpen_ball.Amount = Wallet_Def[d].Amount
                 DisOpen_ball.Type = Wallet_Def[d].NameBal
                 DisOpen_ball.Title = "Receipt"
-                DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
-                DisOpen_ball.TrDate = "2023-01-01";
+                DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].Remars;
+                var today: Date = new Date();
+                var yyyy = today.getFullYear();
+                DisOpen_ball.TrDate = "" + yyyy + "-01-01";
                 Display.push(DisOpen_ball)
+
+
             }
 
         }
@@ -398,8 +489,11 @@ $(document).ready(() => {
         if ($('#TypeSoursF').val() != "All") {
             Display = Display.filter(x => x.Type == $('#TypeSoursF').val());
         }
-        if ($('#TrType').val() != "All") {
+        if ($('#TrType').val() != "All" && $('#TrType').val() != "Open_Bal") {
             Display = Display.filter(x => x.Title == $('#TrType').val());
+        }
+        if ($('#TrType').val() == "Open_Bal") {
+            Display = Display.filter(x => x.ID == -1);
         }
         Display = Display.filter(x => x.TrDate >= txtDateFrom.value && x.TrDate <= txtDateTo.value);
 
@@ -411,8 +505,14 @@ $(document).ready(() => {
 
         Clean();
 
-        let DisplayEx = Display.filter(x => x.Type != 'Debt' && x.Title == 'Exchange');
-        let DisplayRec = Display.filter(x => x.Type != 'Debt' && x.Title == 'Receipt');
+        TotalGrid();
+
+        $('.jsgrid-grid-body').scrollLeft(500);
+    }
+    function TotalGrid() {
+
+        let DisplayEx = Display.filter(x => x.Title == 'Exchange');
+        let DisplayRec = Display.filter(x => x.Title == 'Receipt');
 
         let AmountEx = 0
         for (var i = 0; i < DisplayEx.length; i++) {
@@ -428,9 +528,7 @@ $(document).ready(() => {
         $('#txtTotalReceipt').val(AmountRec.toFixed(2));
         $('#txtTotal').val((AmountRec - AmountEx).toFixed(2));
 
-        $('.jsgrid-grid-body').scrollLeft(500);
     }
-
     function AppTans(Type: string) {
 
         debugger
@@ -497,7 +595,7 @@ $(document).ready(() => {
 
                 flagSave = 1;
 
-
+                setTimeout(function () { flagSave = 0; }, 800);
 
             }
         })
@@ -550,9 +648,29 @@ $(document).ready(() => {
             $('#txtRemark').val('');
             $('#txtdate').val(GetDate());
             $('#txtAmount').val('');
+            //**********************************Shahada**************************       
+            $('#txtTrNoSH').val('');
+            $('#TypeSoursSH').prop('selectedIndex', 0)
+            $('#TypePeriod').prop('selectedIndex', 0)
+            $('#txtRemarkSH').val('');
+            $('#txtdateSH').val(GetDate());
+            $('#txtdateDueSH').val(GetDateyyyy_1());
+            $('#txtAmountSH').val('');
+            $('#txtPrcSH').val('');
+            $("#ActiveSH").prop('checked', true);
+            $('#txtAmountDuePay').val('');
+            $('#txtAllDue').val('');
+            $('#txtAllAmountDue').val('');
         }
 
-        setTimeout(function () { $('#txtRemark').focus(); }, 150);
+        setTimeout(function () {
+            if ($('#txtRemark').is(":hidden")) {
+                $('#txtRemarkSH').focus();
+            }
+            else {
+                $('#txtRemark').focus();
+            }
+        }, 150);
 
         $('#btnReceipt').addClass('display_none');
         $('#btnExchange').addClass('display_none');
@@ -586,17 +704,21 @@ $(document).ready(() => {
             }
             $('#txtTrNo').val(MaxID + 1);
             $('#txtTrNo').attr('style', 'text-align: center;background: #004895;color: white;')
+
+            $('#txtTrNoSH').val(MaxID + 1);
+            $('#txtTrNoSH').attr('style', 'text-align: center;background: #004895;color: white;')
         }
         else {
             $('#txtTrNo').attr('style', 'text-align: center;background: #009563;color: white;')
+
+            $('#txtTrNoSH').attr('style', 'text-align: center;background: #009563;color: white;')
         }
 
         //AllBalance(); 
         Sum_AllBalance();
     }
 
-    //*************************************************Display_AllBalance****************************************
-
+    //*************************************************Display_AllBalance**************************************** 
     function AllBalance() {
 
         debugger
@@ -709,7 +831,6 @@ $(document).ready(() => {
 
 
     }
-
     function Sum_AllBalance() {
 
         $('#Div_Show_Balance').html('')
@@ -739,9 +860,8 @@ $(document).ready(() => {
                 }
             }
 
-
-            //**************************************************** Receipt**************************************
-
+            //****************************************************Sum Receipt**************************************
+            debugger
             let RecAmount = 0;
             let Receipt = AllDisplay.filter(x => x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Receipt' || (x.TypeTo == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Transfers'));
 
@@ -750,10 +870,11 @@ $(document).ready(() => {
                     RecAmount = RecAmount + Receipt[i2].Amount
                 }
             }
-            RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
-            //****************************************Total***********************************************
-            $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].NameBal + ' ( ' + (Number(RecAmount) - Number(EXAmount)) + ' ) $');
+            //RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
+            //***************************************************************SetValHtml*********************************************  
+            $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].Remars + ' ( ' + (Number(RecAmount) - Number(EXAmount)).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
 
+            //****************************************Total***********************************************
             if (Wallet_Def_IsActive[xx].CUSTOM3 == "true") {
                 AllTotal = AllTotal + (Number(RecAmount) - Number(EXAmount));
             }
@@ -766,11 +887,134 @@ $(document).ready(() => {
                     </div>`;
 
         $('#Div_Show_Balance').append(html_Balance)
-        $('#BalanceLab').html('All Bal ( ' + (Number(AllTotal.toFixed(2))) + ' ) $');
+        $('#BalanceLab').html('All Bal ( ' + (Number(AllTotal.toFixed(2))).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
     }
 
-    //*************************************************Def****************************************
+    //*************************************************Shahadat****************************************
 
+    function SumPrc() {
+        debugger
+        let Amount = Number($('#txtAmountSH').val())
+        let Prc = (Number($('#txtPrcSH').val()) / 100)
+        let NumYear = getYearDifference($('#txtdateSH').val(), $('#txtdateDueSH').val())
+
+        let calacul = Amount * Prc  //حساب الفائده علي السنه
+
+
+        let period = Number($('#TypePeriod').val());
+
+        let AmountDue = 0;
+        let allAmount = 0;
+
+        if (period != 0) {
+            AmountDue = (calacul / 12) * period;
+        }
+        else {
+            let NumMonths = getMonthsDifference($('#txtdateSH').val(), $('#txtdateDueSH').val())
+            AmountDue = (calacul / 12) * NumMonths;
+        }
+
+        allAmount = calacul * NumYear;
+
+
+        $('#txtAmountDuePay').val(Number(Number(AmountDue).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }))
+
+        $('#txtAllAmountDue').val(Number((allAmount + Amount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }))
+
+        $('#txtAllDue').val(Number(Number(allAmount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }))
+
+
+        // Remove commas from the number string to convert it to a valid number format
+        //var numberString = "1,583.3";
+
+        //var number = parseFloat(numberString.replace(/,/g, ''));
+    }
+
+    function AppTansShahada(Type: string) {
+
+        debugger
+
+        if (flagSave == 1) {
+            setTimeout(function () { flagSave = 0; }, 800);
+
+            return false
+        }
+
+        if ($('#txtRemarkSH').val().trim() == '') {
+            Errorinput($('#txtRemarkSH'))
+            return false
+        }
+
+
+
+
+        if (Number($('#txtPrcSH').val()) == 0) {
+            Errorinput($('#txtPrcSH'))
+            return false
+        }
+
+        if (Number($('#txtAmountSH').val()) == 0) {
+            Errorinput($('#txtAmountSH'))
+            return false
+        }
+
+
+
+        Model = new Wallet_Data();
+
+        let Val = $('#txtAmountSH').val();
+
+        $('#txtAmountSH').val(eval(Val));
+
+        //DocumentActions.AssignToModel(Model);//Insert Update 
+        Model.ID = Number($('#txtTrNoSH').val());
+        Model.TrDate = DateFormatRep($('#txtdateSH').val())
+        Model.Type = $('#TypeSoursSH').val();
+        Model.TypeTo = '';
+        Model.Title = Type;
+        Model.Remars = $('#txtRemarkSH').val();;
+        Model.Amount = Number($('#txtAmountSH').val());
+        Model.Prc = Number($('#txtPrcSH').val());
+        Model.DueDate = DateFormatRep($('#txtdateDueSH').val())
+        Model.TypePeriod = $('#TypePeriod').val();
+        Model.CUSTOM1 = "" + ($("#ActiveSH").prop('checked')) + "";
+        Model.CUSTOM2 = $('#txtAmountDuePay').val()
+        Model.CUSTOM3 = $('#txtAllDue').val() 
+        Model.CUSTOM4 = '';
+
+
+
+        let Data = new Send_Data();
+
+        Data.ID = Number($('#txtTrNoSH').val());
+        Data.Name_Txt_Master = Comp_Wallet;
+        Data.Model = JSON.stringify(Model);
+        Data.StatusFlag = 'u';
+
+        debugger
+        $.ajax({
+            url: Url.Action("Add_Trans", "Profile"),
+            type: "POST",
+            dataType: 'json',
+            async: false,
+            data: { Data: JSON.stringify(Data) },
+            success: (d) => {
+                let result = JSON.parse(d)
+
+                let res = result as Array<Wallet_Data>;
+                Display_Grid(res)
+                Clean();
+
+                flagSave = 1;
+
+                setTimeout(function () { flagSave = 0; }, 800);
+
+            }
+        })
+    }
+
+
+    //*************************************************Definitions****************************************
 
 
     function GetDefinitions() {
@@ -809,7 +1053,7 @@ $(document).ready(() => {
 
                     }
                     disabled();
-                        Set_Roll_HedDef();
+                    Set_Roll_HedDef();
                 }
 
             }
@@ -817,7 +1061,6 @@ $(document).ready(() => {
 
 
     }
-
     function Set_Roll_HedDef() {
 
         debugger
@@ -841,8 +1084,6 @@ $(document).ready(() => {
 
         DisplayOneTap();
     }
-
-
     function DisplayOneTap() {
 
         debugger
@@ -870,8 +1111,6 @@ $(document).ready(() => {
             $('#a_Definitions').click();
         }
     }
-
-
     function DisplayHedDef(Data: Wallet_HedDef) {
 
 
@@ -883,7 +1122,6 @@ $(document).ready(() => {
 
 
     }
-
     function BuildControls(cnt: number) {
 
         var html = "";
@@ -922,10 +1160,16 @@ $(document).ready(() => {
 		                <div class="form-group">
                             <input id="CH_Sum_Exchange${cnt}" type="checkbox" disabled class=" _dis form-control" name=""  />
 		                </div>
-	                </td> 
+	                </td>
+                   
                     <td>
 		                <div class="form-group">
                             <input id="CH_Sum_AllTotal${cnt}" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                </div>
+	                </td>
+                     <td>
+		                <div class="form-group">
+                            <input id="CH_Shahadat${cnt}" type="checkbox" disabled class=" _dis form-control" name=""  />
 		                </div>
 	                </td>
                      <td>
@@ -962,6 +1206,7 @@ $(document).ready(() => {
         $("#CH_Sum_Exchange" + cnt).prop('checked', DataDet.CUSTOM2 == "false" ? false : true);
         $("#CH_Sum_AllTotal" + cnt).prop('checked', DataDet.CUSTOM3 == "false" ? false : true);
         $("#CH_Active" + cnt).prop('checked', DataDet.CUSTOM4 == "false" ? false : true);
+        $("#CH_Shahadat" + cnt).prop('checked', DataDet.CUSTOM5 == "false" ? false : true);
         $("#txt_StatusFlag" + cnt).val('');
 
 
@@ -1029,8 +1274,6 @@ $(document).ready(() => {
         }
 
     }
-
-
     function btnSave_onClick() {
 
         setTimeout(function () {
@@ -1044,7 +1287,6 @@ $(document).ready(() => {
 
         }, 100);
     }
-
     function btnBack_onclick() {
 
         DisplayHedDef(Wal_HedDef)
@@ -1055,8 +1297,6 @@ $(document).ready(() => {
         Enabled();
 
     }
-
-
     function Assign() {
         debugger
 
@@ -1084,6 +1324,7 @@ $(document).ready(() => {
                 SingModelDetails.CUSTOM2 = "" + ($("#CH_Sum_Exchange" + i).prop('checked')) + "";
                 SingModelDetails.CUSTOM3 = "" + ($("#CH_Sum_AllTotal" + i).prop('checked')) + "";
                 SingModelDetails.CUSTOM4 = "" + ($("#CH_Active" + i).prop('checked')) + "";
+                SingModelDetails.CUSTOM5 = "" + ($("#CH_Shahadat" + i).prop('checked')) + "";
 
                 ModelDetails.push(SingModelDetails);
             }
@@ -1091,7 +1332,6 @@ $(document).ready(() => {
         }
 
     }
-
     function Update(StatusFlag: string) {
 
         let Data = new Send_Data();
@@ -1135,8 +1375,6 @@ $(document).ready(() => {
             }
         })
     }
-
-
     function Enabled() {
         $('._dis').removeAttr('disabled')
         $('._Cont').removeClass('display_none')

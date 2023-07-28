@@ -1,0 +1,33 @@
+﻿@{
+
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="fileUpload" id="fileUploadInput" style="background: #0051a3;color: aliceblue;font-weight: bold;" />
+    <input type="button" value="Upload" onclick="uploadFile()" />
+</form>
+<script>
+    function uploadFile() {
+        debugger
+        var fileInput = document.getElementById("fileUploadInput");
+        var file = fileInput.files[0];
+
+        var formData = new FormData();
+        formData.append("fileUpload", file);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/FileUpload/Upload"); // Replace with your server endpoint URL
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // File uploaded successfully
+                console.log("File uploaded!");
+            } else {
+                // File upload failed
+                console.error("File upload failed!");
+            }
+        };
+        xhr.send(formData);
+    }
+
+</script>

@@ -111,7 +111,7 @@ namespace AllPages {
         </div>
 
     
- 
+<div id="Page_Loding" class=" display_none ">
 
  
         <div id="Rec_Exch_Tab" class="tab-content ">
@@ -208,6 +208,9 @@ namespace AllPages {
                     <option value="All">All</option>
                     <option value="Receipt">Receipt</option>
                     <option value="Exchange">Exchange</option>
+                    <option value="Transfers">Transfers</option>
+                    <option value="Shahadat">Shahadat</option>
+                    <option value="Open_Bal">Open Bal</option>
                 </select>
             </div>
 
@@ -397,6 +400,7 @@ namespace AllPages {
                                     <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Receipt</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Exchange</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Sum Total</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Shahadat</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Active</div><div class="fht-cell"></div></th>
                                  
 
@@ -427,7 +431,110 @@ namespace AllPages {
        <div id="Shahadat_Tab" class="tab-content display_none ">
 
 
+
+
+                        <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtdateSH" type="date" name="TrDateSH" class="form-control  "  />
+                        </div>
+                         <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtTrNoSH" type="number" disabled class="form-control " name="IDSH" />
+                        </div>
+
+                        <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                            <br />
+                        </div>
+
+                        <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                            <label>Remark</label>
+                        </div>
+                        <div class="col-xs-11 col-lg-10 col-sm-11 ">
+                            <textarea id="txtRemarkSH" type="text" class="form-control " value="" name="RemarsSH" placeholder="Remars"  spellcheck="false"></textarea>
+                        </div>
+                        <div class="col-xs-1 col-lg-1 col-sm-1 ">
+                            <input id="ActiveSH" type="checkbox"  class="   form-control" style="margin-top: -4%;" name="">
+                        </div>
+                        <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                            <br />
+                        </div>
+ 
+                        <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <select id="TypeSoursSH" class="form-control ">
+                                <option value="Cash">Cash</option>
+                                <option class="Not_Trans" value="Debt">Debt</option>
+                                <option value="Bal Home">Bal Home</option>
+                                <option value="Cairo Bank">Cairo Bank</option>
+                                <option value="Al ahly Bank">Al-ahly Bank</option>
+                                <option value="AAIB">AAIB</option>
+                            </select>
+                        </div> 
+     
+                        <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtPrcSH" type="number" inputmode="numeric" name="AmountSH" placeholder="Prc" class="form-control " />
+                        </div>
+               
+                        <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                            <br />
+                        </div>
+
+
+                        <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtAmountSH" type="number" inputmode="numeric" name="AmountSH" placeholder="Amount" class="form-control " />
+                        </div>
+
+
+                         <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtdateDueSH" type="date" name="TrDateDueSH" class="form-control  "  />
+                        </div>
+
+
+                     
+                        <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                            <br />
+                        </div>
+
+                        <div class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <select id="TypePeriod" class="form-control ">
+                                <option value="1">1 Month</option>
+                                <option value="3">3 Month</option>
+                                <option value="6">6 Month</option>
+                                <option value="12">Year</option>
+                                <option value="0">Due Date</option>
+                            </select>
+                        </div>
+
+                        <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtAmountDuePay" type="text" disabled inputmode="numeric" name="AmountSH" placeholder="AmountDuePay" class="form-control " />
+                        </div>
+
+                     
+
+                        <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                            <br />
+                        </div>   
+ 
+                        <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtAllDue" type="text" disabled inputmode="numeric" name="AmountSH" placeholder="AllDue" class="form-control " />
+                        </div>
+
+                        <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtAllAmountDue" type="text" disabled inputmode="numeric" name="AmountSH" placeholder="AllAmountDue" class="form-control " />
+                        </div>
+
+ 
+
+                       <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                            <br />
+                        </div>
+
+                        <div class="col-xs-12 col-lg-12 col-sm-12 "> 
+                            <button id="btnFreeze" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Freeze </button>
+                        </div>
+
+
        </div>   
+
+
+    </div>   
 
 
 
@@ -1027,7 +1134,8 @@ namespace AllPages {
                 <label>PassUesr</label>
             </div>
             <div class="col-xs-12 col-lg-4 col-sm-12">
-                <input id="txtPassUesr" type="text" name="PassUesr" class="_copy _dis form-control ">
+                <input id="txtPassUesr" type="text" name="PassUesr" class="_copy _dis form-control " pattern="[0-9]*" inputmode="numeric"   placeholder="Password" style="text-align: center;">
+
             </div>
             <div class="col-xs-5 col-lg-1 col-sm-5">
                 <label>Status</label>

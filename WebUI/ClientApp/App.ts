@@ -1180,8 +1180,7 @@ function GetResourceList(Sourcekey: string): any {
     });
     return result;
 }
- 
-// Doha
+  
 function GetDate() {
     var today: Date = new Date();
     var dd: string = today.getDate().toString();
@@ -1197,7 +1196,24 @@ function GetDate() {
     ReturnedDate = yyyy + '-' + mm + '-' + dd;
     return ReturnedDate;
 }
- 
+
+function GetDateyyyy_1() {
+    var today: Date = new Date();
+    var dd: string = today.getDate().toString();
+    var ReturnedDate: string;
+    var mm: string = (today.getMonth() + 1).toString();
+    var yyyy = Number(today.getFullYear()) + 1
+    if (Number(dd) < 10) {
+        dd = ('0' + dd);
+    }
+    if (Number(mm) < 10) {
+        mm = ('0' + mm);
+    }
+    ReturnedDate = yyyy + '-' + mm + '-' + dd;
+    return ReturnedDate;
+}
+
+
 //function CreateListMaleFemale(): HTMLSelectElement {
 //    var offDay = [
 //        {
@@ -1397,6 +1413,44 @@ function DateStartYear() {
     }
     ReturnedDate = yyyy + '-' + '01' + '-' + '01';
     return ReturnedDate;
+}
+
+
+function getMonthsDifference(date1, date2) {
+    // Create Date objects from the input
+    debugger
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+
+    // Calculate the difference in years and months
+    let yearsDiff = d2.getFullYear() - d1.getFullYear();
+    let monthsDiff = d2.getMonth() - d1.getMonth();
+
+    // Handle cases where the dates are not on the same day of the month
+    if (d2.getDate() < d1.getDate()) {
+        monthsDiff -= 1;
+    }
+
+    // Convert years difference to months and add to the months difference
+    monthsDiff += yearsDiff * 12;
+
+    return monthsDiff;
+}
+
+
+function getYearDifference(date1, date2) {
+    // Create Date objects from the input
+    debugger
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+
+    // Calculate the difference in years and months
+    let yearsDiff = d2.getFullYear() - d1.getFullYear();
+  
+
+    // Convert years difference to months and add to the months difference 
+
+    return yearsDiff;
 }
 
 
