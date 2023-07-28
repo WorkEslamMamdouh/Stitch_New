@@ -625,6 +625,14 @@ $(document).ready(function () {
             idBal = idBal.replace(/ /g, "_");
             var html_Balance_1 = " \n                    <div class=\"col-xs-6 col-lg-6 col-sm-6 \">\n                            <label id=\"" + idBal + "\"> ( 0 )</label>\n                    </div>";
             $('#Div_Show_Balance').append(html_Balance_1);
+            //******************************************* Sum Shahadat********************************
+            var SHAmount = 0;
+            var SHchange = AllDisplay.filter(function (x) { return x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && (x.Title == 'Shahadat') && x.CUSTOM1 == 'true'; });
+            if (Wallet_Def_IsActive[xx].CUSTOM5 == "true") {
+                for (var i0 = 0; i0 < SHchange.length; i0++) {
+                    SHAmount = SHAmount + SHchange[i0].Amount;
+                }
+            }
             //******************************************* Sum Exchange********************************
             var EXAmount = 0;
             var Exchange = AllDisplay.filter(function (x) { return x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && (x.Title == 'Exchange' || x.Title == 'Transfers'); });
@@ -633,6 +641,7 @@ $(document).ready(function () {
                     EXAmount = EXAmount + Exchange[i1].Amount;
                 }
             }
+            EXAmount = EXAmount + SHAmount;
             //****************************************************Sum Receipt**************************************
             debugger;
             var RecAmount = 0;
