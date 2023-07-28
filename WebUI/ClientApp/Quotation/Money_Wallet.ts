@@ -129,8 +129,8 @@ $(document).ready(() => {
         btnTransfers.onclick = () => { AppTans(Glopl_Type) };
         btnFreeze.onclick = () => { AppTansShahada(Glopl_Type) };
         a_Expans.onclick = () => { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
-        a_Resive.onclick = () => { $('.Shaha_Ex').removeClass('display_none');  $('.Hid_Ex').removeClass('display_none'); $('.Hid_Rec').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
-        a_Transfers.onclick = () => { $('.Shaha_Ex').removeClass('display_none');  $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Transfers'; };
+        a_Resive.onclick = () => { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Hid_Rec').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
+        a_Transfers.onclick = () => { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Transfers'; };
         a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Definitions.onclick = () => { $('#Definitions_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Shahadat.onclick = () => { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Shaha_Ex').addClass('display_none'); $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Shahadat'; };
@@ -639,18 +639,22 @@ $(document).ready(() => {
 
     }
 
-
+  
     function Clean() {
 
         if (!FlagUpdate) {
-            $('#TypeSours').prop('selectedIndex', 0)
-            $('#TypeSoursTrans').prop('selectedIndex', 0)
+            //$('#TypeSours').prop('selectedIndex', 0)
+            //$('#TypeSoursTrans').prop('selectedIndex', 0)
+            SelectFristRow('TypeSours');
+            SelectFristRow('TypeSoursTrans');
             $('#txtRemark').val('');
             $('#txtdate').val(GetDate());
             $('#txtAmount').val('');
             //**********************************Shahada**************************       
             $('#txtTrNoSH').val('');
-            $('#TypeSoursSH').prop('selectedIndex', 0)
+            SelectFristRow('TypeSoursSH');
+
+            //$('#TypeSoursSH').prop('selectedIndex', 0)
             $('#TypePeriod').prop('selectedIndex', 0)
             $('#txtRemarkSH').val('');
             $('#txtdateSH').val(GetDate());
@@ -979,7 +983,7 @@ $(document).ready(() => {
         Model.TypePeriod = $('#TypePeriod').val();
         Model.CUSTOM1 = "" + ($("#ActiveSH").prop('checked')) + "";
         Model.CUSTOM2 = $('#txtAmountDuePay').val()
-        Model.CUSTOM3 = $('#txtAllDue').val() 
+        Model.CUSTOM3 = $('#txtAllDue').val()
         Model.CUSTOM4 = '';
 
 

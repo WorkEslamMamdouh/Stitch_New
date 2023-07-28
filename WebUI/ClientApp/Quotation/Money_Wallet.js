@@ -462,14 +462,17 @@ $(document).ready(function () {
     }
     function Clean() {
         if (!FlagUpdate) {
-            $('#TypeSours').prop('selectedIndex', 0);
-            $('#TypeSoursTrans').prop('selectedIndex', 0);
+            //$('#TypeSours').prop('selectedIndex', 0)
+            //$('#TypeSoursTrans').prop('selectedIndex', 0)
+            SelectFristRow('TypeSours');
+            SelectFristRow('TypeSoursTrans');
             $('#txtRemark').val('');
             $('#txtdate').val(GetDate());
             $('#txtAmount').val('');
             //**********************************Shahada**************************       
             $('#txtTrNoSH').val('');
-            $('#TypeSoursSH').prop('selectedIndex', 0);
+            SelectFristRow('TypeSoursSH');
+            //$('#TypeSoursSH').prop('selectedIndex', 0)
             $('#TypePeriod').prop('selectedIndex', 0);
             $('#txtRemarkSH').val('');
             $('#txtdateSH').val(GetDate());

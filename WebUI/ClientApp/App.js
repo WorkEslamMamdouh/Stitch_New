@@ -962,6 +962,27 @@ function GetDateyyyy_1() {
     ReturnedDate = yyyy + '-' + mm + '-' + dd;
     return ReturnedDate;
 }
+function SelectFristRow(NameID) {
+    debugger;
+    var dropdown = document.getElementById('' + NameID + '');
+    // Loop through the options and find the first visible option
+    for (var i = 0; i < dropdown.options.length; i++) {
+        debugger;
+        var option = dropdown.options[i];
+        var ch_none = false;
+        for (var u = 0; u < option.classList.length; u++) {
+            if (option.classList[u] == 'display_none') {
+                ch_none = true;
+            }
+        }
+        if (ch_none == false) {
+            debugger;
+            // Set the "selected" property to true for the first visible option
+            option.selected = true;
+            break; // Break the loop once the first visible option is found
+        }
+    }
+}
 //function CreateListMaleFemale(): HTMLSelectElement {
 //    var offDay = [
 //        {
