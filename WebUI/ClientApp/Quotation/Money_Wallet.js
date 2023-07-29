@@ -125,6 +125,8 @@ $(document).ready(function () {
             });
         }
         setTimeout(function () { $('#Page_Loding').removeClass("display_none"); }, 500);
+        var Name = sessionStorage.getItem("AddUserName");
+        PushNotification('Hello Mister ' + Name + '');
     }
     function Tabs_click() {
         $('body').on('click', '.scrollable-tabs li', function () {
@@ -418,6 +420,15 @@ $(document).ready(function () {
             data: { Data: JSON.stringify(Data) },
             success: function (d) {
                 var result = JSON.parse(d);
+                if (Type == "Receipt") {
+                    PushNotification('تم اضافة مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) في حساب (' + $("#TypeSours option:selected").text() + ') ');
+                }
+                if (Type == "Exchange") {
+                    PushNotification('تم خصم مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) في حساب (' + $("#TypeSours option:selected").text() + ') ');
+                }
+                if (Type == "Transfers") {
+                    PushNotification('تم تحويل مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) من حساب (' + $("#TypeSours option:selected").text() + ') الي حساب (' + $("#TypeSoursTrans option:selected").text() + ') ');
+                }
                 var res = result;
                 Display_Grid(res);
                 Clean();
@@ -683,6 +694,9 @@ $(document).ready(function () {
                 }
             }
         }
+        //if (AomuntDue != 0) {
+        //    PushNotification(' تم اضافة فائدة بمقدار (' + AomuntDue + ') في بنك (' + Shahadat[0].Type+') ');
+        //}
         return AomuntDue;
     }
     function returnBalansCalculatorShahadat(Shahadat) {

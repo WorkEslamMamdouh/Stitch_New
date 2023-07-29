@@ -179,7 +179,10 @@ $(document).ready(() => {
 
         setTimeout(function () { $('#Page_Loding').removeClass("display_none") }, 500);
 
+        let Name = sessionStorage.getItem("AddUserName");
 
+        PushNotification('Hello Mister ' + Name+'')
+         
     }
 
 
@@ -589,6 +592,21 @@ $(document).ready(() => {
             success: (d) => {
                 let result = JSON.parse(d)
 
+                if (Type == "Receipt") {
+                    PushNotification('تم اضافة مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) في حساب (' + $("#TypeSours option:selected").text() + ') ');
+                }
+
+                if (Type == "Exchange") {
+                    PushNotification('تم خصم مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) في حساب (' + $("#TypeSours option:selected").text() + ') ');
+                }
+
+                if (Type == "Transfers") {
+                    PushNotification('تم تحويل مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) من حساب (' + $("#TypeSours option:selected").text() + ') الي حساب (' + $("#TypeSoursTrans option:selected").text() + ') ');
+                }
+ 
+
+            
+
                 let res = result as Array<Wallet_Data>;
                 Display_Grid(res)
                 Clean();
@@ -977,7 +995,10 @@ $(document).ready(() => {
 
         }
 
+        //if (AomuntDue != 0) {
 
+        //    PushNotification(' تم اضافة فائدة بمقدار (' + AomuntDue + ') في بنك (' + Shahadat[0].Type+') ');
+        //}
 
         return AomuntDue
     }
@@ -1113,6 +1134,8 @@ $(document).ready(() => {
 
         }, 300);
     }
+
+  
     function AppTansShahada(Type: string) {
 
 
