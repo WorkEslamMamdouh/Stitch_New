@@ -447,12 +447,10 @@ namespace AllPages {
                         <div class="col-xs-12 col-lg-1 col-sm-12 ">
                             <label>Remark</label>
                         </div>
-                        <div class="col-xs-11 col-lg-10 col-sm-11 ">
+                        <div class="col-xs-12 col-lg-11 col-sm-12 ">
                             <textarea id="txtRemarkSH" type="text" class="form-control " value="" name="RemarsSH" placeholder="Remars"  spellcheck="false"></textarea>
                         </div>
-                        <div class="col-xs-1 col-lg-1 col-sm-1 ">
-                            <input id="ActiveSH" type="checkbox"  class="   form-control" style="margin-top: -4%;" name="">
-                        </div>
+                   
                         <div class="col-xs-12 col-lg-12 col-sm-12 ">
                             <br />
                         </div>
@@ -520,14 +518,32 @@ namespace AllPages {
                             <input id="txtAllAmountDue" type="text" disabled inputmode="numeric" name="AmountSH" placeholder="AllAmountDue" class="form-control " />
                         </div>
 
- 
+                        <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                            <br />
+                        </div>
+
+                        <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtPaid_up" type="text" disabled inputmode="numeric" name="AmountSH" placeholder="AllDue" class="form-control " />
+                        </div>
+
+                        <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
+                            <input id="txtResidual" type="text" disabled inputmode="numeric" name="AmountSH" placeholder="AllAmountDue" class="form-control " />
+                        </div>
+
 
                        <div class="col-xs-12 col-lg-12 col-sm-12 ">
                             <br />
                         </div>
 
-                        <div class="col-xs-12 col-lg-12 col-sm-12 "> 
+                        <div class="col-xs-11 col-lg-11 col-sm-11 "> 
                             <button id="btnFreeze" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Freeze </button>
+                        </div>
+                            <div class="col-xs-1 col-lg-1 col-sm-1 ">
+                            <input id="ActiveSH" type="checkbox"  class="   form-control" style="margin-top: -4%;" name="">
+                        </div>
+
+                       <div class="col-xs-12 col-lg-12 col-sm-12 ">
+                            <br />
                         </div>
 
 

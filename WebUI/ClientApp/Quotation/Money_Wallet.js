@@ -613,11 +613,9 @@ $(document).ready(function () {
                 for (var i0 = 0; i0 < SHchange.length; i0++) {
                     SHAmount = SHAmount + SHchange[i0].Amount;
                 }
-                debugger;
                 //alert(BalansCalculatorShahadat(SHchange))
                 //alert(SHAmount)
                 SHAmount = SHAmount - BalansCalculatorShahadat(SHchange);
-                debugger;
             }
             //******************************************* Sum Exchange********************************
             var EXAmount = 0;
@@ -627,9 +625,7 @@ $(document).ready(function () {
                     EXAmount = EXAmount + Exchange[i1].Amount;
                 }
             }
-            debugger;
             EXAmount = EXAmount + SHAmount;
-            debugger;
             //****************************************************Sum Receipt**************************************
             var RecAmount = 0;
             var Receipt = AllDisplay.filter(function (x) { return x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Receipt' || (x.TypeTo == '' + Wallet_Def_IsActive[xx].NameBal + '' && x.Title == 'Transfers'); });
@@ -640,7 +636,6 @@ $(document).ready(function () {
             }
             //RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
             //***************************************************************SetValHtml*********************************************  
-            debugger;
             $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].Remars + ' ( ' + (Number(RecAmount) - Number(EXAmount)).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
             //****************************************Total***********************************************
             if (Wallet_Def_IsActive[xx].CUSTOM3 == "true") {
@@ -656,18 +651,15 @@ $(document).ready(function () {
     function BalansCalculatorShahadat(Shahadat) {
         var AomuntDue = 0;
         for (var b = 0; b < Shahadat.length; b++) {
-            debugger;
             var AllMonth = getMonthsDifference(Shahadat[b].TrDate, Shahadat[b].DueDate);
             var NumPriod = 1;
             if (Shahadat[b].TypePeriod != '0') {
                 NumPriod = AllMonth / Number(Shahadat[b].TypePeriod);
             }
             var NumMonth = getMonthsDifference(Shahadat[b].TrDate, GetDate());
-            debugger;
             for (var Pr = 0; Pr < NumPriod; Pr++) {
                 var AllDue = parseFloat(Shahadat[b].CUSTOM3.replace(/,/g, ''));
                 if (AomuntDue == AllDue) {
-                    debugger;
                     AomuntDue = AomuntDue + Shahadat[b].Amount;
                     break;
                 }
@@ -679,26 +671,55 @@ $(document).ready(function () {
                     NumMonth = NumMonth - Number(Shahadat[b].TypePeriod);
                 }
                 else {
-                    debugger;
                     if (AomuntDue == AllDue) {
-                        debugger;
                         AomuntDue = AomuntDue + Shahadat[b].Amount;
                         break;
                     }
                     break;
                 }
                 if (AomuntDue == AllDue) {
-                    debugger;
                     AomuntDue = AomuntDue + Shahadat[b].Amount;
                     break;
                 }
             }
         }
-        debugger;
+        return AomuntDue;
+    }
+    function returnBalansCalculatorShahadat(Shahadat) {
+        var AomuntDue = 0;
+        for (var b = 0; b < Shahadat.length; b++) {
+            var AllMonth = getMonthsDifference(Shahadat[b].TrDate, Shahadat[b].DueDate);
+            var NumPriod = 1;
+            if (Shahadat[b].TypePeriod != '0') {
+                NumPriod = AllMonth / Number(Shahadat[b].TypePeriod);
+            }
+            var NumMonth = getMonthsDifference(Shahadat[b].TrDate, GetDate());
+            for (var Pr = 0; Pr < NumPriod; Pr++) {
+                var AllDue = parseFloat(Shahadat[b].CUSTOM3.replace(/,/g, ''));
+                if (AomuntDue == AllDue) {
+                    break;
+                }
+                if (Number(Shahadat[b].TypePeriod) <= NumMonth) {
+                    var numberString = Shahadat[b].CUSTOM2;
+                    var Due = parseFloat(numberString.replace(/,/g, ''));
+                    AomuntDue = (AomuntDue + Due);
+                    AomuntDue = parseFloat(AomuntDue.toFixed(1));
+                    NumMonth = NumMonth - Number(Shahadat[b].TypePeriod);
+                }
+                else {
+                    if (AomuntDue == AllDue) {
+                        break;
+                    }
+                    break;
+                }
+                if (AomuntDue == AllDue) {
+                    break;
+                }
+            }
+        }
         return AomuntDue;
     }
     function SumPrc() {
-        debugger;
         var Amount = Number($('#txtAmountSH').val());
         var Prc = (Number($('#txtPrcSH').val()) / 100);
         //let NumYear = getYearDifference($('#txtdateSH').val(), $('#txtdateDueSH').val())
@@ -709,10 +730,8 @@ $(document).ready(function () {
         }
         var calacul = Amount * Prc; //حساب الفائده علي السنه
         var period = Number($('#TypePeriod').val());
-        debugger;
         var AmountDue = 0;
         var allAmount = 0;
-        debugger;
         if (period != 0) {
             AmountDue = (calacul / 12) * period;
         }
@@ -720,7 +739,6 @@ $(document).ready(function () {
             var NumMonths = getMonthsDifference($('#txtdateSH').val(), $('#txtdateDueSH').val());
             AmountDue = (calacul / 12) * NumMonths;
         }
-        debugger;
         allAmount = Number(AmountDue.toFixed(1)) * NumPriod;
         $('#txtAmountDuePay').val(Number(Number(AmountDue).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
         $('#txtAllDue').val(Number(Number(allAmount).toFixed(4)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
@@ -728,6 +746,19 @@ $(document).ready(function () {
         // Remove commas from the number string to convert it to a valid number format
         //var numberString = "1,583.3";
         //var number = parseFloat(numberString.replace(/,/g, ''));
+        setTimeout(function () {
+            debugger;
+            var chackDateMakeShahada = AllDisplay.filter(function (x) { return (x.Title == 'Shahadat') && x.ID == Number($('#txtTrNoSH').val()); });
+            if (chackDateMakeShahada.length > 0) {
+                var returnBalans = returnBalansCalculatorShahadat(chackDateMakeShahada);
+                $('#txtPaid_up').val(returnBalans.toLocaleString('en-US', { maximumFractionDigits: 1 }));
+                $('#txtResidual').val((Number(Number(allAmount).toFixed(4)) - returnBalans).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+            }
+            else {
+                $('#txtPaid_up').val(0);
+                $('#txtResidual').val(0);
+            }
+        }, 300);
     }
     function AppTansShahada(Type) {
         if (flagSave == 1) {
@@ -770,10 +801,8 @@ $(document).ready(function () {
         Data.Name_Txt_Master = Comp_Wallet;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'u';
-        debugger;
         var chackDateMakeShahada = AllDisplay.filter(function (x) { return x.Type == '' + $('#TypeSoursSH').val() + '' && (x.Title == 'Shahadat') && x.CUSTOM1 == 'true' && x.DueDate >= DateFormatRep($('#txtdateSH').val()) && x.ID != Number($('#txtTrNoSH').val()); });
         if (chackDateMakeShahada.length > 0) {
-            debugger;
             alert('في شهاده معموله في هذه الفتره');
             Errorinput($('#txtdateSH'));
             return;
