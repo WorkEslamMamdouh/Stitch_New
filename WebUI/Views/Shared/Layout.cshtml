@@ -438,8 +438,28 @@
             margin-bottom: 9px;
         }
 
+        body { 
+        }
 
-     
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+        }
+
+        .toast {
+            background-color: #333;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
     </style>
 
 </head>
@@ -452,15 +472,15 @@
     <input type="hidden" id="GetPass" name="name" value="" />
 
 
-    <a id="layout_Back" @*onclick="history.back()"*@ class="backposition animate__animated animate__backInDown" data-toggle="tab" title="Back Page" href="">  
+    <a id="layout_Back" @*onclick="history.back()"*@ class="backposition animate__animated animate__backInDown" data-toggle="tab" title="Back Page" href="">
         <i class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;"></i>
     </a>
 
-    <a id="layout_Refresh" @*onclick="location.reload()"*@ class="Refreshposition animate__animated animate__backInDown" data-toggle="tab" title="Refresh" href="">   
+    <a id="layout_Refresh" @*onclick="location.reload()"*@ class="Refreshposition animate__animated animate__backInDown" data-toggle="tab" title="Refresh" href="">
         <i class="fa-solid fa-clock-rotate-left fa-beat Refresh"></i>
     </a>
 
-     
+
     <div id="cont" class="divcont">
         @RenderBody()
     </div>
@@ -503,11 +523,12 @@
             </div>
         </div>
     </div>
+     
+    <div class="toast-container" id="toastContainer"></div>
 
-
-
-
-
+    <script>
+     
+    </script>
 
     <script src="~/ClientApp/Quotation/AllPages.js"></script>
 </body>

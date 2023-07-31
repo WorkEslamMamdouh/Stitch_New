@@ -179,9 +179,8 @@ $(document).ready(() => {
 
         setTimeout(function () { $('#Page_Loding').removeClass("display_none") }, 500);
 
-        let Name = sessionStorage.getItem("AddUserName");
-
-        PushNotification('Hello Mister ' + Name+'')
+        let Name = sessionStorage.getItem("AddUserName"); 
+        ShowMessage('Hello Mister ' + Name +' in your Wallet')
          
     }
 
@@ -593,15 +592,15 @@ $(document).ready(() => {
                 let result = JSON.parse(d)
 
                 if (Type == "Receipt") {
-                    PushNotification('تم اضافة مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) في حساب (' + $("#TypeSours option:selected").text() + ') ');
+                    ShowMessage('تم اضافة مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) في حساب (' + $("#TypeSours option:selected").text() + ')ـ ');
                 }
 
                 if (Type == "Exchange") {
-                    PushNotification('تم خصم مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) في حساب (' + $("#TypeSours option:selected").text() + ') ');
+                    ShowMessage('تم خصم مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) من حساب ـ(' + $("#TypeSours option:selected").text() + ')ـ ');
                 }
 
                 if (Type == "Transfers") {
-                    PushNotification('تم تحويل مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) من حساب (' + $("#TypeSours option:selected").text() + ') الي حساب (' + $("#TypeSoursTrans option:selected").text() + ') ');
+                    ShowMessage('تم تحويل مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) من حساب ـ(' + $("#TypeSours option:selected").text() + ')ـ الي حساب ـ(' + $("#TypeSoursTrans option:selected").text() + ') ');
                 }
  
 

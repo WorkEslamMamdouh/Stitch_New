@@ -875,10 +875,10 @@ namespace AllPages {
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12 ">
 
-                <input id="Server" type="text" class="form-control " value="172.106.161.82" name="Server" list="ServerName">
+                <input id="Server" type="text" class="form-control " value="108.181.197.82" name="Server" list="ServerName">
                 <datalist id="ServerName">
 
-                    <option value="172.106.161.82">
+                    <option value="108.181.197.82">
                 </datalist>
             </div>
 
@@ -1314,7 +1314,8 @@ namespace AllPages {
                     if (User[0].Type == "Work") {
                         $("#_Work").removeClass('display_none');
                     }
-
+                    let Name = sessionStorage.getItem("AddUserName");
+                    ShowMessage('Hello Mister ' + Name + ' in App')
                 }
                 else {
                     Errorinput(txtPassword);
@@ -1340,18 +1341,28 @@ namespace AllPages {
             Profile();
             glopalBtn = "Open_Profile";
             localStorage.setItem('glopalBtn', glopalBtn);
+
+
+            let Name = sessionStorage.getItem("AddUserName");
+            ShowMessage('Hello Mister ' + Name + ' in your Profile')
         });
 
         $("#Open_Notes").on('click', function () {
             Notes();
             glopalBtn = "Open_Notes";
             localStorage.setItem('glopalBtn', glopalBtn);
+
+            let Name = sessionStorage.getItem("AddUserName");
+            ShowMessage('Hello Mister ' + Name + ' in your Notes')
         });
 
         $("#Open_Data_Server").on('click', function () {
             Data_Server();
             glopalBtn = "Open_Data_Server";
             localStorage.setItem('glopalBtn', glopalBtn);
+
+            let Name = sessionStorage.getItem("AddUserName");
+            ShowMessage('Hello Mister ' + Name + ' in your Server')
         });
 
         $("#Open_Money_Wallet").on('click', function () {
@@ -1369,12 +1380,16 @@ namespace AllPages {
             Settings();
             glopalBtn = "Open_Settings";
             localStorage.setItem('glopalBtn', glopalBtn);
+
+            let Name = sessionStorage.getItem("AddUserName");
+            ShowMessage('Hello Mister ' + Name + ' in your Settings')
         });
 
          
 
 
-        
+
+   
 
     }
      
