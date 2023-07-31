@@ -997,6 +997,48 @@ function PushNotification(Message) {
         });
     }
 }
+function showNonfictionMessage(message) {
+    debugger;
+    var nonfictionMessageContainer = document.getElementById("nonfictionMessageContainer");
+    var nonfictionMessage = document.getElementById("nonfictionMessage");
+    if (nonfictionMessageContainer && nonfictionMessage) {
+        nonfictionMessage.textContent = message;
+        nonfictionMessageContainer.style.display = "block";
+        // Hide the message after a certain time (e.g., 5 seconds)
+        setTimeout(function () {
+            nonfictionMessageContainer.style.display = "none";
+        }, 10000); // 5000 milliseconds = 5 seconds
+    }
+}
+function ShowMessage(Message) {
+    var toastContainer = document.getElementById('toastContainer');
+    // Create a new toast element
+    var toastElement = document.createElement('div');
+    toastElement.classList.add('toast');
+    toastElement.textContent = Message + ' !';
+    // Append the toast element to the container
+    toastContainer.appendChild(toastElement);
+    // Display the toast using CSS animations
+    setTimeout(function () {
+        toastElement.style.opacity = '1';
+        toastElement.style.transform = 'translateY(0)';
+    }, 100);
+    // Hide the toast after a delay (adjust as needed)
+    setTimeout(function () {
+        hideToast(toastElement);
+    }, 5000);
+}
+function hideToast(toastElement) {
+    toastElement.style.opacity = '0';
+    toastElement.style.transform = 'translateY(100%)';
+    // Remove the toast element from the container after the animation ends
+    toastElement.addEventListener('transitionend', function () {
+        toastElement.remove();
+    });
+}
+// Call the showAlert() function with your desired message
+// Call the showAlert() function to display the alert
+// Show the alert with a custom message
 //function CreateListMaleFemale(): HTMLSelectElement {
 //    var offDay = [
 //        {
