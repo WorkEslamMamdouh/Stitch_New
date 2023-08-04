@@ -1315,7 +1315,7 @@ namespace AllPages {
                         $("#_Work").removeClass('display_none');
                     }
                     let Name = sessionStorage.getItem("AddUserName");
-                    ShowMessage('Hello Mister ' + Name + ' in App')
+                    ShowMessage('Welcome Mister ' + Name + ' in App')
                 }
                 else {
                     Errorinput(txtPassword);
@@ -1344,7 +1344,7 @@ namespace AllPages {
 
 
             let Name = sessionStorage.getItem("AddUserName");
-            ShowMessage('Hello Mister ' + Name + ' in your Profile')
+            ShowMessage('Welcome Mister ' + Name + ' in your Profile')
         });
 
         $("#Open_Notes").on('click', function () {
@@ -1353,7 +1353,7 @@ namespace AllPages {
             localStorage.setItem('glopalBtn', glopalBtn);
 
             let Name = sessionStorage.getItem("AddUserName");
-            ShowMessage('Hello Mister ' + Name + ' in your Notes')
+            ShowMessage('Welcome Mister ' + Name + ' in your Notes')
         });
 
         $("#Open_Data_Server").on('click', function () {
@@ -1362,13 +1362,17 @@ namespace AllPages {
             localStorage.setItem('glopalBtn', glopalBtn);
 
             let Name = sessionStorage.getItem("AddUserName");
-            ShowMessage('Hello Mister ' + Name + ' in your Server')
+            ShowMessage('Welcome Mister ' + Name + ' in your Server')
         });
 
         $("#Open_Money_Wallet").on('click', function () {
             Wallet(); 
             glopalBtn = "Open_Money_Wallet";
             localStorage.setItem('glopalBtn', glopalBtn);
+
+
+            let Name = sessionStorage.getItem("AddUserName");
+            ShowMessage('Hello Mister ' + Name + ' in your Wallet')
         });
 
         $("#Open_Get_Views").on('click', function () {
@@ -1382,7 +1386,7 @@ namespace AllPages {
             localStorage.setItem('glopalBtn', glopalBtn);
 
             let Name = sessionStorage.getItem("AddUserName");
-            ShowMessage('Hello Mister ' + Name + ' in your Settings')
+            ShowMessage('Welcome Mister ' + Name + ' in your Settings')
         });
 
          

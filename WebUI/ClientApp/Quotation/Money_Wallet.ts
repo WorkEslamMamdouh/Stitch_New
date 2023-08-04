@@ -178,9 +178,7 @@ $(document).ready(() => {
 
 
         setTimeout(function () { $('#Page_Loding').removeClass("display_none") }, 500);
-
-        let Name = sessionStorage.getItem("AddUserName"); 
-        ShowMessage('Hello Mister ' + Name +' in your Wallet')
+ 
          
     }
 

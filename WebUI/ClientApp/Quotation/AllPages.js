@@ -100,7 +100,7 @@ var AllPages;
                         $("#_Work").removeClass('display_none');
                     }
                     var Name = sessionStorage.getItem("AddUserName");
-                    ShowMessage('Hello Mister ' + Name + ' in App');
+                    ShowMessage('Welcome Mister ' + Name + ' in App');
                 }
                 else {
                     Errorinput(txtPassword);
@@ -121,26 +121,28 @@ var AllPages;
             glopalBtn = "Open_Profile";
             localStorage.setItem('glopalBtn', glopalBtn);
             var Name = sessionStorage.getItem("AddUserName");
-            ShowMessage('Hello Mister ' + Name + ' in your Profile');
+            ShowMessage('Welcome Mister ' + Name + ' in your Profile');
         });
         $("#Open_Notes").on('click', function () {
             Notes();
             glopalBtn = "Open_Notes";
             localStorage.setItem('glopalBtn', glopalBtn);
             var Name = sessionStorage.getItem("AddUserName");
-            ShowMessage('Hello Mister ' + Name + ' in your Notes');
+            ShowMessage('Welcome Mister ' + Name + ' in your Notes');
         });
         $("#Open_Data_Server").on('click', function () {
             Data_Server();
             glopalBtn = "Open_Data_Server";
             localStorage.setItem('glopalBtn', glopalBtn);
             var Name = sessionStorage.getItem("AddUserName");
-            ShowMessage('Hello Mister ' + Name + ' in your Server');
+            ShowMessage('Welcome Mister ' + Name + ' in your Server');
         });
         $("#Open_Money_Wallet").on('click', function () {
             Wallet();
             glopalBtn = "Open_Money_Wallet";
             localStorage.setItem('glopalBtn', glopalBtn);
+            var Name = sessionStorage.getItem("AddUserName");
+            ShowMessage('Hello Mister ' + Name + ' in your Wallet');
         });
         $("#Open_Get_Views").on('click', function () {
             //alert("تحت")
@@ -151,7 +153,7 @@ var AllPages;
             glopalBtn = "Open_Settings";
             localStorage.setItem('glopalBtn', glopalBtn);
             var Name = sessionStorage.getItem("AddUserName");
-            ShowMessage('Hello Mister ' + Name + ' in your Settings');
+            ShowMessage('Welcome Mister ' + Name + ' in your Settings');
         });
     }
     function Home() {
