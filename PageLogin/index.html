@@ -19,11 +19,14 @@
 
 
 
-     
+
     <script>
         //GetUrlConfig
 
+        var Num_Random = Math.random()
+
         GetUrl();
+
 
         function GetUrl() {
             fetch("https://sheetdb.io/api/v1/l27klxbvez23x", {
@@ -32,8 +35,23 @@
                 .then(UrlConfig => {
                     debugger;
                     var url = UrlConfig[UrlConfig.length - 1].Url1;
-                    sessionStorage.setItem("UrlConfig", url);
+                    sessionStorage.setItem("UrlConfig" + Num_Random, url);
 
+                });
+        }
+
+
+        function GetUrlOpen() {
+            fetch("https://sheetdb.io/api/v1/l27klxbvez23x", {
+                method: "GET"
+            }).then(response => response.json())
+                .then(UrlConfig => {
+                    debugger;
+                    var url = UrlConfig[UrlConfig.length - 1].Url1;
+                    sessionStorage.setItem("UrlConfig" + Num_Random, url);
+
+                    var randomQueryParam = "nocache=" + Num_Random;
+                    window.open(url + "?" + randomQueryParam, "_self");
                 });
         }
 
@@ -41,14 +59,17 @@
 
         function OpenPage() {
 
-            let url = sessionStorage.getItem("UrlConfig")
-             
+            let url = sessionStorage.getItem("UrlConfig" + Num_Random)
+
             if (url == null) {
-                alert("there is no Internet")
-                GetUrl();
+                //alert("there is no Internet")
+                GetUrlOpen();
             }
             else {
-                window.open(url, "_self"); 
+                //window.open(url, "_self");
+                var randomQueryParam = "nocache=" + Num_Random;
+
+                window.open(url + "?" + randomQueryParam, "_self");
             }
         }
 
@@ -68,7 +89,7 @@
             }
         }
 
-         
+
 
     </script>
 
