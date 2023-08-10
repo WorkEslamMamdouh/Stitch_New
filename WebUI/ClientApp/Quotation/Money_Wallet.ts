@@ -444,7 +444,7 @@ $(document).ready(() => {
                     JGrid.DataSource = Display;
                     JGrid.Bind();
 
-                    setTimeout(function () { Clean(); }, 50);
+                    setTimeout(function () { Clean(); }, 100);
 
 
                     TotalGrid();
@@ -524,9 +524,9 @@ $(document).ready(() => {
             AmountRec = AmountRec + DisplayRec[i].Amount;
         }
 
-        $('#txtTotalExchange').val(AmountEx.toFixed(2));
-        $('#txtTotalReceipt').val(AmountRec.toFixed(2));
-        $('#txtTotal').val((AmountRec - AmountEx).toFixed(2));
+        $('#txtTotalExchange').val(Number(AmountEx.toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+        $('#txtTotalReceipt').val(Number(AmountRec.toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+        $('#txtTotal').val(Number((AmountRec - AmountEx).toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
 
     }
     function AppTans(Type: string) {
@@ -734,7 +734,8 @@ $(document).ready(() => {
         }
 
         //AllBalance(); 
-        Sum_AllBalance();
+        setTimeout(function () { Sum_AllBalance(); }, 150);
+      
     }
 
     //*************************************************Display_AllBalance**************************************** 

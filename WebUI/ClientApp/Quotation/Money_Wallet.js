@@ -319,7 +319,7 @@ $(document).ready(function () {
                     AllDisplay = Display;
                     JGrid.DataSource = Display;
                     JGrid.Bind();
-                    setTimeout(function () { Clean(); }, 50);
+                    setTimeout(function () { Clean(); }, 100);
                     TotalGrid();
                 }
             }
@@ -373,9 +373,9 @@ $(document).ready(function () {
         for (var i = 0; i < DisplayRec.length; i++) {
             AmountRec = AmountRec + DisplayRec[i].Amount;
         }
-        $('#txtTotalExchange').val(AmountEx.toFixed(2));
-        $('#txtTotalReceipt').val(AmountRec.toFixed(2));
-        $('#txtTotal').val((AmountRec - AmountEx).toFixed(2));
+        $('#txtTotalExchange').val(Number(AmountEx.toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+        $('#txtTotalReceipt').val(Number(AmountRec.toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+        $('#txtTotal').val(Number((AmountRec - AmountEx).toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 1 }));
     }
     function AppTans(Type) {
         if (flagSave == 1) {
@@ -526,7 +526,7 @@ $(document).ready(function () {
             $('#txtTrNoSH').attr('style', 'text-align: center;background: #009563;color: white;');
         }
         //AllBalance(); 
-        Sum_AllBalance();
+        setTimeout(function () { Sum_AllBalance(); }, 150);
     }
     //*************************************************Display_AllBalance**************************************** 
     function AllBalance() {
