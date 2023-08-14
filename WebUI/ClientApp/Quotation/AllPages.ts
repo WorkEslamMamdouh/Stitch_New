@@ -985,7 +985,7 @@ namespace AllPages {
                 <label>New Query</label>
             </div>
             <div class="col-xs-12 col-lg-11 col-sm-12">
-                <textarea id="New_Query" type="text" class="form-control " value=""></textarea>
+                <textarea id="New_Query" type="text" class="form-control " value="" style="height: 150px;"></textarea>
             </div>
 
          
