@@ -183,10 +183,10 @@ namespace Inv.WebUI.Controllers
             {
                 using (SqlCommand command = new SqlCommand())
                 {
-                   
+
 
                     //----------------------------------------------------get Table columns name--------------------------
-
+                    command.Connection = connection;
                     connection.Open();
 
 
@@ -194,18 +194,25 @@ namespace Inv.WebUI.Controllers
                                                   , system_type_name 
                                             FROM    sys.dm_exec_describe_first_result_set (N' Select Top(1)* from " + TablesName + " ', null, 1) ";
 
-
-
-                    SqlDataReader reader1 = command.ExecuteReader();
-                    while (reader1.Read())
+                    try
                     {
-                        SqlColumns column = new SqlColumns();
 
-                        column.name = reader1["name"].ToString();
-                        column.system_type = reader1["system_type_name"].ToString();
+                        SqlDataReader reader1 = command.ExecuteReader();
+                        while (reader1.Read())
+                        {
+                            SqlColumns column = new SqlColumns();
 
-                        columns.Add(column);
+                            column.name = reader1["name"].ToString();
+                            column.system_type = reader1["system_type_name"].ToString();
+
+                            columns.Add(column);
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                         
+                    }
+
                     connection.Close();
                     //---------------------------------------------------------------------------------------------------------------
                      

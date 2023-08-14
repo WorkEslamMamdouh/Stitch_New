@@ -181,7 +181,10 @@ $(document).ready(() => {
     }
     function Share() {
 
-        var url = window.location.origin + '/Downlad/?D=' + GloplePath + '&N=' + NameFile;
+        debugger
+        let encoded_GloplePath = encodeURIComponent(GloplePath)
+        let encoded_NameFile = encodeURIComponent(NameFile)
+        var url = window.location.origin + '/Downlad/?D=' + encoded_GloplePath + '&N=' + encoded_NameFile;
 
         $('#txtShare').val(url);
 

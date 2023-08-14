@@ -528,7 +528,7 @@ $(document).ready(function () {
             $('#txtTrNoSH').attr('style', 'text-align: center;background: #009563;color: white;');
         }
         //AllBalance(); 
-        setTimeout(function () { Sum_AllBalance(); }, 150);
+        setTimeout(function () { Sum_AllBalance(); }, 50);
     }
     //*************************************************Display_AllBalance**************************************** 
     function AllBalance() {

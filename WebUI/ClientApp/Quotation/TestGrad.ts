@@ -1,13 +1,15 @@
 ﻿
-$(document).ready(() => { 
+$(document).ready(() => {
 
     var Grid: ESGrid = new ESGrid();
 
     //var ShowData: HTMLButtonElement; 
     var GenerateModels: HTMLButtonElement;
-    var ConactServer: HTMLButtonElement;
+    //var ConactServer: HTMLButtonElement;
     var Conact: HTMLButtonElement;
     var DataSours: HTMLSelectElement;
+    var Columns_Table: HTMLSelectElement;
+    var ORDER_Table: HTMLSelectElement;
     var Database: HTMLSelectElement;
     var top: HTMLSelectElement;
 
@@ -20,16 +22,18 @@ $(document).ready(() => {
         $("#layout_Back").removeClass('display_none');
 
 
-       
+
 
 
 
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
         GenerateModels = document.getElementById('GenerateModels') as HTMLButtonElement
         Conact = document.getElementById('Conact') as HTMLButtonElement
-        ConactServer = document.getElementById('ConactServer') as HTMLButtonElement
+        //ConactServer = document.getElementById('ConactServer') as HTMLButtonElement
         Database = document.getElementById('Database') as HTMLSelectElement
         DataSours = document.getElementById('DataSours') as HTMLSelectElement
+        Columns_Table = document.getElementById('Columns_Table') as HTMLSelectElement
+        ORDER_Table = document.getElementById('ORDER_Table') as HTMLSelectElement
         top = document.getElementById('top') as HTMLSelectElement
 
 
@@ -48,15 +52,18 @@ $(document).ready(() => {
         //InitializeGridControl(); 
 
         Conact.onclick = Conact_onclick;
-        ConactServer.onclick = ConactServer_onclick;
-        GenerateModels.onclick = GenerateModels_onclick; 
+        //ConactServer.onclick = ConactServer_onclick;
+        GenerateModels.onclick = GenerateModels_onclick;
+        Database.onchange = ConactServer_onclick;
         DataSours.onchange = DataSours_onchange;
-        top.onchange = DataSours_onchange;
+        top.onchange = () => { $('#New_Query').val('') };
+        Columns_Table.onchange = () => { $('#New_Query').val('') };
+        ORDER_Table.onchange = () => { $('#New_Query').val('') };
         //ShowData.onclick = ShowData_onclick;
 
         InitializeGridControl();
     }
-     
+
 
     function Conact_onclick() {
 
@@ -76,7 +83,7 @@ $(document).ready(() => {
                 //let res = result as SqlTables;
 
                 if (result.success) {
-                    Database.innerHTML = '';
+                    Database.innerHTML = '<option value="null">Select Database</option>';
                     for (var i = 0; i < result.TableName.length; i++) {
                         if (result.TableName[i] != 'tempdb' && result.TableName[i] != 'master' && result.TableName[i] != 'msdb' && result.TableName[i] != 'model') {
                             $('#Database').append('<option value="' + result.TableName[i] + '">' + result.TableName[i] + '</option>')
@@ -100,25 +107,46 @@ $(document).ready(() => {
         if (DataSours.value == 'null') {
 
             $('#New_Query').val('')
+            $('#Columns_Table').html('')
         }
         else {
-            $('#New_Query').val('Select TOP (' + $('#top').val() + ') * from ' + $("#DataSours option:selected").text() + '')
+            $('#New_Query').val('')
+            GetColumnsTable();
+            //$('#New_Query').val('Select TOP (' + $('#top').val() + ') * from ' + $("#DataSours option:selected").text() + '')
         }
 
     }
     function ConactServer_onclick() {
-
+        debugger
         $('#New_Query').val('')
+        $('#Columns_Table').html('')
         GetsqlData();
 
     }
 
     function GenerateModels_onclick() {
-        if (DataSours.value.trim() == '' || $('#New_Query').val().trim() == '') {
-            Errorinput(DataSours)
-            Errorinput($('#New_Query'))
+
+        if (Database.value.trim() == '' || Database.value == 'null') {
+            Errorinput(Database)
             return
         }
+        if (DataSours.value.trim() == '' || DataSours.value == 'null') {
+            Errorinput(DataSours)
+            return
+        }
+
+        if ($('#New_Query').val().trim() == '') {
+
+            if (Columns_Table.value.trim() == '' || Columns_Table.value == 'null') {
+                $('#New_Query').val('Select TOP (' + $('#top').val() + ') * from ' + $("#DataSours option:selected").text() + '')
+            }
+
+            if (Columns_Table.value.trim() != '' && Columns_Table.value != 'null') {
+                $('#New_Query').val('Select TOP (' + $('#top').val() + ') * from ' + $("#DataSours option:selected").text() + ' ORDER BY ' + Columns_Table.value + ' ' + ORDER_Table.value + '')
+            }
+        }
+
+
 
         GenerateMode();
     }
@@ -224,7 +252,7 @@ $(document).ready(() => {
                 let res = d
 
 
-                DocumentActions.FillCombowithdefult(res, DataSours, 'object_id', 'name', "Select Table");
+                DocumentActions.FillCombowithdefult(res, Columns_Table, 'name', 'name', "Select Columns");
 
             }
         })
@@ -569,11 +597,11 @@ $(document).ready(() => {
         modelSql.Model = Grid.ESG.Model;
 
         let _Data: string = JSON.stringify(modelSql);
-          
-        debugger
-        
 
-        if (Grid.ESG.CountModel  == 0) {
+        debugger
+
+
+        if (Grid.ESG.CountModel == 0) {
             alert('لا يوجد اي تعديل للحفظ')
             return;
         }

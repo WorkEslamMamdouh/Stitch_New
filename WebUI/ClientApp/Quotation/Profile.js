@@ -144,7 +144,10 @@ $(document).ready(function () {
         //JGrid.Bind();
     }
     function Share() {
-        var url = window.location.origin + '/Downlad/?D=' + GloplePath + '&N=' + NameFile;
+        debugger;
+        var encoded_GloplePath = encodeURIComponent(GloplePath);
+        var encoded_NameFile = encodeURIComponent(NameFile);
+        var url = window.location.origin + '/Downlad/?D=' + encoded_GloplePath + '&N=' + encoded_NameFile;
         $('#txtShare').val(url);
         copyToClipboard('txtShare');
         alert("تم أخذ اللينك نسخ يمكنك ارساله الان");

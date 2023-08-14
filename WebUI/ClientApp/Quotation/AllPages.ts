@@ -924,38 +924,41 @@ namespace AllPages {
             </div>
 
 
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <button id="ConactServer" value="Conact" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">   Action Data </button>
-            </div>
-
-
-            <div class="col-xs-12">
-                <br />
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
+               <div class="col-xs-12 col-lg-1 col-sm-12">
                 <label>Data Sours</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12">
                 <select id="DataSours" class="form-control "></select>
             </div>
 
+            <div class="col-xs-12">
+                <br />
+            </div>
 
+       
+
+
+           <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>Columns Table</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <select id="Columns_Table" class="form-control "></select>
+            </div>
 
             <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>New Query</label>
+                <label>Order</label>
             </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12">
-                <textarea id="New_Query" type="text" class="form-control " value=""></textarea>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <select id="ORDER_Table" class="form-control ">
+                    <option value="DESC">DESC</option>
+                    <option value="ASC">ASC</option>
+                </select>
             </div>
 
             <div class="col-xs-12 col-lg-1 col-sm-12">
                 <label>Top</label>
             </div>
-            <div class="col-xs-12 col-lg-1 col-sm-12">
+            <div class="col-xs-12 col-lg-3 col-sm-12">
                 <select id="top" class="form-control ">
                     <option value="100">100</option>
                     <option value="200">200</option>
@@ -963,8 +966,29 @@ namespace AllPages {
                     <option value="400">400</option>
                     <option value="500">500</option>
                     <option value="1000">1000</option>
+                    <option value="1500">1500</option>
+                    <option value="2000">2000</option>
+                    <option value="2500">2500</option>
+                    <option value="3000">3000</option>
+                    <option value="4000">4000</option>
+                    <option value="5000">5000</option>
                 </select>
             </div>
+
+            <div class="col-xs-12">
+                <br />
+            </div>
+
+           
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>New Query</label>
+            </div>
+            <div class="col-xs-12 col-lg-11 col-sm-12">
+                <textarea id="New_Query" type="text" class="form-control " value=""></textarea>
+            </div>
+
+         
 
             <div class="col-xs-12">
                 <br />
@@ -1376,8 +1400,8 @@ namespace AllPages {
         });
 
         $("#Open_Get_Views").on('click', function () {
-            //alert("تحت")
-            window.open(Url.Action("Page_Get_Views", "Home"), "_self");
+            alert("تحت الانشاء")
+            //window.open(Url.Action("Page_Get_Views", "Home"), "_self");
         });
 
         $("#Open_Settings").on('click', function () {

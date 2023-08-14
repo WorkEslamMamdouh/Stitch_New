@@ -737,7 +737,7 @@ $(document).ready(() => {
         }
 
         //AllBalance(); 
-        setTimeout(function () { Sum_AllBalance(); }, 150);
+        setTimeout(function () { Sum_AllBalance(); }, 50);
       
     }
 
