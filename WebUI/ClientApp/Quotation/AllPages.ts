@@ -1194,7 +1194,7 @@ namespace AllPages {
     var _Users: Array<Settings_Users>;
     export function InitalizeComponent() {
 
-        debugger 
+         
 
 
 
@@ -1211,7 +1211,7 @@ namespace AllPages {
         Event_key('Enter', 'txtUser', 'btnLogin');
         Event_key('Enter', 'txtPassword', 'btnLogin');
 
-        debugger
+        
         let pass = sessionStorage.getItem("AddUserPass");
         let Name = sessionStorage.getItem("AddUserName");
         let ID = sessionStorage.getItem("AddUserID");
@@ -1240,7 +1240,7 @@ namespace AllPages {
             url: Url.Action("Get_Data", "Profile"),
             data: { Name_txt: "Settings/Settings_Users" },
             success: (d) => {
-                debugger
+                
                 let result = JSON.parse(d) 
                   _Users = result as Array<Settings_Users>;
 
@@ -1461,30 +1461,30 @@ namespace AllPages {
     }
 
     function Notes() {
-        debugger 
+         
         LodePage(Html_Notes, 'ClientApp/Quotation/Notes.js')
 
         $('#layout_Back').addClass('display_none')
     }
 
     function Data_Server() {
-        debugger
+        
         LodePage(Html_DataServer, 'ClientApp/Quotation/TestGrad.js')
     }
 
     function Wallet() {
-        debugger
+        
         LodePage(Html_Wallet, 'ClientApp/Quotation/Money_Wallet.js')
     }
 
     function  Settings() {
-        debugger
+        
         LodePage(Html_Settings, 'ClientApp/Quotation/Settings.js')
     }
 
     function LodePage(page: string, Pathscript: string) {
 
-        debugger
+        
         $('#Body_Page').html('');
 
         $('#Home_Page').addClass('display_none');

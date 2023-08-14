@@ -157,6 +157,78 @@ namespace Inv.WebUI.Controllers
 
 
 
+        public JsonResult GetColumnsTable(string RepP)
+        {
+            ModelSql rp = JsonConvert.DeserializeObject<ModelSql>(RepP);
+
+            db.Server = rp.sqlEnt.Server;
+            db.Database = rp.sqlEnt.Database;
+            db.User = rp.sqlEnt.User;
+            db.Password = rp.sqlEnt.Password;
+            string New_Query = rp.sqlEnt.New_Query;
+            string TablesName = rp.sqlTables.name;
+
+
+
+
+            //-------------------------------------------------------------------------------
+
+
+            StringBuilder models = new StringBuilder();
+             
+            List<SqlColumns> columns = new List<SqlColumns>();
+
+
+            using (SqlConnection connection = new SqlConnection("Data source = " + db.Server + " ; Initial catalog = " + db.Database + " ; User id = " + db.User + "; Password = " + db.Password + ";"))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                   
+
+                    //----------------------------------------------------get Table columns name--------------------------
+
+                    connection.Open();
+
+
+                    command.CommandText = @"SELECT  name 
+                                                  , system_type_name 
+                                            FROM    sys.dm_exec_describe_first_result_set (N' Select Top(1)* from " + TablesName + " ', null, 1) ";
+
+
+
+                    SqlDataReader reader1 = command.ExecuteReader();
+                    while (reader1.Read())
+                    {
+                        SqlColumns column = new SqlColumns();
+
+                        column.name = reader1["name"].ToString();
+                        column.system_type = reader1["system_type_name"].ToString();
+
+                        columns.Add(column);
+                    }
+                    connection.Close();
+                    //---------------------------------------------------------------------------------------------------------------
+                     
+
+                }
+
+
+            }
+
+
+
+            //-------------------------------------------------------------------------------
+
+             
+             
+
+            return Json(columns, JsonRequestBehavior.AllowGet);
+
+     
+             
+
+        }
+
 
         public JsonResult FindModels(string RepP)
         {

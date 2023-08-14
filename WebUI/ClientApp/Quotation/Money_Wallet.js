@@ -481,6 +481,8 @@ $(document).ready(function () {
             $('#txtAmountDuePay').val('');
             $('#txtAllDue').val('');
             $('#txtAllAmountDue').val('');
+            $('#txtPaid_up').val('');
+            $('#txtResidual').val('');
         }
         setTimeout(function () {
             if ($('#txtRemark').is(":hidden")) {
@@ -616,14 +618,17 @@ $(document).ready(function () {
             var html_Balance_1 = " \n                    <div class=\"col-xs-6 col-lg-6 col-sm-6 \">\n                            <label id=\"" + idBal + "\"> ( 0 )</label>\n                    </div>";
             $('#Div_Show_Balance').append(html_Balance_1);
             //******************************************* Sum Shahadat********************************
+            debugger;
             var SHAmount = 0;
             var SHchange = AllDisplay.filter(function (x) { return x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && (x.Title == 'Shahadat') && x.CUSTOM1 == 'true'; });
             if (Wallet_Def_IsActive[xx].CUSTOM5 == "true") {
+                debugger;
                 for (var i0 = 0; i0 < SHchange.length; i0++) {
                     SHAmount = SHAmount + SHchange[i0].Amount;
                 }
                 //alert(BalansCalculatorShahadat(SHchange))
                 //alert(SHAmount)
+                debugger;
                 SHAmount = SHAmount - BalansCalculatorShahadat(SHchange);
             }
             //******************************************* Sum Exchange********************************
@@ -658,8 +663,10 @@ $(document).ready(function () {
     }
     //*************************************************Shahadat****************************************
     function BalansCalculatorShahadat(Shahadat) {
-        var AomuntDue = 0;
+        debugger;
+        var AllAomuntDue = 0;
         for (var b = 0; b < Shahadat.length; b++) {
+            var AomuntDue = 0;
             var AllMonth = getMonthsDifference(Shahadat[b].TrDate, Shahadat[b].DueDate);
             var NumPriod = 1;
             if (Shahadat[b].TypePeriod != '0') {
@@ -670,6 +677,7 @@ $(document).ready(function () {
                 var AllDue = parseFloat(Shahadat[b].CUSTOM3.replace(/,/g, ''));
                 if (AomuntDue == AllDue) {
                     AomuntDue = AomuntDue + Shahadat[b].Amount;
+                    AllAomuntDue = AllAomuntDue + AomuntDue;
                     break;
                 }
                 if (Number(Shahadat[b].TypePeriod) <= NumMonth) {
@@ -677,25 +685,29 @@ $(document).ready(function () {
                     var Due = parseFloat(numberString.replace(/,/g, ''));
                     AomuntDue = (AomuntDue + Due);
                     AomuntDue = parseFloat(AomuntDue.toFixed(1));
+                    AllAomuntDue = AllAomuntDue + AomuntDue;
                     NumMonth = NumMonth - Number(Shahadat[b].TypePeriod);
                 }
                 else {
                     if (AomuntDue == AllDue) {
                         AomuntDue = AomuntDue + Shahadat[b].Amount;
+                        AllAomuntDue = AllAomuntDue + AomuntDue;
                         break;
                     }
                     break;
                 }
                 if (AomuntDue == AllDue) {
                     AomuntDue = AomuntDue + Shahadat[b].Amount;
+                    AllAomuntDue = AllAomuntDue + AomuntDue;
                     break;
                 }
             }
         }
+        debugger;
         //if (AomuntDue != 0) {
         //    PushNotification(' تم اضافة فائدة بمقدار (' + AomuntDue + ') في بنك (' + Shahadat[0].Type+') ');
         //}
-        return AomuntDue;
+        return AllAomuntDue;
     }
     function returnBalansCalculatorShahadat(Shahadat) {
         var AomuntDue = 0;
@@ -759,7 +771,6 @@ $(document).ready(function () {
         //var numberString = "1,583.3";
         //var number = parseFloat(numberString.replace(/,/g, ''));
         setTimeout(function () {
-            debugger;
             var chackDateMakeShahada = AllDisplay.filter(function (x) { return (x.Title == 'Shahadat') && x.ID == Number($('#txtTrNoSH').val()); });
             if (chackDateMakeShahada.length > 0) {
                 var returnBalans = returnBalansCalculatorShahadat(chackDateMakeShahada);
@@ -768,7 +779,7 @@ $(document).ready(function () {
             }
             else {
                 $('#txtPaid_up').val(0);
-                $('#txtResidual').val(0);
+                $('#txtResidual').val((Number(Number(allAmount).toFixed(4))).toLocaleString('en-US', { maximumFractionDigits: 1 }));
             }
         }, 300);
     }
@@ -813,12 +824,12 @@ $(document).ready(function () {
         Data.Name_Txt_Master = Comp_Wallet;
         Data.Model = JSON.stringify(Model);
         Data.StatusFlag = 'u';
-        var chackDateMakeShahada = AllDisplay.filter(function (x) { return x.Type == '' + $('#TypeSoursSH').val() + '' && (x.Title == 'Shahadat') && x.CUSTOM1 == 'true' && x.DueDate >= DateFormatRep($('#txtdateSH').val()) && x.ID != Number($('#txtTrNoSH').val()); });
-        if (chackDateMakeShahada.length > 0) {
-            alert('في شهاده معموله في هذه الفتره');
-            Errorinput($('#txtdateSH'));
-            return;
-        }
+        //let chackDateMakeShahada = AllDisplay.filter(x => x.Type == '' + $('#TypeSoursSH').val() + '' && (x.Title == 'Shahadat') && x.CUSTOM1 == 'true' && x.DueDate >= DateFormatRep($('#txtdateSH').val()) && x.ID != Number($('#txtTrNoSH').val()));
+        //if (chackDateMakeShahada.length > 0) {
+        //    alert('في شهاده معموله في هذه الفتره')
+        //    Errorinput($('#txtdateSH'))
+        //    return
+        //}
         $.ajax({
             url: Url.Action("Add_Trans", "Profile"),
             type: "POST",

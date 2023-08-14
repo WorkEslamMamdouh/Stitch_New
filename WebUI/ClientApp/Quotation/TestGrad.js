@@ -130,6 +130,30 @@ $(document).ready(function () {
             }
         });
     }
+    function GetColumnsTable() {
+        var model = new SqlTables();
+        var modelSql = new ModelSql();
+        var rp = new SqlEnt();
+        rp.Database = $('#Database').val();
+        rp.Server = $('#Server').val();
+        rp.Password = $('#Password').val();
+        rp.User = $('#User').val();
+        rp.New_Query = $('#New_Query').val();
+        model.name = $("#DataSours option:selected").text();
+        model.object_id = $('#DataSours').val();
+        modelSql.sqlTables = model;
+        modelSql.sqlEnt = rp;
+        var _Data = JSON.stringify(modelSql);
+        Ajax.CallAsync({
+            url: Url.Action("GetColumnsTable", "GeneralSQL"),
+            data: { RepP: _Data },
+            success: function (d) {
+                debugger;
+                var res = d;
+                DocumentActions.FillCombowithdefult(res, DataSours, 'object_id', 'name', "Select Table");
+            }
+        });
+    }
     function GenerateMode() {
         var model = new SqlTables();
         var modelSql = new ModelSql();

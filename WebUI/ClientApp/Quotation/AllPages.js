@@ -14,7 +14,6 @@ var AllPages;
     var txtUser;
     var _Users;
     function InitalizeComponent() {
-        debugger;
         btnLogin = document.getElementById("btnLogin");
         txtPassword = document.getElementById("txtPassword");
         txtUser = document.getElementById("txtUser");
@@ -23,7 +22,6 @@ var AllPages;
         txtUser.focus();
         Event_key('Enter', 'txtUser', 'btnLogin');
         Event_key('Enter', 'txtPassword', 'btnLogin');
-        debugger;
         var pass = sessionStorage.getItem("AddUserPass");
         var Name = sessionStorage.getItem("AddUserName");
         var ID = sessionStorage.getItem("AddUserID");
@@ -47,7 +45,6 @@ var AllPages;
             url: Url.Action("Get_Data", "Profile"),
             data: { Name_txt: "Settings/Settings_Users" },
             success: function (d) {
-                debugger;
                 var result = JSON.parse(d);
                 _Users = result;
                 var User = _Users.filter(function (x) { return x.PassUesr == txtPassword.value.trim() && x.NameUesr == txtUser.value.trim() && x.Status == 1; });
@@ -195,24 +192,19 @@ var AllPages;
         bodyPage.appendChild(container);
     }
     function Notes() {
-        debugger;
         LodePage(Html_Notes, 'ClientApp/Quotation/Notes.js');
         $('#layout_Back').addClass('display_none');
     }
     function Data_Server() {
-        debugger;
         LodePage(Html_DataServer, 'ClientApp/Quotation/TestGrad.js');
     }
     function Wallet() {
-        debugger;
         LodePage(Html_Wallet, 'ClientApp/Quotation/Money_Wallet.js');
     }
     function Settings() {
-        debugger;
         LodePage(Html_Settings, 'ClientApp/Quotation/Settings.js');
     }
     function LodePage(page, Pathscript) {
-        debugger;
         $('#Body_Page').html('');
         $('#Home_Page').addClass('display_none');
         $('#Body_Page').removeClass('display_none');

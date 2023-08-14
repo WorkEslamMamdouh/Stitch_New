@@ -194,6 +194,42 @@ $(document).ready(() => {
     }
 
 
+    function GetColumnsTable() {
+
+        let model: SqlTables = new SqlTables();
+        let modelSql: ModelSql = new ModelSql();
+
+        let rp: SqlEnt = new SqlEnt();
+
+        rp.Database = $('#Database').val();
+        rp.Server = $('#Server').val();
+        rp.Password = $('#Password').val();
+        rp.User = $('#User').val();
+        rp.New_Query = $('#New_Query').val();
+
+        model.name = $("#DataSours option:selected").text();
+        model.object_id = $('#DataSours').val();
+
+
+        modelSql.sqlTables = model;
+        modelSql.sqlEnt = rp;
+
+        let _Data: string = JSON.stringify(modelSql);
+
+        Ajax.CallAsync({
+            url: Url.Action("GetColumnsTable", "GeneralSQL"),
+            data: { RepP: _Data },
+            success: (d) => {
+                debugger
+                let res = d
+
+
+                DocumentActions.FillCombowithdefult(res, DataSours, 'object_id', 'name', "Select Table");
+
+            }
+        })
+
+    }
 
 
     function GenerateMode() {
