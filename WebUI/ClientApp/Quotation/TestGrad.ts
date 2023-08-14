@@ -4,6 +4,7 @@ $(document).ready(() => {
     var Grid: ESGrid = new ESGrid();
 
     //var ShowData: HTMLButtonElement; 
+    var SelectText: HTMLButtonElement;
     var GenerateModels: HTMLButtonElement;
     //var ConactServer: HTMLButtonElement;
     var Conact: HTMLButtonElement;
@@ -12,8 +13,11 @@ $(document).ready(() => {
     var ORDER_Table: HTMLSelectElement;
     var Database: HTMLSelectElement;
     var top: HTMLSelectElement;
-
+    var New_Query: HTMLTextAreaElement;
+    var autocompleteList;
+    var List_Data_Columns_Table;
     TestGradInitalizeComponent();
+    var List_DataSours: Array<SqlTables> = new Array< SqlTables>();
 
     function TestGradInitalizeComponent() {
 
@@ -27,6 +31,8 @@ $(document).ready(() => {
 
 
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
+        New_Query = document.getElementById('New_Query') as HTMLTextAreaElement
+        SelectText = document.getElementById('SelectText') as HTMLButtonElement
         GenerateModels = document.getElementById('GenerateModels') as HTMLButtonElement
         Conact = document.getElementById('Conact') as HTMLButtonElement
         //ConactServer = document.getElementById('ConactServer') as HTMLButtonElement
@@ -36,7 +42,7 @@ $(document).ready(() => {
         ORDER_Table = document.getElementById('ORDER_Table') as HTMLSelectElement
         top = document.getElementById('top') as HTMLSelectElement
 
-
+          autocompleteList = document.getElementById("autocompleteList");
 
         //Ajax.Callsync({
         //    type: "Get",
@@ -53,6 +59,7 @@ $(document).ready(() => {
 
         Conact.onclick = Conact_onclick;
         //ConactServer.onclick = ConactServer_onclick;
+        SelectText.onclick = SelectText_Onclick;
         GenerateModels.onclick = GenerateModels_onclick;
         Database.onchange = ConactServer_onclick;
         DataSours.onchange = DataSours_onchange;
@@ -62,6 +69,48 @@ $(document).ready(() => {
         //ShowData.onclick = ShowData_onclick;
 
         InitializeGridControl();
+
+        New_Query.addEventListener("input", handleInput);
+
+        Event_key('Enter', 'New_Query', 'SelectText');
+    }
+
+
+    function handleInput() {
+        const textArray = New_Query.value.toLowerCase().split(' ');
+        const lastWord = textArray[textArray.length - 1];
+
+        const suggestions = List_Data_Columns_Table.filter(item => item.name.toLowerCase().startsWith(lastWord));
+
+        renderSuggestions(suggestions);
+    }
+
+    function renderSuggestions(suggestions) {
+        autocompleteList.innerHTML = "";
+
+        suggestions.forEach(suggestion => {
+            const listItem = document.createElement("li");
+            listItem.textContent = suggestion.name;
+
+            listItem.addEventListener("click", () => {
+                const textArray = New_Query.value.toLowerCase().split(' ');
+                textArray[textArray.length - 1] = suggestion.name;
+                New_Query.value = textArray.join(' ');
+                autocompleteList.innerHTML = "";
+            });
+
+            autocompleteList.appendChild(listItem);
+        });
+    }
+
+
+    function SelectText_Onclick() {
+        const itemList = document.getElementById("autocompleteList");
+        const firstItem = itemList.querySelector("li:first-child") as HTMLLIElement;
+        if (firstItem) {
+            firstItem.click();
+        }
+
     }
 
 
@@ -210,8 +259,9 @@ $(document).ready(() => {
             success: (d) => {
                 let result = d
                 debugger
-                let res = result as SqlTables;
-
+                let res = result as Array< SqlTables>;
+                
+                List_DataSours = res;
 
                 DocumentActions.FillCombowithdefult(result, DataSours, 'object_id', 'name', "Select Table");
 
@@ -243,16 +293,109 @@ $(document).ready(() => {
         modelSql.sqlEnt = rp;
 
         let _Data: string = JSON.stringify(modelSql);
-
+        List_Data_Columns_Table = new Array<Data_Columns_Table>();
         Ajax.CallAsync({
             url: Url.Action("GetColumnsTable", "GeneralSQL"),
             data: { RepP: _Data },
             success: (d) => {
                 debugger
                 let res = d
-
+                List_Data_Columns_Table = res;
 
                 DocumentActions.FillCombowithdefult(res, Columns_Table, 'name', 'name', "Select Columns");
+
+
+                for (var i = 0; i < List_DataSours.length; i++) {
+                    let List_Name_table: Data_Columns_Table = new Data_Columns_Table();
+                    List_Name_table.name = List_DataSours[i].name;
+                    List_Data_Columns_Table.push(List_Name_table);
+                }
+
+                let List0: Data_Columns_Table = new Data_Columns_Table();
+                List0.name = "Select * From ";
+                List_Data_Columns_Table.push(List0);
+
+                let List: Data_Columns_Table = new Data_Columns_Table(); 
+                List.name = "Select "; 
+                List_Data_Columns_Table.push(List);
+
+                let List1: Data_Columns_Table = new Data_Columns_Table();
+                List1.name = "insert into  ";
+                List_Data_Columns_Table.push(List1);
+
+                let List2: Data_Columns_Table = new Data_Columns_Table();
+                List2.name = "Update ";
+                List_Data_Columns_Table.push(List2);
+
+                let List3: Data_Columns_Table = new Data_Columns_Table();
+                List3.name = "From ";
+                List_Data_Columns_Table.push(List3);
+
+                let List4: Data_Columns_Table = new Data_Columns_Table();
+                List4.name = "inner join ";
+                List_Data_Columns_Table.push(List4);
+
+                let List5: Data_Columns_Table = new Data_Columns_Table();
+                List5.name = "outer join ";
+                List_Data_Columns_Table.push(List5);
+
+                let List6: Data_Columns_Table = new Data_Columns_Table();
+                List6.name = "left join ";
+                List_Data_Columns_Table.push(List6);
+
+                let List7: Data_Columns_Table = new Data_Columns_Table();
+                List7.name = "right join ";
+                List_Data_Columns_Table.push(List7);
+
+                let List8: Data_Columns_Table = new Data_Columns_Table();
+                List8.name = "set ";
+                List_Data_Columns_Table.push(List8);
+
+
+                let List9: Data_Columns_Table = new Data_Columns_Table();
+                List9.name = "null ";
+                List_Data_Columns_Table.push(List9);
+
+                let List10: Data_Columns_Table = new Data_Columns_Table();
+                List10.name = "where ";
+                List_Data_Columns_Table.push(List10);
+
+                let List11: Data_Columns_Table = new Data_Columns_Table();
+                List11.name = "isnull(,0) ";
+                List_Data_Columns_Table.push(List11);
+
+                let List12: Data_Columns_Table = new Data_Columns_Table();
+                List12.name = "year() ";
+                List_Data_Columns_Table.push(List12);
+
+                let List13: Data_Columns_Table = new Data_Columns_Table();
+                List13.name = "Sum() ";
+                List_Data_Columns_Table.push(List13);
+
+                let List14: Data_Columns_Table = new Data_Columns_Table();
+                List14.name = "Max() ";
+                List_Data_Columns_Table.push(List14);
+
+
+                let List15: Data_Columns_Table = new Data_Columns_Table();
+                List15.name = "ORDER BY  ";
+                List_Data_Columns_Table.push(List15);
+
+                let List16: Data_Columns_Table = new Data_Columns_Table();
+                List16.name = "count(*) ";
+                List_Data_Columns_Table.push(List16);
+
+                let List17: Data_Columns_Table = new Data_Columns_Table();
+                List17.name = "group by ";
+                List_Data_Columns_Table.push(List17);
+
+                let List18: Data_Columns_Table = new Data_Columns_Table();
+                List18.name = "DESC ";
+                List_Data_Columns_Table.push(List18);
+
+                let List19: Data_Columns_Table = new Data_Columns_Table();
+                List19.name = "ASC ";
+                List_Data_Columns_Table.push(List19);
 
             }
         })

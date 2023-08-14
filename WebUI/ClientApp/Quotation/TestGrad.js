@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var Grid = new ESGrid();
     //var ShowData: HTMLButtonElement; 
+    var SelectText;
     var GenerateModels;
     //var ConactServer: HTMLButtonElement;
     var Conact;
@@ -9,11 +10,17 @@ $(document).ready(function () {
     var ORDER_Table;
     var Database;
     var top;
+    var New_Query;
+    var autocompleteList;
+    var List_Data_Columns_Table;
     TestGradInitalizeComponent();
+    var List_DataSours = new Array();
     function TestGradInitalizeComponent() {
         $("#layout_Refresh").removeClass('display_none');
         $("#layout_Back").removeClass('display_none');
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
+        New_Query = document.getElementById('New_Query');
+        SelectText = document.getElementById('SelectText');
         GenerateModels = document.getElementById('GenerateModels');
         Conact = document.getElementById('Conact');
         //ConactServer = document.getElementById('ConactServer') as HTMLButtonElement
@@ -22,6 +29,7 @@ $(document).ready(function () {
         Columns_Table = document.getElementById('Columns_Table');
         ORDER_Table = document.getElementById('ORDER_Table');
         top = document.getElementById('top');
+        autocompleteList = document.getElementById("autocompleteList");
         //Ajax.Callsync({
         //    type: "Get",
         //    url: sys.apiUrl("SlsTrSales", "GetAllUOM"),
@@ -35,6 +43,7 @@ $(document).ready(function () {
         //InitializeGridControl(); 
         Conact.onclick = Conact_onclick;
         //ConactServer.onclick = ConactServer_onclick;
+        SelectText.onclick = SelectText_Onclick;
         GenerateModels.onclick = GenerateModels_onclick;
         Database.onchange = ConactServer_onclick;
         DataSours.onchange = DataSours_onchange;
@@ -43,6 +52,35 @@ $(document).ready(function () {
         ORDER_Table.onchange = function () { $('#New_Query').val(''); };
         //ShowData.onclick = ShowData_onclick;
         InitializeGridControl();
+        New_Query.addEventListener("input", handleInput);
+        Event_key('Enter', 'New_Query', 'SelectText');
+    }
+    function handleInput() {
+        var textArray = New_Query.value.toLowerCase().split(' ');
+        var lastWord = textArray[textArray.length - 1];
+        var suggestions = List_Data_Columns_Table.filter(function (item) { return item.name.toLowerCase().startsWith(lastWord); });
+        renderSuggestions(suggestions);
+    }
+    function renderSuggestions(suggestions) {
+        autocompleteList.innerHTML = "";
+        suggestions.forEach(function (suggestion) {
+            var listItem = document.createElement("li");
+            listItem.textContent = suggestion.name;
+            listItem.addEventListener("click", function () {
+                var textArray = New_Query.value.toLowerCase().split(' ');
+                textArray[textArray.length - 1] = suggestion.name;
+                New_Query.value = textArray.join(' ');
+                autocompleteList.innerHTML = "";
+            });
+            autocompleteList.appendChild(listItem);
+        });
+    }
+    function SelectText_Onclick() {
+        var itemList = document.getElementById("autocompleteList");
+        var firstItem = itemList.querySelector("li:first-child");
+        if (firstItem) {
+            firstItem.click();
+        }
     }
     function Conact_onclick() {
         var rp = new SqlEnt();
@@ -149,6 +187,7 @@ $(document).ready(function () {
                 var result = d;
                 debugger;
                 var res = result;
+                List_DataSours = res;
                 DocumentActions.FillCombowithdefult(result, DataSours, 'object_id', 'name', "Select Table");
             }
         });
@@ -167,13 +206,83 @@ $(document).ready(function () {
         modelSql.sqlTables = model;
         modelSql.sqlEnt = rp;
         var _Data = JSON.stringify(modelSql);
+        List_Data_Columns_Table = new Array();
         Ajax.CallAsync({
             url: Url.Action("GetColumnsTable", "GeneralSQL"),
             data: { RepP: _Data },
             success: function (d) {
                 debugger;
                 var res = d;
+                List_Data_Columns_Table = res;
                 DocumentActions.FillCombowithdefult(res, Columns_Table, 'name', 'name', "Select Columns");
+                for (var i = 0; i < List_DataSours.length; i++) {
+                    var List_Name_table = new Data_Columns_Table();
+                    List_Name_table.name = List_DataSours[i].name;
+                    List_Data_Columns_Table.push(List_Name_table);
+                }
+                var List0 = new Data_Columns_Table();
+                List0.name = "Select * From ";
+                List_Data_Columns_Table.push(List0);
+                var List = new Data_Columns_Table();
+                List.name = "Select ";
+                List_Data_Columns_Table.push(List);
+                var List1 = new Data_Columns_Table();
+                List1.name = "insert into  ";
+                List_Data_Columns_Table.push(List1);
+                var List2 = new Data_Columns_Table();
+                List2.name = "Update ";
+                List_Data_Columns_Table.push(List2);
+                var List3 = new Data_Columns_Table();
+                List3.name = "From ";
+                List_Data_Columns_Table.push(List3);
+                var List4 = new Data_Columns_Table();
+                List4.name = "inner join ";
+                List_Data_Columns_Table.push(List4);
+                var List5 = new Data_Columns_Table();
+                List5.name = "outer join ";
+                List_Data_Columns_Table.push(List5);
+                var List6 = new Data_Columns_Table();
+                List6.name = "left join ";
+                List_Data_Columns_Table.push(List6);
+                var List7 = new Data_Columns_Table();
+                List7.name = "right join ";
+                List_Data_Columns_Table.push(List7);
+                var List8 = new Data_Columns_Table();
+                List8.name = "set ";
+                List_Data_Columns_Table.push(List8);
+                var List9 = new Data_Columns_Table();
+                List9.name = "null ";
+                List_Data_Columns_Table.push(List9);
+                var List10 = new Data_Columns_Table();
+                List10.name = "where ";
+                List_Data_Columns_Table.push(List10);
+                var List11 = new Data_Columns_Table();
+                List11.name = "isnull(,0) ";
+                List_Data_Columns_Table.push(List11);
+                var List12 = new Data_Columns_Table();
+                List12.name = "year() ";
+                List_Data_Columns_Table.push(List12);
+                var List13 = new Data_Columns_Table();
+                List13.name = "Sum() ";
+                List_Data_Columns_Table.push(List13);
+                var List14 = new Data_Columns_Table();
+                List14.name = "Max() ";
+                List_Data_Columns_Table.push(List14);
+                var List15 = new Data_Columns_Table();
+                List15.name = "ORDER BY  ";
+                List_Data_Columns_Table.push(List15);
+                var List16 = new Data_Columns_Table();
+                List16.name = "count(*) ";
+                List_Data_Columns_Table.push(List16);
+                var List17 = new Data_Columns_Table();
+                List17.name = "group by ";
+                List_Data_Columns_Table.push(List17);
+                var List18 = new Data_Columns_Table();
+                List18.name = "DESC ";
+                List_Data_Columns_Table.push(List18);
+                var List19 = new Data_Columns_Table();
+                List19.name = "ASC ";
+                List_Data_Columns_Table.push(List19);
             }
         });
     }

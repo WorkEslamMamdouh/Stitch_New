@@ -860,6 +860,71 @@ namespace AllPages {
         padding-right: 3rem !important;
     }
 
+.dropdown {
+  max-width: 13em;
+  margin: 80px auto 0;
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-btn {
+  background: #1d1f24;
+  font-size: 18px;
+  width: 100%;
+  border: none;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7em 0.5em;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.arrow {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  transition: transform ease-in-out 0.3s;
+}
+
+.dropdown-content {
+  border-radius: 0.5em !important;;
+}
+
+.dropdown-content li {
+  background: #000000bf;
+
+  position: relative; 
+  transition: 0.5s;
+  transition-delay: calc(60ms * var(--delay));
+    color: wheat;
+font-weight: bold;
+}
+
+.dropdown-btn:focus + .dropdown-content li {
+  left: 0;
+}
+
+.dropdown-btn:focus + .dropdown-content {
+  visibility: visible;
+}
+
+.dropdown-btn:focus > .arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-content li:hover {
+  background: #1d1f24;
+}
+
+.dropdown-content li a {
+  display: block; 
+  color: #fff; 
+  text-decoration: none;
+}
+ 
+
 </style>
 <body class="materialdesign">
     <div class="content-inner-all animate__animated animate__zoomIn">
@@ -985,7 +1050,9 @@ namespace AllPages {
                 <label>New Query</label>
             </div>
             <div class="col-xs-12 col-lg-11 col-sm-12">
+                <button id="SelectText"  class="form-control display_none" value=""  ></button>
                 <textarea id="New_Query" type="text" class="form-control " value="" style="height: 150px;"></textarea>
+                <ul class="dropdown-content" role="menu" id="autocompleteList"></ul>
             </div>
 
          

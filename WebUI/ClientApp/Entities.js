@@ -1286,4 +1286,15 @@ var Send_Data = /** @class */ (function () {
     }
     return Send_Data;
 }());
+var Data_Columns_Table = /** @class */ (function () {
+    function Data_Columns_Table() {
+        this.column_id = 0;
+        this.is_nullable = false;
+        this.name = '';
+        this.object_id = 0;
+        this.system_type = '';
+        this.system_type_id = 0;
+    }
+    return Data_Columns_Table;
+}());
 //# sourceMappingURL=Entities.js.map

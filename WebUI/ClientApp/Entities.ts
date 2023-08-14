@@ -2135,4 +2135,21 @@ class Send_Data {
     public StatusFlag: string;
 
 }
- 
+
+
+class Data_Columns_Table {
+    constructor() {
+        this.column_id = 0;
+        this.is_nullable = false;
+        this.name = '';
+        this.object_id = 0;
+        this.system_type = '';
+        this.system_type_id = 0;
+    }
+    public column_id: number;
+    public is_nullable: boolean;
+    public name: string;
+    public object_id: number;
+    public system_type: string;
+    public system_type_id: number;
+}
