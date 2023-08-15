@@ -17,8 +17,8 @@ $(document).ready(() => {
     var autocompleteList;
     var List_Data_Columns_Table;
     TestGradInitalizeComponent();
-    var List_DataSours: Array<SqlTables> = new Array< SqlTables>();
-
+    var List_DataSours: Array<SqlTables> = new Array<SqlTables>();
+    var _lastWord = "";
     function TestGradInitalizeComponent() {
 
 
@@ -42,7 +42,7 @@ $(document).ready(() => {
         ORDER_Table = document.getElementById('ORDER_Table') as HTMLSelectElement
         top = document.getElementById('top') as HTMLSelectElement
 
-          autocompleteList = document.getElementById("autocompleteList");
+        autocompleteList = document.getElementById("autocompleteList");
 
         //Ajax.Callsync({
         //    type: "Get",
@@ -71,16 +71,78 @@ $(document).ready(() => {
         InitializeGridControl();
 
         New_Query.addEventListener("input", handleInput);
+        New_Query.addEventListener("mouseup", handleMouseUp);
+        New_Query.addEventListener("select", handleMouseUp);  
+        New_Query.addEventListener("click", handleMouseUp);
 
         Event_key('Enter', 'New_Query', 'SelectText');
     }
 
 
-    function handleInput() {
-        const textArray = New_Query.value.toLowerCase().split(' ');
-        const lastWord = textArray[textArray.length - 1];
+    //function handleInput() {
+    //    const textArray = New_Query.value.toLowerCase().split(' ');
+    //    const lastWord = textArray[textArray.length - 1];
 
-        const suggestions = List_Data_Columns_Table.filter(item => item.name.toLowerCase().startsWith(lastWord));
+    //    const suggestions = List_Data_Columns_Table.filter(item => item.name.toLowerCase().startsWith(lastWord));
+
+    //    renderSuggestions(suggestions);
+    //}
+
+    //function renderSuggestions(suggestions) {
+    //    autocompleteList.innerHTML = "";
+
+    //    suggestions.forEach(suggestion => {
+    //        const listItem = document.createElement("li");
+    //        listItem.textContent = suggestion.name;
+
+    //        listItem.addEventListener("click", () => {
+    //            const textArray = New_Query.value.toLowerCase().split(' ');
+    //            textArray[textArray.length - 1] = suggestion.name;
+    //            New_Query.value = textArray.join(' ');
+    //            autocompleteList.innerHTML = "";
+    //        });
+
+    //        autocompleteList.appendChild(listItem);
+    //    });
+    //}
+
+    function handleMouseUp() {
+        debugger
+        const selection = window.getSelection();
+        const selectedText = selection.toString();
+        const startPosition = selection.anchorOffset;
+        const endPosition = selection.focusOffset;
+
+        const textContent = New_Query.value.toLowerCase();
+        const words = textContent.split(/\s+/); // Split by spaces
+
+        let lastWord = "";
+        for (let i = words.length - 1; i >= 0; i--) {
+            if (words[i].trim() == selectedText) {
+                lastWord = words[i];
+                break;
+            }
+        }
+
+        _lastWord = lastWord
+
+        const suggestions = List_Data_Columns_Table.filter(item => item.name.toLowerCase().includes(lastWord));
+
+        renderSuggestions(suggestions);
+
+
+    }
+
+    function handleInput() {
+        debugger
+        const textContent = New_Query.value.toLowerCase();
+        const words = textContent.split(/\s+/); // Split by spaces
+
+        const lastWord = words[words.length - 1];
+
+        _lastWord = lastWord
+
+        const suggestions = List_Data_Columns_Table.filter(item => item.name.toLowerCase().includes(lastWord));
 
         renderSuggestions(suggestions);
     }
@@ -89,13 +151,41 @@ $(document).ready(() => {
         autocompleteList.innerHTML = "";
 
         suggestions.forEach(suggestion => {
+            debugger
             const listItem = document.createElement("li");
             listItem.textContent = suggestion.name;
 
             listItem.addEventListener("click", () => {
-                const textArray = New_Query.value.toLowerCase().split(' ');
-                textArray[textArray.length - 1] = suggestion.name;
-                New_Query.value = textArray.join(' ');
+                debugger
+                const textContent = New_Query.value.toLowerCase();
+                const words = textContent.split(/\s+/);
+                debugger
+                //const lastWord = words[words.length - 1];
+                let lastWord = "";
+                for (let i = words.length - 1; i >= 0; i--) {
+                    if (words[i].trim() == _lastWord) {
+                        lastWord = words[i];
+                        break;
+                    }
+                }
+
+                debugger
+               
+                    let last_text = textContent;
+                try {
+                    const newText = textContent.replace(new RegExp("\\" + lastWord, "ig"), suggestion.name);
+                    New_Query.value = newText;
+                    if (last_text == newText) {
+                        const newText = textContent.replace(new RegExp(lastWord, "ig"), suggestion.name);
+                        New_Query.value = newText;
+                    }
+                } catch (e) {
+                    const newText = textContent.replace(new RegExp(lastWord + "$", "i"), suggestion.name);
+                    New_Query.value = newText;
+                }
+              
+              
+                debugger
                 autocompleteList.innerHTML = "";
             });
 
@@ -259,8 +349,8 @@ $(document).ready(() => {
             success: (d) => {
                 let result = d
                 debugger
-                let res = result as Array< SqlTables>;
-                
+                let res = result as Array<SqlTables>;
+
                 List_DataSours = res;
 
                 DocumentActions.FillCombowithdefult(result, DataSours, 'object_id', 'name', "Select Table");
@@ -315,8 +405,8 @@ $(document).ready(() => {
                 List0.name = "Select * From ";
                 List_Data_Columns_Table.push(List0);
 
-                let List: Data_Columns_Table = new Data_Columns_Table(); 
-                List.name = "Select "; 
+                let List: Data_Columns_Table = new Data_Columns_Table();
+                List.name = "Select ";
                 List_Data_Columns_Table.push(List);
 
                 let List1: Data_Columns_Table = new Data_Columns_Table();

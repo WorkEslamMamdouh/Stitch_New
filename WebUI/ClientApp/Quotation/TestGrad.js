@@ -15,6 +15,7 @@ $(document).ready(function () {
     var List_Data_Columns_Table;
     TestGradInitalizeComponent();
     var List_DataSours = new Array();
+    var _lastWord = "";
     function TestGradInitalizeComponent() {
         $("#layout_Refresh").removeClass('display_none');
         $("#layout_Back").removeClass('display_none');
@@ -53,23 +54,93 @@ $(document).ready(function () {
         //ShowData.onclick = ShowData_onclick;
         InitializeGridControl();
         New_Query.addEventListener("input", handleInput);
+        New_Query.addEventListener("mouseup", handleMouseUp);
+        New_Query.addEventListener("select", handleMouseUp);
+        New_Query.addEventListener("click", handleMouseUp);
         Event_key('Enter', 'New_Query', 'SelectText');
     }
+    //function handleInput() {
+    //    const textArray = New_Query.value.toLowerCase().split(' ');
+    //    const lastWord = textArray[textArray.length - 1];
+    //    const suggestions = List_Data_Columns_Table.filter(item => item.name.toLowerCase().startsWith(lastWord));
+    //    renderSuggestions(suggestions);
+    //}
+    //function renderSuggestions(suggestions) {
+    //    autocompleteList.innerHTML = "";
+    //    suggestions.forEach(suggestion => {
+    //        const listItem = document.createElement("li");
+    //        listItem.textContent = suggestion.name;
+    //        listItem.addEventListener("click", () => {
+    //            const textArray = New_Query.value.toLowerCase().split(' ');
+    //            textArray[textArray.length - 1] = suggestion.name;
+    //            New_Query.value = textArray.join(' ');
+    //            autocompleteList.innerHTML = "";
+    //        });
+    //        autocompleteList.appendChild(listItem);
+    //    });
+    //}
+    function handleMouseUp() {
+        debugger;
+        var selection = window.getSelection();
+        var selectedText = selection.toString();
+        var startPosition = selection.anchorOffset;
+        var endPosition = selection.focusOffset;
+        var textContent = New_Query.value.toLowerCase();
+        var words = textContent.split(/\s+/); // Split by spaces
+        var lastWord = "";
+        for (var i = words.length - 1; i >= 0; i--) {
+            if (words[i].trim() == selectedText) {
+                lastWord = words[i];
+                break;
+            }
+        }
+        _lastWord = lastWord;
+        var suggestions = List_Data_Columns_Table.filter(function (item) { return item.name.toLowerCase().includes(lastWord); });
+        renderSuggestions(suggestions);
+    }
     function handleInput() {
-        var textArray = New_Query.value.toLowerCase().split(' ');
-        var lastWord = textArray[textArray.length - 1];
-        var suggestions = List_Data_Columns_Table.filter(function (item) { return item.name.toLowerCase().startsWith(lastWord); });
+        debugger;
+        var textContent = New_Query.value.toLowerCase();
+        var words = textContent.split(/\s+/); // Split by spaces
+        var lastWord = words[words.length - 1];
+        _lastWord = lastWord;
+        var suggestions = List_Data_Columns_Table.filter(function (item) { return item.name.toLowerCase().includes(lastWord); });
         renderSuggestions(suggestions);
     }
     function renderSuggestions(suggestions) {
         autocompleteList.innerHTML = "";
         suggestions.forEach(function (suggestion) {
+            debugger;
             var listItem = document.createElement("li");
             listItem.textContent = suggestion.name;
             listItem.addEventListener("click", function () {
-                var textArray = New_Query.value.toLowerCase().split(' ');
-                textArray[textArray.length - 1] = suggestion.name;
-                New_Query.value = textArray.join(' ');
+                debugger;
+                var textContent = New_Query.value.toLowerCase();
+                var words = textContent.split(/\s+/);
+                debugger;
+                //const lastWord = words[words.length - 1];
+                var lastWord = "";
+                for (var i = words.length - 1; i >= 0; i--) {
+                    if (words[i].trim() == _lastWord) {
+                        lastWord = words[i];
+                        break;
+                    }
+                }
+                debugger;
+                var last_text = textContent;
+                try {
+                    var newText = textContent.replace(new RegExp("\\" + lastWord, "ig"), suggestion.name);
+                    New_Query.value = newText;
+                    if (last_text == newText) {
+                        var newText_1 = textContent.replace(new RegExp(lastWord, "ig"), suggestion.name);
+                        New_Query.value = newText_1;
+                    }
+                }
+                catch (e) {
+                    var newText = textContent.replace(new RegExp(lastWord + "$", "i"), suggestion.name);
+                    New_Query.value = newText;
+                }
+                debugger;
                 autocompleteList.innerHTML = "";
             });
             autocompleteList.appendChild(listItem);

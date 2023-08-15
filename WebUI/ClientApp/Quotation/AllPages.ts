@@ -889,7 +889,11 @@ namespace AllPages {
 }
 
 .dropdown-content {
-  border-radius: 0.5em !important;;
+  border-radius: 0.5em !important;
+    height: 20px;
+    position: absolute;
+    z-index: 99999;
+width: 300px; height: 200px; overflow: auto;
 }
 
 .dropdown-content li {
