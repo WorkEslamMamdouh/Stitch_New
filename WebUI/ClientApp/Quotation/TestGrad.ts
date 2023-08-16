@@ -19,6 +19,12 @@ $(document).ready(() => {
     TestGradInitalizeComponent();
     var List_DataSours: Array<SqlTables> = new Array<SqlTables>();
     var _lastWord = "";
+
+    var ListLike = ["Select * From ", "Select ", "insert into  ", "Update ", "From ",
+        "inner join ", "outer join ", "left join ", "right join ", "set ", "null ", "year() ",
+        "where ", "isnull(,0) ", "Sum() ", "Max() ", "ORDER BY  ", "count(*) ", "group by ", "DESC ", "ASC ",
+        "Top(100)"]
+     
     function TestGradInitalizeComponent() {
 
 
@@ -395,97 +401,20 @@ $(document).ready(() => {
                 DocumentActions.FillCombowithdefult(res, Columns_Table, 'name', 'name', "Select Columns");
 
 
+                for (var p = 0; p < ListLike.length; p++) {
+                    let List: Data_Columns_Table = new Data_Columns_Table();
+                    List.name = ListLike[p];
+                    List_Data_Columns_Table.push(List);
+                }
+
                 for (var i = 0; i < List_DataSours.length; i++) {
                     let List_Name_table: Data_Columns_Table = new Data_Columns_Table();
                     List_Name_table.name = List_DataSours[i].name;
                     List_Data_Columns_Table.push(List_Name_table);
                 }
 
-                let List0: Data_Columns_Table = new Data_Columns_Table();
-                List0.name = "Select * From ";
-                List_Data_Columns_Table.push(List0);
-
-                let List: Data_Columns_Table = new Data_Columns_Table();
-                List.name = "Select ";
-                List_Data_Columns_Table.push(List);
-
-                let List1: Data_Columns_Table = new Data_Columns_Table();
-                List1.name = "insert into  ";
-                List_Data_Columns_Table.push(List1);
-
-                let List2: Data_Columns_Table = new Data_Columns_Table();
-                List2.name = "Update ";
-                List_Data_Columns_Table.push(List2);
-
-                let List3: Data_Columns_Table = new Data_Columns_Table();
-                List3.name = "From ";
-                List_Data_Columns_Table.push(List3);
-
-                let List4: Data_Columns_Table = new Data_Columns_Table();
-                List4.name = "inner join ";
-                List_Data_Columns_Table.push(List4);
-
-                let List5: Data_Columns_Table = new Data_Columns_Table();
-                List5.name = "outer join ";
-                List_Data_Columns_Table.push(List5);
-
-                let List6: Data_Columns_Table = new Data_Columns_Table();
-                List6.name = "left join ";
-                List_Data_Columns_Table.push(List6);
-
-                let List7: Data_Columns_Table = new Data_Columns_Table();
-                List7.name = "right join ";
-                List_Data_Columns_Table.push(List7);
-
-                let List8: Data_Columns_Table = new Data_Columns_Table();
-                List8.name = "set ";
-                List_Data_Columns_Table.push(List8);
-
-
-                let List9: Data_Columns_Table = new Data_Columns_Table();
-                List9.name = "null ";
-                List_Data_Columns_Table.push(List9);
-
-                let List10: Data_Columns_Table = new Data_Columns_Table();
-                List10.name = "where ";
-                List_Data_Columns_Table.push(List10);
-
-                let List11: Data_Columns_Table = new Data_Columns_Table();
-                List11.name = "isnull(,0) ";
-                List_Data_Columns_Table.push(List11);
-
-                let List12: Data_Columns_Table = new Data_Columns_Table();
-                List12.name = "year() ";
-                List_Data_Columns_Table.push(List12);
-
-                let List13: Data_Columns_Table = new Data_Columns_Table();
-                List13.name = "Sum() ";
-                List_Data_Columns_Table.push(List13);
-
-                let List14: Data_Columns_Table = new Data_Columns_Table();
-                List14.name = "Max() ";
-                List_Data_Columns_Table.push(List14);
-
-
-                let List15: Data_Columns_Table = new Data_Columns_Table();
-                List15.name = "ORDER BY  ";
-                List_Data_Columns_Table.push(List15);
-
-                let List16: Data_Columns_Table = new Data_Columns_Table();
-                List16.name = "count(*) ";
-                List_Data_Columns_Table.push(List16);
-
-                let List17: Data_Columns_Table = new Data_Columns_Table();
-                List17.name = "group by ";
-                List_Data_Columns_Table.push(List17);
-
-                let List18: Data_Columns_Table = new Data_Columns_Table();
-                List18.name = "DESC ";
-                List_Data_Columns_Table.push(List18);
-
-                let List19: Data_Columns_Table = new Data_Columns_Table();
-                List19.name = "ASC ";
-                List_Data_Columns_Table.push(List19);
+             
+                 
 
             }
         })
