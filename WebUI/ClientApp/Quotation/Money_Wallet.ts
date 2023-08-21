@@ -13,12 +13,14 @@ $(document).ready(() => {
     var btnExchange: HTMLButtonElement;
     var btnReceipt: HTMLButtonElement;
     var btnTransfers: HTMLButtonElement;
+    var btnAdjustment: HTMLButtonElement;
     var btnFreeze: HTMLButtonElement;
     var a_Expans: HTMLButtonElement;
     var a_Resive: HTMLButtonElement;
     var a_Transfers: HTMLButtonElement;
     var a_View: HTMLButtonElement;
     var a_Definitions: HTMLButtonElement;
+    var a_Adjustment: HTMLButtonElement;
     var a_Shahadat: HTMLButtonElement;
     var txtAmount: HTMLInputElement;
     var txtPrcSH: HTMLInputElement;
@@ -27,6 +29,7 @@ $(document).ready(() => {
     var txtSearch: HTMLInputElement;
     var txtDateFrom: HTMLInputElement;
     var txtDateTo: HTMLInputElement;
+    var txtAdjustmentAmountDone: HTMLInputElement;
 
     var btnShow: HTMLButtonElement;
     var btnSave: HTMLButtonElement;
@@ -34,6 +37,7 @@ $(document).ready(() => {
     var btnBack: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
     var TypePeriod: HTMLSelectElement;
+    var TypeSours: HTMLSelectElement;
 
 
 
@@ -100,8 +104,10 @@ $(document).ready(() => {
         Tabs_click();
         InitializeGrid();
 
+        TypeSours = document.getElementById("TypeSours") as HTMLSelectElement;
         TypePeriod = document.getElementById("TypePeriod") as HTMLSelectElement;
         txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
+        txtAdjustmentAmountDone = document.getElementById("txtAdjustmentAmountDone") as HTMLInputElement;
         txtDateTo = document.getElementById("txtDateTo") as HTMLInputElement;
         txtSearch = document.getElementById("txtSearch") as HTMLInputElement;
         txtAmount = document.getElementById("txtAmount") as HTMLInputElement;
@@ -116,21 +122,27 @@ $(document).ready(() => {
         btnExchange = document.getElementById("btnExchange") as HTMLButtonElement;
         btnReceipt = document.getElementById("btnReceipt") as HTMLButtonElement;
         btnTransfers = document.getElementById("btnTransfers") as HTMLButtonElement;
+        btnAdjustment = document.getElementById("btnAdjustment") as HTMLButtonElement;
         btnFreeze = document.getElementById("btnFreeze") as HTMLButtonElement;
         a_Expans = document.getElementById("a_Expans") as HTMLButtonElement;
         a_Resive = document.getElementById("a_Resive") as HTMLButtonElement;
         a_Transfers = document.getElementById("a_Transfers") as HTMLButtonElement;
         a_View = document.getElementById("a_View") as HTMLButtonElement;
         a_Definitions = document.getElementById("a_Definitions") as HTMLButtonElement;
+        a_Adjustment = document.getElementById("a_Adjustment") as HTMLButtonElement;
         a_Shahadat = document.getElementById("a_Shahadat") as HTMLButtonElement;
 
+        txtAdjustmentAmountDone.onkeyup = Settlement_difference;
+        TypeSours.onchange = () => { Glopl_Type == 'Adjustment' ? SelectAdjustmentAmount() : null };
         btnExchange.onclick = () => { AppTans(Glopl_Type) };
         btnReceipt.onclick = () => { AppTans(Glopl_Type) };
         btnTransfers.onclick = () => { AppTans(Glopl_Type) };
+        btnAdjustment.onclick = () => { AppTans(Glopl_Type) };
         btnFreeze.onclick = () => { AppTansShahada(Glopl_Type) };
         a_Expans.onclick = () => { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Exchange'; };
         a_Resive.onclick = () => { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Hid_Rec').addClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Receipt'; };
         a_Transfers.onclick = () => { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Transfers'; };
+        a_Adjustment.onclick = () => { $('.Shaha_Ex').removeClass('display_none'); $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('#Rec_Exch_Tab').removeClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Adjustment'; };
         a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Definitions.onclick = () => { $('#Definitions_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Shahadat.onclick = () => { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Shaha_Ex').addClass('display_none'); $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Shahadat'; };
@@ -178,8 +190,8 @@ $(document).ready(() => {
 
 
         setTimeout(function () { $('#Page_Loding').removeClass("display_none") }, 500);
- 
-         
+
+
     }
 
 
@@ -249,6 +261,9 @@ $(document).ready(() => {
                     else if (item.Title == "Transfers") {
                         txt.style.color = "rgb(91 192 222)";
                     }
+                    else if (item.Title == "Adjustment") {
+                        txt.style.color = "#cea307";
+                    }
                     return txt;
                 }
             },
@@ -308,10 +323,12 @@ $(document).ready(() => {
                 Nameclass = Nameclass + ' Shaha_Ex';
             }
 
+
             if (Wallet_Def[u].CUSTOM4 == "true") {
                 $('#TypeSours').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].Remars + '</option>');
                 $('#TypeSoursTrans').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">To ' + Wallet_Def[u].Remars + '</option>');
                 $('#TypeSoursSH').append('<option class="' + Nameclass + '" value="' + Wallet_Def[u].NameBal + '">' + Wallet_Def[u].Remars + '</option>');
+                //$('#TypeSoursAdjus').append('<option class="" value="' + Wallet_Def[u].NameBal + '">To ' + Wallet_Def[u].Remars + '</option>');
             }
 
 
@@ -340,6 +357,10 @@ $(document).ready(() => {
 
             $('#a_Shahadat').click();
         }
+        else if (JGrid.SelectedItem.Title == "Adjustment") {
+
+            $('#a_Adjustment').click();
+        }
 
 
         if (JGrid.SelectedItem.Title != "Shahadat") {
@@ -351,6 +372,8 @@ $(document).ready(() => {
                 $('#TypeSours').val(JGrid.SelectedItem.Type);
                 $('#TypeSoursTrans').val(JGrid.SelectedItem.TypeTo);
                 $('#txtRemark').val(JGrid.SelectedItem.Remars);
+                $('#txtAdjustmentAmount').val(JGrid.SelectedItem.Prc);
+                $('#txtAdjustmentAmountDone').val(JGrid.SelectedItem.CUSTOM4);
             }, 100);
 
             setTimeout(function () {
@@ -550,6 +573,19 @@ $(document).ready(() => {
             return false
         }
 
+       
+
+        if ($('#txtAdjustmentAmountDone').val().trim() == '' && Type == 'Adjustment') {
+            Errorinput($('#txtAdjustmentAmountDone'))
+            return false
+        }
+
+        if ($('#txtAdjustmentAmountDone').val() == $('#txtAdjustmentAmount').val() && Type == 'Adjustment') {
+            Errorinput($('#txtAdjustmentAmountDone'))
+            Errorinput($('#txtAdjustmentAmount'))
+            return false
+        }
+
         if ($('#txtAmount').val().trim() == '') {
             Errorinput($('#txtAmount'))
             return false
@@ -562,6 +598,7 @@ $(document).ready(() => {
         let Val = txtAmount.value;
 
         txtAmount.value = eval(Val);
+        let AmountDone = eval($('#txtAdjustmentAmountDone').val());
 
         DocumentActions.AssignToModel(Model);//Insert Update 
         Model.TrDate = DateFormatRep($('#txtdate').val())
@@ -569,6 +606,8 @@ $(document).ready(() => {
         Model.TypeTo = $('#TypeSoursTrans').val();
         Model.Title = Type;
         Model.Amount = eval(Val);
+        Model.Prc = Number($('#txtAdjustmentAmount').val());
+        Model.CUSTOM4 = AmountDone;
         Model.ID = Number($('#txtTrNo').val());
         //Model.ID = 666;
 
@@ -590,19 +629,19 @@ $(document).ready(() => {
                 let result = JSON.parse(d)
 
                 if (Type == "Receipt") {
-                    ShowMessage('تم اضافة مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) في حساب (' + $("#TypeSours option:selected").text() + ')ـ ');
+                    ShowMessage('تم اضافة مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) في حساب (' + $("#TypeSours option:selected").text() + ')ـ ');
                 }
 
                 if (Type == "Exchange") {
-                    ShowMessage('تم خصم مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) من حساب ـ(' + $("#TypeSours option:selected").text() + ')ـ ');
+                    ShowMessage('تم خصم مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) من حساب ـ(' + $("#TypeSours option:selected").text() + ')ـ ');
                 }
 
                 if (Type == "Transfers") {
-                    ShowMessage('تم تحويل مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 })  + ' ) من حساب ـ(' + $("#TypeSours option:selected").text() + ')ـ الي حساب ـ(' + $("#TypeSoursTrans option:selected").text() + ') ');
+                    ShowMessage('تم تحويل مبلغ بمقدار ( ' + eval(Val).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) من حساب ـ(' + $("#TypeSours option:selected").text() + ')ـ الي حساب ـ(' + $("#TypeSoursTrans option:selected").text() + ') ');
                 }
- 
 
-            
+
+
 
                 let res = result as Array<Wallet_Data>;
                 Display_Grid(res)
@@ -665,6 +704,8 @@ $(document).ready(() => {
             $('#txtRemark').val('');
             $('#txtdate').val(GetDate());
             $('#txtAmount').val('');
+            $('#txtAdjustmentAmountDone').val('');
+            $('#txtAdjustmentAmount').val('');
             //**********************************Shahada**************************       
             $('#txtTrNoSH').val('');
             SelectFristRow('TypeSoursSH');
@@ -697,9 +738,12 @@ $(document).ready(() => {
         $('#btnReceipt').addClass('display_none');
         $('#btnExchange').addClass('display_none');
         $('#btnTransfers').addClass('display_none');
+        $('#btnAdjustment').addClass('display_none');
         $('.Not_Trans').removeClass('display_none');
         $('.ToTransfers').addClass('display_none');
+        $('.ToAdjustment').addClass('display_none');
         $('#AreaAmount').attr('class', 'col-xs-6 col-lg-6 col-sm-6');
+        $('#txtAmount').removeAttr('disabled');
 
         if (Glopl_Type == 'Exchange') {
             $('#btnExchange').removeClass('display_none');
@@ -716,6 +760,17 @@ $(document).ready(() => {
             $('.Not_Trans').addClass('display_none');
             $('.ToTransfers').removeClass('display_none');
             $('#AreaAmount').attr('class', 'col-xs-12 col-lg-12 col-sm-12');
+        }
+        else if (Glopl_Type == 'Adjustment') {
+            $('#btnAdjustment').removeClass('display_none');
+            Event_key('Enter', 'txtAdjustmentAmountDone', 'btnAdjustment');
+
+            $('.Not_Trans').addClass('display_none');
+            $('.ToTransfers').addClass('display_none');
+            $('.ToAdjustment').removeClass('display_none');
+            $('#AreaAmount').attr('class', 'col-xs-6 col-lg-6 col-sm-6');
+            $('#txtAmount').attr('disabled', 'disabled');
+            SelectAdjustmentAmount();
         }
 
 
@@ -738,9 +793,39 @@ $(document).ready(() => {
 
         //AllBalance(); 
         setTimeout(function () { Sum_AllBalance(); }, 50);
-      
+
     }
 
+    function SelectAdjustmentAmount() {
+
+        debugger
+
+        let idBal = $('#TypeSours').val()
+        idBal = idBal.replace(/ /g, "_");
+
+        var text = $('#' + idBal + '').html()
+
+        // Use regular expression to match numbers with optional comma separators
+        var numbers = text.match(/[0-9,]+/g);
+
+        // Loop through the matched numbers and remove commas, then convert to numbers
+        var extractedNumbers = numbers.map(function (number) {
+            return parseInt(number.replace(/,/g, ''));
+        });
+
+        // Print the extracted numbers
+        $('#txtAdjustmentAmount').val(extractedNumbers[0])
+
+    }
+    function Settlement_difference() {
+        let AmountCorrect = txtAdjustmentAmountDone.value;
+        let AmountCorrectDone = 0
+        AmountCorrect = eval(AmountCorrect);
+        AmountCorrectDone = Number(AmountCorrect);
+        let AmountExisting = Number($('#txtAdjustmentAmount').val());
+        let difference = (AmountCorrectDone - AmountExisting).toFixed(2);
+        $('#txtAmount').val(difference)
+    }
     //*************************************************Display_AllBalance**************************************** 
     function AllBalance() {
 
@@ -891,6 +976,15 @@ $(document).ready(() => {
 
             }
 
+
+            //******************************************* Sum Adjustment********************************
+            let AdjAmount = 0;
+            let Adjchange = AllDisplay.filter(x => x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && (x.Title == 'Adjustment'));
+
+            for (var i99 = 0; i99 < Adjchange.length; i99++) {
+                AdjAmount = AdjAmount + Adjchange[i99].Amount
+            }
+             
             //******************************************* Sum Exchange********************************
             let EXAmount = 0;
             let Exchange = AllDisplay.filter(x => x.Type == '' + Wallet_Def_IsActive[xx].NameBal + '' && (x.Title == 'Exchange' || x.Title == 'Transfers'));
@@ -900,7 +994,7 @@ $(document).ready(() => {
                     EXAmount = EXAmount + Exchange[i1].Amount
                 }
             }
-
+             
             EXAmount = EXAmount + SHAmount;
 
             //****************************************************Sum Receipt**************************************
@@ -916,11 +1010,11 @@ $(document).ready(() => {
             //RecAmount = RecAmount + Wallet_Def_IsActive[xx].Amount;
             //***************************************************************SetValHtml*********************************************  
 
-            $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].Remars + ' ( ' + (Number(RecAmount) - Number(EXAmount)).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
+            $('#' + idBal + '').html('' + Wallet_Def_IsActive[xx].Remars + ' ( ' + ((Number(RecAmount) - Number(EXAmount)) + AdjAmount).toLocaleString('en-US', { maximumFractionDigits: 1 }) + ' ) $');
 
             //****************************************Total***********************************************
             if (Wallet_Def_IsActive[xx].CUSTOM3 == "true") {
-                AllTotal = AllTotal + (Number(RecAmount) - Number(EXAmount));
+                AllTotal = AllTotal + ((Number(RecAmount) - Number(EXAmount)) + AdjAmount);
             }
 
         }
@@ -940,7 +1034,7 @@ $(document).ready(() => {
 
         debugger
         let AllAomuntDue = 0;
-       
+
 
         for (let b = 0; b < Shahadat.length; b++) {
             let AomuntDue = 0;
@@ -1000,7 +1094,7 @@ $(document).ready(() => {
                     break;
                 }
 
-            } 
+            }
         }
 
         debugger
@@ -1127,7 +1221,7 @@ $(document).ready(() => {
 
 
         setTimeout(function () {
-            
+
             let chackDateMakeShahada = AllDisplay.filter(x => (x.Title == 'Shahadat') && x.ID == Number($('#txtTrNoSH').val()));
             if (chackDateMakeShahada.length > 0) {
                 let returnBalans = returnBalansCalculatorShahadat(chackDateMakeShahada);
@@ -1144,7 +1238,7 @@ $(document).ready(() => {
         }, 300);
     }
 
-  
+
     function AppTansShahada(Type: string) {
 
 
@@ -1300,6 +1394,9 @@ $(document).ready(() => {
         if (Wal_HedDef.CUSTOM4 == "true") {
             $('#a_Shahadat').removeClass('display_none')
         }
+        if (Wal_HedDef.CUSTOM6 == "true") {
+            $('#a_Adjustment').removeClass('display_none')
+        }
         if (Wal_HedDef.CUSTOM5 == "true") {
             $('#a_View').removeClass('display_none')
         }
@@ -1325,6 +1422,10 @@ $(document).ready(() => {
             $('#a_Shahadat').click();
             return
         }
+        else if ($('#a_Adjustment').is(':visible')) {
+            $('#a_Adjustment').click();
+            return
+        }
         else if ($('#a_View').is(':visible')) {
             $('#a_View').click();
             return
@@ -1340,6 +1441,7 @@ $(document).ready(() => {
         $("#CH_Hed_Exchange").prop('checked', Data.CUSTOM2 == "false" ? false : true);
         $("#CH_Hed_Transfers").prop('checked', Data.CUSTOM3 == "false" ? false : true);
         $("#CH_Hed_Shahadat").prop('checked', Data.CUSTOM4 == "false" ? false : true);
+        $("#CH_Hed_Adjustment").prop('checked', Data.CUSTOM6 == "false" ? false : true);
         $("#CH_Hed_Report").prop('checked', Data.CUSTOM5 == "false" ? false : true);
 
 
@@ -1529,6 +1631,7 @@ $(document).ready(() => {
         Model_Wal_HedDef.CUSTOM2 = "" + ($("#CH_Hed_Exchange").prop('checked')) + "";
         Model_Wal_HedDef.CUSTOM3 = "" + ($("#CH_Hed_Transfers").prop('checked')) + "";
         Model_Wal_HedDef.CUSTOM4 = "" + ($("#CH_Hed_Shahadat").prop('checked')) + "";
+        Model_Wal_HedDef.CUSTOM6 = "" + ($("#CH_Hed_Adjustment").prop('checked')) + "";
         Model_Wal_HedDef.CUSTOM5 = "" + ($("#CH_Hed_Report").prop('checked')) + "";
 
         for (var i = 0; i < CountGrid; i++) {

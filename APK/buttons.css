@@ -10,8 +10,8 @@ html, body {
 }
 
 .button {
-    min-width: 400px;
-    min-height: 100px;
+    min-width: 300px;
+    min-height: 60px;
     font-family: 'Nunito', sans-serif;
     font-size: 22px;
     text-transform: uppercase;
@@ -106,9 +106,9 @@ body {
 
 .waviy {
     position: relative;
-    -webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0,0,0,.2));
-    font-size: 60px;
-    margin-top: -25%;
+    -webkit-box-reflect: below -29px linear-gradient(transparent, rgba(0,0,0,.2));
+    font-size: 50px;
+    margin-top: -30%;
 }
 
     .waviy span {
@@ -135,8 +135,8 @@ body {
 
 
 .button_Error {
-    min-width: 400px;
-    min-height: 100px;
+    min-width: 300px;
+    min-height: 60px;
     font-family: 'Nunito', sans-serif;
     font-size: 22px;
     text-transform: uppercase;
@@ -175,23 +175,23 @@ body {
         transform: translateY(-6px);
     }
 
-.button_Error:hover::before, button_Error:focus::before {
-    opacity: 1;
-}
+        .button_Error:hover::before, button_Error:focus::before {
+            opacity: 1;
+        }
 
-.button_Error::after {
-    content: '';
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    border: 6px solid #c90000;
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: ring 1.5s infinite;
-}
+    .button_Error::after {
+        content: '';
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        border: 6px solid #c90000;
+        position: absolute;
+        z-index: -1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: ring 1.5s infinite;
+    }
 
     .button_Error:hover::after, .button_Error:focus::after {
         animation: none;

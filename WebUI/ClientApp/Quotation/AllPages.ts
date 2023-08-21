@@ -60,13 +60,20 @@ namespace AllPages {
                 <a id="a_Shahadat" class="nav-link" data-toggle="tab" href="#Tab_4"> شهادات  </a>
             </li>
 
+             <li id="a_Adjustment" class="Hed display_none nav-item Respon_width" data_remark="">
+                <a id="a_Adjustment" class="nav-link" data-toggle="tab" href="#Tab_6"> تسوية  </a>
+            </li>
+
             <li id="a_View" class="Hed display_none nav-item Respon_width" data_remark="tab_2_Remark">
                 <a id="a_View" class="nav-link" data-toggle="tab" href="#Tab_2">  الماليات</a>
             </li>
 
+
             <li id="a_Definitions" class="nav-item Respon_width" data_remark="">
-                <a id="a_Definitions" class="nav-link" data-toggle="tab" href="#Tab_4"> التعريفات  </a>
+                <a id="a_Definitions" class="nav-link" data-toggle="tab" href="#Tab_5"> التعريفات  </a>
             </li>
+
+         
 
             <li id="App_Ref" class="">
                 <a id="App_Ref" class="" data-toggle="tab" href="">
@@ -161,8 +168,22 @@ namespace AllPages {
                     <option value="Al ahly Bank">To Al-ahly Bank</option>
                     <option value="AAIB">To AAIB</option>
                 </select>
-            </div> 
+            </div>
 
+   
+
+            <div id="AdjustmentAmount" class="col-xs-6 col-lg-6 col-sm-6 ToAdjustment">
+                <input id="txtAdjustmentAmount" type="tel" inputmode="numeric" disabled name="Amount" placeholder="The Existing Amount" class="form-control " />
+            </div>
+
+            <div id="" class="col-xs-12 col-lg-12 col-sm-12 ToAdjustment">
+                <br/>
+            </div>
+
+            <div id="" class="col-xs-6 col-lg-6 col-sm-6 ToAdjustment">
+                <input id="txtAdjustmentAmountDone" type="tel" inputmode="numeric" name="Amount" placeholder="The Correct Amount" class="form-control " />
+            </div>
+ 
             <div id="AreaAmount" class="col-xs-6 col-lg-6 col-sm-6 ">
                 <input id="txtAmount" type="tel" inputmode="numeric" name="Amount" placeholder="Amount" class="form-control " />
             </div>
@@ -176,6 +197,7 @@ namespace AllPages {
                 <button id="btnExchange" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Exchange </button>
                 <button id="btnReceipt" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">    Receipt </button>
                 <button id="btnTransfers" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Transfers </button>
+                <button id="btnAdjustment" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info" style="background-color: #e2942b;">    Adjustment </button>
             </div>
 
         </div>
@@ -205,12 +227,13 @@ namespace AllPages {
 
             <div class="col-xs-4 col-lg-5 col-sm-4 ">
                 <select id="TrType" class="form-control ">
-                    <option value="All">All</option>
-                    <option value="Receipt">Receipt</option>
-                    <option value="Exchange">Exchange</option>
-                    <option value="Transfers">Transfers</option>
-                    <option value="Shahadat">Shahadat</option>
-                    <option value="Open_Bal">Open Bal</option>
+                    <option value="All">اختيار نوع الحركه</option>
+                    <option value="Receipt"> ايرادات  </option>
+                    <option value="Exchange">مصروفات  </option>
+                    <option value="Transfers"> تحويلات  </option>
+                    <option value="Shahadat"> شهادات  </option>
+                    <option value="Adjustment">التسوية</option>
+                    <option value="Open_Bal">الرصيد الافتتاحي</option>
                 </select>
             </div>
 
@@ -334,6 +357,7 @@ namespace AllPages {
                                     <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Exchange</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Transfers</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Shahadat</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Adjustment</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Report Money</div><div class="fht-cell"></div></th>
  
                                 </tr>
@@ -357,6 +381,11 @@ namespace AllPages {
                                      <td>
 		                                <div class="form-group">
                                             <input id="CH_Hed_Shahadat" type="checkbox" disabled class=" _dis form-control" name=""  />
+		                                </div>
+	                                </td>
+                                    <td>
+		                                <div class="form-group">
+                                            <input id="CH_Hed_Adjustment" type="checkbox" disabled class=" _dis form-control" name=""  />
 		                                </div>
 	                                </td>
                                      <td>
@@ -450,11 +479,11 @@ namespace AllPages {
                         <div class="col-xs-12 col-lg-11 col-sm-12 ">
                             <textarea id="txtRemarkSH" type="text" class="form-control " value="" name="RemarsSH" placeholder="Remars"  spellcheck="false"></textarea>
                         </div>
-                   
+
                         <div class="col-xs-12 col-lg-12 col-sm-12 ">
                             <br />
                         </div>
- 
+
                         <div class="col-xs-6 col-lg-6 col-sm-6 ">
                             <select id="TypeSoursSH" class="form-control ">
                                 <option value="Cash">Cash</option>
@@ -464,12 +493,12 @@ namespace AllPages {
                                 <option value="Al ahly Bank">Al-ahly Bank</option>
                                 <option value="AAIB">AAIB</option>
                             </select>
-                        </div> 
-     
+                        </div>
+
                         <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
                             <input id="txtPrcSH" type="number" inputmode="numeric" name="AmountSH" placeholder="Prc" class="form-control " />
                         </div>
-               
+
                         <div class="col-xs-12 col-lg-12 col-sm-12 ">
                             <br />
                         </div>
@@ -485,7 +514,7 @@ namespace AllPages {
                         </div>
 
 
-                     
+
                         <div class="col-xs-12 col-lg-12 col-sm-12 ">
                             <br />
                         </div>
@@ -504,12 +533,12 @@ namespace AllPages {
                             <input id="txtAmountDuePay" type="text" disabled inputmode="numeric" name="AmountSH" placeholder="AmountDuePay" class="form-control " />
                         </div>
 
-                     
+
 
                         <div class="col-xs-12 col-lg-12 col-sm-12 ">
                             <br />
-                        </div>   
- 
+                        </div>
+
                         <div id="" class="col-xs-6 col-lg-6 col-sm-6 ">
                             <input id="txtAllDue" type="text" disabled inputmode="numeric" name="AmountSH" placeholder="AllDue" class="form-control " />
                         </div>
@@ -535,7 +564,7 @@ namespace AllPages {
                             <br />
                         </div>
 
-                        <div class="col-xs-11 col-lg-11 col-sm-11 "> 
+                        <div class="col-xs-11 col-lg-11 col-sm-11 ">
                             <button id="btnFreeze" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">    Freeze </button>
                         </div>
                             <div class="col-xs-1 col-lg-1 col-sm-1 ">
@@ -547,7 +576,9 @@ namespace AllPages {
                         </div>
 
 
-       </div>   
+       </div>
+
+        
 
 
     </div>   
@@ -1061,21 +1092,21 @@ font-weight: bold;
 
          
 
-            <div class="col-xs-12">
-                <br />
-            </div>
- <div class="col-xs-12">
-                <br />
-            </div>
- <div class="col-xs-12">
-                <br />
-            </div>
- <div class="col-xs-12">
-                <br />
-            </div>
- <div class="col-xs-12">
-                <br />
-            </div> 
+                        <div class="col-xs-12">
+                            <br />
+                        </div>
+             <div class="col-xs-12">
+                            <br />
+                        </div>
+             <div class="col-xs-12">
+                            <br />
+                        </div>
+             <div class="col-xs-12">
+                            <br />
+                        </div>
+             <div class="col-xs-12">
+                            <br />
+                        </div> 
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <button id="GenerateModels" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Execute </button>
             </div>
