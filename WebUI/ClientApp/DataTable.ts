@@ -50,7 +50,7 @@ class DataTable {
         $("#" + this.ElementName).off();
     }
 
-    public Bind() {
+    public Bind(Cnt: number) {
          
 
         debugger
@@ -113,21 +113,21 @@ class DataTable {
                 } 
 
 
-        $("#tableDiv").empty();
-        $("#tableDiv").append('  <table id="SearchDataTable" class="display" cellspacing="0" width="100%"><thead><tr>' + tableHeaders + '</tr></thead></table>');
+        $("#tableDiv" + Cnt).empty();
+        $("#tableDiv" + Cnt).append('  <table id="SearchDataTable' + Cnt+'" class="display" cellspacing="0" width="100%"><thead><tr>' + tableHeaders + '</tr></thead></table>');
         debugger
-        var table = $('#SearchDataTable').dataTable({
+        var table = $('#SearchDataTable' + Cnt).dataTable({
             "destroy": true,
             "data": this.dataScr,
             "columns": this.column_defs,
             language: this.language_app
         });
 
-        $('#tableDiv .row .col-sm-12').addClass("table-responsive"); 
-        $('#tableDiv .sorting').addClass("px-5");
-        $('#tableDiv td').addClass("px-5");
+        $('#tableDiv'+Cnt+' .row .col-sm-12').addClass("table-responsive"); 
+        $('#tableDiv'+Cnt+' .sorting').addClass("px-5");
+        $('#tableDiv' + Cnt+' td').addClass("px-5");
      
-        $('#SearchDataTable tbody').on('click', 'tr', function () {
+        $('#SearchDataTable' + Cnt+' tbody').on('click', 'tr', function () {
 
             debugger
             var tableData = $(this).children("td").map(function () {

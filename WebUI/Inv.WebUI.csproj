@@ -858,6 +858,7 @@
     <TypeScriptCompile Include="ClientApp\Quotation\AllPages.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Money_Wallet.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Notes.ts" />
+    <TypeScriptCompile Include="ClientApp\Quotation\ServerMaster.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Settings.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\Profile.ts" />
     <TypeScriptCompile Include="ClientApp\Quotation\TestGrad.ts" />

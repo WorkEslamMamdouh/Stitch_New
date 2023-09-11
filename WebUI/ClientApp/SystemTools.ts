@@ -158,7 +158,7 @@ class SystemTools {
                 $("#SearchBox").css("left", boxLeft);
                 $("#SearchBox").css("top", boxTop);
               
-                SearchGrid.SearchDataGrid.Bind();
+                SearchGrid.SearchDataGrid.Bind(0);
         
 
                 SearchGrid.SearchDataGrid.OnDoubleClick = () => {
@@ -238,7 +238,7 @@ class SystemTools {
                 $("#SearchBox").css("left", boxLeft);
                 $("#SearchBox").css("top", boxTop);
 
-                SearchGrid.SearchDataGrid.Bind();
+                SearchGrid.SearchDataGrid.Bind(0);
 
 
 
