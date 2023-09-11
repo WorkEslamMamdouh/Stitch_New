@@ -5,10 +5,19 @@ $(document).ready(() => {
 
     var DetMaxLast = 0;
     var CountGrid = 0;
+    var CountPage = 0;
 
     var NameModel = "";
 
-    var Html_DataServer_Page = `
+    var Html_DataServer_Page = ``
+
+    SetPageServer();
+
+    NotesInitalizeComponent();
+
+    function SetPageServer() {
+
+        Html_DataServer_Page = `
 
       
 
@@ -129,88 +138,38 @@ font-weight: bold;
 
          
 
-            <div class="col-xs-12 col-lg-1 col-sm-12 ">
-                <label>Server</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12 ">
-
-                <input id="Server" type="text" class="form-control " value="108.181.197.82" name="Server" list="ServerName">
-                <datalist id="ServerName">
-
-                    <option value="108.181.197.82">
-                    <option value="192.168.1.50\\SQL2014">
-                </datalist>
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>User</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <input id="User" type="text" class="form-control " value="SYSUSER" name="Server" list="UserName">
-                <datalist id="UserName">
-
-                    <option value="SYSUSER">
-                </datalist>
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Password</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12 animated animate backInDown">
-                <input id="Password" type="text" class="form-control " value="SYSUSER2020" name="Password" list="PasswordName">
-                <datalist id="PasswordName">
-                    <option value="SYSUSER2020">
-                    <option value="SYSUSER">
-                </datalist>
-            </div>
-
-            <div class="col-xs-12">
-                <br />
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-
-            </div>
-
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <button id="Conact" value="Conact" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">   Conact </button>
-            </div>
-
-
+         
             <div class="col-xs-12 col-lg-1 col-sm-12">
                 <label>Database</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="Database" class="form-control "></select>
+                <select id="Database${CountPage}" class="form-control "></select>
             </div>
 
 
                <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Data Sours</label>
+                <label>Tables</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="DataSours" class="form-control "></select>
+                <select id="DataSours${CountPage}" class="form-control "></select>
+            </div>
+
+            
+           <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>Columns</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <select id="Columns_Table${CountPage}" class="form-control "></select>
             </div>
 
             <div class="col-xs-12">
                 <br />
             </div>
-
-       
-
-
-           <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Columns Table</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="Columns_Table" class="form-control "></select>
-            </div>
-
             <div class="col-xs-12 col-lg-1 col-sm-12">
                 <label>Order</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="ORDER_Table" class="form-control ">
+                <select id="ORDER_Table${CountPage}" class="form-control ">
                     <option value="DESC">DESC</option>
                     <option value="ASC">ASC</option>
                 </select>
@@ -220,7 +179,7 @@ font-weight: bold;
                 <label>Top</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="top" class="form-control ">
+                <select id="top${CountPage}" class="form-control ">
                     <option value="100">100</option>
                     <option value="200">200</option>
                     <option value="300">300</option>
@@ -246,9 +205,9 @@ font-weight: bold;
                 <label>New Query</label>
             </div>
             <div class="col-xs-12 col-lg-11 col-sm-12">
-                <button id="SelectText"  class="form-control display_none" value=""  ></button>
-                <textarea id="New_Query" type="text" class="form-control " value="" style="height: 150px;"></textarea>
-                <ul class="dropdown-content" role="menu" id="autocompleteList"></ul>
+                <button id="SelectText${CountPage}"  class="form-control display_none" value=""  ></button>
+                <textarea id="New_Query${CountPage}" type="text" class="form-control " value="" style="height: 150px;"></textarea>
+                <ul class="dropdown-content" role="menu" id="autocompleteList${CountPage}"></ul>
             </div>
 
          
@@ -269,7 +228,8 @@ font-weight: bold;
                             <br />
                         </div> 
             <div class="col-xs-12 col-lg-12 col-sm-12">
-                <button id="GenerateModels" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Execute </button>
+                <button id="GenerateModels${CountPage}" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Execute </button>
+                <button id="RefreshDisplay${CountPage}" value="Generate Models" class="display_none  col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    RefreshDisplay </button>
             </div>
 
 
@@ -283,15 +243,15 @@ font-weight: bold;
         <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
             <div class="inside-table my-4">
-                <h2 id="searchTitle"></h2>
-                <div id="tableDiv">
+                <h2 id="searchTitle${CountPage}"></h2>
+                <div id="tableDiv${CountPage}">
 
                 </div>
             </div>
 
         </div>
 
-        <div id="Grad1" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
+        <div id="Grad1${CountPage}" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
         </div>
 
@@ -305,13 +265,12 @@ font-weight: bold;
 `;
 
 
-
-    NotesInitalizeComponent();
+    }
 
     function NotesInitalizeComponent() {
 
         $("#layout_Refresh").addClass('display_none');
-  
+
         $("#layout_Refresh").attr('style', 'top: 17.5%;');
 
 
@@ -333,11 +292,27 @@ font-weight: bold;
         NameModel = "Notepad/Notepad_" + ID + "_";
 
 
-        Tabs_click(); 
+        Tabs_click();
         BuildControls(0);
         CountGrid++;
-         
+
         AddButtonApp_Tap();
+
+        var coll = document.getElementsByClassName("Balance");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active_Balance");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+
+                }
+            });
+        }
     }
     function Tabs_click() {
 
@@ -353,20 +328,29 @@ font-weight: bold;
                 let id_Remark = $(this).attr('Data_Remark');
 
                 setTimeout(function () { $('#' + id_Remark + '').focus(); }, 150);
+
+                let Cnt_Page = Number($(this).attr("data_Cnt_Page"));
+                Cnt_Page = Cnt_Page.toString() == 'NaN' ? 0 : Cnt_Page;
+                //alert(Cnt_Page) 
+                $(".AllButConact").addClass("display_none");
+                $("#Div_Conact" + Cnt_Page).removeClass("display_none");
+
+                setTimeout(function () { $("#RefreshDisplay" + Cnt_Page).click(); }, 300);
+                
             }
 
 
         });
 
     }
-  
+
     function BuildControls(cnt: number) {
 
         debugger
 
         var label_Html = "";
         label_Html = `
-            <li class="nav-item" Data_Remark="tab_${cnt}_Server">
+            <li class="nav-item"  data_Cnt_Page="${cnt}" Data_Remark="tab_${cnt}_Server">
                 <a id="a_Tab_${cnt}" class="nav-link active" data-toggle="tab" href="#Tab_${cnt}">Server ( ${cnt + 1} )</a>
             </li>`;
 
@@ -383,29 +367,120 @@ font-weight: bold;
 
         $("#Area_Tab").append(Area_Html);
 
-        if (cnt !=0) {
-            var iframe: HTMLIFrameElement = document.getElementById('tab_' + cnt + '_Server') as HTMLIFrameElement;
+        debugger
+        //if (cnt !=0) {
+        //    //var iframe: HTMLIFrameElement = document.getElementById('tab_' + cnt + '_Server') as HTMLIFrameElement;
 
-            let x = Url.Action("TestIndex", "Home");
+        //    //let x = Url.Action("TestIndex", "Home");
 
-            let UrlPdf = x + "/";
+        //    //let UrlPdf = x + "/";
 
-            iframe.src = UrlPdf; 
-        }
-        else {
-             LodePage(Html_DataServer_Page, 'ClientApp/Quotation/TestGrad.js')
-        }
+        //    //iframe.src = UrlPdf;
 
-          
+        //    //sessionStorage.SetItem('Cnt_Page', "" + 1+"");
 
-         
- 
+        //}
+        //else {
+        //    LodePage(Html_DataServer_Page, 'ClientApp/Quotation/TestGrad.js', cnt)
+        //}
+
+        CountPage = cnt;
+        $("#Cnt_Page").val(cnt);
+        SetPageServer();
+
+        Add_Div_Conact(cnt);
+     
+        LodePage(Html_DataServer_Page, 'ClientApp/Quotation/TestGrad.js', cnt)
+
+   
+
+
+        setTimeout(function () {
+
+            if (sessionStorage.getItem('Server') != 'undefined' && sessionStorage.getItem('Server').trim() != '' && sessionStorage.getItem('Server') != undefined) {
+                $("#Server" + cnt).val(sessionStorage.getItem('Server'))
+                $("#User" + cnt).val(sessionStorage.getItem('User'))
+                $("#Password" + cnt).val(sessionStorage.getItem('Password'))
+            }
+
+            $("#Conact" + cnt).click();
+
+            setTimeout(function () {
+                 
+      
+                let Database = sessionStorage.getItem('Database');
+                //alert(Database)
+                if (Database != 'undefined' && Database != 'null' && Database != undefined) {
+                    $('#Database' + cnt + ' option[value=' + Database + ']').prop('selected', 'selected').change();
+                }
+
+                
+
+            }, 300);
+
+            $(".AllButConact").addClass("display_none");
+            $("#Div_Conact" + cnt).removeClass("display_none");
+        }, 800);
+
+
+    }
+    function Add_Div_Conact(cnt: number) {
+        let Div_Conact = `
+
+           <div id="Div_Conact${cnt}" class="AllButConact">
+           <div class="col-xs-12 col-lg-1 col-sm-12 ">
+                <label class="_LabelColor">Server</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 ">
+
+                <input id="Server${cnt}" type="text" class="form-control _LabelColor" value="108.181.197.82" name="Server" list="ServerName${cnt}">
+                <datalist id="ServerName${cnt}">
+
+                    <option value="108.181.197.82">
+                    <option value="192.168.1.50\\SQL2014">
+                </datalist>
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label class="_LabelColor">User </label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <input id="User${cnt}" type="text" class="form-control _LabelColor" value="SYSUSER" name="Server" list="UserName${cnt}">
+                <datalist id="UserName${cnt}">
+
+                    <option value="SYSUSER">
+                </datalist>
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label class="_LabelColor">Password</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12 animated animate backInDown">
+                <input id="Password${cnt}" type="text" class="form-control _LabelColor" value="SYSUSER2020" name="Password" list="PasswordName${cnt}">
+                <datalist id="PasswordName${cnt}">
+                    <option value="SYSUSER2020">
+                    <option value="SYSUSER">
+                </datalist>
+            </div>
+
+
+
+            <div   class="col-xs-12 col-lg-12 col-sm-12">
+                 <button id="Conact${cnt}"   class=" col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">   Conact </button>
+            </div>
+
+         </div>
+
+         `
+
+        $("#Div_Show_Balance").append(Div_Conact);
+       
     }
     function AddNewRow() {
 
         BuildControls(CountGrid);
         CountGrid++;
-         
+
         AddButtonApp_Tap();
     }
     function AddButtonApp_Tap() {
@@ -433,11 +508,11 @@ font-weight: bold;
         const label_Tab = document.getElementById("label_Tab");
         label_Tab.scrollLeft = 1000;
     }
-    function LodePage(page: string, Pathscript: string) {
+    function LodePage(page: string, Pathscript: string, cnt) {
 
 
-        $('#Tab_0').html('');
-         
+        $('#Tab_' + cnt).html('');
+
 
         var container = document.createElement('div');
 
@@ -458,7 +533,7 @@ font-weight: bold;
         container.appendChild(scriptElement);
 
         // Append the container element to the desired location on the page
-        var bodyPage = document.getElementById('Tab_0');
+        var bodyPage = document.getElementById('Tab_' + cnt);
         bodyPage.appendChild(container);
 
 

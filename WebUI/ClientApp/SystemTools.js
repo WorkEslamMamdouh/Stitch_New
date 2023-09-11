@@ -125,7 +125,7 @@ var SystemTools = /** @class */ (function () {
                 $("#SearchBox").css("height", boxHeight);
                 $("#SearchBox").css("left", boxLeft);
                 $("#SearchBox").css("top", boxTop);
-                SearchGrid.SearchDataGrid.Bind();
+                SearchGrid.SearchDataGrid.Bind(0);
                 SearchGrid.SearchDataGrid.OnDoubleClick = function () {
                     console.log(SearchGrid.SearchDataGrid.SelectedKey);
                     $("#SearchBox").modal("hide"); //.css("display", "none");
@@ -187,7 +187,7 @@ var SystemTools = /** @class */ (function () {
                 $("#SearchBox").css("height", boxHeight);
                 $("#SearchBox").css("left", boxLeft);
                 $("#SearchBox").css("top", boxTop);
-                SearchGrid.SearchDataGrid.Bind();
+                SearchGrid.SearchDataGrid.Bind(0);
                 try {
                     if (_this.SysSession.CurrentEnvironment.ScreenLanguage == "ar") {
                         document.getElementById("searchTitle").innerText = settings.SerachFormTitleA;

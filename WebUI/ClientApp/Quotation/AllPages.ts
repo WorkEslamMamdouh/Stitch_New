@@ -35,6 +35,14 @@ namespace AllPages {
 
   
 
+<style>
+#Div_Show_Balance
+{
+    color: rgb(221, 126, 0) !important;
+}
+
+</style>
+
     <div id="Page_mone" class="responsive__tabs animate__animated animate__zoomIn display_none">
  
         <ul id="label_Tab" class="scrollable-tabs ">
@@ -89,7 +97,7 @@ namespace AllPages {
         </ul>
  
         <button class="Balance">Show Balance $</button>
-        <div id="Div_Show_Balance" class="col-xs-12 col-lg-12 col-sm-12 content "  >
+        <div id="Div_Show_Balance" class="col-xs-12 col-lg-12 col-sm-12 content " style="color: rgb(221, 126, 0);" >
                  
                     <div class="col-xs-6 col-lg-6 col-sm-6 ">
                             <label id="CairoLab"> ( 0 )</label>
@@ -850,19 +858,32 @@ namespace AllPages {
 </body>`;
 
     var Html_DataServer = `
- 
+ <style>
+ ._LabelColor{
+ color: #d47900 !important;
+ }
+
+ </style>
 <body class="materialdesign"> 
     <div class="responsive__tabs animate__animated animate__zoomIn"> 
-        <ul id="label_Tab" class="scrollable-tabs ">
+        <ul id="label_Tab" class="scrollable-tabs "> 
       <li id="Back" class="nav-item">
                     <a id="Back" class="nav-link" data-toggle="tab" href="">
                         <i id="Back" class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;color: #df0303;"></i>
+                       <input id="Cnt_Page" type="hidden" value="0"  class="form-control ">
                     </a>
                 </li>
             <li id="App_Tap" class=""><a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a></li>
  
         </ul>
- 
+     <button class="Balance">Connections 🔌 </button>
+        <div id="Div_Show_Balance" class="col-xs-12 col-lg-12 col-sm-12 content "  >
+         
+                 
+              
+
+        </div>
+
         <div id="Area_Tab" class="tab-content">
  
         </div>

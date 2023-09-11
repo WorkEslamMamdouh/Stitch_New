@@ -1,9 +1,14 @@
+//*************************************************Page_Ts*********************
 $(document).ready(function () {
     var Grid = new ESGrid();
+    var Display_AllRes;
     //var ShowData: HTMLButtonElement; 
     var SelectText;
+    var RefreshDisplay;
     var GenerateModels;
-    //var ConactServer: HTMLButtonElement;
+    var ConactServer;
+    var ConactUser;
+    var ConactPassword;
     var Conact;
     var DataSours;
     var Columns_Table;
@@ -13,6 +18,8 @@ $(document).ready(function () {
     var New_Query;
     var autocompleteList;
     var List_Data_Columns_Table;
+    //var Cnt = Number(sessionStorage.getItem('Cnt_Page'));
+    var Cnt = Number($("#Cnt_Page").val());
     TestGradInitalizeComponent();
     var List_DataSours = new Array();
     var _lastWord = "";
@@ -25,67 +32,53 @@ $(document).ready(function () {
         $("#layout_Back").removeClass('display_none');
         $("#layout_Refresh").addClass('display_none');
         $("#layout_Back").addClass('display_none');
+        ConactServer = document.getElementById('Server' + Cnt);
+        ConactUser = document.getElementById('User' + Cnt);
+        ConactPassword = document.getElementById('Password' + Cnt);
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
-        New_Query = document.getElementById('New_Query');
-        SelectText = document.getElementById('SelectText');
-        GenerateModels = document.getElementById('GenerateModels');
-        Conact = document.getElementById('Conact');
-        //ConactServer = document.getElementById('ConactServer') as HTMLButtonElement
-        Database = document.getElementById('Database');
-        DataSours = document.getElementById('DataSours');
-        Columns_Table = document.getElementById('Columns_Table');
-        ORDER_Table = document.getElementById('ORDER_Table');
-        top = document.getElementById('top');
-        autocompleteList = document.getElementById("autocompleteList");
-        //Ajax.Callsync({
-        //    type: "Get",
-        //    url: sys.apiUrl("SlsTrSales", "GetAllUOM"),
-        //    success: (d) => {
-        //        let result = d as BaseResponse;
-        //        if (result.IsSuccess) {
-        //            I_D_UOMDetails = result.Response as Array<I_D_UOM>;
-        //        }
-        //    }
-        //});
-        //InitializeGridControl(); 
+        debugger;
+        New_Query = document.getElementById('New_Query' + Cnt);
+        SelectText = document.getElementById('SelectText' + Cnt);
+        RefreshDisplay = document.getElementById('RefreshDisplay' + Cnt);
+        GenerateModels = document.getElementById('GenerateModels' + Cnt);
+        Conact = document.getElementById('Conact' + Cnt);
+        Database = document.getElementById('Database' + Cnt);
+        DataSours = document.getElementById('DataSours' + Cnt);
+        Columns_Table = document.getElementById('Columns_Table' + Cnt);
+        ORDER_Table = document.getElementById('ORDER_Table' + Cnt);
+        top = document.getElementById('top' + Cnt);
+        autocompleteList = document.getElementById("autocompleteList" + Cnt);
+        ConactServer.onchange = SetSession;
+        ConactUser.onchange = SetSession;
+        ConactPassword.onchange = SetSession;
+        ConactServer.onkeyup = SetSession;
+        ConactUser.onkeyup = SetSession;
+        ConactPassword.onkeyup = SetSession;
         Conact.onclick = Conact_onclick;
-        //ConactServer.onclick = ConactServer_onclick;
+        debugger;
         SelectText.onclick = SelectText_Onclick;
+        RefreshDisplay.onclick = RefreshDisplay_All;
         GenerateModels.onclick = GenerateModels_onclick;
         Database.onchange = ConactServer_onclick;
         DataSours.onchange = DataSours_onchange;
-        top.onchange = function () { $('#New_Query').val(''); };
-        Columns_Table.onchange = function () { $('#New_Query').val(''); };
-        ORDER_Table.onchange = function () { $('#New_Query').val(''); };
-        //ShowData.onclick = ShowData_onclick;
+        top.onchange = function () { $('#New_Query' + Cnt).val(''); };
+        Columns_Table.onchange = function () { $('#New_Query' + Cnt).val(''); };
+        ORDER_Table.onchange = function () { $('#New_Query' + Cnt).val(''); };
         InitializeGridControl();
         New_Query.addEventListener("input", handleInput);
         New_Query.addEventListener("mouseup", handleMouseUp);
         New_Query.addEventListener("select", handleMouseUp);
         New_Query.addEventListener("click", handleMouseUp);
-        Event_key('Enter', 'New_Query', 'SelectText');
+        Event_key('Enter', 'New_Query' + Cnt, 'SelectText' + Cnt);
         setTimeout(function () { $('#Body_animated').removeClass('animate__bounceInLeft'); }, 500);
+        SetSession();
     }
-    //function handleInput() {
-    //    const textArray = New_Query.value.toLowerCase().split(' ');
-    //    const lastWord = textArray[textArray.length - 1];
-    //    const suggestions = List_Data_Columns_Table.filter(item => item.name.toLowerCase().startsWith(lastWord));
-    //    renderSuggestions(suggestions);
-    //}
-    //function renderSuggestions(suggestions) {
-    //    autocompleteList.innerHTML = "";
-    //    suggestions.forEach(suggestion => {
-    //        const listItem = document.createElement("li");
-    //        listItem.textContent = suggestion.name;
-    //        listItem.addEventListener("click", () => {
-    //            const textArray = New_Query.value.toLowerCase().split(' ');
-    //            textArray[textArray.length - 1] = suggestion.name;
-    //            New_Query.value = textArray.join(' ');
-    //            autocompleteList.innerHTML = "";
-    //        });
-    //        autocompleteList.appendChild(listItem);
-    //    });
-    //}
+    function SetSession() {
+        sessionStorage.setItem('Server', $('#Server' + (Cnt - 1)).val());
+        sessionStorage.setItem('User', $('#User' + (Cnt - 1)).val());
+        sessionStorage.setItem('Password', $('#Password' + (Cnt - 1)).val());
+        sessionStorage.setItem('Database', $('#Database' + (Cnt - 1)).val());
+    }
     function handleMouseUp() {
         debugger;
         var selection = window.getSelection();
@@ -125,7 +118,6 @@ $(document).ready(function () {
                 var textContent = New_Query.value.toLowerCase();
                 var words = textContent.split(/\s+/);
                 debugger;
-                //const lastWord = words[words.length - 1];
                 var lastWord = "";
                 for (var i = words.length - 1; i >= 0; i--) {
                     if (words[i].trim() == _lastWord) {
@@ -154,7 +146,7 @@ $(document).ready(function () {
         });
     }
     function SelectText_Onclick() {
-        var itemList = document.getElementById("autocompleteList");
+        var itemList = document.getElementById("autocompleteList" + Cnt);
         var firstItem = itemList.querySelector("li:first-child");
         if (firstItem) {
             firstItem.click();
@@ -162,26 +154,27 @@ $(document).ready(function () {
     }
     function Conact_onclick() {
         var rp = new SqlEnt();
-        //rp.Database = $('#Database').val();
-        rp.Server = $('#Server').val();
-        rp.Password = $('#Password').val();
-        rp.User = $('#User').val();
+        rp.Server = $('#Server' + Cnt).val();
+        rp.Password = $('#Password' + Cnt).val();
+        rp.User = $('#User' + Cnt).val();
+        debugger;
+        //rp.Server = sessionStorage.getItem('Server');
+        //rp.Password = sessionStorage.getItem('Password');  
+        //rp.User = sessionStorage.getItem('User'); 
         Ajax.CallAsync({
             url: Url.Action("GetNameData", "GeneralSQL"),
             data: rp,
             success: function (d) {
                 var result = d;
                 debugger;
-                //let res = result as SqlTables;
                 if (result.success) {
                     Database.innerHTML = '<option value="null">Select Database</option>';
                     for (var i = 0; i < result.TableName.length; i++) {
                         if (result.TableName[i] != 'tempdb' && result.TableName[i] != 'master' && result.TableName[i] != 'msdb' && result.TableName[i] != 'model') {
-                            $('#Database').append('<option value="' + result.TableName[i] + '">' + result.TableName[i] + '</option>');
-                            //Database.append("<option value=" + result.TableName[i] + '">Select ' + result.TableName[i] + '</option>")
+                            $('#Database' + Cnt).append('<option value="' + result.TableName[i] + '">' + result.TableName[i] + '</option>');
                         }
                     }
-                    //DocumentActions.FillCombowithdefult(result.TableName, Database, 'name', 'name', "Select Data Sours");
+                    SetSession();
                 }
                 else {
                     alert('يوجد خطأ في الاتصال في الداته بيز');
@@ -191,19 +184,18 @@ $(document).ready(function () {
     }
     function DataSours_onchange() {
         if (DataSours.value == 'null') {
-            $('#New_Query').val('');
-            $('#Columns_Table').html('');
+            $('#New_Query' + Cnt).val('');
+            $('#Columns_Table' + Cnt).html('');
         }
         else {
-            $('#New_Query').val('');
+            $('#New_Query' + Cnt).val('');
             GetColumnsTable();
-            //$('#New_Query').val('Select TOP (' + $('#top').val() + ') * from ' + $("#DataSours option:selected").text() + '')
         }
     }
     function ConactServer_onclick() {
         debugger;
-        $('#New_Query').val('');
-        $('#Columns_Table').html('');
+        $('#New_Query' + Cnt).val('');
+        $('#Columns_Table' + Cnt).html('');
         GetsqlData();
     }
     function GenerateModels_onclick() {
@@ -215,49 +207,25 @@ $(document).ready(function () {
             Errorinput(DataSours);
             return;
         }
-        if ($('#New_Query').val().trim() == '') {
+        if ($('#New_Query' + Cnt).val().trim() == '') {
             if (Columns_Table.value.trim() == '' || Columns_Table.value == 'null') {
-                $('#New_Query').val('Select TOP (' + $('#top').val() + ') * from ' + $("#DataSours option:selected").text() + '');
+                $('#New_Query' + Cnt).val('Select TOP (' + $('#top' + Cnt).val() + ') * from ' + $("#DataSours" + Cnt + " option:selected").text() + '');
             }
             if (Columns_Table.value.trim() != '' && Columns_Table.value != 'null') {
-                $('#New_Query').val('Select TOP (' + $('#top').val() + ') * from ' + $("#DataSours option:selected").text() + ' ORDER BY ' + Columns_Table.value + ' ' + ORDER_Table.value + '');
+                $('#New_Query' + Cnt).val('Select TOP (' + $('#top' + Cnt).val() + ') * from ' + $("#DataSours" + Cnt + " option:selected").text() + ' ORDER BY ' + Columns_Table.value + ' ' + ORDER_Table.value + '');
             }
         }
         GenerateMode();
     }
-    function ShowData_onclick() {
-        var model = new SqlTables();
-        var modelSql = new ModelSql();
-        var rp = new SqlEnt();
-        rp.Database = $('#Database').val();
-        rp.Server = $('#Server').val();
-        rp.Password = $('#Password').val();
-        rp.User = $('#User').val();
-        model.name = $("#DataSours option:selected").text();
-        model.object_id = $('#DataSours').val();
-        modelSql.sqlTables = model;
-        modelSql.sqlEnt = rp;
-        var _Data = JSON.stringify(modelSql);
-        Ajax.CallAsync({
-            url: Url.Action("ShowData", "GeneralSQL"),
-            data: { RepP: _Data },
-            success: function (d) {
-                var result = d;
-                debugger;
-                var res = result;
-                var Model = JSON.parse(res);
-                Grid.ESG.LastCounter = 0;
-                Grid.ESG.LastCounterAdd = 0;
-                DisplayDataGridControl(Model, Grid);
-            }
-        });
-    }
     function GetsqlData() {
         var rp = new SqlEnt();
-        rp.Database = $('#Database').val();
-        rp.Server = $('#Server').val();
-        rp.Password = $('#Password').val();
-        rp.User = $('#User').val();
+        rp.Database = $('#Database' + Cnt).val();
+        rp.Server = $('#Server' + Cnt).val();
+        rp.Password = $('#Password' + Cnt).val();
+        rp.User = $('#User' + Cnt).val();
+        //rp.Server = sessionStorage.getItem('Server');
+        //rp.Password = sessionStorage.getItem('Password');
+        //rp.User = sessionStorage.getItem('User'); 
         Ajax.CallAsync({
             url: Url.Action("CounactData", "GeneralSQL"),
             data: rp,
@@ -274,13 +242,16 @@ $(document).ready(function () {
         var model = new SqlTables();
         var modelSql = new ModelSql();
         var rp = new SqlEnt();
-        rp.Database = $('#Database').val();
-        rp.Server = $('#Server').val();
-        rp.Password = $('#Password').val();
-        rp.User = $('#User').val();
-        rp.New_Query = $('#New_Query').val();
-        model.name = $("#DataSours option:selected").text();
-        model.object_id = $('#DataSours').val();
+        rp.Database = $('#Database' + Cnt).val();
+        rp.Server = $('#Server' + Cnt).val();
+        rp.Password = $('#Password' + Cnt).val();
+        rp.User = $('#User' + Cnt).val();
+        //rp.Server = sessionStorage.getItem('Server');
+        //rp.Password = sessionStorage.getItem('Password');
+        //rp.User = sessionStorage.getItem('User'); 
+        rp.New_Query = $('#New_Query' + Cnt).val();
+        model.name = $("#DataSours" + Cnt + " option:selected").text();
+        model.object_id = $('#DataSours' + Cnt).val();
         modelSql.sqlTables = model;
         modelSql.sqlEnt = rp;
         var _Data = JSON.stringify(modelSql);
@@ -310,13 +281,16 @@ $(document).ready(function () {
         var model = new SqlTables();
         var modelSql = new ModelSql();
         var rp = new SqlEnt();
-        rp.Database = $('#Database').val();
-        rp.Server = $('#Server').val();
-        rp.Password = $('#Password').val();
-        rp.User = $('#User').val();
-        rp.New_Query = $('#New_Query').val();
-        model.name = $("#DataSours option:selected").text();
-        model.object_id = $('#DataSours').val();
+        rp.Database = $('#Database' + Cnt).val();
+        rp.Server = $('#Server' + Cnt).val();
+        rp.Password = $('#Password' + Cnt).val();
+        rp.User = $('#User' + Cnt).val();
+        //rp.Server = sessionStorage.getItem('Server');
+        //rp.Password = sessionStorage.getItem('Password');
+        //rp.User = sessionStorage.getItem('User'); 
+        rp.New_Query = $('#New_Query' + Cnt).val();
+        model.name = $("#DataSours" + Cnt + " option:selected").text();
+        model.object_id = $('#DataSours' + Cnt).val();
         modelSql.sqlTables = model;
         modelSql.sqlEnt = rp;
         var _Data = JSON.stringify(modelSql);
@@ -325,14 +299,40 @@ $(document).ready(function () {
             data: { RepP: _Data },
             success: function (d) {
                 debugger;
-                var res = d;
-                Display_All(res, model.name);
+                Display_AllRes = d;
+                Display_All(Display_AllRes, model.name);
             }
         });
     }
+    function RefreshDisplay_All() {
+        var model = new SqlTables();
+        var modelSql = new ModelSql();
+        var rp = new SqlEnt();
+        rp.Database = $('#Database' + Cnt).val();
+        rp.Server = $('#Server' + Cnt).val();
+        rp.Password = $('#Password' + Cnt).val();
+        rp.User = $('#User' + Cnt).val();
+        //rp.Server = sessionStorage.getItem('Server');
+        //rp.Password = sessionStorage.getItem('Password');
+        //rp.User = sessionStorage.getItem('User'); 
+        rp.New_Query = $('#New_Query' + Cnt).val();
+        model.name = $("#DataSours" + Cnt + " option:selected").text();
+        model.object_id = $('#DataSours' + Cnt).val();
+        modelSql.sqlTables = model;
+        modelSql.sqlEnt = rp;
+        if (Display_AllRes != undefined && Display_AllRes != 'undefined' && Display_AllRes != null) {
+            Display_All(Display_AllRes, model.name);
+        }
+    }
     function Display_All(res, NameTaple) {
         debugger;
-        var Model = JSON.parse(res.Columns_Models[0]);
+        var Model;
+        try {
+            Model = JSON.parse(res.Columns_Models[0]);
+        }
+        catch (e) {
+            return false;
+        }
         Grid.Column = new Array();
         var properties = Object.getOwnPropertyNames(Model);
         for (var _i = 0, properties_1 = properties; _i < properties_1.length; _i++) {
@@ -360,8 +360,10 @@ $(document).ready(function () {
         BindGridControl(Grid);
         Display_Data(res, NameTaple, function () {
             debugger;
+            //let _SearchGrid: SearchGrid = new SearchGrid();
             var values = SearchGrid.SearchDataGrid.SelectedKey;
             Grid.ESG.Model;
+            Grid.ESG.NameTable = 'Grad1' + Cnt;
             EditGridControl(Grid);
             Grid.ESG.LastCounter = 0;
             Grid.ESG.LastCounterAdd = 0;
@@ -371,7 +373,6 @@ $(document).ready(function () {
             var NameTable = Grid.ESG.NameTable;
             debugger;
             for (var u = 0; u < Grid.Column.length; u++) {
-                //$('#' + NameTable + '_' + Grid.Column[u].Name + 0 + '').val(values[u]);
                 debugger;
                 if (Grid.Column[u].ColumnType.NameType == 'checkbox') {
                     if (values[u] == "1" || values[u] == "true") {
@@ -403,8 +404,10 @@ $(document).ready(function () {
         var response = res;
         var columns = response.Columns;
         var result = JSON.parse(response.DataResult);
+        //let _SearchGrid: SearchGrid = new SearchGrid();
         SearchGrid.SearchDataGrid = new DataTable();
         SearchGrid.SearchDataGrid.Columns = columns;
+        SearchGrid;
         SearchGrid.SearchDataGrid.dataScr = result;
         SearchGrid.SearchDataGrid.ElementName = "SearchDataTable";
         SearchGrid.SearchDataGrid.PageSize = 10; // < 50 ? 50 : settings.PageSize;
@@ -417,112 +420,45 @@ $(document).ready(function () {
         $("#SearchBox").css("height", boxHeight);
         $("#SearchBox").css("left", boxLeft);
         $("#SearchBox").css("top", boxTop);
-        SearchGrid.SearchDataGrid.Bind();
+        SearchGrid.SearchDataGrid.Bind(Cnt);
         SearchGrid.SearchDataGrid.OnDoubleClick = function () {
+            debugger;
             console.log(SearchGrid.SearchDataGrid.SelectedKey);
             //salert(SearchGrid.SearchDataGrid.SelectedKey)
             $("#SearchBox").modal("hide"); //.css("display", "none");
             OnSearchSelected();
         };
-        document.getElementById("searchTitle").innerText = NameTable;
+        document.getElementById("searchTitle" + Cnt).innerText = NameTable;
         $(".ui-igedit-input").keyup(function (e) {
         });
-        $("#SearchBox").modal("show"); //.css("display", "");//
-        // $("#SearchBox").addClass("in");//.css("display", "");//
+        $("#SearchBox").modal("show"); //.css("display", "");// 
         $("#SearchDataTable").css("width", "100%");
         $("#SearchDataTable").css("height", "100%");
     }
-    function GenerateModeOld() {
-        var model = new SqlTables();
-        var modelSql = new ModelSql();
-        var rp = new SqlEnt();
-        rp.Database = $('#Database').val();
-        rp.Server = $('#Server').val();
-        rp.Password = $('#Password').val();
-        rp.User = $('#User').val();
-        rp.New_Query = $('#New_Query').val();
-        model.name = $("#DataSours option:selected").text();
-        model.object_id = $('#DataSours').val();
-        modelSql.sqlTables = model;
-        modelSql.sqlEnt = rp;
-        var _Data = JSON.stringify(modelSql);
-        Ajax.CallAsync({
-            url: Url.Action("FindModels", "GeneralSQL"),
-            data: { RepP: _Data },
-            success: function (d) {
-                var result = d;
-                var res = result;
-                debugger;
-                var Model = JSON.parse(res[0]);
-                Grid.Column = new Array();
-                var properties = Object.getOwnPropertyNames(Model);
-                for (var _i = 0, properties_2 = properties; _i < properties_2.length; _i++) {
-                    var property = properties_2[_i];
-                    var Colum = new Column();
-                    Colum.Name = "" + property + "";
-                    Colum.title = "" + property + "";
-                    var NameTyp = res.Columns.filter(function (x) { return x.headerText == property; });
-                    if (NameTyp[0].dataType == "boolean") {
-                        Colum.ColumnType.NameType = "checkbox";
-                    }
-                    if (NameTyp[0].dataType == "date") {
-                        Colum.ColumnType.NameType = "date";
-                    }
-                    if (NameTyp[0].dataType == "number") {
-                        Colum.ColumnType.NameType = "number";
-                    }
-                    Grid.Column.push(Colum);
-                }
-                debugger;
-                Model['StatusFlag'] = '';
-                Grid.ESG.object = Model;
-                Grid.ESG.LastCounter = 0;
-                Grid.ESG.LastCounterAdd = 0;
-                BindGridControl(Grid);
-                //-------------------------------------------------------------
-                debugger;
-                var Model_2 = res[1];
-                showGridData(Grid, Model_2.toString());
-                //$("table_Grad1").each(function () {
-                //    var $this = $(this);
-                //    var newrows = [];
-                //    $this.find("tr").each(function () {
-                //        var i = 0;
-                //        $(this).find("td").each(function () {
-                //            i++;
-                //            if (newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
-                //            newrows[i].append($(this));
-                //        });
-                //    });
-                //    $this.find("tr").remove();
-                //    $.each(newrows, function () {
-                //        $this.append(this);
-                //    });
-                //});
-            }
-        });
-    }
     function InitializeGridControl() {
-        Grid.ESG.NameTable = 'Grad1';
+        Grid = new ESGrid();
+        Grid = JSON.parse(JSON.stringify(Grid));
+        Grid.ESG.NameTable = 'Grad1' + Cnt;
         Grid.ESG.OnfunctionSave = SaveNew;
         Grid.ESG.OnfunctionTotal = computeTotal;
         Grid.ESG.OnRowDoubleClicked = DoubleClicked;
         //DisplayDataGridControl(I_D_UOMDetails, Grid);
     }
     function SaveNew() {
-        debugger;
-        //alert(Grid.ESG.Model)
         console.log(Grid.ESG.Model);
         var model = new SqlTables();
         var modelSql = new ModelSql();
         var rp = new SqlEnt();
-        rp.Database = $('#Database').val();
-        rp.Server = $('#Server').val();
-        rp.Password = $('#Password').val();
-        rp.User = $('#User').val();
-        rp.New_Query = $('#New_Query').val();
-        model.name = $("#DataSours option:selected").text();
-        model.object_id = $('#DataSours').val();
+        rp.Database = $('#Database' + Cnt).val();
+        rp.Server = $('#Server' + Cnt).val();
+        rp.Password = $('#Password' + Cnt).val();
+        rp.User = $('#User' + Cnt).val();
+        //rp.Server = sessionStorage.getItem('Server');
+        //rp.Password = sessionStorage.getItem('Password');
+        //rp.User = sessionStorage.getItem('User'); 
+        rp.New_Query = $('#New_Query' + Cnt).val();
+        model.name = $("#DataSours" + Cnt + " option:selected").text();
+        model.object_id = $('#DataSours' + Cnt).val();
         modelSql.sqlTables = model;
         modelSql.sqlEnt = rp;
         modelSql.Model = Grid.ESG.Model;
@@ -539,6 +475,7 @@ $(document).ready(function () {
                 debugger;
                 var res = d;
                 if (res.success == true) {
+                    Display_AllRes = d;
                     Display_All(res, model.name);
                 }
                 else {

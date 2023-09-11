@@ -1381,7 +1381,7 @@ namespace Inv.WebUI.Controllers
                             models.Append("Null");
                         }
                         else { 
-                        models.Append("'" + value.ToString() + "'");
+                        models.Append("N'" + value.ToString() + "'");
                         }
 
                     }
@@ -1396,7 +1396,7 @@ namespace Inv.WebUI.Controllers
                         }
                         else
                         {
-                            models.Append(",'" + value.ToString() + "'");
+                            models.Append(",N'" + value.ToString() + "'");
 
                         }
                     }
@@ -1492,7 +1492,7 @@ namespace Inv.WebUI.Controllers
                             }
                             else
                             {
-                                models.Append("" + column.name + " = '" + value.ToString() + "'");
+                                models.Append("" + column.name + " = N'" + value.ToString() + "'");
 
                             }
 
@@ -1506,7 +1506,7 @@ namespace Inv.WebUI.Controllers
                             }
                             else
                             {
-                                models.Append("," + column.name + " = '" + value.ToString() + "'");
+                                models.Append("," + column.name + " = N'" + value.ToString() + "'");
 
                             }
                         }
