@@ -567,6 +567,7 @@ function BuildGridControl(flagDisplay, Grid) {
             Column_td.attr('style', '' + Grid.Column[u].style + '  !important;');
         }
         ;
+        //------------------------------------------------------------------------------------------
     };
     for (var u = 0; u < Grid.Column.length; u++) {
         _loop_1(u);
@@ -827,7 +828,7 @@ function CopyRow(Grid, index) {
         var cnt = i;
         var StatusFlag = $("#StatusFlag_" + NameTable + '_' + cnt).val();
         if (cnt == index) {
-            GActions.AssignToModel(CopyModel, NameTable, cnt, StatusFlag);
+            GActions.AssignToModelCopy(CopyModel, NameTable, cnt, StatusFlag);
             CopyModel.Ser = LastCountGrid;
             //CopyModel.StatusFlag = 'i';
             BuildGridControl(true, Grid);
@@ -945,10 +946,28 @@ var GActions = {
         }
         return Model;
     },
-    ComputeTotalToModel: function (Model, NameTable, cnt, StatusFlag) {
+    AssignToModelCopy: function (Model, NameTable, cnt, StatusFlag) {
+        debugger;
         var properties = Object.getOwnPropertyNames(Model);
         for (var _i = 0, properties_3 = properties; _i < properties_3.length; _i++) {
             var property = properties_3[_i];
+            var element = document.getElementById('' + NameTable + '_' + property + cnt);
+            if (element != null) {
+                if (element.type == "checkbox") {
+                    Model[property] = element.checked;
+                }
+                else {
+                    Model[property] = element.value;
+                }
+                //addToArray('Model', property, element.value)
+            }
+        }
+        return Model;
+    },
+    ComputeTotalToModel: function (Model, NameTable, cnt, StatusFlag) {
+        var properties = Object.getOwnPropertyNames(Model);
+        for (var _i = 0, properties_4 = properties; _i < properties_4.length; _i++) {
+            var property = properties_4[_i];
             var element = document.getElementById('' + NameTable + '_' + property + cnt);
             if (element != null) {
                 if (element.type != "checkbox")

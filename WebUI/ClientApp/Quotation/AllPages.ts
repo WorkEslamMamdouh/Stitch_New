@@ -850,302 +850,26 @@ namespace AllPages {
 </body>`;
 
     var Html_DataServer = `
-
-<style>
-
-    .des {
-        width: 22% !important;
-    }
-
-    .uom {
-        width: 11% !important;
-    }
-
-    .Zero {
-        width: 0% !important;
-    }
-
-    .Price {
-        width: 9% !important;
-    }
-
-    .odd {
-        background-color: lightcoral;
-        font-weight: bold;
-        font-size: 16px;
-        color: black;
-    }
-    .even {
-        background-color: #fff2ce;
-        font-weight: bold;
-        font-size: 16px;
-        color: black;
-    }
-    tr {
-        background-color: #b9b9b9;
-        color: black;
-    }
-
-    .px-5 {
-        padding-left: 3rem !important;
-        padding-right: 3rem !important;
-    }
-
-.dropdown {
-  max-width: 13em;
-  margin: 80px auto 0;
-  position: relative;
-  width: 100%;
-}
-
-.dropdown-btn {
-  background: #1d1f24;
-  font-size: 18px;
-  width: 100%;
-  border: none;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.7em 0.5em;
-  border-radius: 0.5em;
-  cursor: pointer;
-}
-
-.arrow {
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 6px solid #fff;
-  transition: transform ease-in-out 0.3s;
-}
-
-.dropdown-content {
-  border-radius: 0.5em !important;
-    height: 20px;
-    position: absolute;
-    z-index: 99999;
-width: 300px; height: 100px; overflow: auto;
-}
-
-.dropdown-content li {
-  background: #000000bf;
-
-  position: relative; 
-  transition: 0.5s;
-  transition-delay: calc(60ms * var(--delay));
-    color: wheat;
-font-weight: bold;
-}
-
-.dropdown-btn:focus + .dropdown-content li {
-  left: 0;
-}
-
-.dropdown-btn:focus + .dropdown-content {
-  visibility: visible;
-}
-
-.dropdown-btn:focus > .arrow {
-  transform: rotate(180deg);
-}
-
-.dropdown-content li:hover {
-  background: #1d1f24;
-}
-
-.dropdown-content li a {
-  display: block; 
-  color: #fff; 
-  text-decoration: none;
-}
  
-
-</style>
-<body class="materialdesign">
-    <div class="content-inner-all animate__animated animate__zoomIn">
-        <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
-
-
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <h1 class="col-xs-12 col-lg-12 col-sm-12">Data Server</h1>
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12 ">
-                <label>Server</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12 ">
-
-                <input id="Server" type="text" class="form-control " value="108.181.197.82" name="Server" list="ServerName">
-                <datalist id="ServerName">
-
-                    <option value="108.181.197.82">
-                </datalist>
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>User</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <input id="User" type="text" class="form-control " value="SYSUSER" name="Server" list="UserName">
-                <datalist id="UserName">
-
-                    <option value="SYSUSER">
-                </datalist>
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Password</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12 animated animate backInDown">
-                <input id="Password" type="text" class="form-control " value="SYSUSER2020" name="Password" list="PasswordName">
-                <datalist id="PasswordName">
-                    <option value="SYSUSER2020">
-                </datalist>
-            </div>
-
-            <div class="col-xs-12">
-                <br />
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-
-            </div>
-
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <button id="Conact" value="Conact" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">   Conact </button>
-            </div>
-
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Database</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="Database" class="form-control "></select>
-            </div>
-
-
-               <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Data Sours</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="DataSours" class="form-control "></select>
-            </div>
-
-            <div class="col-xs-12">
-                <br />
-            </div>
-
-       
-
-
-           <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Columns Table</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="Columns_Table" class="form-control "></select>
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Order</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="ORDER_Table" class="form-control ">
-                    <option value="DESC">DESC</option>
-                    <option value="ASC">ASC</option>
-                </select>
-            </div>
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>Top</label>
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <select id="top" class="form-control ">
-                    <option value="100">100</option>
-                    <option value="200">200</option>
-                    <option value="300">300</option>
-                    <option value="400">400</option>
-                    <option value="500">500</option>
-                    <option value="1000">1000</option>
-                    <option value="1500">1500</option>
-                    <option value="2000">2000</option>
-                    <option value="2500">2500</option>
-                    <option value="3000">3000</option>
-                    <option value="4000">4000</option>
-                    <option value="5000">5000</option>
-                </select>
-            </div>
-
-            <div class="col-xs-12">
-                <br />
-            </div>
-
-           
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>New Query</label>
-            </div>
-            <div class="col-xs-12 col-lg-11 col-sm-12">
-                <button id="SelectText"  class="form-control display_none" value=""  ></button>
-                <textarea id="New_Query" type="text" class="form-control " value="" style="height: 150px;"></textarea>
-                <ul class="dropdown-content" role="menu" id="autocompleteList"></ul>
-            </div>
-
-         
-
-                        <div class="col-xs-12">
-                            <br />
-                        </div>
-             <div class="col-xs-12">
-                            <br />
-                        </div>
-             <div class="col-xs-12">
-                            <br />
-                        </div>
-             <div class="col-xs-12">
-                            <br />
-                        </div>
-             <div class="col-xs-12">
-                            <br />
-                        </div> 
-            <div class="col-xs-12 col-lg-12 col-sm-12">
-                <button id="GenerateModels" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Execute </button>
-            </div>
-
-
-
-
+<body class="materialdesign"> 
+    <div class="responsive__tabs animate__animated animate__zoomIn"> 
+        <ul id="label_Tab" class="scrollable-tabs ">
+      <li id="Back" class="nav-item">
+                    <a id="Back" class="nav-link" data-toggle="tab" href="">
+                        <i id="Back" class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;color: #df0303;"></i>
+                    </a>
+                </li>
+            <li id="App_Tap" class=""><a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a></li>
+ 
+        </ul>
+ 
+        <div id="Area_Tab" class="tab-content">
+ 
         </div>
-
-
-
-
-        <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
-
-            <div class="inside-table my-4">
-                <h2 id="searchTitle"></h2>
-                <div id="tableDiv">
-
-                </div>
-            </div>
-
-        </div>
-
-        <div id="Grad1" class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
-
-        </div>
-
-
-
-
-    </div>
-
-
-
-
+    </div> 
 </body>
 `;
-
-
+ 
 
     var Html_Settings = `
 
@@ -1262,6 +986,7 @@ font-weight: bold;
                     <option value="Wallet">Wallet</option>
                     <option value="Notes">Notes</option>
                     <option value="Work">Work</option>
+                    <option value="Data_Server">Data Server</option>
                 </select>
             </div>
 
@@ -1451,6 +1176,9 @@ font-weight: bold;
                     if (User[0].Type == "Work") {
                         $("#_Work").removeClass('display_none');
                     }
+                    if (User[0].Type == "Data_Server") {
+                        $("#_Server").removeClass('display_none');
+                    }
                     let Name = sessionStorage.getItem("AddUserName");
                     ShowMessage('Welcome Mister ' + Name + ' in App')
                 }
@@ -1606,7 +1334,8 @@ font-weight: bold;
 
     function Data_Server() {
         
-        LodePage(Html_DataServer, 'ClientApp/Quotation/TestGrad.js')
+        LodePage(Html_DataServer, 'ClientApp/Quotation/ServerMaster.js')
+        //LodePage(Html_DataServer, 'ClientApp/Quotation/TestGrad.js')
     }
 
     function Wallet() {

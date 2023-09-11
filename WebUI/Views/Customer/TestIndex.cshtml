@@ -1,8 +1,8 @@
 ﻿
 @{
-
     Layout = "~/Views/Shared/Layout.cshtml";
 }
+
 
 <style>
 
@@ -28,12 +28,14 @@
         font-size: 16px;
         color: black;
     }
+
     .even {
         background-color: #fff2ce;
         font-weight: bold;
         font-size: 16px;
         color: black;
     }
+
     tr {
         background-color: #b9b9b9;
         color: black;
@@ -44,25 +46,95 @@
         padding-right: 3rem !important;
     }
 
+    .dropdown {
+        max-width: 13em;
+        margin: 80px auto 0;
+        position: relative;
+        width: 100%;
+    }
+
+    .dropdown-btn {
+        background: #1d1f24;
+        font-size: 18px;
+        width: 100%;
+        border: none;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.7em 0.5em;
+        border-radius: 0.5em;
+        cursor: pointer;
+    }
+
+    .arrow {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid #fff;
+        transition: transform ease-in-out 0.3s;
+    }
+
+    .dropdown-content {
+        border-radius: 0.5em !important;
+        height: 20px;
+        position: absolute;
+        z-index: 99999;
+        width: 300px;
+        height: 100px;
+        overflow: auto;
+    }
+
+        .dropdown-content li {
+            background: #000000bf;
+            position: relative;
+            transition: 0.5s;
+            transition-delay: calc(60ms * var(--delay));
+            color: wheat;
+            font-weight: bold;
+        }
+
+    .dropdown-btn:focus + .dropdown-content li {
+        left: 0;
+    }
+
+    .dropdown-btn:focus + .dropdown-content {
+        visibility: visible;
+    }
+
+    .dropdown-btn:focus > .arrow {
+        transform: rotate(180deg);
+    }
+
+    .dropdown-content li:hover {
+        background: #1d1f24;
+    }
+
+    .dropdown-content li a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+    }
 </style>
 <body class="materialdesign">
-    <div class="content-inner-all animate__animated animate__backInLeft">
+    @*<div class="content-inner-all animate__animated animate__zoom">*@
+    <div id="Body_animated" class="content-inner-all animate__animated animate__bounceInLeft">
         <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
 
- 
-            <div class="col-xs-12 col-lg-12 col-sm-12">
+
+            @*<div class="col-xs-12 col-lg-12 col-sm-12">
                 <h1 class="col-xs-12 col-lg-12 col-sm-12">Data Server</h1>
-            </div>
+            </div>*@
 
             <div class="col-xs-12 col-lg-1 col-sm-12 ">
                 <label>Server</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12 ">
-                @*<input  type="text"  />*@
-                <input id="Server" type="text" class="form-control " value="172.106.161.82" name="Server" list="ServerName">
+
+                <input id="Server" type="text" class="form-control " value="108.181.197.82" name="Server" list="ServerName">
                 <datalist id="ServerName">
-                    @*<option value="SQL5070.site4now.net">*@
-                    <option value="172.106.161.82">
+
+                    <option value="108.181.197.82">
+                    <option value="192.168.1.50\SQL2014">
                 </datalist>
             </div>
 
@@ -72,9 +144,8 @@
             <div class="col-xs-12 col-lg-3 col-sm-12">
                 <input id="User" type="text" class="form-control " value="SYSUSER" name="Server" list="UserName">
                 <datalist id="UserName">
-                    @*<option value="db_a7d7aa_newtax_admin">*@
+
                     <option value="SYSUSER">
-                         
                 </datalist>
             </div>
 
@@ -82,11 +153,10 @@
                 <label>Password</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12 animated animate backInDown">
-                @*<input id="Password" type="password" class="form-control " value="619619Ss619619" />*@
                 <input id="Password" type="text" class="form-control " value="SYSUSER2020" name="Password" list="PasswordName">
                 <datalist id="PasswordName">
-                    @*<option value="619619Ss619619">*@
                     <option value="SYSUSER2020">
+                    <option value="SYSUSER">
                 </datalist>
             </div>
 
@@ -107,22 +177,9 @@
                 <label>Database</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12">
-                @*<input id="Database" type="text" class="form-control " value="db_a7d7aa_newtax" />*@
                 <select id="Database" class="form-control "></select>
             </div>
 
-
-            <div class="col-xs-12 col-lg-1 col-sm-12">
-
-            </div>
-            <div class="col-xs-12 col-lg-3 col-sm-12">
-                <button id="ConactServer" value="Conact" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-success">   Action Data </button>
-            </div>
-
-
-            <div class="col-xs-12">
-                <br />
-            </div>
 
             <div class="col-xs-12 col-lg-1 col-sm-12">
                 <label>Data Sours</label>
@@ -131,19 +188,34 @@
                 <select id="DataSours" class="form-control "></select>
             </div>
 
+            <div class="col-xs-12">
+                <br />
+            </div>
+
+
 
 
             <div class="col-xs-12 col-lg-1 col-sm-12">
-                <label>New Query</label>
+                <label>Columns Table</label>
             </div>
-            <div class="col-xs-12 col-lg-5 col-sm-12">
-                <textarea id="New_Query" type="text" class="form-control " value=""></textarea>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <select id="Columns_Table" class="form-control "></select>
+            </div>
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>Order</label>
+            </div>
+            <div class="col-xs-12 col-lg-3 col-sm-12">
+                <select id="ORDER_Table" class="form-control ">
+                    <option value="DESC">DESC</option>
+                    <option value="ASC">ASC</option>
+                </select>
             </div>
 
             <div class="col-xs-12 col-lg-1 col-sm-12">
                 <label>Top</label>
             </div>
-            <div class="col-xs-12 col-lg-1 col-sm-12">
+            <div class="col-xs-12 col-lg-3 col-sm-12">
                 <select id="top" class="form-control ">
                     <option value="100">100</option>
                     <option value="200">200</option>
@@ -151,6 +223,12 @@
                     <option value="400">400</option>
                     <option value="500">500</option>
                     <option value="1000">1000</option>
+                    <option value="1500">1500</option>
+                    <option value="2000">2000</option>
+                    <option value="2500">2500</option>
+                    <option value="3000">3000</option>
+                    <option value="4000">4000</option>
+                    <option value="5000">5000</option>
                 </select>
             </div>
 
@@ -158,6 +236,34 @@
                 <br />
             </div>
 
+
+
+            <div class="col-xs-12 col-lg-1 col-sm-12">
+                <label>New Query</label>
+            </div>
+            <div class="col-xs-12 col-lg-11 col-sm-12">
+                <button id="SelectText" class="form-control display_none" value=""></button>
+                <textarea id="New_Query" type="text" class="form-control " value="" style="height: 150px;"></textarea>
+                <ul class="dropdown-content" role="menu" id="autocompleteList"></ul>
+            </div>
+
+
+
+            <div class="col-xs-12">
+                <br />
+            </div>
+            <div class="col-xs-12">
+                <br />
+            </div>
+            <div class="col-xs-12">
+                <br />
+            </div>
+            <div class="col-xs-12">
+                <br />
+            </div>
+            <div class="col-xs-12">
+                <br />
+            </div>
             <div class="col-xs-12 col-lg-12 col-sm-12">
                 <button id="GenerateModels" value="Generate Models" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-danger">    Execute </button>
             </div>
@@ -191,8 +297,6 @@
     </div>
 
 
+    <script src="~/ClientApp/Quotation/TestGrad.js"></script>
 
-
-</body>
-
-<script src="~/ClientApp/Quotation/TestGrad.js"></script>
+</body> 

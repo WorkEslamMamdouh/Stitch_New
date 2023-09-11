@@ -18,6 +18,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using NPOI.SS.Formula.Functions;
 using System.Web.Script.Serialization;
+using NPOI.SS.Formula.Eval;
 
 namespace Inv.WebUI.Controllers
 {//eslam 1 dec 2020
@@ -610,7 +611,7 @@ namespace Inv.WebUI.Controllers
                         foreach (Object obj in NewModel)
                         {
 
-
+                            columns = new List<SqlColumns>();
                             //----------------------------------------------------Cheak_on_ID IN Table--------------------------
 
                             connection.Open();
@@ -1295,7 +1296,9 @@ namespace Inv.WebUI.Controllers
 
             if (StatusFlag == "i") //insert
             {
-                models.AppendLine("insert into " + table.name + " values( ");
+                string _ValS_ = "";
+
+                models.AppendLine("insert into " + table.name + " _Val_ values( ");
                 foreach (SqlColumns column in columns)
                 {
                     bool Is_computed_column = false;
@@ -1340,10 +1343,13 @@ namespace Inv.WebUI.Controllers
                         }
                     }
 
+
+                    _ValS_ = _ValS_ + column.name+" , "; 
+
                     value = routes_list[column.name].ToString();
 
 
-                    if (value.Trim() == "")
+                    if (value == "")
                     {
                         string typeName = column.ColumnTypeInsert(this.db);
 
@@ -1353,10 +1359,10 @@ namespace Inv.WebUI.Controllers
                                 value = "Null";
                                 break;
                             case "string":
-                                value = "";
+                                value = "Null";
                                 break;
                             case "number":
-                                value = "0";
+                                value = "Null";
                                 break;
                             case "boolean":
                                 value = "false";
@@ -1369,7 +1375,8 @@ namespace Inv.WebUI.Controllers
 
                     if (flagfrist == 0)
                     {
-                        if (value == "Null" || value == "0"|| value == ""|| value == "NaN-NaN-NaN")
+                        //if (value == "Null" || value == "0"|| value == ""|| value == "NaN-NaN-NaN")
+                        if (value == "Null" || value == "null" || value == "" || value == "NaN-NaN-NaN")
                         {
                             models.Append("Null");
                         }
@@ -1380,7 +1387,8 @@ namespace Inv.WebUI.Controllers
                     }
                     else
                     {
-                        if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN")
+                        //if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN")
+                        if (value == "Null" || value == "null" || value == "" || value == "NaN-NaN-NaN")
 
                         {
                             models.Append(",Null");
@@ -1396,6 +1404,10 @@ namespace Inv.WebUI.Controllers
                     flagfrist = 1;
                 }
                 models.Append(" ) ");
+
+                models = models.Replace("_Val_", "(" + _ValS_ + ")");
+
+                models = models.Replace(", )", ")");
 
             }
             if (StatusFlag == "u")//update
@@ -1432,7 +1444,7 @@ namespace Inv.WebUI.Controllers
 
                     value = routes_list[column.name].ToString();
 
-                    if (value.Trim() == "")
+                    if (value == "")
                     {
                         string typeName = column.ColumnTypeInsert(this.db);
 
@@ -1442,10 +1454,10 @@ namespace Inv.WebUI.Controllers
                                 value = "Null";
                                 break;
                             case "string":
-                                value = "";
+                                value = "Null";
                                 break;
                             case "number":
-                                value = "0";
+                                value = "Null";
                                 break;
                             case "boolean":
                                 value = "false";
@@ -1473,7 +1485,8 @@ namespace Inv.WebUI.Controllers
 
                         if (flagfrist == 0)
                         {
-                            if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN") 
+                            //if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN") 
+                            if (value == "Null" || value == "null" || value == "" || value == "NaN-NaN-NaN") 
                             {
                                 models.Append("" + column.name + " = Null");
                             }
@@ -1486,7 +1499,8 @@ namespace Inv.WebUI.Controllers
                         }
                         else
                         {
-                            if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN") 
+                            //if (value == "Null" || value == "0" || value == "" || value == "NaN-NaN-NaN") 
+                            if (value == "Null" || value == "null" || value == "" || value == "NaN-NaN-NaN") 
                             {
                                 models.Append("," + column.name + " = Null");
                             }

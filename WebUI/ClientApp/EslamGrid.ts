@@ -1270,7 +1270,7 @@ function CopyRow(Grid: ESGrid, index: number) {
 
         if (cnt == index) {
 
-            GActions.AssignToModel(CopyModel, NameTable, cnt, StatusFlag)
+            GActions.AssignToModelCopy(CopyModel, NameTable, cnt, StatusFlag)
 
             CopyModel.Ser = LastCountGrid;
             //CopyModel.StatusFlag = 'i';
@@ -1451,6 +1451,30 @@ var GActions = {
                     Model[property] = DateFormatNew(element.value);
 
                 }
+                else {
+                    Model[property] = element.value;
+                }
+
+                //addToArray('Model', property, element.value)
+            }
+        }
+
+        return Model;
+    },
+
+
+    AssignToModelCopy: <T>(Model: T, NameTable: string, cnt: number, StatusFlag: string): T => {
+
+        debugger
+        let properties = Object.getOwnPropertyNames(Model);
+        for (var property of properties) {
+            let element = document.getElementById('' + NameTable + '_' + property + cnt) as HTMLInputElement;
+
+            if (element != null) {
+                if (element.type == "checkbox") {
+                    Model[property] = element.checked;
+
+                } 
                 else {
                     Model[property] = element.value;
                 }

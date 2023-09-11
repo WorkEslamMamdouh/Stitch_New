@@ -23,6 +23,8 @@ $(document).ready(function () {
     function TestGradInitalizeComponent() {
         $("#layout_Refresh").removeClass('display_none');
         $("#layout_Back").removeClass('display_none');
+        $("#layout_Refresh").addClass('display_none');
+        $("#layout_Back").addClass('display_none');
         //ShowData = document.getElementById('ShowData') as HTMLButtonElement 
         New_Query = document.getElementById('New_Query');
         SelectText = document.getElementById('SelectText');
@@ -62,6 +64,7 @@ $(document).ready(function () {
         New_Query.addEventListener("select", handleMouseUp);
         New_Query.addEventListener("click", handleMouseUp);
         Event_key('Enter', 'New_Query', 'SelectText');
+        setTimeout(function () { $('#Body_animated').removeClass('animate__bounceInLeft'); }, 500);
     }
     //function handleInput() {
     //    const textArray = New_Query.value.toLowerCase().split(' ');

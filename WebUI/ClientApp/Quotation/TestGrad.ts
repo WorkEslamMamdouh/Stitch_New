@@ -32,7 +32,8 @@ $(document).ready(() => {
         $("#layout_Back").removeClass('display_none');
 
 
-
+        $("#layout_Refresh").addClass('display_none');
+        $("#layout_Back").addClass('display_none');
 
 
 
@@ -82,6 +83,10 @@ $(document).ready(() => {
         New_Query.addEventListener("click", handleMouseUp);
 
         Event_key('Enter', 'New_Query', 'SelectText');
+         
+        setTimeout(function () { $('#Body_animated').removeClass('animate__bounceInLeft') }, 500);
+       
+        
     }
 
 
