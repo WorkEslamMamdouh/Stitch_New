@@ -50,28 +50,9 @@
     </ul>
 
 
+ 
 
-    <script>
-
-
-        let req = new XMLHttpRequest();
-
-        req.onreadystatechange = () => {
-            if (req.readyState == XMLHttpRequest.DONE) {
-                console.log(req.responseText);
-            }
-        };
-
-        req.open("PUT", "https://api.jsonbin.io/v3/b/64e2640fb89b1e2299d39c3e", true);
-        req.setRequestHeader("Content-Type", "application/json");
-        req.setRequestHeader("X-Master-Key", "$2b$10$7.e5N.Z8fAP1A.11R42fPu9Q.RMb/NWhKQ8PEf9fG05u9VN9rYJFe");
-        req.send('[{"UUID_PC": "121321113215152","Remark": "البرنامج شغال","Status": false,"Url": "","Block": false,"Custom": ""}]');
-
-
-    </script>
-
-    <script>
-        //GetUrlConfig
+    <script> 
 
         var Num_Random = Math.random()
 
@@ -79,41 +60,56 @@
 
 
 
-        function GetUrl() {
-            let req = new XMLHttpRequest();
 
-            req.onreadystatechange = () => {
-                if (req.readyState == XMLHttpRequest.DONE) {
+        function GetUrl() {
+
+            var data = null;
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
                     try {
-                        const dataObject = JSON.parse(req.responseText);
-                        var url = dataObject.record.Url1
+                        debugger
+                        let Data = this.responseText;
+                        const dataObject = JSON.parse(this.responseText);
+                        var url = dataObject[0];
+                        url = url["Url" + 1]
                         sessionStorage.setItem("UrlConfig" + Num_Random, url);
-                        document.getElementById('Open').className = 'button';
-                        document.getElementById('Open').innerHTML = "login App";
                     } catch (e) {
                         document.getElementById('Open').className = 'button_Error';
                         document.getElementById('Open').innerHTML = "Now it not work";
                     }
-
                 }
-            };
+            });
 
-            req.open("GET", "https://api.jsonbin.io/v3/b/64e262588e4aa6225ed2f06d", true);
-            req.setRequestHeader("X-Master-Key", "$2b$10$7.e5N.Z8fAP1A.11R42fPu9Q.RMb/NWhKQ8PEf9fG05u9VN9rYJFe");
-            req.send();
+            xhr.open("GET", "https://eslam-a25f.restdb.io/rest/server");
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.setRequestHeader("x-apikey", "42d4c58ebca002ea93f044c600e9d1a2b7634");
+            xhr.setRequestHeader("cache-control", "no-cache");
+
+            xhr.send(data);
+
 
         }
 
 
         function GetUrlOpen() {
 
-            let req = new XMLHttpRequest();
 
-            req.onreadystatechange = () => {
-                if (req.readyState == XMLHttpRequest.DONE) {
+            var data = null;
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
                     try {
-                        const dataObject = JSON.parse(req.responseText);
-                        var url = dataObject.record.Url1
+                        debugger
+                        const dataObject = JSON.parse(this.responseText);
+                        var url = dataObject[0];
+                        url = url["Url" + 1]
                         sessionStorage.setItem("UrlConfig" + Num_Random, url);
 
                         var randomQueryParam = "nocache=" + Num_Random;
@@ -122,16 +118,20 @@
                         document.getElementById('Open').className = 'button_Error';
                         document.getElementById('Open').innerHTML = "Now it not work";
                     }
-
                 }
-            };
+            });
 
-            req.open("GET", "https://api.jsonbin.io/v3/b/64e262588e4aa6225ed2f06d", true);
-            req.setRequestHeader("X-Master-Key", "$2b$10$7.e5N.Z8fAP1A.11R42fPu9Q.RMb/NWhKQ8PEf9fG05u9VN9rYJFe");
-            req.send();
+            xhr.open("GET", "https://eslam-a25f.restdb.io/rest/server");
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.setRequestHeader("x-apikey", "42d4c58ebca002ea93f044c600e9d1a2b7634");
+            xhr.setRequestHeader("cache-control", "no-cache");
+
+            xhr.send(data);
+
 
 
         }
+
 
 
 
@@ -149,8 +149,7 @@
         }
 
 
-
-
+         
 
 
         function PushNotification(Message) {
@@ -170,26 +169,9 @@
         }
 
 
+         
 
-
-
-        const timerId = setInterval(GetUrl, 10000);
-
-
-
-                //function GetUrl() {
-                //    fetch("https://sheetdb.io/api/v1/576r7o2uvnu0l", {
-                //        method: "GET"
-                //    }).then(response => response.json())
-                //        .then(UrlConfig => {
-                //            debugger;
-                //            UrlConfig = UrlConfig.filter(x => x.Url2.trim() !== "" && x.Url2.trim() !== "There is no link");
-                //            var url = UrlConfig[UrlConfig.length - 1].Url2;
-                //            sessionStorage.setItem("UrlConfig" + Num_Random, url);
-
-                //        });
-                //}
-
+         
 
 
     </script>

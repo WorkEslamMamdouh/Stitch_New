@@ -1,0 +1,194 @@
+﻿
+<!doctype html>
+<html>
+
+<head>
+
+    <link href="buttons.css" rel="stylesheet" />
+</head>
+
+<body id="main-menu" class=" materialdesign mini-navbar" style="background-color: black;">
+
+
+    <ul>
+        <li>
+            <!--welcome-->
+            <div class="waviy">
+                <span style="--i:1">W</span>
+                <span style="--i:2">e</span>
+                <span style="--i:3">l</span>
+                <span style="--i:4">c</span>
+                <span style="--i:5">o</span>
+                <span style="--i:6">m</span>
+                <span style="--i:7">e</span>
+                <span style="--i:8">!</span>
+                <span style="--i:9">.</span>
+                <span id="WelcomeNum" style="--i:10"> </span>
+
+            </div>
+        </li>
+        <li>
+            <div class="">
+                <br />
+            </div>
+        </li>
+        <li>
+            <div class="">
+                <br />
+            </div>
+        </li>
+        <li>
+            <div class="">
+                <br />
+            </div>
+        </li> 
+        <li>
+            <div class="wrap">
+
+                <button onclick="OpenPage()" id="Open" class="button">login App</button>
+            </div>
+        </li>
+    </ul>
+
+
+
+     
+
+    <script> 
+
+        debugger
+        var currentUrl = window.location.href;
+        var parts = currentUrl.split('_');
+
+        let parts2 = parts[2].split('.')
+     
+
+        var Num_Row_Url = parts[1];
+        var UrlNum = parts2[0];
+
+        var WelcomeNum = document.getElementById('WelcomeNum')
+        WelcomeNum.innerHTML = UrlNum;
+
+        var Num_Random = Math.random()
+
+        GetUrl();
+
+
+        function GetUrl() {
+
+            var data = null;
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    try { 
+                        debugger 
+                        let Data = this.responseText;
+                        const dataObject = JSON.parse(this.responseText);
+                        var url = dataObject[(Number(Num_Row_Url) - 1)];
+                        url = url["Url" + UrlNum]
+                        sessionStorage.setItem("UrlConfig" + Num_Random, url);
+                    } catch (e) {
+                        document.getElementById('Open').className = 'button_Error';
+                        document.getElementById('Open').innerHTML = "Now it not work";
+                    }
+                }
+            });
+
+            xhr.open("GET", "https://eslam-a25f.restdb.io/rest/server");
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.setRequestHeader("x-apikey", "42d4c58ebca002ea93f044c600e9d1a2b7634");
+            xhr.setRequestHeader("cache-control", "no-cache");
+
+            xhr.send(data);
+
+             
+        }
+
+
+        function GetUrlOpen() {
+
+
+            var data = null;
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    try {
+                        debugger
+                        const dataObject = JSON.parse(this.responseText);
+                        var url = dataObject[(Number(Num_Row_Url) - 1)];
+                        url = url["Url" + UrlNum]
+                        sessionStorage.setItem("UrlConfig" + Num_Random, url);
+
+                        var randomQueryParam = "nocache=" + Num_Random;
+                        window.open(url + "?" + randomQueryParam, "_self");
+                    } catch (e) {
+                        document.getElementById('Open').className = 'button_Error';
+                        document.getElementById('Open').innerHTML = "Now it not work";
+                    }
+                }
+            });
+
+            xhr.open("GET", "https://eslam-a25f.restdb.io/rest/server");
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.setRequestHeader("x-apikey", "42d4c58ebca002ea93f044c600e9d1a2b7634");
+            xhr.setRequestHeader("cache-control", "no-cache");
+
+            xhr.send(data);
+
+       
+
+        }
+
+
+
+        function OpenPage() {
+
+            let url = sessionStorage.getItem("UrlConfig" + Num_Random)
+
+            if (url == null) {
+                GetUrlOpen();
+            }
+            else {
+                var randomQueryParam = "nocache=" + Num_Random;
+                window.open(url + "?" + randomQueryParam, "_self");
+            }
+        }
+
+
+         
+
+        function PushNotification(Message) {
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+            } else if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                var notification = new Notification(Message);
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission(function (permission) {
+                    // If the user is okay, let's create a notification
+                    if (permission === "granted") {
+                        var notification = new Notification(Message);
+                    }
+                });
+            }
+        }
+
+
+
+        const timerId = setInterval(GetUrl, 10000);
+         
+    </script>
+
+
+
+</body>
+
+
+
+</html>
