@@ -1,0 +1,135 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<style>
+
+    textarea {
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .active {
+        /*background-color: white;*/
+        font-weight: bold;
+    }
+
+    .actTab {
+        background-color: white !important;
+        font-weight: bold;
+        border-radius: 19px 19px 0 0;
+        cursor: pointer;
+    }
+
+    .nav-item {
+        cursor: pointer !important;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+
+    .Add {
+        font-size: 23px !important;
+        color: wheat;
+    }
+
+    .display_none {
+        display: none !important;
+    }
+
+    .backposition {
+        position: absolute;
+        left: 0% !important;
+        top: 0% !important;
+        z-index: 99999 !important;
+    }
+
+    .Refreshposition {
+        position: absolute;
+        right: 1%;
+        top: 12.5%;
+        z-index: 99999 !important;
+    }
+</style>
+<link href="~/NewStyle/css/Taps.css" rel="stylesheet" />
+
+
+<body class="materialdesign">
+
+    @*<table class="wrapper">
+            <tr id="div_Data" class="tabs">
+            </tr>
+            <p>Example line outside of tab box</p>
+        </table>*@
+
+    <div class="responsive__tabs animate__animated animate__backInLeft">
+        <!-- Nav tabs -->
+        <ul id="label_Tab" class="scrollable-tabs ">
+            <li id="Back" onclick="history.back()" class="nav-item">
+                <a id="Back" class="nav-link" data-toggle="tab" href="">
+                    @*<i id="Back" class="fa fa-backward back"></i>*@
+                    <i id="Back" class="fa-solid fa-reply-all fa-fade back" style="font-size: 40px;color: #df0303;"></i>
+                </a>
+            </li>
+            <li id="App_Tap" class=""><a class="" data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a></li>
+
+
+
+
+
+        </ul>
+
+
+        <!-- Tab panes -->
+        <div id="Area_Tab" class="tab-content">
+
+
+
+
+        </div>
+    </div>
+
+
+</body>
+<script>
+    //$('body').on('click', '.scrollable-tabs li', function () {
+    //    $('li').removeClass('actTab');
+    //    $('.scrollable-tabs li a.active').removeClass('active');
+
+    //    alert($(this).html())
+    //    console.log($(this).html())
+    //    if ($(this).html() != '<a class=" " data-toggle="tab" href=""><i class="fa fa-plus-circle Add"></i></a>') {
+
+    //        $(this).addClass('actTab');
+    //        let id_Remark = $(this).attr('Data_Remark');
+
+    //        setTimeout(function () { $('#' + id_Remark + '').focus(); }, 150);
+    //    }
+
+
+    //});
+</script> 
+<script src="~/ClientApp/Quotation/Notes.js"></script>
+<script>
+    $('#layout_Back').addClass('display_none')
+</script>
