@@ -94,7 +94,7 @@ $(document).ready(() => {
 
         Event_key('Enter', 'New_Query' + Cnt, 'SelectText' + Cnt);
 
-        setTimeout(function () { $('#Body_animated').removeClass('animate__bounceInLeft') }, 500);
+        setTimeout(function () { $('#Body_animated' + Cnt).removeClass('animate__bounceInLeft') }, 500);
 
         SetSession();
 
@@ -105,6 +105,7 @@ $(document).ready(() => {
         sessionStorage.setItem('User', $('#User' + (Cnt - 1)).val());
         sessionStorage.setItem('Password', $('#Password' + (Cnt - 1)).val());
         sessionStorage.setItem('Database', $('#Database' + (Cnt - 1)).val());
+        sessionStorage.setItem('DataSours', $('#DataSours' + (Cnt - 1)).val());
     }
 
     function handleMouseUp() {
@@ -173,14 +174,14 @@ $(document).ready(() => {
 
                 let last_text = textContent;
                 try {
-                    const newText = textContent.replace(new RegExp("\\" + lastWord, "ig"), suggestion.name);
+                    const newText = textContent.replace(new RegExp("\\" + lastWord, "ig"), " "+suggestion.name);
                     New_Query.value = newText;
                     if (last_text == newText) {
-                        const newText = textContent.replace(new RegExp(lastWord, "ig"), suggestion.name);
+                        const newText = textContent.replace(new RegExp(lastWord, "ig"), " " + suggestion.name);
                         New_Query.value = newText;
                     }
                 } catch (e) {
-                    const newText = textContent.replace(new RegExp(lastWord + "$", "i"), suggestion.name);
+                    const newText = textContent.replace(new RegExp(lastWord + "$", "i"), " " + suggestion.name);
                     New_Query.value = newText;
                 }
 

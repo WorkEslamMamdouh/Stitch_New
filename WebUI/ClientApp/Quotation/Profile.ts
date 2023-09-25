@@ -596,6 +596,8 @@ $(document).ready(() => {
 
 
         $("#ID" + CountGrid).val(DetMaxLast)
+        $('.fixed-table-body').scrollTop(100000);
+        $("#btnAddDetails").focus();
         DetMaxLast++;
     }
     function DeleteRow(RecNo: number) {

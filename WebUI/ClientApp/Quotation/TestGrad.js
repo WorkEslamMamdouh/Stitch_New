@@ -70,7 +70,7 @@ $(document).ready(function () {
         New_Query.addEventListener("select", handleMouseUp);
         New_Query.addEventListener("click", handleMouseUp);
         Event_key('Enter', 'New_Query' + Cnt, 'SelectText' + Cnt);
-        setTimeout(function () { $('#Body_animated').removeClass('animate__bounceInLeft'); }, 500);
+        setTimeout(function () { $('#Body_animated' + Cnt).removeClass('animate__bounceInLeft'); }, 500);
         SetSession();
     }
     function SetSession() {
@@ -78,6 +78,7 @@ $(document).ready(function () {
         sessionStorage.setItem('User', $('#User' + (Cnt - 1)).val());
         sessionStorage.setItem('Password', $('#Password' + (Cnt - 1)).val());
         sessionStorage.setItem('Database', $('#Database' + (Cnt - 1)).val());
+        sessionStorage.setItem('DataSours', $('#DataSours' + (Cnt - 1)).val());
     }
     function handleMouseUp() {
         debugger;
@@ -128,15 +129,15 @@ $(document).ready(function () {
                 debugger;
                 var last_text = textContent;
                 try {
-                    var newText = textContent.replace(new RegExp("\\" + lastWord, "ig"), suggestion.name);
+                    var newText = textContent.replace(new RegExp("\\" + lastWord, "ig"), " " + suggestion.name);
                     New_Query.value = newText;
                     if (last_text == newText) {
-                        var newText_1 = textContent.replace(new RegExp(lastWord, "ig"), suggestion.name);
+                        var newText_1 = textContent.replace(new RegExp(lastWord, "ig"), " " + suggestion.name);
                         New_Query.value = newText_1;
                     }
                 }
                 catch (e) {
-                    var newText = textContent.replace(new RegExp(lastWord + "$", "i"), suggestion.name);
+                    var newText = textContent.replace(new RegExp(lastWord + "$", "i"), " " + suggestion.name);
                     New_Query.value = newText;
                 }
                 debugger;

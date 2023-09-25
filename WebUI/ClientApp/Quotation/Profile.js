@@ -401,6 +401,8 @@ $(document).ready(function () {
         $('._dis').removeAttr('disabled');
         $('._Cont').removeClass('display_none');
         $("#ID" + CountGrid).val(DetMaxLast);
+        $('.fixed-table-body').scrollTop(100000);
+        $("#btnAddDetails").focus();
         DetMaxLast++;
     }
     function DeleteRow(RecNo) {

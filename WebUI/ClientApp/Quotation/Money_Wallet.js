@@ -324,24 +324,26 @@ $(document).ready(function () {
                     Display_Grid(res);
                 }
                 else {
-                    Display = new Array();
-                    for (var d = 0; d < Wallet_Def.length; d++) {
-                        if (Wallet_Def[d].Amount > 0) {
-                            var DisOpen_ball = new Wallet_Data();
-                            DisOpen_ball.ID = -1;
-                            DisOpen_ball.Amount = Wallet_Def[d].Amount;
-                            DisOpen_ball.Type = Wallet_Def[d].NameBal;
-                            DisOpen_ball.Title = "Receipt";
-                            DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
-                            DisOpen_ball.TrDate = "2023-01-01";
-                            Display.push(DisOpen_ball);
+                    setTimeout(function () {
+                        Display = new Array();
+                        for (var d = 0; d < Wallet_Def.length; d++) {
+                            if (Wallet_Def[d].Amount > 0) {
+                                var DisOpen_ball = new Wallet_Data();
+                                DisOpen_ball.ID = -1;
+                                DisOpen_ball.Amount = Wallet_Def[d].Amount;
+                                DisOpen_ball.Type = Wallet_Def[d].NameBal;
+                                DisOpen_ball.Title = "Receipt";
+                                DisOpen_ball.Remars = "Open Balance " + Wallet_Def[d].NameBal;
+                                DisOpen_ball.TrDate = "2023-01-01";
+                                Display.push(DisOpen_ball);
+                            }
                         }
-                    }
-                    AllDisplay = Display;
-                    JGrid.DataSource = Display;
-                    JGrid.Bind();
-                    setTimeout(function () { Clean(); }, 100);
-                    TotalGrid();
+                        AllDisplay = Display;
+                        JGrid.DataSource = Display;
+                        JGrid.Bind();
+                        TotalGrid();
+                    }, 400);
+                    Clean();
                 }
             }
         });
@@ -1051,6 +1053,8 @@ $(document).ready(function () {
         $('._dis').removeAttr('disabled');
         $('._Cont').removeClass('display_none');
         $("#ID" + CountGrid).val(DetMaxLast);
+        $('.fixed-table-body').scrollTop(100000);
+        $("#btnAddDetails").focus();
         DetMaxLast++;
     }
     function DeleteRow(RecNo) {

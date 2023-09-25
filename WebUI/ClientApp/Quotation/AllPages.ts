@@ -446,11 +446,11 @@ namespace AllPages {
                             <tbody id="div_Data_Def"></tbody>
                         </table>
                         <div class="d-flex justify-content-start mr-1">
-                            <button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo"><i class="fa fa-plus"></i></button>
+                            
                         </div>
                     </div>
-                    <div class="fixed-table-footer" style="display: none;">
-                        <table><tbody><tr></tr></tbody></table>
+                    <div class="fixed-table-footer" style=" ">
+                        <table><tbody><tr><button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo" style="width: 100%;"><i class="fa fa-plus"></i></button></tr></tbody></table>
                     </div><div class="fixed-table-pagination" style="display: none;"><div class="pull-left pagination-detail"><span class="pagination-info">Showing 6 to 0 of 0 rows</span><span class="page-list" style="display: none;"><span class="btn-group dropup"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="page-size">5</span> <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li role="menuitem"><a href="#">10</a></li></ul></span> rows per page</span></div><div class="pull-right pagination" style="display: none;"><ul class="pagination"><li class="page-pre"><a href="#">‹</a></li><li class="page-next"><a href="#">›</a></li></ul></div></div>
 
                 </div>
@@ -792,7 +792,7 @@ namespace AllPages {
                             <thead id="thead_Grad1">
                                 <tr>
                                     <th class=" Text_right Delet" style="width: 0.1% !important;" data-field="number" tabindex="0"><div class="th-inner ">  </div><div class="fht-cell"></div></th>
-                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Ser</div><div class="fht-cell"></div></th>
+                                    <th class=" Text_right Ser" style="width: 0.7% !important;" data-field="number" tabindex="0"><div class="th-inner ">Serial</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Decs" style="width: 5% !important;" data-field="number" tabindex="0"><div class="th-inner ">Description</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Rem" style="width: 10%  !important;" data-field="number" tabindex="0"><div class="th-inner ">Remark</div><div class="fht-cell"></div></th>
                                     <th class=" Text_right Url" style="width: 5% !important;" data-field="number" tabindex="0"><div class="th-inner ">Url</div><div class="fht-cell"></div></th>
@@ -806,11 +806,11 @@ namespace AllPages {
                             <tbody id="div_Data"></tbody>
                         </table>
                         <div class="d-flex justify-content-start mr-1">
-                            <button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo"><i class="fa fa-plus"></i></button>
+                            
                         </div>
                     </div>
-                    <div class="fixed-table-footer" style="display: none;">
-                        <table><tbody><tr></tr></tbody></table>
+                    <div class="fixed-table-footer" style=" ">
+                        <table><tbody><tr><button id="btnAddDetails" class="_Cont btn btn-custon-four btn-success oo" style="width: 100%;"><i class="fa fa-plus"></i></button></tr></tbody></table>
                     </div><div class="fixed-table-pagination" style="display: none;"><div class="pull-left pagination-detail"><span class="pagination-info">Showing 6 to 0 of 0 rows</span><span class="page-list" style="display: none;"><span class="btn-group dropup"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="page-size">5</span> <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li role="menuitem"><a href="#">10</a></li></ul></span> rows per page</span></div><div class="pull-right pagination" style="display: none;"><ul class="pagination"><li class="page-pre"><a href="#">‹</a></li><li class="page-next"><a href="#">›</a></li></ul></div></div>
 
                 </div>
@@ -1078,7 +1078,17 @@ namespace AllPages {
     export function InitalizeComponent() {
 
          
+               // Disable right-click context menu
+        window.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
 
+        // Disable F12 key and Ctrl+Shift+I
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+            }
+        });
 
 
 
@@ -1127,7 +1137,7 @@ namespace AllPages {
                 let result = JSON.parse(d) 
                   _Users = result as Array<Settings_Users>;
 
-                let User = _Users.filter(x => x.PassUesr == txtPassword.value.trim() && x.NameUesr == txtUser.value.trim() && x.Status == 1)
+                let User = _Users.filter(x => x.PassUesr.toUpperCase() == txtPassword.value.trim().toUpperCase() && x.NameUesr.toUpperCase() == txtUser.value.trim().toUpperCase() && x.Status == 1)
 
                 if (User.length > 0) {
 

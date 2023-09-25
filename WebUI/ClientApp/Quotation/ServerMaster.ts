@@ -132,11 +132,8 @@ font-weight: bold;
 
 </style>
 <body class="materialdesign">
-    <div id="Body_animated"  class="content-inner-all animate__animated animate__bounceInLeft">
+    <div id="Body_animated${CountPage}"  class="content-inner-all animate__animated animate__bounceInLeft">
         <div class="sparkline8-graph col-xs-12" style="border-radius: 50px;">
-
-
-         
 
          
             <div class="col-xs-12 col-lg-1 col-sm-12">
@@ -414,9 +411,32 @@ font-weight: bold;
                     $('#Database' + cnt + ' option[value=' + Database + ']').prop('selected', 'selected').change();
                 }
 
-                
+                setTimeout(function () {
 
-            }, 300);
+
+                    let Database = sessionStorage.getItem('Database');
+                    //alert(Database)
+                    if (Database != 'undefined' && Database != 'null' && Database != undefined) {
+                        $('#Database' + cnt + ' option[value=' + Database + ']').prop('selected', 'selected').change();
+                    }
+
+
+
+                    setTimeout(function () {
+
+
+                        let DataSours = sessionStorage.getItem('DataSours');
+                        //alert(Database)
+                        if (DataSours != 'undefined' && DataSours != 'null' && DataSours != undefined) {
+                            $('#DataSours' + cnt + ' option[value=' + DataSours + ']').prop('selected', 'selected').change();
+                        }
+                         
+
+                    }, 1000);
+
+                }, 500);
+
+            }, 600);
 
             $(".AllButConact").addClass("display_none");
             $("#Div_Conact" + cnt).removeClass("display_none");
@@ -426,14 +446,42 @@ font-weight: bold;
     }
     function Add_Div_Conact(cnt: number) {
         let Div_Conact = `
+        <style>
+                    
+                datalist {
+                  position: absolute;
+                  max-height: 20em;
+                  border: 0 none;
+                  overflow-x: hidden;
+                  overflow-y: auto;
+                      background-color: black;
+    color: wheat;
+                }
 
+                datalist option {
+                  font-size: 0.8em;
+                  padding: 0.3em 1em;
+                  background-color: #ccc;
+                  cursor: pointer;
+                      background-color: black;
+    color: wheat;
+                }
+
+                datalist option:hover, datalist option:focus {
+                  color: #fff;
+                  background-color: #036;
+                  outline: 0 none;
+                      background-color: black;
+    color: wheat;
+                }
+        </style>
            <div id="Div_Conact${cnt}" class="AllButConact">
            <div class="col-xs-12 col-lg-1 col-sm-12 ">
                 <label class="_LabelColor">Server</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12 ">
 
-                <input id="Server${cnt}" type="text" class="form-control _LabelColor" value="108.181.197.82" name="Server" list="ServerName${cnt}">
+                <input id="Server${cnt}" type="text"  size="50" autocomplete="off" class="form-control _LabelColor" value="108.181.197.82" name="Server" list="ServerName${cnt}">
                 <datalist id="ServerName${cnt}">
 
                     <option value="108.181.197.82">
@@ -445,7 +493,7 @@ font-weight: bold;
                 <label class="_LabelColor">User </label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12">
-                <input id="User${cnt}" type="text" class="form-control _LabelColor" value="SYSUSER" name="Server" list="UserName${cnt}">
+                <input id="User${cnt}" type="text"  size="50" autocomplete="off" class="form-control _LabelColor" value="SYSUSER" name="Server" list="UserName${cnt}">
                 <datalist id="UserName${cnt}">
 
                     <option value="SYSUSER">
@@ -456,7 +504,7 @@ font-weight: bold;
                 <label class="_LabelColor">Password</label>
             </div>
             <div class="col-xs-12 col-lg-3 col-sm-12 animated animate backInDown">
-                <input id="Password${cnt}" type="text" class="form-control _LabelColor" value="SYSUSER2020" name="Password" list="PasswordName${cnt}">
+                <input id="Password${cnt}" type="text"  size="50" autocomplete="off" class="form-control _LabelColor" value="SYSUSER2020" name="Password" list="PasswordName${cnt}">
                 <datalist id="PasswordName${cnt}">
                     <option value="SYSUSER2020">
                     <option value="SYSUSER">
@@ -470,6 +518,8 @@ font-weight: bold;
             </div>
 
          </div>
+
+     
 
          `
 

@@ -445,7 +445,7 @@ $(document).ready(() => {
                     Display_Grid(res)
                 }
                 else {
-
+                    setTimeout(function () {
                     Display = new Array<Wallet_Data>();
 
                     for (var d = 0; d < Wallet_Def.length; d++) {
@@ -467,10 +467,10 @@ $(document).ready(() => {
                     JGrid.DataSource = Display;
                     JGrid.Bind();
 
-                    setTimeout(function () { Clean(); }, 100);
+                        TotalGrid();
+                    }, 400);
 
-
-                    TotalGrid();
+                  Clean();  
                 }
 
             }
@@ -1562,6 +1562,10 @@ $(document).ready(() => {
 
 
         $("#ID" + CountGrid).val(DetMaxLast)
+
+        $('.fixed-table-body').scrollTop(100000);
+        $("#btnAddDetails").focus();
+
         DetMaxLast++;
     }
     function DeleteRow(RecNo: number) {
