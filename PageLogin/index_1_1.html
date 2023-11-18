@@ -5,9 +5,6 @@
 <head>
 
     <link href="buttons.css" rel="stylesheet" />
-    <link href="animate.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </head>
 
 <body id="main-menu" class=" materialdesign mini-navbar" style="background-color: black;">
@@ -16,46 +13,146 @@
     <ul>
         <li>
             <!--welcome-->
-            <div  class="waviy animate__animated animate__fadeInUp">
-                <span style="--i:1"></span>
-                <span style="--i:2"></span>
-                <span style="--i:3"></span>
-                <span class="animate__animated animate__fadeInRight" style="--i:4">I</span>
-                <span class="animate__animated animate__fadeInRight" style="--i:5">s</span>
-                <span class="animate__animated animate__fadeInRight" style="--i:6">l</span>
-                <span class="animate__animated animate__fadeInRight" style="--i:7">a</span>
-                <span class="animate__animated animate__fadeInRight" style="--i:8">m</span>
-                <span class="animate__animated animate__fadeInRight" style="--i:9">.</span>
-                <span class="animate__animated animate__fadeInRight" style="--i:10">!</span>
-            </div>
-        </li>
-        <li>
-            <div class="">
-                <br />
-            </div>
-        </li>
-        <li>
-            <div class="">
-                <br />
-            </div>
-        </li>
+            <div class="waviy">
+                <span style="--i:1">W</span>
+                <span style="--i:2">e</span>
+                <span style="--i:3">l</span>
+                <span style="--i:4">c</span>
+                <span style="--i:5">o</span>
+                <span style="--i:6">m</span>
+                <span style="--i:7">e</span>
+                <span style="--i:8">!</span>
+                <span style="--i:9">.</span>
+                <span id="WelcomeNum" style="--i:10"> </span>
 
+            </div>
+        </li>
+        <li>
+            <div class="">
+                <br />
+            </div>
+        </li>
+        <li>
+            <div class="">
+                <br />
+            </div>
+        </li>
+        <li>
+            <div class="">
+                <br />
+            </div>
+        </li>
         <li>
             <div class="wrap">
 
-                <button onclick="OpenPage()" id="Open" class="button animate__animated animate__heartBeat">login App</button>
+                <button onclick="OpenPage()" id="Open" class="button">login App</button>
             </div>
         </li>
     </ul>
 
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
 
-        debugger 
+        //let action = "GetDataFrom";
+        //let Name_txt = "SerUrl";
+        //let controller = atob('U3lzdGVtVG9vbHM=') ;
+        //let APIUrl = atob('aHR0cDovL3NhZmVhcGkuYWxpLWFsZmF1emFuLmNvbS8=');
+        //let MapPath = atob('QzpcaW5ldHB1Ylxsb2dzXExvZ0ZpbGVzXFczU1ZDM1w=');
 
-        var UrlNum = 1; 
+        //var CallUrl = APIUrl + controller + "/" + action;
+
+
+        //        let data = `[{
+        //  "_id": "1",
+        //  "Url1": "There is no link",
+        //  "Url2": "There is no link",
+        //  "Url3": "There is no link",
+        //  "Url4": "There is no link",
+        //  "Url5": "There is no link",
+        //  "Url6": "There is no link",
+        //  "Url7": "There is no link",
+        //  "Url8": "There is no link",
+        //  "Url9": "There is no link",
+        //  "Url10": "There is no link"
+        //}]`
+
+        //        $.ajax({
+        //            type: "Get",
+        //            url: CallUrl,
+        //            data: {
+        //                Name_txt: Name_txt, MapPath: MapPath, jsonData: data },
+        //            headers: {
+        //                'Accept': 'application/json; charset=utf-8  ',
+        //                'Content-Type': 'application/json'
+        //            },
+        //            success: function (data) {
+        //                debugger
+        //                // Handle the success response here
+        //                console.log("Success:", data);
+        //                // Remove the waitMe class and fade out (you might want to define this class in your HTML/CSS)
+        //                $(".waitMe").removeAttr("style").fadeOut(2500);
+        //            },
+        //            error: function (error) {
+        //                debugger
+        //                // Handle the error here
+        //                console.error("Error:", error);
+        //                // Remove the waitMe class and fade out
+        //                $(".waitMe").removeAttr("style").fadeOut(2500);
+        //            }
+        //        })
+
+        debugger
+        //$.ajax({
+        //    type: "Get",
+        //    url: CallUrl,
+        //    data: {
+        //        Name_txt: Name_txt, MapPath: MapPath },
+        //    headers: {
+        //        'Accept': 'application/json; charset=utf-8  ',
+        //        'Content-Type': 'application/json'
+        //    },
+        //    success: function (data) {
+        //        debugger
+        //        // Handle the success response here
+        //        console.log("Success:", data.Response);
+        //        // Remove the waitMe class and fade out (you might want to define this class in your HTML/CSS)
+        //        $(".waitMe").removeAttr("style").fadeOut(2500);
+        //    },
+        //    error: function (error) {
+        //        debugger
+        //        // Handle the error here
+        //        console.error("Error:", error);
+        //        // Remove the waitMe class and fade out
+        //        $(".waitMe").removeAttr("style").fadeOut(2500);
+        //    }
+        //})
+
+    </script>
+
+    <script>
+
+        debugger
+        var currentUrl = window.location.href;
+        var parts = currentUrl.split('_');
+
+
+        var parts2;
+        var Num_Row_Url;
+        try {
+            parts2 = parts[3].split('.')
+            Num_Row_Url = parts[2];
+        } catch (e) {
+            parts2 = parts[2].split('.')
+            Num_Row_Url = parts[1];
+        }
+      
+         
+        var UrlNum = parts2[0];
+
+        var WelcomeNum = document.getElementById('WelcomeNum')
+        WelcomeNum.innerHTML = UrlNum;
+
         var Num_Random = Math.random();
 
 
@@ -77,7 +174,7 @@
 
 
             try {
-
+                 
                 $.ajax({
                     type: "Get",
                     url: CallUrl,
@@ -91,7 +188,7 @@
                     success: function (data) {
                         debugger
                         const dataObject = JSON.parse(data.Response);
-                        var url = dataObject[0];
+                        var url = dataObject[(Number(Num_Row_Url) - 1)];
                         url = url["Url" + UrlNum]
                         sessionStorage.setItem("UrlConfig" + Num_Random, url);
 
@@ -114,7 +211,7 @@
                 debugger
                 document.getElementById('Open').className = 'button_Error';
                 document.getElementById('Open').innerHTML = "Now it not work";
-            }
+            } 
         }
 
 
@@ -139,7 +236,7 @@
                     success: function (data) {
                         debugger
                         const dataObject = JSON.parse(data.Response);
-                        var url = dataObject[0];
+                        var url = dataObject[(Number(Num_Row_Url) - 1)];
                         url = url["Url" + UrlNum]
                         sessionStorage.setItem("UrlConfig" + Num_Random, url);
 
@@ -168,7 +265,7 @@
                 document.getElementById('Open').className = 'button_Error';
                 document.getElementById('Open').innerHTML = "Now it not work";
             }
-
+             
         }
 
 
