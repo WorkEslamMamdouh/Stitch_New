@@ -34,6 +34,7 @@ $(document).ready(function () {
     var btnAddDetails;
     var TypePeriod;
     var TypeSours;
+    var dbFinYear;
     var Glopl_Type = 'Exchange';
     var flagSave = 0;
     var totalAmount = 0;
@@ -56,8 +57,16 @@ $(document).ready(function () {
             $("#layout_Back").addClass('display_none');
             $("#layout_Refresh").attr('style', '');
         });
-        var today = new Date();
-        var yyyy = today.getFullYear().toString();
+        var yyyy = "";
+        yyyy = sessionStorage.getItem("FinYear");
+        if (yyyy == null) {
+            var today = new Date();
+            yyyy = today.getFullYear().toString();
+        }
+        else if (yyyy.trim() == "") {
+            var today = new Date();
+            yyyy = today.getFullYear().toString();
+        }
         var ID = sessionStorage.getItem("AddUserID");
         Comp_Wallet = "Wallet/Wallet_0" + ID + "_" + yyyy;
         Comp_Definitions = "Wallet/Def_Wallet_0" + ID + "_" + yyyy;
@@ -68,6 +77,7 @@ $(document).ready(function () {
         $('#Page_mone').removeClass('display_none');
         Tabs_click();
         InitializeGrid();
+        dbFinYear = document.getElementById("dbFinYear");
         TypeSours = document.getElementById("TypeSours");
         TypePeriod = document.getElementById("TypePeriod");
         txtDateFrom = document.getElementById("txtDateFrom");
@@ -109,6 +119,12 @@ $(document).ready(function () {
         a_View.onclick = function () { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Definitions.onclick = function () { $('#Definitions_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Shahadat.onclick = function () { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Shaha_Ex').addClass('display_none'); $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Shahadat'; };
+        dbFinYear.onchange = function () {
+            sessionStorage.setItem("FinYear", dbFinYear.value);
+            var glopalBtn = localStorage.getItem('glopalBtn');
+            $("#" + glopalBtn + "").click();
+        };
+        dbFinYear.value = yyyy;
         txtDateFrom.value = DateStartYear();
         txtDateTo.value = GetDate();
         TypePeriod.onchange = SumPrc;

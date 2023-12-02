@@ -38,6 +38,7 @@ $(document).ready(() => {
     var btnAddDetails: HTMLButtonElement;
     var TypePeriod: HTMLSelectElement;
     var TypeSours: HTMLSelectElement;
+    var dbFinYear: HTMLSelectElement;
 
 
 
@@ -77,10 +78,18 @@ $(document).ready(() => {
             $("#layout_Refresh").attr('style', '');
         });
 
+        var yyyy = "";
+        yyyy = sessionStorage.getItem("FinYear");
 
-        var today: Date = new Date();
-        var yyyy = today.getFullYear().toString();
-
+        if (yyyy == null) {
+            var today: Date = new Date();
+            yyyy = today.getFullYear().toString();
+        }
+        else if (yyyy.trim() == "") {
+            var today: Date = new Date();
+            yyyy = today.getFullYear().toString();
+        }
+         
 
         let ID = sessionStorage.getItem("AddUserID");
 
@@ -104,6 +113,7 @@ $(document).ready(() => {
         Tabs_click();
         InitializeGrid();
 
+        dbFinYear = document.getElementById("dbFinYear") as HTMLSelectElement;
         TypeSours = document.getElementById("TypeSours") as HTMLSelectElement;
         TypePeriod = document.getElementById("TypePeriod") as HTMLSelectElement;
         txtDateFrom = document.getElementById("txtDateFrom") as HTMLInputElement;
@@ -133,7 +143,7 @@ $(document).ready(() => {
         a_Shahadat = document.getElementById("a_Shahadat") as HTMLButtonElement;
 
         txtAdjustmentAmountDone.onkeyup = Settlement_difference;
-        TypeSours.onchange = () => { Glopl_Type == 'Adjustment' ? SelectAdjustmentAmount() : null };
+        TypeSours.onchange = () => { Glopl_Type == 'Adjustment' ? SelectAdjustmentAmount() : null }; 
         btnExchange.onclick = () => { AppTans(Glopl_Type) };
         btnReceipt.onclick = () => { AppTans(Glopl_Type) };
         btnTransfers.onclick = () => { AppTans(Glopl_Type) };
@@ -146,6 +156,18 @@ $(document).ready(() => {
         a_View.onclick = () => { $('#Views_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Definitions.onclick = () => { $('#Definitions_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Shahadat_Tab').addClass('display_none'); };
         a_Shahadat.onclick = () => { $('.Hid_Rec').removeClass('display_none'); $('.Hid_Ex').removeClass('display_none'); $('.Shaha_Ex').addClass('display_none'); $('#Shahadat_Tab').removeClass('display_none'); $('#Rec_Exch_Tab').addClass('display_none'); $('#Views_Tab').addClass('display_none'); $('#Definitions_Tab').addClass('display_none'); Glopl_Type = 'Shahadat'; };
+         
+        dbFinYear.onchange = () => {
+
+             sessionStorage.setItem("FinYear", dbFinYear.value);
+             
+            var glopalBtn = localStorage.getItem('glopalBtn');
+            $("#" + glopalBtn + "").click();
+
+
+        };
+
+        dbFinYear.value = yyyy;
 
         txtDateFrom.value = DateStartYear();
         txtDateTo.value = GetDate();
@@ -169,6 +191,8 @@ $(document).ready(() => {
         DisplayAll();
 
 
+
+
         $('.jsgrid-grid-body').scrollLeft(300);
 
 
@@ -190,6 +214,7 @@ $(document).ready(() => {
 
 
         setTimeout(function () { $('#Page_Loding').removeClass("display_none") }, 500);
+
 
 
     }

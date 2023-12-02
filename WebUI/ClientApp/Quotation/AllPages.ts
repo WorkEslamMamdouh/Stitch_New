@@ -335,6 +335,18 @@ namespace AllPages {
         <div id="Definitions_Tab" class="tab-content display_none ">
 
             <div class="col-xs-12 col-lg-12 col-sm-12">
+                <select id="dbFinYear" class="form-control ">
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-lg-12 col-sm-12">
                 <button id="btnUpdate" class="col-xs-12 col-lg-12 col-sm-12 btn btn-custon-four btn-info">     Update </button>
             </div>
             <div class="col-xs-6 col-lg-6 col-sm-6">
@@ -1079,16 +1091,16 @@ namespace AllPages {
 
          
                // Disable right-click context menu
-        window.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
+        //window.addEventListener('contextmenu', (e) => {
+        //    e.preventDefault();
+        //});
 
-        // Disable F12 key and Ctrl+Shift+I
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                e.preventDefault();
-            }
-        });
+        //// Disable F12 key and Ctrl+Shift+I
+        //window.addEventListener('keydown', (e) => {
+        //    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+        //        e.preventDefault();
+        //    }
+        //});
 
 
 
