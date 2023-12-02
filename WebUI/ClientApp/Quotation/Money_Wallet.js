@@ -56,10 +56,12 @@ $(document).ready(function () {
             $("#layout_Back").addClass('display_none');
             $("#layout_Refresh").attr('style', '');
         });
+        var today = new Date();
+        var yyyy = today.getFullYear().toString();
         var ID = sessionStorage.getItem("AddUserID");
-        Comp_Wallet = "Wallet/Wallet_0" + ID;
-        Comp_Definitions = "Wallet/Def_Wallet_0" + ID;
-        Comp_HedDef = "Wallet/Def_Wallet_Hed_0" + ID;
+        Comp_Wallet = "Wallet/Wallet_0" + ID + "_" + yyyy;
+        Comp_Definitions = "Wallet/Def_Wallet_0" + ID + "_" + yyyy;
+        Comp_HedDef = "Wallet/Def_Wallet_Hed_0" + ID + "_" + yyyy;
         $('#layout_Back').addClass('display_none');
         $('#layout_Refresh').addClass('display_none');
         $('#Pass').addClass('display_none');
